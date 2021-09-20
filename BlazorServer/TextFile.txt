@@ -1,0 +1,16 @@
+﻿
+
+
+Add-Migration InitialMigration
+
+Remove-Migration.
+
+dotnet ef migrations remove
+
+dotnet ef migrations add initial
+
+dotnet ef database update 
+
+
+dotnet ef migrations add seeding -> enviar todos os dados do context (Update) para o banco
+

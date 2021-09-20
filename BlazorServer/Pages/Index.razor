@@ -1,0 +1,176 @@
+﻿@page "/"
+@using System
+@using System.IO
+@using BlazorServer.Data
+
+<ComponetAlertMessege Enumtipo=EnumTipoAlerts.info Message="Bem vindo ao novo app G-Ponto (Gerenciamento do Ponto de Colaboradores) v4.0" />
+<MatTabGroup>
+    <MatTab Label="1-Carregar Arquivo">
+        <p>
+            @if (_messageDangerFile)
+            {
+                @foreach (var f in listAlert)
+                {
+                    <ComponetAlertMessege Enumtipo=EnumTipoAlerts.success Message="@f" />
+                }
+                <ComponetAlertMessege Enumtipo=EnumTipoAlerts.danger Message="O aquivo informado não é um arquivo do tipo TXT. Selecione um arquivo TXT válido!" />
+            }
+        </p>
+        <p></p>
+        <p>
+            <MatSelectItem @bind-Value="@RegoligoSelecionado" Items="@value1ItemsCombo" Outlined="true" Label="Selecione o modelo do Relogio"></MatSelectItem>
+        </p>
+        <p>
+            <MatFileUpload OnChange="@FilesReady" AllowMultiple="false" Label="Selecione um único arquivo aqui no navegador"></MatFileUpload>
+        </p>
+
+    </MatTab>
+
+    <MatTab Label="2-Filtrar Colaborador">
+        <p></p>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm btn-lg">
+                    <MatButton Raised="true" Type="submit" Class="align-bottom">Carregar Cadastros</MatButton>
+                </div>
+                <div class="col-lg">
+                    <MatSelectItem @bind-Value="@Nome" Items="@value1ItemsCombo" Outlined="true" Label="Selecione Colaborador"></MatSelectItem>
+                </div>
+                <div class="col-sm">
+                    <MatDatePicker @bind-Value="@Data" Format="dd-MM-yy" Label="Data Inicio" Class="w-100" Outlined="true"></MatDatePicker>
+                </div>
+                <div class="col-sm">
+                    <MatDatePicker @bind-Value="@Data" Format="dd-MM-yy" Label="Data Final" Class="w-100" Outlined="true"></MatDatePicker>
+                </div>
+                <div class="col-lg btn">
+                    <MatButton Raised="true" Type="submit">Filtrar</MatButton>
+                </div>
+            </div>
+        </div>
+    </MatTab>
+    <MatTab Label="3-Processar">
+        <p></p>
+        <div class="row">
+            <div class="col-sm"><MatButton Raised="true" Type="submit">Processar Horas</MatButton></div>
+            <div class="col-sm align-content-center"><div class="h6">Registros do colaborador no périodo selecionado</div></div>
+        </div>
+        
+    </MatTab>
+    <MatTab Label="4-Gerar aquivo de ponto">
+        Second Content
+    </MatTab>
+    <MatTab Label="5-Impressão">
+        Second Content
+    </MatTab>
+    <MatTab>
+        <LabelContent>
+            Third <MatIcon Icon="@MatIconNames.Close"></MatIcon>
+        </LabelContent>
+        <ChildContent>
+            Third Content
+        </ChildContent>
+    </MatTab>
+
+</MatTabGroup>
+
+
+
+@code
+{
+    public string Nome { get; set; }
+    public DateTime? Data { get; set; }
+
+
+    #region Carregar Arquivo
+
+    string RegoligoSelecionado = "Nacional";
+    string[] value1ItemsCombo = new[]
+    {
+        "Nacional",
+        "Chines",
+    };
+
+    List<Arquivo> listArquivo = new List<Arquivo>();
+
+    List<string> listAlert = new List<string>();
+
+    bool _messageDangerFile = false;
+
+
+    async Task FilesReady(IMatFileUploadEntry[] files)
+    {
+        listAlert = new List<string>();
+        string extensao = string.Empty;
+
+        var file = files.FirstOrDefault();
+
+        extensao = file.Name.Substring(file.Name.IndexOf("."), file.Name.Length - file.Name.IndexOf("."));
+
+        if (!extensao.Equals(".txt"))
+        {
+            _messageDangerFile = true;
+            return;
+        }
+        else
+        {
+            listAlert.Add($"Nome: {file.Name} - Tamanho: {file.Size}");
+            _messageDangerFile = false;
+        }
+
+        var ms = new MemoryStream();
+
+        await file.WriteToStreamAsync(ms);
+
+        StreamReader sr = new StreamReader(ms);
+
+        //string lin = sr.ReadToEnd();
+        //string Arquivo = Encoding.ASCII.GetString(ms.ToArray());
+
+        List<string> lista = new List<string>();
+
+        ms.Position = 0;
+
+        string sline = "";
+
+        while (sline != null)
+        {
+            sline = sr.ReadLine();
+            if (sline != "")
+            {
+                lista.Add(sline);
+            }
+        }
+
+        List<Data.RegistroRegolgio> ListRegistro = new List<RegistroRegolgio>();
+
+        try
+        {
+            foreach (var item in lista)
+            {
+                if (!item.Equals("No\tMchn\tEnNo\t\tName\t\tMode\tIOMd\tDateTime\t"))
+                {
+
+                    int x = item.ToString().Length;
+                    string codigoColaborador = item.ToString().Substring(10, 8);
+                    string dataHoraRegistro = item.ToString().Substring(24, 20);
+
+                    RegistroRegolgio reg = new RegistroRegolgio();
+
+                    reg.CodColaborador = Convert.ToInt32(codigoColaborador);
+                    reg.DataHoraRegistro = Convert.ToDateTime(dataHoraRegistro);
+
+                    ListRegistro.Add(reg);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            listAlert.Add(ex.Message);
+            _messageDangerFile = true;
+            return;
+        }
+    }
+
+    #endregion
+
+}

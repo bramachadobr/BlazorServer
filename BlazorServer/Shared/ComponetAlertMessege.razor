@@ -1,0 +1,30 @@
+﻿@using BlazorServer.Data;
+
+@switch (Enumtipo)
+{
+    case EnumTipoAlerts.success:
+        <div class="alert alert-success mt-4" role="alert">@Message</div>
+        break;
+    case EnumTipoAlerts.info:
+        <div class="alert alert-info mt-4" role="alert">@Message</div>
+        break;
+    case EnumTipoAlerts.warning:
+        <div class="alert alert-warning mt-4" role="alert">@Message</div>
+        break;
+    case EnumTipoAlerts.danger:
+        <div class="alert alert-danger mt-4" role="alert">@Message</div>
+        break;
+    default:
+        break;
+}
+
+
+@code {
+
+    [Parameter]
+    public EnumTipoAlerts Enumtipo { get; set; }
+
+
+    [Parameter]
+    public string Message { get; set; }
+}

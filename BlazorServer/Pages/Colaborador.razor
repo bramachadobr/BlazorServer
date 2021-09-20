@@ -1,0 +1,91 @@
+﻿@page "/colaboradorcrud"
+@using BlazorServer.Service
+@using BlazorServer.Data
+@using System.ComponentModel.DataAnnotations
+@using System.IO
+@using System.Net.Http.Headers
+
+@inherits OwningComponentBase<ColaboradorService>
+
+<div class="container">
+    <div class="w-50">
+        <p class="h5">Gerenciamento de Colaboradores</p>
+    </div>
+
+    <div class="w-100">
+        @if (inserido)
+        {
+            <ComponetAlertMessege Message="Registro salvo com sucesso!" Enumtipo="EnumTipoAlerts.success" />
+        }
+        else
+        {
+            <ComponetAlertMessege Message="ops! Algo deu errado com o registro." Enumtipo="EnumTipoAlerts.danger" />
+        }
+    </div>
+</div>
+
+
+<div class="container">
+    <EditForm Model="@cl" OnValidSubmit="@InsertRecord">
+        <DataAnnotationsValidator />
+        <div class="row">
+            <div class="col-sm-6">
+                <MatTextField @bind-Value="@cl.Nome" Label="Nome" Class="w-100" Outlined="true"></MatTextField>
+            </div>
+            <div class="col-sm-3">
+                <MatTextField @bind-Value="@cl.CodPonto" Label="Código R.P." Class="w-100" Outlined="true"></MatTextField>
+            </div>
+            <div class="col-sm-3">
+                <MatDatePicker @bind-Value="@cl.Contratacao" Format="dd-MM-yy" Label="Admissão" Class="w-100" Outlined="true"></MatDatePicker>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <MatDatePicker @bind-Value="@cl.Demissao" Format="dd-MM-yy" Label="Demissão" Outlined="true" Class="w-100"></MatDatePicker>
+            </div>
+            <div class="col-sm">
+                <MatTextField @bind-Value="@cl.Salario" TValue="decimal" Label="Salário" Outlined="true" Class="w-100"></MatTextField>
+            </div>
+            <div class="col-sm">
+                <MatTextField @bind-Value="@cl.HoraAula" TValue="decimal" Label="R$ Hora aula" Outlined="true" Class="w-100"></MatTextField>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3"><MatButton Raised="true" Type="submit">Salvar</MatButton></div>
+        </div>
+        <ValidationSummary />
+    </EditForm>
+</div>
+
+
+
+@code {
+
+    
+
+    public DateTime? DataDemissaoBind { get; set; }
+
+    Data.Colaborador cl = new Data.Colaborador();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        DataDemissaoBind = cl.Demissao;
+    }
+
+    bool inserido = true;
+
+    void InsertRecord()
+    {
+        try
+        {
+            inserido = Service.InsertRecord(cl);
+        }
+        catch (Exception)
+        {
+        }
+
+
+    }
+
+}
