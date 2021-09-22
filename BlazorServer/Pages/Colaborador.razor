@@ -5,7 +5,10 @@
 @using System.IO
 @using System.Net.Http.Headers
 
-@inherits OwningComponentBase<ColaboradorService>
+@*@inherits OwningComponentBase<ColaboradorService>*@
+@inject ColaboradorService ColaboradorService
+@inject IMatDialogService MatDialogService
+
 
 <div class="container">
     <div class="w-50">
@@ -24,68 +27,142 @@
     </div>
 </div>
 
+ <MatButton OnClick="@OpenDialog" Raised="true">Pick one</MatButton>
 
-<div class="container">
-    <EditForm Model="@cl" OnValidSubmit="@InsertRecord">
-        <DataAnnotationsValidator />
-        <div class="row">
-            <div class="col-sm-6">
-                <MatTextField @bind-Value="@cl.Nome" Label="Nome" Class="w-100" Outlined="true"></MatTextField>
-            </div>
-            <div class="col-sm-3">
-                <MatTextField @bind-Value="@cl.CodPonto" Label="Código R.P." Class="w-100" Outlined="true"></MatTextField>
-            </div>
-            <div class="col-sm-3">
-                <MatDatePicker @bind-Value="@cl.Contratacao" Format="dd-MM-yy" Label="Admissão" Class="w-100" Outlined="true"></MatDatePicker>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm">
-                <MatDatePicker @bind-Value="@cl.Demissao" Format="dd-MM-yy" Label="Demissão" Outlined="true" Class="w-100"></MatDatePicker>
-            </div>
-            <div class="col-sm">
-                <MatTextField @bind-Value="@cl.Salario" TValue="decimal" Label="Salário" Outlined="true" Class="w-100"></MatTextField>
-            </div>
-            <div class="col-sm">
-                <MatTextField @bind-Value="@cl.HoraAula" TValue="decimal" Label="R$ Hora aula" Outlined="true" Class="w-100"></MatTextField>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-3"><MatButton Raised="true" Type="submit">Salvar</MatButton></div>
-        </div>
-        <ValidationSummary />
-    </EditForm>
-</div>
 
+<MatDialog @bind-IsOpen="@dialogIsOpen">
+            <MatDialogTitle>Inserir novo Coloborador</MatDialogTitle>
+            
+                <div class="container">
+                    <MatDialogContent>
+                    <EditForm Model="@cl" OnValidSubmit="@InsertRecord">
+                        <DataAnnotationsValidator />
+                        <div class="row">
+                            <div class="col-sm">
+                                <MatTextField @bind-Value="@cl.Nome" Label="Nome" Class="w-100" Outlined="true"></MatTextField>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm">
+                                <MatDatePicker @bind-Value="@cl.Contratacao" Format="dd-MM-yy" Label="Admissão" Class="w-100" Outlined="true"></MatDatePicker>
+                            </div>
+                            <div class="col-sm">
+                                <MatDatePicker @bind-Value="@cl.Demissao" Format="dd-MM-yy" Label="Demissão" Outlined="true" Class="w-100"></MatDatePicker>
+                            </div>
+                        </div>
+                        <div class=row>
+                            <div class="col-sm">
+                                <MatTextField @bind-Value="@cl.CodPonto" Label="Código R.P." Class="w-100" Outlined="true"></MatTextField>
+                            </div>
+                            <div class="col-sm">
+                                <MatTextField @bind-Value="@cl.Salario" TValue="decimal" Label="Salário" Outlined="true" Class="w-100"></MatTextField>
+                            </div>
+                            <div class="col-sm">
+                                <MatTextField @bind-Value="@cl.HoraAula" TValue="decimal" Label="R$ Hora aula" Outlined="true" Class="w-100"></MatTextField>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3"><MatButton Raised="true" Type="submit">Salvar</MatButton></div>
+                        </div>
+                        <ValidationSummary />
+                    </EditForm>
+                    </MatDialogContent>
+                </div>
+ 
+ 
+            
+            <MatDialogActions>
+                <MatButton OnClick="@(e => { dialogIsOpen = false; })">No Thanks</MatButton>
+                <MatButton OnClick="@OkClick">OK</MatButton>
+            </MatDialogActions>
+        </MatDialog>
+
+
+<MatTable Items="@colaboradoresData" class="mat-elevation-z5" OnRowDbClick="OnColaboradorDbClicked" AllowSelection="true" ShowPaging="true" UseSortHeaderRow="true">
+    <MatTableHeader>
+        <MatSortHeaderRow SortChanged="@SortData">
+            <MatSortHeader SortId="Id">Id</MatSortHeader>
+            <MatSortHeader SortId="Nome">Name</MatSortHeader>
+            <MatSortHeader SortId="CodPonto">Ponto</MatSortHeader>
+            <MatSortHeader SortId="Contratacao">Admissão</MatSortHeader>
+            <MatSortHeader SortId="Demissao">Demissão</MatSortHeader>
+            <MatSortHeader SortId="Salario">R$ Salário</MatSortHeader>
+            <MatSortHeader SortId="HoraAula">R$ HoraAula</MatSortHeader>
+            @*<MatSortHeader SortId="btnAlterar">Alterar</MatSortHeader>*@
+        </MatSortHeaderRow>
+    </MatTableHeader>
+    <MatTableRow>
+            <td class="col-sm-1">@context.Id</td>
+            <td class="col-sm-6" >@context.Nome</td>
+            <td class="col-sm-2">@context.CodPonto</td>
+            <td class="col-sm-3">@string.Format("{0:dd/MM/yyyy}", @context.Contratacao)</td>
+            <td class="col-sm-3">@string.Format("{0:dd/MM/yyyy}", @context.Demissao)</td>
+            <td class="col-sm-5">@string.Format("R$ {0:00}", @context.Salario.ToString())</td>
+            <td class="col-sm-5">@string.Format("R$ {0:00}", @context.HoraAula.ToString())</td>
+@*            <MatButton type="submit" name="action">Alterar</MatButton>>
+            <MatButton type="submit" name="action">Excluir</MatButton>>*@
+    </MatTableRow>
+</MatTable>
 
 
 @code {
-
-    
-
-    public DateTime? DataDemissaoBind { get; set; }
+    List<Data.Colaborador> colaboradoresData=null;
 
     Data.Colaborador cl = new Data.Colaborador();
+
+    bool inserido = true;
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        DataDemissaoBind = cl.Demissao;
+        ColaboradorService.LoadColaboradores();
+        SortData(null);
     }
 
-    bool inserido = true;
 
     void InsertRecord()
     {
-        try
-        {
-            inserido = Service.InsertRecord(cl);
-        }
-        catch (Exception)
-        {
-        }
-
-
+        ColaboradorService.SaveRecord(cl);
+        //inserido = ColaboradorService.InsertRecord(cl);
+        this.cl = new Data.Colaborador();
     }
+
+
+
+    void SortData(MatSortChangedEvent sort)
+    {
+        colaboradoresData = ColaboradorService.Colaboradores;
+    }
+
+    void OnColaboradorDbClicked(object item)
+    {
+        this.cl = item as Data.Colaborador;
+        if (cl == null)
+        {
+            return;
+        }
+    }
+
+    bool dialogIsOpen = false;
+    string name = null;
+    string animal = null;
+    string dialogAnimal = null;
+
+
+    void OpenDialog()
+    {
+        dialogAnimal = null;
+        dialogIsOpen = true;
+    }
+ 
+    void OkClick()
+    {
+        inserido = ColaboradorService.InsertRecord(cl);
+        this.cl = new Data.Colaborador();
+        animal = dialogAnimal;
+        dialogIsOpen = false;
+    }
+
+
 
 }

@@ -1,13 +1,12 @@
-﻿using System;
+﻿using BlazorServer.Data;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using BlazorServer.Data;
 
 namespace BlazorServer.Service
 {
-    public interface ICobaloradorService
+    public interface ICobaloradorService /*: Microsoft.AspNetCore.Components.IComponent*/
     {
+        void SaveRecord(Colaborador record);
 
         bool InsertRecord(Colaborador record);
 

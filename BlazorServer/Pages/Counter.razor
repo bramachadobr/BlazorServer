@@ -92,6 +92,7 @@
                 if (sort.Direction == MatSortDirection.Desc)
                 {
                     Array.Sort(sortedData.ToArray(), (s1, s2) => -1 * comparison(s1, s2));
+                    sortedData.OrderByDescending(o => o.Nome).ToList();
                 }
                 else
                 {

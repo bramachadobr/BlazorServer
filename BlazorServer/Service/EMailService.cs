@@ -1,9 +1,8 @@
-﻿using System;
+﻿using BlazorServer.Data;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using BlazorServer.Data;
 
 namespace BlazorServer.Service
 {
@@ -47,12 +46,12 @@ namespace BlazorServer.Service
 
         public async Task<Email> GetEmailById(int id)
         {
-            return await _context.Email.Where<Email>(a=>a.Id == id).FirstOrDefaultAsync();
+            return await _context.Email.Where<Email>(a => a.Id == id).FirstOrDefaultAsync();
         }
 
         public async Task<List<Email>> GetEmailsByName(string url)
         {
-            return await _context.Email.Where<Email>(a=>a.Nome.Contains(url)).ToListAsync();
+            return await _context.Email.Where<Email>(a => a.Nome.Contains(url)).ToListAsync();
         }
 
         public bool InserRecord(Email record)

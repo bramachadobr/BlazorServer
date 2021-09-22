@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using BlazorServer.Service;
-using Microsoft.EntityFrameworkCore;
 
 
 
@@ -20,7 +16,7 @@ namespace BlazorServer.Data
         danger
     }
 
-    public class Cargo 
+    public class Cargo
     {
         public int Id { get; set; } = 0;
         public string NomeCargo { get; set; }
@@ -48,10 +44,11 @@ namespace BlazorServer.Data
 
     public class Colaborador
     {
+        [Required]
         public int Id { get; set; }
-
+        [Required]
         public int CodPonto { get; set; }
-
+        [Required]
         public string Nome { get; set; }
 
         public Cargo Cargo { get; set; }
@@ -71,7 +68,7 @@ namespace BlazorServer.Data
 
     }
 
-    public class RegistroPonto 
+    public class RegistroPonto
     {
         public int Id { get; set; }
         public Colaborador Colaborador { get; set; }
@@ -85,7 +82,7 @@ namespace BlazorServer.Data
         public TimeSpan NOI_ENT { get; set; }
         public TimeSpan NOI_SAI { get; set; }
         public TimeSpan TOTALHORAS { get; set; }
-        [Column(TypeName ="decimal(18,2)")]
+        [Column(TypeName = "decimal(18,2)")]
         public decimal VALORHORA { get; set; }
         [Column(TypeName = "decimal(18,2)")]
         public decimal VALORTOTAL { get; set; }
