@@ -17,7 +17,7 @@ namespace BlazorServer.Service
 
         Task<List<Email>> GetAllEmail();
 
-        Task<Email> GetEmailById(int id);
+        Task<Email> GetEmailById(Guid id);
 
         Task<List<Email>> GetEmailsByName(string url);
 

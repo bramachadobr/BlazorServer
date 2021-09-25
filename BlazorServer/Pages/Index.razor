@@ -121,7 +121,7 @@
             }
         }
 
-        List<Data.RegistroRegolgio> ListRegistro = new List<RegistroRegolgio>();
+        List<Data.RegistroRelogio> ListRegistro = new List<RegistroRelogio>();
 
 
         //string lin = sr.ReadToEnd();
@@ -142,36 +142,30 @@
             }
         }
 
-
-
         //U{5}P{12}D{2}M{2}A{4}H{2}N{2}
+
+        foreach (var item in lista)
+        {
+            
+            string cod = item.Substring(0, 5);
+            string cpf = item.Substring(5, 17);
+            string dia = item.Substring(17, 2);
+            string mes = item.Substring(19, 2);
+            string ano = item.Substring(21, 4);
+            string hh = item.Substring(25, 2);
+            string mm = item.Substring(27, 2);
+
+            RegistroRelogio reg = new RegistroRelogio();
+
+            reg.CodColaborador = Convert.ToInt32(cod);
+            reg.Cpf = cpf;
+            reg.Data = Convert.ToDateTime($"{dia}/{mes}/{ano}");
+            reg.Hora = new TimeSpan(Convert.ToInt32(hh), Convert.ToInt32(mm), 0);
+
+        }
         
 
-        try
-        {
-            foreach (var item in lista)
-            {
-                if (!item.Equals("No\tMchn\tEnNo\t\tName\t\tMode\tIOMd\tDateTime\t"))
-                {
 
-                    int x = item.ToString().Length;
-                    string codigoColaborador = item.ToString().Substring(10, 8);
-                    string dataHoraRegistro = item.ToString().Substring(24, 20);
-
-                    RegistroRegolgio reg = new RegistroRegolgio();
-
-                    reg.CodColaborador = Convert.ToInt32(codigoColaborador);
-                    reg.DataHoraRegistro = Convert.ToDateTime(dataHoraRegistro);
-
-                    ListRegistro.Add(reg);
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            listAlert.Add(ex.Message);
-            return;
-        }
     }
 
     #endregion

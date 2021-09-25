@@ -16,11 +16,11 @@ namespace BlazorServer.Service
         public void LoadEmail()
         {
             Email = new List<Email> {
-                new Email { Id = 1, Nome = "Edivlado", EnderecoEmail = "edivaldomachado@gmailcom" },
-                new Email { Id = 2, Nome = "Edivlado", EnderecoEmail = "edivaldomachado@gmailcom" },
-                new Email { Id = 3, Nome = "Edivlado", EnderecoEmail = "edivaldomachado@gmailcom" },
-                new Email { Id = 4, Nome = "Edivlado", EnderecoEmail = "edivaldomachado@gmailcom" },
-                new Email { Id = 5, Nome = "Edivlado", EnderecoEmail = "edivaldomachado@gmailcom" }
+                new Email { Nome = "Edivlado", EnderecoEmail = "edivaldomachado@gmailcom" },
+                new Email { Nome = "Edivlado", EnderecoEmail = "edivaldomachado@gmailcom" },
+                new Email { Nome = "Edivlado", EnderecoEmail = "edivaldomachado@gmailcom" },
+                new Email { Nome = "Edivlado", EnderecoEmail = "edivaldomachado@gmailcom" },
+                new Email { Nome = "Edivlado", EnderecoEmail = "edivaldomachado@gmailcom" }
             };
         }
 
@@ -45,9 +45,9 @@ namespace BlazorServer.Service
             return await _context.Email.ToListAsync();
         }
 
-        public async Task<Email> GetEmailById(int id)
+        public async Task<Email> GetEmailById(Guid id)
         {
-            return await _context.Email.Where<Email>(a=>a.Id == id).FirstOrDefaultAsync();
+            return await _context.Email.Where<Email>(a => a.Id == id).FirstOrDefaultAsync();
         }
 
         public async Task<List<Email>> GetEmailsByName(string url)

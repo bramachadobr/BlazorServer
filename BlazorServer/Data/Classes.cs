@@ -119,16 +119,20 @@ namespace BlazorServer.Data
         public decimal ValorTotal { get; set; }
     }
 
-    public class RegistroRegolgio
+    public class RegistroRelogio
     {
-        public RegistroRegolgio()
+        public RegistroRelogio()
         {
             Id = Guid.NewGuid();
         }
 
         public Guid Id { get; set; }
         public int CodColaborador { get; set; }
-        public DateTime? DataHoraRegistro { get; set; }
+        public Colaborador Colaborador {  get; set; }
+        public string Cpf { get; set; }
+        public DateTime Data{ get; set; }
+        public TimeSpan Hora { get; set; }
+
     }
 
     public class Feriado
