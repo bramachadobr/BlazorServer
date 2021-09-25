@@ -63,6 +63,33 @@
 
 </MatTabGroup>
 
+@if (ListRegPonto.Count >0)
+{
+        <table class="table">
+        <thead>
+            <tr>
+                <th>Cod</th>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Data</th>
+                <th>Hora</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ListRegPonto)
+            {
+                <tr>
+                    <td>@item.CodColaborador</td>
+                    <td>@item.Colaborador.Nome</td>
+                    <td>@item.Cpf</td>
+                    <td>@item.Data.ToShortDateString()</td>
+                    <td>@item.Hora</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
 
 
 @code
@@ -83,6 +110,16 @@
     List<Arquivo> listArquivo = new List<Arquivo>();
 
     List<string> listAlert = new List<string>();
+
+    List<Data.RegistroRelogio> ListRegPonto = new List<RegistroRelogio>();
+
+    Service.ColaboradorService cs = new Service.ColaboradorService();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        cs.LoadColaboradores();
+    }
 
 
     async Task FilesReady(IMatFileUploadEntry[] files)
@@ -121,7 +158,6 @@
             }
         }
 
-        List<Data.RegistroRelogio> ListRegistro = new List<RegistroRelogio>();
 
 
         //string lin = sr.ReadToEnd();
@@ -146,25 +182,28 @@
 
         foreach (var item in lista)
         {
-            
-            string cod = item.Substring(0, 5);
-            string cpf = item.Substring(5, 17);
-            string dia = item.Substring(17, 2);
-            string mes = item.Substring(19, 2);
-            string ano = item.Substring(21, 4);
-            string hh = item.Substring(25, 2);
-            string mm = item.Substring(27, 2);
+            if (item!=null)
+            {
+                string cod = item.Substring(0, 5);
+                string cpf = item.Substring(5, 17);
+                string dia = item.Substring(17, 2);
+                string mes = item.Substring(19, 2);
+                string ano = item.Substring(21, 4);
+                string hh = item.Substring(25, 2);
+                string mm = item.Substring(27, 2);
 
-            RegistroRelogio reg = new RegistroRelogio();
+                RegistroRelogio reg = new RegistroRelogio();
 
-            reg.CodColaborador = Convert.ToInt32(cod);
-            reg.Cpf = cpf;
-            reg.Data = Convert.ToDateTime($"{dia}/{mes}/{ano}");
-            reg.Hora = new TimeSpan(Convert.ToInt32(hh), Convert.ToInt32(mm), 0);
+                reg.CodColaborador = Convert.ToInt32(cod);
+                reg.Colaborador = await cs.GetColaboradorByIdPonto(Convert.ToInt32(cod));
+                reg.Cpf = cpf;
+                reg.Data = Convert.ToDateTime($"{dia}/{mes}/{ano}");
+                reg.Hora = new TimeSpan(Convert.ToInt32(hh), Convert.ToInt32(mm), 0);
+                ListRegPonto.Add(reg);
+            }
 
         }
         
-
 
     }
 
