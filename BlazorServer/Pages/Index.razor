@@ -6,16 +6,6 @@
 <ComponetAlertMessege Enumtipo=EnumTipoAlerts.info Message="Bem vindo ao novo app G-Ponto (Gerenciamento do Ponto de Colaboradores) v4.0" />
 <MatTabGroup>
     <MatTab Label="1-Carregar Arquivo">
-        <p>
-            @if (_messageDangerFile)
-            {
-                @foreach (var f in listAlert)
-                {
-                    <ComponetAlertMessege Enumtipo=EnumTipoAlerts.success Message="@f" />
-                }
-                <ComponetAlertMessege Enumtipo=EnumTipoAlerts.danger Message="O aquivo informado não é um arquivo do tipo TXT. Selecione um arquivo TXT válido!" />
-            }
-        </p>
         <p></p>
         <p>
             <MatSelectItem @bind-Value="@RegoligoSelecionado" Items="@value1ItemsCombo" Outlined="true" Label="Selecione o modelo do Relogio"></MatSelectItem>
@@ -94,27 +84,20 @@
 
     List<string> listAlert = new List<string>();
 
-    bool _messageDangerFile = false;
-
 
     async Task FilesReady(IMatFileUploadEntry[] files)
     {
-        listAlert = new List<string>();
         string extensao = string.Empty;
-
         var file = files.FirstOrDefault();
-
         extensao = file.Name.Substring(file.Name.IndexOf("."), file.Name.Length - file.Name.IndexOf("."));
 
         if (!extensao.Equals(".txt"))
         {
-            _messageDangerFile = true;
             return;
         }
         else
         {
             listAlert.Add($"Nome: {file.Name} - Tamanho: {file.Size}");
-            _messageDangerFile = false;
         }
 
         var ms = new MemoryStream();
@@ -122,6 +105,24 @@
         await file.WriteToStreamAsync(ms);
 
         StreamReader sr = new StreamReader(ms);
+
+        List<string> linhas = new List<string>();
+
+        ms.Position = 0;
+
+        string linha = "";
+        
+        while (!(linha is null))
+        {
+            linha = sr.ReadLine();
+            if (linha != null)
+            {
+                linhas.Add(linha);
+            }
+        }
+
+        List<Data.RegistroRegolgio> ListRegistro = new List<RegistroRegolgio>();
+
 
         //string lin = sr.ReadToEnd();
         //string Arquivo = Encoding.ASCII.GetString(ms.ToArray());
@@ -141,7 +142,10 @@
             }
         }
 
-        List<Data.RegistroRegolgio> ListRegistro = new List<RegistroRegolgio>();
+
+
+        //U{5}P{12}D{2}M{2}A{4}H{2}N{2}
+        
 
         try
         {
@@ -166,7 +170,6 @@
         catch (Exception ex)
         {
             listAlert.Add(ex.Message);
-            _messageDangerFile = true;
             return;
         }
     }

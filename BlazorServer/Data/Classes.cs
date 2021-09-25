@@ -20,9 +20,14 @@ namespace BlazorServer.Data
         danger
     }
 
-    public class Cargo 
+    public class Cargo
     {
-        public int Id { get; set; } = 0;
+        public Cargo()
+        {
+            Id = Guid.NewGuid();
+        }
+
+        public Guid Id { get; set; }
         public string NomeCargo { get; set; }
         public List<Colaborador> Colaboradores { get; set; }
     }
@@ -30,6 +35,11 @@ namespace BlazorServer.Data
 
     public class Arquivo
     {
+        public Arquivo()
+        {
+            Id = Guid.NewGuid();
+        }
+        public Guid Id { get; set; }
         public string NomeArquivo { get; set; }
 
         public string Caminho { get; set; }
@@ -40,7 +50,12 @@ namespace BlazorServer.Data
 
     public class Email
     {
-        public int Id { get; set; }
+        public Email()
+        {
+            Id = Guid.NewGuid();
+        }
+
+        public Guid Id { get; set; }
         public string Nome { get; set; }
         public string EnderecoEmail { get; set; }
     }
@@ -48,11 +63,18 @@ namespace BlazorServer.Data
 
     public class Colaborador
     {
-        public int Id { get; set; }
+        public Colaborador()
+        {
+            Id = Guid.NewGuid();
+        }
+
+        public Guid Id { get; set; }
 
         public int CodPonto { get; set; }
 
         public string Nome { get; set; }
+
+        public string Cpf { get; set; }
 
         public Cargo Cargo { get; set; }
 
@@ -73,33 +95,50 @@ namespace BlazorServer.Data
 
     public class RegistroPonto 
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
+
+        public RegistroPonto(Guid id)
+        {
+            Id = id;
+        }
+
         public Colaborador Colaborador { get; set; }
         public int ColaboradorId { get; set; }
         public string DiaSemana { get; set; }
-        public DateTime? Data { get; set; }
+        public DateTime Data { get; set; }
         public TimeSpan AM_ENT { get; set; }
         public TimeSpan AM_SAI { get; set; }
         public TimeSpan PM_ENT { get; set; }
         public TimeSpan PM_SAI { get; set; }
         public TimeSpan NOI_ENT { get; set; }
         public TimeSpan NOI_SAI { get; set; }
-        public TimeSpan TOTALHORAS { get; set; }
+        public TimeSpan TotalHorasDia { get => TimeSpan.FromHours( (AM_SAI.Ticks - AM_ENT.Ticks) + (PM_SAI.Ticks - PM_ENT.Ticks) + (NOI_SAI.Ticks - NOI_ENT.Ticks)); }
         [Column(TypeName ="decimal(18,2)")]
-        public decimal VALORHORA { get; set; }
+        public decimal ValorHora { get; set; }
         [Column(TypeName = "decimal(18,2)")]
-        public decimal VALORTOTAL { get; set; }
+        public decimal ValorTotal { get; set; }
     }
 
     public class RegistroRegolgio
     {
+        public RegistroRegolgio()
+        {
+            Id = Guid.NewGuid();
+        }
+
+        public Guid Id { get; set; }
         public int CodColaborador { get; set; }
         public DateTime? DataHoraRegistro { get; set; }
     }
 
     public class Feriado
     {
-        public int Id { get; set; }
+        public Feriado()
+        {
+            Id = Guid.NewGuid();
+        }
+
+        public Guid Id { get; set; }
         public DateTime? DataFeriado { get; set; }
         public string NomeFeriado { get; set; }
     }
