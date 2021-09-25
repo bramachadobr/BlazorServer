@@ -5,6 +5,7 @@
 
 <ComponetAlertMessege Enumtipo=EnumTipoAlerts.info Message="Bem vindo ao novo app G-Ponto (Gerenciamento do Ponto de Colaboradores) v4.0" />
 <MatTabGroup>
+
     <MatTab Label="1-Carregar Arquivo">
         <p></p>
         <p>
@@ -24,13 +25,20 @@
                     <MatButton Raised="true" Type="submit" Class="align-bottom">Carregar Cadastros</MatButton>
                 </div>
                 <div class="col-lg">
-                    <MatSelectItem @bind-Value="@Nome" Items="@value1ItemsCombo" Outlined="true" Label="Selecione Colaborador"></MatSelectItem>
+                    <MatSelectValue @bind-Value="@idSelectd" Items="@cs.Colaboradores" Outlined="true" ValueSelector="@(i=>i.Id)" Label="Selecione Colaborador">
+                                <ItemTemplate>
+                                        <span>@context.Nome</span>
+                                </ItemTemplate>
+                    </MatSelectValue>
+                    <p>@idSelectd</p>
                 </div>
                 <div class="col-sm">
-                    <MatDatePicker @bind-Value="@Data" Format="dd-MM-yy" Label="Data Inicio" Class="w-100" Outlined="true"></MatDatePicker>
+                    <MatDatePicker @bind-Value="@Data1" Format="dd-MM-yy" Label="Data Inicio" Class="w-100" Outlined="true"></MatDatePicker>
+                    <p>@Data1</p>
                 </div>
                 <div class="col-sm">
-                    <MatDatePicker @bind-Value="@Data" Format="dd-MM-yy" Label="Data Final" Class="w-100" Outlined="true"></MatDatePicker>
+                    <MatDatePicker @bind-Value="@Data2" Format="dd-MM-yy" Label="Data Final" Class="w-100" Outlined="true"></MatDatePicker>
+                    <p>@Data2</p>
                 </div>
                 <div class="col-lg btn">
                     <MatButton Raised="true" Type="submit">Filtrar</MatButton>
@@ -38,14 +46,15 @@
             </div>
         </div>
     </MatTab>
+
     <MatTab Label="3-Processar">
         <p></p>
         <div class="row">
             <div class="col-sm"><MatButton Raised="true" Type="submit">Processar Horas</MatButton></div>
             <div class="col-sm align-content-center"><div class="h6">Registros do colaborador no périodo selecionado</div></div>
         </div>
-        
     </MatTab>
+
     <MatTab Label="4-Gerar aquivo de ponto">
         Second Content
     </MatTab>
@@ -76,6 +85,22 @@
             </tr>
         </thead>
         <tbody>
+            @if (idSelectd!=Guid.Empty)
+            { 
+                int codigo = cs.Colaboradores.FirstOrDefault(x => x.Id.Equals(idSelectd)).CodPonto;
+                var filtro = from registros in ListRegPonto where registros.Data >= Data1 && registros.Data <= Data2 select registros;
+
+                foreach (var item in filtro)
+                {       
+                    <tr>
+                    <td>@item.CodColaborador</td>
+                    <td>@item.Colaborador.Nome</td>
+                    <td>@item.Cpf</td>
+                    <td>@item.Data.ToShortDateString()</td>
+                    <td>@item.Hora</td>
+                    </tr>
+                }
+            }
             @foreach (var item in ListRegPonto)
             {
                 <tr>
@@ -97,6 +122,9 @@
     public string Nome { get; set; }
     public DateTime? Data { get; set; }
 
+    public Guid idSelectd { get; set; }
+    public DateTime Data1 { get; set; }
+    public DateTime Data2 { get; set; }
 
     #region Carregar Arquivo
 

@@ -104,7 +104,7 @@ namespace BlazorServer.Data
 
         public Colaborador Colaborador { get; set; }
         public int ColaboradorId { get; set; }
-        public string DiaSemana { get; set; }
+        public DayOfWeek DiaSemana { get=>Data.DayOfWeek;}
         public DateTime Data { get; set; }
         public TimeSpan AM_ENT { get; set; }
         public TimeSpan AM_SAI { get; set; }
@@ -130,7 +130,7 @@ namespace BlazorServer.Data
         public int CodColaborador { get; set; }
         public Colaborador Colaborador {  get; set; }
         public string Cpf { get; set; }
-        public DateTime Data{ get; set; }
+        public DateTime Data { get; set; }
         public TimeSpan Hora { get; set; }
 
     }
