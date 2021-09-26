@@ -16,6 +16,35 @@
         <p>
             <MatFileUpload OnChange="@FilesReady" AllowMultiple="false" Label="Selecione um único arquivo aqui no navegador"></MatFileUpload>
         </p>
+        <p></p>
+        <p>
+            @if (ListRegPonto.Count >0)
+            {
+                <MatTable Items="@ListRegPonto" class="mat-elevation-z5">
+                    <MatTableHeader>
+                        <th>Cod</th>
+                        <th class=col-sm>Nome</th>
+                        <th>CPF</th>
+                        <th>Data</th>
+                        <th>Hora</th>
+                            @*<MatSortHeaderRow>
+                            <MatSortHeader>Cod</MatSortHeader>
+                            <MatSortHeader>Nome</MatSortHeader><span style="width:600px">Nome</span>
+                            <MatSortHeader>CPF</MatSortHeader>
+                            <MatSortHeader>Data</MatSortHeader>
+                            <MatSortHeader>Hora</MatSortHeader>
+                        </MatSortHeaderRow>*@
+                    </MatTableHeader>
+                    <MatTableRow>
+                        <td>@context.CodColaborador</td>
+                        <td>@context.Colaborador.Nome</td>
+                        <td>@context.Cpf</td>
+                        <td>@context.Data.ToShortDateString()</td>
+                        <td>@context.Hora.ToString()</td>
+                    </MatTableRow>
+                </MatTable>
+            }
+        </p>
 
     </MatTab>
 
@@ -23,28 +52,28 @@
         <p></p>
         <div class="container">
             <div class="row">
-                <div class="col-sm btn-lg">
+@*                <div class="col-sm btn-lg">
                     <MatButton Raised="true" Type="submit" Class="align-bottom">Carregar Cadastros</MatButton>
-                </div>
-                <div class="col-lg">
+                </div>*@
+                <div class="col-sm">
                     <MatSelectValue @bind-Value="@idSelectd" Items="@cs.Colaboradores" Outlined="true" ValueSelector="@(i=>i.Id)" Label="Selecione Colaborador">
                                 <ItemTemplate>
                                         <span>@context.Nome</span>
                                 </ItemTemplate>
                     </MatSelectValue>
-                    <p>@idSelectd</p>
+                    @*<p>@idSelectd</p>*@
                 </div>
                 <div class="col-sm">
                     <MatDatePicker @bind-Value="@Data1" Format="dd-MM-yy" Label="Data Inicio" Class="w-100" Outlined="true"></MatDatePicker>
-                    <p>@Data1</p>
+                    @*<p>@Data1</p>*@
                 </div>
                 <div class="col-sm">
                     <MatDatePicker @bind-Value="@Data2" Format="dd-MM-yy" Label="Data Final" Class="w-100" Outlined="true"></MatDatePicker>
-                    <p>@Data2</p>
+                    @*<p>@Data2</p>*@
                 </div>
-                <div class="col-lg btn">
+@*                <div class="col-lg btn">
                     <MatButton Raised="true" Type="submit">Filtrar</MatButton>
-                </div>
+                </div>*@
             </div>
         </div>
     </MatTab>
@@ -154,7 +183,7 @@
                     <tr>
                         <td>@item.CodColaborador</td>
                         <td>@item.Colaborador.Nome</td>
-                        <td>@item.Cpf</td>
+                        <td>@string.Format(@"{0:000\.###\.###-##}", item.Cpf)</td>
                         <td>@item.Data.ToShortDateString()</td>
                         <td>@item.Hora</td>
                     </tr>
@@ -212,7 +241,10 @@
 
         if (!extensao.Equals(".txt"))
         {
+            await JSRuntime.InvokeVoidAsync("alert", "Arquivo selecionado não é um arquivo válido!");
             return;
+            // bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?"); // Confirm
+            //string prompted = await JsRuntime.InvokeAsync<string>("prompt", "Take some input:"); // Prompt
         }
         else
         {

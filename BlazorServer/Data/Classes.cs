@@ -71,6 +71,8 @@ namespace BlazorServer.Data
 
         public string Cpf { get; set; }
 
+        public string CpfComMascara { get => string.Format(@"{0:000\.###\.###-##}", Cpf); }
+
         public Cargo Cargo { get; set; }
 
         public int CargoId { get; set; }
