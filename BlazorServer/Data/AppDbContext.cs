@@ -1,8 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BlazorServer.Data
 {
@@ -34,17 +31,17 @@ namespace BlazorServer.Data
         {
 
             modelBuilder.Entity<Colaborador>().HasData(
-                new Colaborador {  Nome="Edivaldo", Contratacao=DateTime.Now, HoraAula=Convert.ToDecimal("52,00"), Salario=Convert.ToDecimal("5000,00")},
-                new Colaborador {  Nome = "Edivaldo", Contratacao = DateTime.Now, HoraAula = Convert.ToDecimal("52,00"), Salario = Convert.ToDecimal("5000,00") },
-                new Colaborador {  Nome = "Edivaldo", Contratacao = DateTime.Now, HoraAula = Convert.ToDecimal("52,00"), Salario = Convert.ToDecimal("5000,00") },
-                new Colaborador {  Nome = "Edivaldo", Contratacao = DateTime.Now, HoraAula = Convert.ToDecimal("52,00"), Salario = Convert.ToDecimal("5000,00") },
-                new Colaborador {  Nome = "Edivaldo", Contratacao = DateTime.Now, HoraAula = Convert.ToDecimal("52,00"), Salario = Convert.ToDecimal("5000,00") },
-                new Colaborador {  Nome = "Edivaldo", Contratacao = DateTime.Now, HoraAula = Convert.ToDecimal("52,00"), Salario = Convert.ToDecimal("5000,00") }
+                new Colaborador { Nome = "Edivaldo", Contratacao = DateTime.Now, HoraAula = Convert.ToDecimal("52,00"), Salario = Convert.ToDecimal("5000,00") },
+                new Colaborador { Nome = "Edivaldo", Contratacao = DateTime.Now, HoraAula = Convert.ToDecimal("52,00"), Salario = Convert.ToDecimal("5000,00") },
+                new Colaborador { Nome = "Edivaldo", Contratacao = DateTime.Now, HoraAula = Convert.ToDecimal("52,00"), Salario = Convert.ToDecimal("5000,00") },
+                new Colaborador { Nome = "Edivaldo", Contratacao = DateTime.Now, HoraAula = Convert.ToDecimal("52,00"), Salario = Convert.ToDecimal("5000,00") },
+                new Colaborador { Nome = "Edivaldo", Contratacao = DateTime.Now, HoraAula = Convert.ToDecimal("52,00"), Salario = Convert.ToDecimal("5000,00") },
+                new Colaborador { Nome = "Edivaldo", Contratacao = DateTime.Now, HoraAula = Convert.ToDecimal("52,00"), Salario = Convert.ToDecimal("5000,00") }
 
                 );
 
             modelBuilder.Entity<Email>().HasData(
-                new Email { Nome ="Edivlado", EnderecoEmail = "edivaldomachado@gmailcom"},
+                new Email { Nome = "Edivlado", EnderecoEmail = "edivaldomachado@gmailcom" },
                 new Email { Nome = "Edivlado", EnderecoEmail = "edivaldomachado@gmailcom" },
                 new Email { Nome = "Edivlado", EnderecoEmail = "edivaldomachado@gmailcom" },
                 new Email { Nome = "Edivlado", EnderecoEmail = "edivaldomachado@gmailcom" },
@@ -53,7 +50,7 @@ namespace BlazorServer.Data
                 );
 
             modelBuilder.Entity<Cargo>().HasData(
-                new Cargo { NomeCargo = "Professor"},
+                new Cargo { NomeCargo = "Professor" },
                 new Cargo { NomeCargo = "Secretaria" },
                 new Cargo { NomeCargo = "Comercial" }
                 );

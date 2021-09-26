@@ -1,12 +1,7 @@
-﻿using System;
+﻿using BlazorServer.Data;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using BlazorServer.Service;
-using BlazorServer.Data;
-using Microsoft.EntityFrameworkCore;
 
 namespace BlazorServer.Service
 {
@@ -15,9 +10,9 @@ namespace BlazorServer.Service
 
         void AddRecord(RegistroPonto record);
 
-        void UpdateRecord(RegistroPonto record);    
+        void UpdateRecord(RegistroPonto record);
 
-        void DeleteRecord(RegistroPonto record);    
+        void DeleteRecord(RegistroPonto record);
 
         void DeleteRecord(Guid id);
 
@@ -25,7 +20,7 @@ namespace BlazorServer.Service
 
         Task<List<RegistroPonto>> GetAllGeristroPontoById(int id);
 
-        Task<List<RegistroPonto>> GetAllGeristroPontoByIdData(int id, DateTime data1, DateTime data2);
+        Task<List<RegistroPonto>> GetAllRegistroPontoByIdData(int id, DateTime data1, DateTime data2);
 
 
 

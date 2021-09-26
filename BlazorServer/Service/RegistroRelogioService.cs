@@ -1,15 +1,13 @@
 ﻿using BlazorServer.Data;
 using MatBlazor;
-using System.IO;
-using System.ComponentModel;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace BlazorServer.Service
 {
-    public class RegistroRelogioService: IRegistroRelogioService
+    public class RegistroRelogioService : IRegistroRelogioService
     {
 
         public ColaboradorService colaboradorService { get; set; }
@@ -41,7 +39,7 @@ namespace BlazorServer.Service
 
         public async Task<RegistroRelogio> CriaRegistroObjAsync(string item)
         {
-            if (item ==null)
+            if (item == null)
             {
                 return null;
             }

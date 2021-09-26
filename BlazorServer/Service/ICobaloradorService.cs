@@ -1,8 +1,8 @@
-﻿using System;
+﻿using BlazorServer.Data;
 using System.Collections.Generic;
-using System.Linq;
+using System.Collections;
 using System.Threading.Tasks;
-using BlazorServer.Data;
+using System;
 
 namespace BlazorServer.Service
 {
@@ -19,7 +19,7 @@ namespace BlazorServer.Service
 
         Task<List<Colaborador>> GetColaboradorsByCargo(string cargoUrl);
 
-        Task<Colaborador> GetColaboradorById(int id);
+        Task<Colaborador> GetColaboradorById(Guid id);
 
         Task<Colaborador> GetColaboradorByIdPonto(int id);
 

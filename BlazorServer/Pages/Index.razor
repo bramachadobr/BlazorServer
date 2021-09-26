@@ -2,6 +2,7 @@
 @using System
 @using System.IO
 @using BlazorServer.Data
+@using System.Globalization
 @inject IJSRuntime JSRuntime
 
 <ComponetAlertMessege Enumtipo=EnumTipoAlerts.info Message="Bem vindo ao novo app G-Ponto (Gerenciamento do Ponto de Colaboradores) v4.0" />
@@ -73,6 +74,45 @@
 
 </MatTabGroup>
 
+@if (rps.registroPontos.Count>0)
+{
+     <table class="table">
+        <thead>
+            <tr>
+                <th>Cod</th>
+                <th>Colaborador</th>
+                <th>DiaSemana</th>
+                <th>Data</th>
+                <th>AM_ENT</th>
+                <th>AM_SAI</th>
+                <th>PM_ENT</th>
+                <th>PM_SAI</th>
+                <th>NOI_ENT</th>
+                <th>NOI_SAI</th>
+                <th>TotalHorasDia</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in rps.registroPontos)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Colaborador.Nome</td>
+                    <td>@Cultura.DateTimeFormat.GetDayName(item.DiaSemana)</td>
+                    <td>@item.Data.ToShortDateString()</td>
+                    <td>@item.AM_ENT</td>
+                    <td>@item.AM_SAI</td>
+                    <td>@item.PM_ENT</td>
+                    <td>@item.PM_SAI</td>
+                    <td>@item.NOI_ENT</td>
+                    <td>@item.NOI_SAI</td>
+                    <td>@item.TotalHorasDia</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
 @if (ListRegPonto.Count >0)
 {
         <table class="table">
@@ -129,6 +169,7 @@
 
 @code
 {
+    CultureInfo Cultura = new CultureInfo("pt-BR");
     public string Nome { get; set; }
     public DateTime? Data { get; set; }
 
@@ -153,12 +194,13 @@
 
     Service.ColaboradorService cs = new Service.ColaboradorService();
 
-    Service.RegistroPontoService rp = new Service.RegistroPontoService();
+    Service.RegistroPontoService rps = new Service.RegistroPontoService();
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
         cs.LoadColaboradores();
+        rps.colaboradores = cs.Colaboradores;
     }
 
 
@@ -247,32 +289,27 @@
 
     async Task ProcessaPontos()
     {
-        //Stopwatch sw = new Stopwatch();
-        // sw.Start();
+        Data1 = Data1.AddHours(-3);
+        Data2 = Data2.AddHours(-3);
 
-        var filtro = ListRegPonto.Where(x=>x.CodColaborador.Equals(idSelectd) && x.Data>=Data1 && x.Data<=Data2).GroupBy(i => i.Data).ToList();
+        Data.Colaborador colab = await cs.GetColaboradorById(idSelectd);
+
+        var filtro = ListRegPonto.Where(x=>x.Colaborador.Id.Equals(colab.Id) && x.Data>=Data1 && x.Data<=Data2).GroupBy(i => i.Data).ToList();
 
         foreach (var item in filtro)
         {
             await JSRuntime.InvokeVoidAsync("console.log", "teste", item);
             RegistroPonto ponto = new RegistroPonto();
-            ponto.Data = Convert.ToDateTime(item.Key);
-            ponto.Colaborador = cs.Colaboradores.FirstOrDefault(i => i.CargoId.Equals(idSelectd));
-            ponto.ColaboradorId = ponto.Colaborador.Id;
+            ponto.Data = item.Key;
+            ponto.Colaborador = colab;
+            ponto.ColaboradorId = colab.Id;
             foreach (var i in item)
             {
                 ponto.AddHora(i.Hora);
                 await JSRuntime.InvokeVoidAsync("console.log", "teste", i);
-
-            } 
-
+            }
+            rps.AddRecord(ponto);
         }
-
-        
-        //criar uma lista de datas agrupadas
-        //pegar todos os registros da data atual
-        //converter e add cada registro a RegistroPonto usando o ServiceAdd da class
-        //Exibir o resultado final
     }
 
 

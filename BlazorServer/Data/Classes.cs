@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using BlazorServer.Service;
-using Microsoft.EntityFrameworkCore;
 
 
 
@@ -93,7 +88,7 @@ namespace BlazorServer.Data
 
     }
 
-    public class RegistroPonto 
+    public class RegistroPonto
     {
         public Guid Id { get; set; }
 
@@ -104,7 +99,7 @@ namespace BlazorServer.Data
 
         public Colaborador Colaborador { get; set; }
         public Guid ColaboradorId { get; set; }
-        public DayOfWeek DiaSemana { get=>Data.DayOfWeek;}
+        public DayOfWeek DiaSemana { get => Data.DayOfWeek; }
         public DateTime Data { get; set; }
         public TimeSpan AM_ENT { get; set; }
         public TimeSpan AM_SAI { get; set; }
@@ -112,8 +107,8 @@ namespace BlazorServer.Data
         public TimeSpan PM_SAI { get; set; }
         public TimeSpan NOI_ENT { get; set; }
         public TimeSpan NOI_SAI { get; set; }
-        public TimeSpan TotalHorasDia { get => TimeSpan.FromHours( (AM_SAI.Ticks - AM_ENT.Ticks) + (PM_SAI.Ticks - PM_ENT.Ticks) + (NOI_SAI.Ticks - NOI_ENT.Ticks)); }
-        [Column(TypeName ="decimal(18,2)")]
+        public TimeSpan TotalHorasDia { get => TimeSpan.FromTicks((AM_SAI.Ticks - AM_ENT.Ticks) + (PM_SAI.Ticks - PM_ENT.Ticks) + (NOI_SAI.Ticks - NOI_ENT.Ticks)); }
+        [Column(TypeName = "decimal(18,2)")]
         public decimal ValorHora { get; set; }
         [Column(TypeName = "decimal(18,2)")]
         public decimal ValorTotal { get; set; }
@@ -124,7 +119,8 @@ namespace BlazorServer.Data
             {
                 AM_ENT = hora;
             }
-            else {
+            else
+            {
                 if (AM_SAI == TimeSpan.Zero)
                 {
                     AM_SAI = hora;
@@ -138,8 +134,8 @@ namespace BlazorServer.Data
                     else
                     {
                         if (PM_SAI == TimeSpan.Zero)
-                        { 
-                            PM_ENT = hora;
+                        {
+                            PM_SAI = hora;
                         }
                         else
                         {
@@ -149,7 +145,7 @@ namespace BlazorServer.Data
                             }
                             else
                             {
-                                if (NOI_SAI==TimeSpan.Zero)
+                                if (NOI_SAI == TimeSpan.Zero)
                                 {
                                     NOI_SAI = hora;
                                 }
@@ -172,7 +168,7 @@ namespace BlazorServer.Data
 
         public Guid Id { get; set; }
         public int CodColaborador { get; set; }
-        public Colaborador Colaborador {  get; set; }
+        public Colaborador Colaborador { get; set; }
         public string Cpf { get; set; }
         public DateTime Data { get; set; }
         public TimeSpan Hora { get; set; }
