@@ -38,6 +38,8 @@ namespace BlazorServer
             services.AddSingleton<WeatherForecastService>();
             services.AddScoped<ColaboradorService>();
             services.AddScoped<EMailService>();
+            services.AddScoped<RegistroRelogioService>();
+            services.AddScoped<RegistroPontoService>();
             services.AddScoped<HttpClient>();
             services.AddMatBlazor();
 

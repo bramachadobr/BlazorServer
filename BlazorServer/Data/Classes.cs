@@ -97,13 +97,13 @@ namespace BlazorServer.Data
     {
         public Guid Id { get; set; }
 
-        public RegistroPonto(Guid id)
+        public RegistroPonto()
         {
-            Id = id;
+            Id = Guid.NewGuid();
         }
 
         public Colaborador Colaborador { get; set; }
-        public int ColaboradorId { get; set; }
+        public Guid ColaboradorId { get; set; }
         public DayOfWeek DiaSemana { get=>Data.DayOfWeek;}
         public DateTime Data { get; set; }
         public TimeSpan AM_ENT { get; set; }
@@ -117,6 +117,50 @@ namespace BlazorServer.Data
         public decimal ValorHora { get; set; }
         [Column(TypeName = "decimal(18,2)")]
         public decimal ValorTotal { get; set; }
+
+        public void AddHora(TimeSpan hora)
+        {
+            if (AM_ENT == TimeSpan.Zero)
+            {
+                AM_ENT = hora;
+            }
+            else {
+                if (AM_SAI == TimeSpan.Zero)
+                {
+                    AM_SAI = hora;
+                }
+                else
+                {
+                    if (PM_ENT == TimeSpan.Zero)
+                    {
+                        PM_ENT = hora;
+                    }
+                    else
+                    {
+                        if (PM_SAI == TimeSpan.Zero)
+                        { 
+                            PM_ENT = hora;
+                        }
+                        else
+                        {
+                            if (NOI_ENT == TimeSpan.Zero)
+                            {
+                                NOI_ENT = hora;
+                            }
+                            else
+                            {
+                                if (NOI_SAI==TimeSpan.Zero)
+                                {
+                                    NOI_SAI = hora;
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+
     }
 
     public class RegistroRelogio
