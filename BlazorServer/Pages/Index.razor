@@ -88,7 +88,12 @@
             @if (idSelectd!=Guid.Empty)
             { 
                 int codigo = cs.Colaboradores.FirstOrDefault(x => x.Id.Equals(idSelectd)).CodPonto;
-                var filtro = from registros in ListRegPonto where registros.Data >= Data1 && registros.Data <= Data2 select registros;
+
+                var filtro = ListRegPonto.Where<RegistroRelogio>(i => i.CodColaborador.Equals(codigo)).ToList();
+                if (Data1 != DateTime.MinValue && Data2 != DateTime.MinValue)
+                {
+                    filtro = ListRegPonto.Where<RegistroRelogio>(i => i.CodColaborador.Equals(codigo) && i.Data >= Data1 && i.Data <= Data2).ToList();
+                }
 
                 foreach (var item in filtro)
                 {       
@@ -101,16 +106,20 @@
                     </tr>
                 }
             }
-            @foreach (var item in ListRegPonto)
+            else
             {
-                <tr>
-                    <td>@item.CodColaborador</td>
-                    <td>@item.Colaborador.Nome</td>
-                    <td>@item.Cpf</td>
-                    <td>@item.Data.ToShortDateString()</td>
-                    <td>@item.Hora</td>
-                </tr>
+                foreach (var item in ListRegPonto)
+                {
+                    <tr>
+                        <td>@item.CodColaborador</td>
+                        <td>@item.Colaborador.Nome</td>
+                        <td>@item.Cpf</td>
+                        <td>@item.Data.ToShortDateString()</td>
+                        <td>@item.Hora</td>
+                    </tr>
+                }
             }
+
         </tbody>
     </table>
 }
