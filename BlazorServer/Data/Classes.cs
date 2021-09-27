@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 
 
 
@@ -92,6 +93,7 @@ namespace BlazorServer.Data
 
     public class RegistroPonto
     {
+        CultureInfo Cultura = new CultureInfo("pt-BR");
         public Guid Id { get; set; }
 
         public RegistroPonto()
@@ -102,6 +104,8 @@ namespace BlazorServer.Data
         public Colaborador Colaborador { get; set; }
         public Guid ColaboradorId { get; set; }
         public DayOfWeek DiaSemana { get => Data.DayOfWeek; }
+
+        public string DiaSemanaPtBr { get => Cultura.DateTimeFormat.GetDayName(DiaSemana); }
         public DateTime Data { get; set; }
         public TimeSpan AM_ENT { get; set; }
         public TimeSpan AM_SAI { get; set; }

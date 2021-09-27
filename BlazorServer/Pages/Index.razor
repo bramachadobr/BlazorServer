@@ -17,63 +17,32 @@
             <MatFileUpload OnChange="@FilesReady" AllowMultiple="false" Label="Selecione um único arquivo aqui no navegador"></MatFileUpload>
         </p>
         <p></p>
-        <p>
-            @if (ListRegPonto.Count >0)
-            {
-                <MatTable Items="@ListRegPonto" class="mat-elevation-z5">
-                    <MatTableHeader>
-                        <th>Cod</th>
-                        <th class=col-sm>Nome</th>
-                        <th>CPF</th>
-                        <th>Data</th>
-                        <th>Hora</th>
-                            @*<MatSortHeaderRow>
-                            <MatSortHeader>Cod</MatSortHeader>
-                            <MatSortHeader>Nome</MatSortHeader><span style="width:600px">Nome</span>
-                            <MatSortHeader>CPF</MatSortHeader>
-                            <MatSortHeader>Data</MatSortHeader>
-                            <MatSortHeader>Hora</MatSortHeader>
-                        </MatSortHeaderRow>*@
-                    </MatTableHeader>
-                    <MatTableRow>
-                        <td>@context.CodColaborador</td>
-                        <td>@context.Colaborador.Nome</td>
-                        <td>@context.Cpf</td>
-                        <td>@context.Data.ToShortDateString()</td>
-                        <td>@context.Hora.ToString()</td>
-                    </MatTableRow>
-                </MatTable>
-            }
-        </p>
 
     </MatTab>
 
     <MatTab Label="2-Filtrar Colaborador">
         <p></p>
-        <div class="container">
+        <div class="content">
             <div class="row">
-@*                <div class="col-sm btn-lg">
-                    <MatButton Raised="true" Type="submit" Class="align-bottom">Carregar Cadastros</MatButton>
-                </div>*@
+
                 <div class="col-sm">
                     <MatSelectValue @bind-Value="@idSelectd" Items="@cs.Colaboradores" Outlined="true" ValueSelector="@(i=>i.Id)" Label="Selecione Colaborador">
                                 <ItemTemplate>
                                         <span>@context.Nome</span>
                                 </ItemTemplate>
                     </MatSelectValue>
-                    @*<p>@idSelectd</p>*@
                 </div>
                 <div class="col-sm">
                     <MatDatePicker @bind-Value="@Data1" Format="dd-MM-yy" Label="Data Inicio" Class="w-100" Outlined="true"></MatDatePicker>
                     @*<p>@Data1</p>*@
                 </div>
                 <div class="col-sm">
-                    <MatDatePicker @bind-Value="@Data2" Format="dd-MM-yy" Label="Data Final" Class="w-100" Outlined="true"></MatDatePicker>
+                    <MatDatePicker @bind-Value="@Data2" Format="dd-MM-yy" Label="Data Final" Class="w-100" Outlined="true" ></MatDatePicker>
                     @*<p>@Data2</p>*@
                 </div>
-@*                <div class="col-lg btn">
-                    <MatButton Raised="true" Type="submit">Filtrar</MatButton>
-                </div>*@
+                <div class="col-lg btn">
+                    <MatButton Raised="true" Type="submit" OnClick="@FiltroPonto">Filtrar</MatButton>
+                </div>
             </div>
         </div>
     </MatTab>
@@ -83,6 +52,36 @@
         <div class="row">
             <div class="col-sm"><MatButton Raised="true" Type="submit" OnClick="@ProcessaPontos" >Processar Horas</MatButton></div>
             <div class="col-sm align-content-center"><div class="h6">Registros do colaborador no périodo selecionado</div></div>
+        </div>
+        <div class="row">
+                <MatTable Items="@rps.registroPontos" class="mat-elevation-z5" Striped="true" RequestApiOnlyOnce="true" AllowSelection="true" PageSize=25 >
+                    <MatTableHeader>
+                        @*<th>Cod</th>*@
+                        <th>Colaborador</th>
+                        <th>DiaSemana</th>
+                        <th>Data</th>
+                        <th>AM_ENT</th>
+                        <th>AM_SAI</th>
+                        <th>PM_ENT</th>
+                        <th>PM_SAI</th>
+                        <th>NOI_ENT</th>
+                        <th>NOI_SAI</th>
+                        <th>TotalHorasDia</th>
+                    </MatTableHeader>
+                    <MatTableRow>
+                        @*<td>@context.Id</td>*@
+                        <td>@context.Colaborador.Nome</td>
+                        <td>@context.DiaSemanaPtBr</td>
+                        <td>@context.Data.ToShortDateString()</td>
+                        <td>@context.AM_ENT</td>
+                        <td>@context.AM_SAI</td>
+                        <td>@context.PM_ENT</td>
+                        <td>@context.PM_SAI</td>
+                        <td>@context.NOI_ENT</td>
+                        <td>@context.NOI_SAI</td>
+                        <td>@context.TotalHorasDia</td>
+                    </MatTableRow>
+                </MatTable>
         </div>
     </MatTab>
 
@@ -103,7 +102,34 @@
 
 </MatTabGroup>
 
-@if (rps.registroPontos.Count>0)
+<div class="row">
+            <p>
+            @if (ListRegPonto.Count >0)
+            {
+                <MatTable Items="@filtro" class="mat-elevation-z5" Striped="true" RequestApiOnlyOnce="true" AllowSelection="true" PageSize=25 >
+                    <MatTableHeader>
+                        <th>Cod</th>
+                        <th class=col-sm>Nome</th>
+                        <th class=col-sm>CPF</th>
+                        <th class=col-sm>Data</th>
+                        <th class=col-sm>Hora</th>
+                    </MatTableHeader>
+                    <MatTableRow>
+                        <td>@context.CodColaborador</td>
+                        <td>@context.Colaborador.Nome</td>
+                        <td>@string.Format("{0:0000.000.000-00}", @context.Cpf)</td>
+                        <td>@context.Data.ToShortDateString()</td>
+                        <td>@context.Hora.ToString()</td>
+                    </MatTableRow>
+                </MatTable>
+            }
+        </p>
+</div>
+
+
+
+
+@*@if (rps.registroPontos.Count>0)
 {
      <table class="table">
         <thead>
@@ -127,6 +153,7 @@
                 <tr>
                     <td>@item.Id</td>
                     <td>@item.Colaborador.Nome</td>
+                    <td>@item.DiaSemanaPtBr</td>
                     <td>@Cultura.DateTimeFormat.GetDayName(item.DiaSemana)</td>
                     <td>@item.Data.ToShortDateString()</td>
                     <td>@item.AM_ENT</td>
@@ -140,60 +167,7 @@
             }
         </tbody>
     </table>
-}
-
-@if (ListRegPonto.Count >0)
-{
-        <table class="table">
-        <thead>
-            <tr>
-                <th>Cod</th>
-                <th>Nome</th>
-                <th>CPF</th>
-                <th>Data</th>
-                <th>Hora</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (idSelectd!=Guid.Empty)
-            { 
-                int codigo = cs.Colaboradores.FirstOrDefault(x => x.Id.Equals(idSelectd)).CodPonto;
-
-                var filtro = ListRegPonto.Where<RegistroRelogio>(i => i.CodColaborador.Equals(codigo)).ToList();
-                if (Data1 != DateTime.MinValue && Data2 != DateTime.MinValue)
-                {
-                    filtro = ListRegPonto.Where<RegistroRelogio>(i => i.CodColaborador.Equals(codigo) && i.Data >= Data1 && i.Data <= Data2).ToList();
-                }
-
-                foreach (var item in filtro)
-                {       
-                    <tr>
-                    <td>@item.CodColaborador</td>
-                    <td>@item.Colaborador.Nome</td>
-                    <td>@item.Cpf</td>
-                    <td>@item.Data.ToShortDateString()</td>
-                    <td>@item.Hora</td>
-                    </tr>
-                }
-            }
-            else
-            {
-                foreach (var item in ListRegPonto)
-                {
-                    <tr>
-                        <td>@item.CodColaborador</td>
-                        <td>@item.Colaborador.Nome</td>
-                        <td>@string.Format(@"{0:000\.###\.###-##}", item.Cpf)</td>
-                        <td>@item.Data.ToShortDateString()</td>
-                        <td>@item.Hora</td>
-                    </tr>
-                }
-            }
-
-        </tbody>
-    </table>
-}
-
+}*@
 
 
 @code
@@ -221,9 +195,30 @@
 
     List<Data.RegistroRelogio> ListRegPonto = new List<RegistroRelogio>();
 
+    List<Data.RegistroRelogio> filtro = new List<RegistroRelogio>();
+
     Service.ColaboradorService cs = new Service.ColaboradorService();
 
     Service.RegistroPontoService rps = new Service.RegistroPontoService();
+
+    public void FiltroPonto()
+    {
+        
+
+        filtro = ListRegPonto;
+
+        if (idSelectd!=Guid.Empty)
+        {
+            int codigo = cs.Colaboradores.FirstOrDefault(x => x.Id.Equals(idSelectd)).CodPonto;
+            filtro = ListRegPonto.Where<RegistroRelogio>(i => i.CodColaborador.Equals(codigo)).ToList();
+        }
+        if (Data1 != DateTime.MinValue && Data2 != DateTime.MinValue)
+        {
+            int codigo = cs.Colaboradores.FirstOrDefault(x => x.Id.Equals(idSelectd)).CodPonto;
+            filtro = ListRegPonto.Where<RegistroRelogio>(i => i.CodColaborador.Equals(codigo) && i.Data >= Data1 && i.Data <= Data2).ToList();
+        }
+    }
+
 
     protected override void OnInitialized()
     {
@@ -299,7 +294,7 @@
             if (item!=null)
             {
                 string cod = item.Substring(0, 5);
-                string cpf = item.Substring(5, 17);
+                string cpf = item.Substring(5, 12);
                 string dia = item.Substring(17, 2);
                 string mes = item.Substring(19, 2);
                 string ano = item.Substring(21, 4);
@@ -317,6 +312,7 @@
             }
 
         }
+        FiltroPonto();
     }
 
     async Task ProcessaPontos()
@@ -342,6 +338,7 @@
             }
             rps.AddRecord(ponto);
         }
+
     }
 
 
