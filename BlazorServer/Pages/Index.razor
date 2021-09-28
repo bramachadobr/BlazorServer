@@ -317,28 +317,55 @@
 
     async Task ProcessaPontos()
     {
-        Data1 = Data1.AddHours(-3);
-        Data2 = Data2.AddHours(-3);
 
-        Data.Colaborador colab = await cs.GetColaboradorById(idSelectd);
 
-        var filtro = ListRegPonto.Where(x=>x.Colaborador.Id.Equals(colab.Id) && x.Data>=Data1 && x.Data<=Data2).GroupBy(i => i.Data).ToList();
-
-        foreach (var item in filtro)
+        if (idSelectd != Guid.Empty)
         {
-            await JSRuntime.InvokeVoidAsync("console.log", "teste", item);
-            RegistroPonto ponto = new RegistroPonto();
-            ponto.Data = item.Key;
-            ponto.Colaborador = colab;
-            ponto.ColaboradorId = colab.Id;
-            foreach (var i in item)
-            {
-                ponto.AddHora(i.Hora);
-                await JSRuntime.InvokeVoidAsync("console.log", "teste", i);
-            }
-            rps.AddRecord(ponto);
-        }
+            Data1 = Data1.AddHours(-3);
+            Data2 = Data2.AddHours(-3);
+            Data.Colaborador colab = await cs.GetColaboradorById(idSelectd);
 
+            var filtro = ListRegPonto.Where(x => x.Colaborador.Id.Equals(colab.Id) && x.Data >= Data1 && x.Data <= Data2).GroupBy(i => i.Data).ToList();
+
+            foreach (var item in filtro)
+            {
+                await JSRuntime.InvokeVoidAsync("console.log", "teste", item);
+                RegistroPonto ponto = new RegistroPonto();
+                ponto.Data = item.Key;
+                ponto.Colaborador = colab;
+                ponto.ColaboradorId = colab.Id;
+                foreach (var i in item)
+                {
+                    ponto.AddHora(i.Hora);
+                    await JSRuntime.InvokeVoidAsync("console.log", "teste", i);
+                }
+                rps.AddRecord(ponto);
+            }
+        }
+        else
+        {
+            var filtro = ListRegPonto.GroupBy(i=>i.Data).ToList();
+
+            foreach (var item in filtro)
+            {
+                var colaboradores = item.GroupBy(i => i.Colaborador).ToList();
+
+                foreach (var colab in colaboradores)
+                {
+                    await JSRuntime.InvokeVoidAsync("console.log", "todos", item);
+                    RegistroPonto ponto = new RegistroPonto();
+                    ponto.Data = item.Key;
+                    ponto.Colaborador = colab.FirstOrDefault().Colaborador;
+                    ponto.ColaboradorId = colab.FirstOrDefault().Id;
+                    foreach (var i in colab)
+                    {
+                        ponto.AddHora(i.Hora);
+                        await JSRuntime.InvokeVoidAsync("console.log", "teste", i);
+                    }
+                    rps.AddRecord(ponto);
+                }
+            }
+        }
     }
 
 
