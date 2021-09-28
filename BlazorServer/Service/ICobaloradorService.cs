@@ -1,8 +1,7 @@
 ﻿using BlazorServer.Data;
-using System.Collections.Generic;
-using System.Collections;
-using System.Threading.Tasks;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BlazorServer.Service
 {

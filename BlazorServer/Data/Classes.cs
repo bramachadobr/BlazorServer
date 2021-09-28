@@ -113,6 +113,12 @@ namespace BlazorServer.Data
         public TimeSpan PM_SAI { get; set; }
         public TimeSpan NOI_ENT { get; set; }
         public TimeSpan NOI_SAI { get; set; }
+        public string AM_ENT_bind { get=>AM_ENT.ToString(); set=>TimeSpan.Parse(value); }
+        public string AM_SAI_bind { get => AM_SAI.ToString(); set => TimeSpan.Parse(value); }
+        public string PM_ENT_bind { get => PM_ENT.ToString(); set => TimeSpan.Parse(value); }
+        public string PM_SAI_bind { get => PM_SAI.ToString(); set => TimeSpan.Parse(value); }
+        public string NOI_ENT_bind { get => NOI_ENT.ToString(); set => TimeSpan.Parse(value); }
+        public string NOI_SAI_bind { get => NOI_SAI.ToString(); set => TimeSpan.Parse(value); }
         public TimeSpan TotalHorasDia { get => TimeSpan.FromTicks((AM_SAI.Ticks - AM_ENT.Ticks) + (PM_SAI.Ticks - PM_ENT.Ticks) + (NOI_SAI.Ticks - NOI_ENT.Ticks)); }
         [Column(TypeName = "decimal(18,2)")]
         public decimal ValorHora { get; set; }
