@@ -15,8 +15,6 @@
 <RadzenButton Text="Hi" Click=@ButtonClicked></RadzenButton>
 
 
-
-
 <p></p>
 
 <ComponetAlertMessege Enumtipo=EnumTipoAlerts.info Message="Bem vindo ao novo app G-Ponto (Gerenciamento do Ponto de Colaboradores) v4.0" />
@@ -66,7 +64,8 @@
         <p></p>
         <div class="row">
             <div class="col-sm"><MatButton Raised="true" Type="submit" OnClick="@ProcessaPontos" >Processar Horas</MatButton></div>
-            <div class="col-sm align-content-center"><div class="h6">Registros do colaborador no périodo selecionado</div></div>
+            <div class="col-sm align-content-center">
+                <div class="h6">Registros do colaborador no périodo selecionado</div></div>
         </div>
         <div class="row">
                 <MatTable Items="@rps.registroPontos" class="mat-elevation-z5" Striped="true" RequestApiOnlyOnce="true" AllowSelection="true" PageSize=25 SelectionChanged="SelectionChangedEvent" >
@@ -202,7 +201,6 @@
             this.StateHasChanged();
             dialogIsOpen = true;
         }
-        
     }
 
 
@@ -237,7 +235,6 @@
     public DateTime Data1 { get; set; }
     public DateTime Data2 { get; set; }
 
-    #region Carregar Arquivo
 
     string RegoligoSelecionado = "Nacional";
     string[] value1ItemsCombo = new[]
@@ -308,8 +305,6 @@
         {
             await JSRuntime.InvokeVoidAsync("alert", "Arquivo selecionado não é um arquivo válido!");
             return;
-            // bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?"); // Confirm
-            //string prompted = await JsRuntime.InvokeAsync<string>("prompt", "Take some input:"); // Prompt
         }
         else
         {
@@ -336,11 +331,6 @@
                 linhas.Add(linha);
             }
         }
-
-
-
-        //string lin = sr.ReadToEnd();
-        //string Arquivo = Encoding.ASCII.GetString(ms.ToArray());
 
         List<string> lista = new List<string>();
 
@@ -379,8 +369,6 @@
                 reg.Colaborador = await cs.GetColaboradorByIdPonto(Convert.ToInt32(cod));
                 reg.Cpf = cpf;
                 reg.Data = Convert.ToDateTime(sData, Cultura);
-                //reg.Data = Convert.ToDateTime($"{dia}/{mes}/{ano}");
-                //reg.Hora = new TimeSpan(Convert.ToInt32(hh), Convert.ToInt32(mm), 0);
                 ListRegPonto.Add(reg);
             }
         }
@@ -451,8 +439,5 @@
             }
         }
     }
-
-
-    #endregion
 
 }
