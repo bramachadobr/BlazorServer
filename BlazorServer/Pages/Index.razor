@@ -3,8 +3,21 @@
 @using System.IO
 @using BlazorServer.Data
 @using System.Globalization
+@using System.Timers
 @inject IJSRuntime JSRuntime
 @inject IMatDialogService MatDialogService
+@inject DialogService RadDialogService
+
+
+
+
+<RadzenButton Text="@text"></RadzenButton>
+<RadzenButton Text="Hi" Click=@ButtonClicked></RadzenButton>
+
+
+
+
+<p></p>
 
 <ComponetAlertMessege Enumtipo=EnumTipoAlerts.info Message="Bem vindo ao novo app G-Ponto (Gerenciamento do Ponto de Colaboradores) v4.0" />
 <MatTabGroup>
@@ -56,7 +69,7 @@
             <div class="col-sm align-content-center"><div class="h6">Registros do colaborador no périodo selecionado</div></div>
         </div>
         <div class="row">
-                <MatTable Items="@rps.registroPontos" class="mat-elevation-z5" Striped="true" RequestApiOnlyOnce="true" AllowSelection="true" PageSize=25 >
+                <MatTable Items="@rps.registroPontos" class="mat-elevation-z5" Striped="true" RequestApiOnlyOnce="true" AllowSelection="true" PageSize=25 SelectionChanged="SelectionChangedEvent" >
                     <MatTableHeader>
                         <th>Colaborador</th>
                         <th>DiaSemana</th>
@@ -69,6 +82,7 @@
                         <th>NOI_SAI</th>
                         <th>TotalHorasDia</th>
                         <th>Editar</th>
+                        <th>Editar2</th>
                     </MatTableHeader>
                     <MatTableRow>
                         <td>@context.Colaborador.Nome</td>
@@ -84,11 +98,17 @@
                         {
                             <td>@context.TotalHorasDia</td>
                             <td><MatButton Disabled="true" Icon="edit" OnClick="@OpenDialog">Editar</MatButton></td>
+                            <td>
+                                <RadzenButton Text="Ediast com RadZen" Click="@OpenDialog">Ediatr</RadzenButton>
+                                </td>
                         }
                         else
                         {
                             <td style="background:red">@context.TotalHorasDia</td>
                             <td><MatButton Icon="edit" OnClick="@OpenDialog">Editar</MatButton></td>
+                                                        <td>
+                                <RadzenButton Text="Ediast com RadZen" Click="@OpenDialog">Ediatr</RadzenButton>
+                                </td>
                         }
                     </MatTableRow>
                 </MatTable>
@@ -117,16 +137,22 @@
             <MatDialogTitle>Editar Ponto</MatDialogTitle>
             <MatDialogContent>
                 <EditForm Model="@regPonto" OnValidSubmit="Success">
-                    <MatTextField Label="ValorHora" @bind-Value="regPonto.ValorHora"/>
-                    <MatTextField Label="ValorHora" @bind-Value="regPonto.ValorTotal"/>
-
-                    <MatDatePicker  @bind-Value="regPonto.AM_ENT_bind" Format="H:mm:ss"></MatDatePicker>
-                    <MatDatePicker  @bind-Value="regPonto.AM_SAI_bind" Format="H:mm:ss"></MatDatePicker>
-                    <MatDatePicker  @bind-Value="regPonto.PM_ENT_bind" Format="H:mm:ss"></MatDatePicker>
-                    <MatDatePicker  @bind-Value="regPonto.PM_SAI_bind" Format="H:mm:ss"></MatDatePicker>
-                    <MatDatePicker  @bind-Value="regPonto.NOI_ENT_bind" Format="H:mm:ss"></MatDatePicker>
-                    <MatDatePicker  @bind-Value="regPonto.NOI_SAI_bind" Format="H:mm:ss"></MatDatePicker>
-
+@*                    <MatTextField Label="ValorHora" @bind-Value="regPonto.ValorHora"/>
+                    <MatTextField Label="ValorHora" @bind-Value="regPonto.ValorTotal"/>*@
+                    
+                    <p><b>Entrada manhã</b></p>
+                    <RadzenDatePicker TValue="DateTime" @bind-Value="regPonto.AM_ENT" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"/> @*Change=@(args => OnChange(args, "Time-only DatePicker", "HH:mm"))*@
+                    <p><b>Saída manhã</b></p>
+                    <RadzenDatePicker TValue="DateTime" @bind-Value="regPonto.AM_SAI" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"/>
+                    <p><b>Entrada tarde</b></p>
+                    <RadzenDatePicker TValue="DateTime" @bind-Value="regPonto.PM_ENT" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"/>
+                    <p><b>Saída tarde</b></p>
+                    <RadzenDatePicker TValue="DateTime" @bind-Value="regPonto.PM_SAI" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"/>
+                    <p><b>Entrada noite</b></p>
+                    <RadzenDatePicker TValue="DateTime" @bind-Value="regPonto.NOI_ENT" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"/>
+                    <p><b>Saída noite</b></p>
+                    <RadzenDatePicker TValue="DateTime" @bind-Value="regPonto.NOI_SAI" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"/>
+                    <a>@regPonto.TotalHorasDia</a>
 
                 </EditForm>
             </MatDialogContent>
@@ -156,7 +182,7 @@
                         <td>@context.Colaborador.Nome</td>
                         <td>@string.Format("{0:0000.000.000-00}", @context.Cpf)</td>
                         <td>@context.Data.ToShortDateString()</td>
-                        <td>@context.Hora.ToString()</td>
+                        <td>@context.Data.ToString()</td>
                     </MatTableRow>
                 </MatTable>
             }
@@ -167,7 +193,37 @@
 @code
 {
 
-    async Task Success() => await JSRuntime.InvokeAsync<object>("alert", "Successful login!");
+    //Evento ao clicar na grid 
+    void SelectionChangedEvent(object reg)
+    {
+        if(reg !=null)
+        {
+            regPonto = (RegistroPonto)reg;
+            this.StateHasChanged();
+            dialogIsOpen = true;
+        }
+        
+    }
+
+
+    string text = "Hi";
+    
+
+   void ButtonClicked()
+   {
+   }
+
+    void OnChange(DateTime? value, string name, string format)
+    {
+        JSRuntime.InvokeAsync<object>("console.log", $"{name} value changed to {value?.ToString(format)}");
+    }
+
+    //async Task Success() => await JSRuntime.InvokeAsync<object>("alert", "Successful login!");
+
+    async Task Success()
+    {
+        await JSRuntime.InvokeAsync<object>("alert", "Successful login!");
+    }
 
     public Data.RegistroPonto regPonto = new RegistroPonto();
     public bool dialogIsOpen = false;
@@ -315,18 +371,31 @@
                 string hh = item.Substring(25, 2);
                 string mm = item.Substring(27, 2);
 
+                string sData = $"{dia}/{mes}/{ano} {hh}:{mm}";
+
                 RegistroRelogio reg = new RegistroRelogio();
 
                 reg.CodColaborador = Convert.ToInt32(cod);
                 reg.Colaborador = await cs.GetColaboradorByIdPonto(Convert.ToInt32(cod));
                 reg.Cpf = cpf;
-                reg.Data = Convert.ToDateTime($"{dia}/{mes}/{ano}");
-                reg.Hora = new TimeSpan(Convert.ToInt32(hh), Convert.ToInt32(mm), 0);
+                reg.Data = Convert.ToDateTime(sData, Cultura);
+                //reg.Data = Convert.ToDateTime($"{dia}/{mes}/{ano}");
+                //reg.Hora = new TimeSpan(Convert.ToInt32(hh), Convert.ToInt32(mm), 0);
                 ListRegPonto.Add(reg);
             }
-
         }
         FiltroPonto();
+    }
+
+    public override bool Equals(object obj)
+    {
+        return obj is Index index &&
+               RegoligoSelecionado == index.RegoligoSelecionado;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(RegoligoSelecionado);
     }
 
     async Task ProcessaPontos()
@@ -339,18 +408,19 @@
             Data2 = Data2.AddHours(-3);
             Data.Colaborador colab = await cs.GetColaboradorById(idSelectd);
 
-            var filtro = ListRegPonto.Where(x => x.Colaborador.Id.Equals(colab.Id) && x.Data >= Data1 && x.Data <= Data2).GroupBy(i => i.Data).ToList();
+            var filtro = ListRegPonto.Where(x => x.Colaborador.Id.Equals(colab.Id) && x.Data >= Data1 && x.Data <= Data2).GroupBy(i => i.Data.ToShortDateString()).ToArray();
+            var filtro3 = ListRegPonto.Where(x => x.Colaborador.Id.Equals(colab.Id) && x.Data >= Data1 && x.Data <= Data2).GroupBy(i => i.Data).Select(x => new {Value = x.Count(), Data=(DateTime)x.Key }).ToArray();
 
             foreach (var item in filtro)
             {
                 await JSRuntime.InvokeVoidAsync("console.log", "teste", item);
                 RegistroPonto ponto = new RegistroPonto();
-                ponto.Data = item.Key;
+                ponto.Data = Convert.ToDateTime(item.Key);
                 ponto.Colaborador = colab;
                 ponto.ColaboradorId = colab.Id;
                 foreach (var i in item)
                 {
-                    ponto.AddHora(i.Hora);
+                    ponto.AddHora(i.Data);
                     await JSRuntime.InvokeVoidAsync("console.log", "teste", i);
                 }
                 rps.AddRecord(ponto);
@@ -358,7 +428,7 @@
         }
         else
         {
-            var filtro = ListRegPonto.GroupBy(i=>i.Data).ToList();
+            var filtro = ListRegPonto.GroupBy(i=>i.Data.ToShortDateString()).ToList();
 
             foreach (var item in filtro)
             {
@@ -368,12 +438,12 @@
                 {
                     await JSRuntime.InvokeVoidAsync("console.log", "todos", item);
                     RegistroPonto ponto = new RegistroPonto();
-                    ponto.Data = item.Key;
+                    ponto.Data = Convert.ToDateTime(item.Key);
                     ponto.Colaborador = colab.FirstOrDefault().Colaborador;
                     ponto.ColaboradorId = colab.FirstOrDefault().Id;
                     foreach (var i in colab)
                     {
-                        ponto.AddHora(i.Hora);
+                        ponto.AddHora(i.Data);
                         await JSRuntime.InvokeVoidAsync("console.log", "teste", i);
                     }
                     rps.AddRecord(ponto);

@@ -51,13 +51,15 @@ namespace BlazorServer.Service
             string hh = item.Substring(25, 2);
             string mm = item.Substring(27, 2);
 
+            string sData = $"{dia}/{mes}/{ano} {hh}:{mm}";
+
             RegistroRelogio reg = new RegistroRelogio();
 
             reg.CodColaborador = Convert.ToInt32(cod);
             reg.Colaborador = await colaboradorService.GetColaboradorByIdPonto(Convert.ToInt32(cod));
             reg.Cpf = cpf;
-            reg.Data = Convert.ToDateTime($"{dia}/{mes}/{ano}");
-            reg.Hora = new TimeSpan(Convert.ToInt32(hh), Convert.ToInt32(mm), 0);
+            reg.Data = Convert.ToDateTime(sData, new System.Globalization.CultureInfo("pt-BR"));
+            //reg.Hora = new TimeSpan(Convert.ToInt32(hh), Convert.ToInt32(mm), 0);
 
             return reg;
         }
