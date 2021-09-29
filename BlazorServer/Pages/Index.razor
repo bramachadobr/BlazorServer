@@ -119,12 +119,15 @@
                 <EditForm Model="@regPonto" OnValidSubmit="Success">
                     <MatTextField Label="ValorHora" @bind-Value="regPonto.ValorHora"/>
                     <MatTextField Label="ValorHora" @bind-Value="regPonto.ValorTotal"/>
+
                     <MatDatePicker  @bind-Value="regPonto.AM_ENT_bind" Format="H:mm:ss"></MatDatePicker>
                     <MatDatePicker  @bind-Value="regPonto.AM_SAI_bind" Format="H:mm:ss"></MatDatePicker>
                     <MatDatePicker  @bind-Value="regPonto.PM_ENT_bind" Format="H:mm:ss"></MatDatePicker>
                     <MatDatePicker  @bind-Value="regPonto.PM_SAI_bind" Format="H:mm:ss"></MatDatePicker>
                     <MatDatePicker  @bind-Value="regPonto.NOI_ENT_bind" Format="H:mm:ss"></MatDatePicker>
                     <MatDatePicker  @bind-Value="regPonto.NOI_SAI_bind" Format="H:mm:ss"></MatDatePicker>
+
+
                 </EditForm>
             </MatDialogContent>
             <MatDialogActions>
