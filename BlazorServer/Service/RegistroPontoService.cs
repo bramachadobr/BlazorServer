@@ -22,6 +22,23 @@ namespace BlazorServer.Service
         {
             registroPontos.Add(record);
         }
+        /// <summary>
+        /// Retorna True caso haja um registro e false caso não exista
+        /// </summary>
+        /// <param name="record"></param>
+        /// <returns></returns>
+        public bool ValidaPontoExiste(RegistroPonto record)
+        {
+            RegistroPonto reg = registroPontos.FirstOrDefault(i => i.AM_ENT == record.AM_ENT && i.ColaboradorId == record.ColaboradorId);
+            if (reg != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         public void DeleteRecord(RegistroPonto record)
         {
