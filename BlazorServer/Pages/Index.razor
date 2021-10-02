@@ -11,10 +11,10 @@
 
 
 
-<RadzenButton Text="@text"></RadzenButton>
+@*<RadzenButton Text="@text"></RadzenButton>
 <RadzenButton Text="Hi" Click=@ButtonClicked></RadzenButton>
 <MatButton OnClick="@(_=>OpenDialogFromService())">Open</MatButton>
-<MatButton OnClick="@(_=>OpenDialog())">Open</MatButton>
+<MatButton OnClick="@(_=>OpenDialog())">Open</MatButton>*@
 
 
 <p></p>
@@ -24,15 +24,9 @@
 
     <MatTab Label="1-Carregar Arquivo">
         <p></p>
-        <div class=row>
-            <div class=col-sm-3>
-                @*<MatSelectItem @bind-Value="@RegoligoSelecionado" Items="@value1ItemsCombo" Outlined="true" Label="Selecione o modelo do Relogio"></MatSelectItem>*@
-                 <RadzenDropDown AllowClear="true" TValue="string" Style="width:300px" Data=@value1ItemsCombo @bind-Value="@RegoligoSelecionado" />
-            </div>
-            <div class=col-sm-9>
-                <MatFileUpload OnChange="@FilesReady" AllowMultiple="false" Label="Selecione um único arquivo aqui no navegador"></MatFileUpload>
-                 @*<RadzenFileInput Style="width:400px" TValue="string" Change=@(args => FilesReady2(args)) />*@
-            </div>
+        <div>
+            <div Class="row"<RadzenDropDown AllowClear="true" TValue="string" Style="width:300px" Data=@value1ItemsCombo @bind-Value="@RegoligoSelecionado" /></div>
+            <div Class="row"><MatFileUpload OnChange="@FilesReady" AllowMultiple="false" Label="Selecione um único arquivo aqui no navegador"></MatFileUpload></div>
         </div>
         <p></p>
     </MatTab>
@@ -63,7 +57,7 @@
                     <p>@Data2</p>
                 </div>
                 <div class="col-lg btn">
-                    @*<RadzenButton Click=@(args=>FiltroPonto())">Filtrar</RadzenButton>*@
+                    <RadzenButton Click="@FiltroPonto">Filtrar</RadzenButton>
                     @*<MatButton Raised="true" Type="submit" OnClick="@FiltroPonto">Filtrar</MatButton>*@
                 </div>
             </div>
