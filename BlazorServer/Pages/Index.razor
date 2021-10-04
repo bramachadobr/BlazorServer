@@ -6,40 +6,53 @@
 @using System.Timers
 @inject IJSRuntime JSRuntime
 @inject IMatDialogService MatDialogService
-@inject DialogService RadDialogService
+
+@inject DialogService DialogService
+@implements IDisposable
 
 
 @*<ComponetAlertMessege Enumtipo=EnumTipoAlerts.info Message="Bem vindo ao novo app G-Ponto (Gerenciamento do Ponto de Colaboradores) v4.0" />*@
 <div class="container">
     <div Class="row">
-        <MatFileUpload OnChange="@FilesReady" AllowMultiple="false" Label="Selecione um único arquivo aqui no navegador"></MatFileUpload>
+        <MatFileUpload OnChange="@ProcessaFile" AllowMultiple="false" Label="Selecione um único arquivo aqui no navegador"></MatFileUpload>
     </div>
         <p></p>
     <div class="row">
-                <div class="col-sm">
+                <div class="col-sm-5">
+                    <h3>Selecione o colaborador</h3>
                     <RadzenDropDownDataGrid TValue="Guid" @bind-Value="@idSelectd" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith"
                                         AllowFiltering="true" AllowClear="true" Data="@cs.Colaboradores" TextProperty="Nome" ValueProperty="Id" 
                                         Style="width:100%" />
                 </div>
                 <div class="col-sm">
+                    <h3>Data inicial</h3>
                     <RadzenDatePicker @bind-Value=@Data1 DateFormat="dd/MM/yyyy" Change=@(args => OnChange(args, "DatePicker", "dd/MM/yyyy")) />
                 </div>
                 <div class="col-sm">
+                    <h3>Data final</h3>
                     <RadzenDatePicker @bind-Value=@Data2 DateFormat="dd/MM/yyyy" Change=@(args => OnChange(args, "DatePicker", "dd/MM/yyyy")) />  
                 </div>
-                      <div class=col-sm>
-                            @TotalHorasPeriodo
-                            <RadzenTextBox @bind-Value=@TotalHorasPeriodo/>
-                        </div>
                 <div class="col-sm">
-                    <RadzenButton Click="@FiltroPontoProcessados">Filtrar</RadzenButton>
+                            <h3 class="text-hide">Selecione o colaborador</h3>
+                            <button type="button" class="btn btn-primary btn-lg" style="margin-bottom:1px; margin-top:10px" @onclick=@FiltroPontoProcessados >Filtrar</button>
+                            @*<RadzenButton Style="" Click="@FiltroPontoProcessados">Filtrar</RadzenButton>*@
                     @*<RadzenTextBox @bind-Value=@value MaxLength="5" Change=@(args => OnChange(args, "TextBox with 5 maximum characters")) />*@
                 </div>
     </div>
-            <p></p>
-            <div class="row">
-                <button class="btn btn-primary" @onclick="Print">Imprimir</button>
-            </div>
+    <div class="row">
+                <div class=col-sm>
+                    <h3>Total de Horas do período: @TotalHorasPeriodo</h3>
+                    @*<RadzenTextBox @bind-Value=@TotalHorasPeriodo/>*@
+                </div>
+    </div>
+    <p></p>
+    <div class="row">
+                <div class="col-sm-3">
+                    <button class="btn btn-primary" @onclick="Print">Imprimir</button>
+                </div>
+    </div>
+    <br/>
+    <div class="dropdown-divider"></div>
     <div class="row">
 @*        <div class="col-sm"><MatButton Raised="true" Type="submit" OnClick="@ProcessaPontos" >Processar Horas</MatButton></div>
         </div>*@
@@ -122,6 +135,7 @@
 {
     public async Task Print()
     {
+        await JSRuntime.InvokeVoidAsync("console.log", "asdsadasaa");
         await JSRuntime.InvokeVoidAsync("Print");
     }
 
@@ -141,8 +155,6 @@
         }
     }
 
-
-    string text = "Hi";
     
 
    void ButtonClicked()
@@ -251,14 +263,58 @@
         base.OnInitialized();
         cs.LoadColaboradores();
         rps.colaboradores = cs.Colaboradores;
+        DialogService.OnOpen += Open;
+        DialogService.OnClose += Close;                 
     }
 
-    
+    async void Open(string title, Type type, Dictionary<string, object> parameters, DialogOptions options)
+    {
+          await JSRuntime.InvokeVoidAsync("console.log", "Abertura");
+    }
+
+    void Close(dynamic result)
+    {
+        JSRuntime.InvokeVoidAsync("console.log", "Fechamento");
+
+    }
+
+
+        
     async Task FilesReady2(string files)
     {
         await JSRuntime.InvokeVoidAsync("console.log", "teste", files);
     }
 
+    public void Dispose()
+    {
+                //DialogService.OnOpen -= Open;
+                //DialogService.OnClose -= Close;                 
+    }
+
+    async Task BusyDialog()
+    {
+        await DialogService.OpenAsync("", ds =>
+            @<div>
+                <div class="row">
+                    <div class="col-md-12">
+                        Loading...
+                    </div>
+                </div>
+        </div>
+    , new DialogOptions() { ShowTitle = false, Style = "min-height:auto;min-width:auto;width:auto" });
+    }
+
+
+    async Task ProcessaFile(IMatFileUploadEntry[] files)
+    {
+        InvokeAsync(async () =>
+        {
+            await FilesReady(files);
+            DialogService.Close();
+        });
+
+        await BusyDialog();
+    }
 
     async Task FilesReady(IMatFileUploadEntry[] files)
     {

@@ -4,33 +4,37 @@
 @using System.ComponentModel.DataAnnotations
 @using System.IO
 @using System.Net.Http.Headers
+@using System.Linq.Dynamic.Core
 
 
 
 <h3>Colaborador Component</h3>
 
-<div class="row">
-    <RadzenDataGrid IsLoading="@isLoading" Count="@count" Data="@_Colaboradores" LoadData="@LoadData" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" 
-    FilterMode="FilterMode.Advanced" AllowSorting="true" AllowFiltering="true" AllowPaging="true" PageSize="4" TItem="Data.Colaborador" ColumnWidth="200px">
-    <Columns>
-@*        <RadzenDataGridColumn TItem="Colaborador" Property="Id" Filterable="false" Title="ID" Frozen="true" Width="50px" TextAlign="TextAlign.Center" />
-        <RadzenDataGridColumn TItem="Colaborador" Title="Nome" Sortable="false" Filterable="false" Width="200px" >
-            <Template Context="data">
-                <RadzenImage Path="@data." style="width: 40px; height: 40px; border-radius: 8px;" />
-            </Template>
-        </RadzenDataGridColumn>*@
-        <RadzenDataGridColumn TItem="Data.Colaborador" Property="CodPonto" Title="Cod." />
-        <RadzenDataGridColumn TItem="Data.Colaborador" Property="Nome" Title="Nome Completo" Width="150px"/>
-        <RadzenDataGridColumn TItem="Data.Colaborador" Property="Cpf" Title="CPF" />
-        <RadzenDataGridColumn TItem="Data.Colaborador" Property="Cargo.Nome" Title="Cargo" />
-        <RadzenDataGridColumn TItem="Data.Colaborador" Property="Contratacao" Title="Data adminissão Date" FormatString="{0:dd/MM/yyyy}" />
-        <RadzenDataGridColumn TItem="Data.Colaborador" Property="Demissao" Title="Data demissão" FormatString="{0:dd/MM/yyyy}" />
-        <RadzenDataGridColumn TItem="Data.Colaborador" Property="Salario" Title="Salario" />
-        <RadzenDataGridColumn TItem="Data.Colaborador" Property="HoraAula" Title="Hora Aula" />
-
-    </Columns>
-</RadzenDataGrid>
-
+<div>
+    <div class="row">
+        <RadzenButton Text="Reset" Click="ResetGrid" Style="margin-bottom:20px"></RadzenButton>
+    </div>
+    <div class="row">
+           <RadzenDataGrid @ref="grid" IsLoading="@isLoading" Count="@count" Data="@_Colaboradores" TItem="Data.Colaborador" LoadData="@LoadData" 
+           FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterMode="FilterMode.Advanced" AllowSorting="true" AllowFiltering="true"   >
+           <Columns>
+        @*        <RadzenDataGridColumn TItem="Colaborador" Property="Id" Filterable="false" Title="ID" Frozen="true" Width="50px" TextAlign="TextAlign.Center" />
+                <RadzenDataGridColumn TItem="Colaborador" Title="Nome" Sortable="false" Filterable="false" Width="200px" > ColumnWidth="200px" PageSize="4" AllowPaging="true"
+                    <Template Context="data">
+                        <RadzenImage Path="@data." style="width: 40px; height: 40px; border-radius: 8px;" />
+                    </Template>
+                </RadzenDataGridColumn>*@
+                <RadzenDataGridColumn TItem="Data.Colaborador" Property="CodPonto" Title="Cod." Frozen="true" Width="40px" />
+                <RadzenDataGridColumn TItem="Data.Colaborador" Property="Nome" Title="Nome Completo" Width="200px"/>
+                <RadzenDataGridColumn TItem="Data.Colaborador" Property="Cpf" Title="CPF" Width="100px" />
+                <RadzenDataGridColumn TItem="Data.Colaborador" Property="Cargo.Nome" Title="Cargo" Width="100px" />
+                <RadzenDataGridColumn TItem="Data.Colaborador" Property="Contratacao" Title="Data adminissão" FormatString="{0:dd/MM/yyyy}" Width="80px" />
+                <RadzenDataGridColumn TItem="Data.Colaborador" Property="Demissao" Title="Data demissão" FormatString="{0:dd/MM/yyyy}" Width="80px" />
+                <RadzenDataGridColumn TItem="Data.Colaborador" Property="Salario" Title="Salario" Width="80px" />
+                <RadzenDataGridColumn TItem="Data.Colaborador" Property="HoraAula" Title="Hora Aula" Width="80px" />
+           </Columns>
+           </RadzenDataGrid>
+    </div>
 </div>
 
 
@@ -38,10 +42,11 @@
 
 @code {
 
+
+    RadzenDataGrid<Data.Colaborador> grid;
+    IEnumerable<Data.Colaborador> _Colaboradores;
     bool isLoading;
     int count;
-
-    IEnumerable<Data.Colaborador> _Colaboradores;
 
     public Service.ColaboradorService _coladoradorService;
 
@@ -51,20 +56,49 @@
         base.OnInitialized();
         _coladoradorService = new ColaboradorService();
         _coladoradorService.LoadColaboradores();
-        LoadData();
+        LoadData(null);
+    }
+
+    async void ResetGrid()
+    {
+        grid.Reset(true);
+        await grid.FirstPage(true);
+        _Colaboradores = _coladoradorService.Colaboradores.AsQueryable();
     }
 
 
-    async Task LoadData()
+    async Task LoadData(LoadDataArgs args)
     {
         isLoading = true;
 
-        _Colaboradores = _coladoradorService.Colaboradores;
+        var query = _coladoradorService.Colaboradores.AsQueryable();
 
+        _Colaboradores = query;
+
+        if (args != null)
+        {
+            if (!string.IsNullOrEmpty(args.Filter))
+            {
+                // Filter via the Where method
+                query = query.Where(args.Filter);
+            }
+
+            if (!string.IsNullOrEmpty(args.OrderBy))
+            {
+                // Sort via the OrderBy method
+                query = query.OrderBy(args.OrderBy);
+            }
+            if (args.Skip > 0)
+            {
+                // Perform paginv via Skip and Take.
+                _Colaboradores = query.Skip(args.Skip.Value).Take(args.Top.Value).ToList();
+            }
+            _Colaboradores = query;
+            // Important!!! Make sure the Count property of RadzenDataGrid is set.
+            count = query.Count();
+        }
         count = _Colaboradores.Count();
-
         isLoading = false;
     }
-
 
 }
