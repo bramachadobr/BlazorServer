@@ -51,15 +51,25 @@
         base.OnInitialized();
         _coladoradorService = new ColaboradorService();
         _coladoradorService.LoadColaboradores();
-        LoadData();
+        LoadData(null);
     }
 
 
-    async Task LoadData()
+    async Task LoadData(LoadDataArgs args)
     {
         isLoading = true;
 
-        _Colaboradores = _coladoradorService.Colaboradores;
+        var uri = new Uri("https://services.radzen.com/odata/Northwind/Employees").GetODataUri(filter: args.Filter, top: args.Top, skip: args.Skip, orderby: args.OrderBy, count: true);
+
+        if (args != null)
+        {
+            _Colaboradores = _coladoradorService.Colaboradores.GetEnumerator();
+        }
+        else
+        {
+            _Colaboradores = _coladoradorService.Colaboradores;
+        }
+
 
         count = _Colaboradores.Count();
 
