@@ -62,10 +62,34 @@ namespace BlazorServer.Service
             return registroPontos.Where(i => i.Colaborador.Id == idGuid).ToList();
         }
 
-        public async Task<List<RegistroPonto>> GetAllRegistroPontoByIdData(int id, DateTime data1, DateTime data2)
+        public async Task<List<RegistroPonto>> GetAllRegistroPontoByIdData(Guid id, DateTime data1, DateTime data2)
         {
-            Guid idGuid = this.colaboradores.Find(i => i.CodPonto == id).Id;
-            return registroPontos.Where(i => i.Colaborador.Id == idGuid && i.Data >= data1 && i.Data <= data2).ToList();
+            //Guid idGuid = this.colaboradores.Find(i => i.CodPonto == id).Id;
+            //return registroPontos.Where(i => i.Colaborador.Id == idGuid && i.Data >= data1 && i.Data <= data2).ToList();
+            if (id == Guid.Empty && data1 == DateTime.MinValue)
+            {
+                return registroPontos;
+            }
+            else
+            {
+                if (id != Guid.Empty)
+                {
+                    if (data1 != DateTime.MinValue && data2 != DateTime.MinValue)
+                    {
+                        return registroPontos.Where(i => i.Colaborador.Id.Equals(id) && i.Data >= data1 && i.Data <= data2).ToList();
+                    }
+                    else
+                    {
+                        return registroPontos.Where(i => i.Colaborador.Id.Equals(id)).ToList();
+                    }
+                }
+                else
+                {
+                    return registroPontos.Where(i => i.Data >= data1 && i.Data <= data2).ToList();
+                }
+            }
+
+
         }
 
         public void UpdateRecord(RegistroPonto record)

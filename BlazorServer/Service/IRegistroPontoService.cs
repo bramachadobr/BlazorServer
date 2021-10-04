@@ -20,7 +20,7 @@ namespace BlazorServer.Service
 
         Task<List<RegistroPonto>> GetAllGeristroPontoById(int id);
 
-        Task<List<RegistroPonto>> GetAllRegistroPontoByIdData(int id, DateTime data1, DateTime data2);
+        Task<List<RegistroPonto>> GetAllRegistroPontoByIdData(Guid id, DateTime data1, DateTime data2);
 
 
 

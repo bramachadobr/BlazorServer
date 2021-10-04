@@ -38,5 +38,20 @@
     <script src="_content/MatBlazor/dist/matBlazor.js"></script>
     <link href="_content/MatBlazor/dist/matBlazor.css" rel="stylesheet" />
     <script src="_content/Radzen.Blazor/Radzen.Blazor.js"></script>
+        <script type="text/javascript">
+        function Print(){
+            var divcontent = document.getElementById("PrintDiv").innerHTML;
+            var a = window.open('','','height=600, width=600');
+            a.document.write('<html>');
+            a.document.write('<body><br/>');
+            a.document.write(divcontent);
+            a.document.write('</body>');
+            a.document.write('</html>');
+            a.document.close();
+            a.print(); 
+        }
+    </script>
+
+
 </body>
 </html>

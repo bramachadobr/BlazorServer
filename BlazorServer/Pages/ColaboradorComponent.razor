@@ -1,0 +1,70 @@
+﻿@page "/colaborador"
+@using BlazorServer.Service
+@using BlazorServer.Data
+@using System.ComponentModel.DataAnnotations
+@using System.IO
+@using System.Net.Http.Headers
+
+
+
+<h3>Colaborador Component</h3>
+
+<div class="row">
+    <RadzenDataGrid IsLoading="@isLoading" Count="@count" Data="@_Colaboradores" LoadData="@LoadData" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" 
+    FilterMode="FilterMode.Advanced" AllowSorting="true" AllowFiltering="true" AllowPaging="true" PageSize="4" TItem="Data.Colaborador" ColumnWidth="200px">
+    <Columns>
+@*        <RadzenDataGridColumn TItem="Colaborador" Property="Id" Filterable="false" Title="ID" Frozen="true" Width="50px" TextAlign="TextAlign.Center" />
+        <RadzenDataGridColumn TItem="Colaborador" Title="Nome" Sortable="false" Filterable="false" Width="200px" >
+            <Template Context="data">
+                <RadzenImage Path="@data." style="width: 40px; height: 40px; border-radius: 8px;" />
+            </Template>
+        </RadzenDataGridColumn>*@
+        <RadzenDataGridColumn TItem="Data.Colaborador" Property="CodPonto" Title="Cod." />
+        <RadzenDataGridColumn TItem="Data.Colaborador" Property="Nome" Title="Nome Completo" Width="150px"/>
+        <RadzenDataGridColumn TItem="Data.Colaborador" Property="Cpf" Title="CPF" />
+        <RadzenDataGridColumn TItem="Data.Colaborador" Property="Cargo.Nome" Title="Cargo" />
+        <RadzenDataGridColumn TItem="Data.Colaborador" Property="Contratacao" Title="Data adminissão Date" FormatString="{0:dd/MM/yyyy}" />
+        <RadzenDataGridColumn TItem="Data.Colaborador" Property="Demissao" Title="Data demissão" FormatString="{0:dd/MM/yyyy}" />
+        <RadzenDataGridColumn TItem="Data.Colaborador" Property="Salario" Title="Salario" />
+        <RadzenDataGridColumn TItem="Data.Colaborador" Property="HoraAula" Title="Hora Aula" />
+
+    </Columns>
+</RadzenDataGrid>
+
+</div>
+
+
+
+
+@code {
+
+    bool isLoading;
+    int count;
+
+    IEnumerable<Data.Colaborador> _Colaboradores;
+
+    public Service.ColaboradorService _coladoradorService;
+
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        _coladoradorService = new ColaboradorService();
+        _coladoradorService.LoadColaboradores();
+        LoadData();
+    }
+
+
+    async Task LoadData()
+    {
+        isLoading = true;
+
+        _Colaboradores = _coladoradorService.Colaboradores;
+
+        count = _Colaboradores.Count();
+
+        isLoading = false;
+    }
+
+
+}

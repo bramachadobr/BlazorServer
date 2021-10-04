@@ -9,72 +9,47 @@
 @inject DialogService RadDialogService
 
 
-
-
-@*<RadzenButton Text="@text"></RadzenButton>
-<RadzenButton Text="Hi" Click=@ButtonClicked></RadzenButton>
-<MatButton OnClick="@(_=>OpenDialogFromService())">Open</MatButton>
-<MatButton OnClick="@(_=>OpenDialog())">Open</MatButton>*@
-
-
-<p></p>
-
-<ComponetAlertMessege Enumtipo=EnumTipoAlerts.info Message="Bem vindo ao novo app G-Ponto (Gerenciamento do Ponto de Colaboradores) v4.0" />
-<MatTabGroup>
-
-    <MatTab Label="1-Carregar Arquivo">
+@*<ComponetAlertMessege Enumtipo=EnumTipoAlerts.info Message="Bem vindo ao novo app G-Ponto (Gerenciamento do Ponto de Colaboradores) v4.0" />*@
+<div class="container">
+    <div Class="row">
+        <MatFileUpload OnChange="@FilesReady" AllowMultiple="false" Label="Selecione um único arquivo aqui no navegador"></MatFileUpload>
+    </div>
         <p></p>
-        <div>
-            @*<div Class="row"<RadzenDropDown AllowClear="true" TValue="string" Style="width:300px" Data=@value1ItemsCombo @bind-Value="@RegoligoSelecionado" /></div>*@
-            <div Class="row"><MatFileUpload OnChange="@FilesReady" AllowMultiple="false" Label="Selecione um único arquivo aqui no navegador"></MatFileUpload></div>
-        </div>
-        <p></p>
-    </MatTab>
-
-    <MatTab Label="2-Filtrar Colaborador">
-        <p></p>
-        <div class="content">
-            <div class="row">
+    <div class="row">
                 <div class="col-sm">
-@*                    <MatSelectValue @bind-Value="@idSelectd" Items="@cs.Colaboradores" Outlined="true" ValueSelector="@(i=>i.Id)" Label="Selecione Colaborador">
-                                <ItemTemplate>
-                                        <span>@context.Nome</span>
-                                </ItemTemplate>
-                    </MatSelectValue>*@
-
                     <RadzenDropDownDataGrid TValue="Guid" @bind-Value="@idSelectd" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith"
                                         AllowFiltering="true" AllowClear="true" Data="@cs.Colaboradores" TextProperty="Nome" ValueProperty="Id" 
                                         Style="width:100%" />
-
                 </div>
                 <div class="col-sm">
-                    @*<MatDatePicker @bind-Value="@Data1" Format="dd-MM-yy" Label="Data Inicio" Class="w-100" Outlined="true"></MatDatePicker>*@
                     <RadzenDatePicker @bind-Value=@Data1 DateFormat="dd/MM/yyyy" Change=@(args => OnChange(args, "DatePicker", "dd/MM/yyyy")) />
                 </div>
                 <div class="col-sm">
-                    @*<MatDatePicker @bind-Value="@Data2" Format="dd-MM-yy" Label="Data Final" Class="w-100" Outlined="true" ></MatDatePicker>*@
-                    <RadzenDatePicker @bind-Value=@Data2 DateFormat="dd/MM/yyyy" Change=@(args => OnChange(args, "DatePicker", "dd/MM/yyyy")) />
+                    <RadzenDatePicker @bind-Value=@Data2 DateFormat="dd/MM/yyyy" Change=@(args => OnChange(args, "DatePicker", "dd/MM/yyyy")) />  
                 </div>
-                <div class="col-lg btn">
-                    <RadzenButton Click="@FiltroPonto">Filtrar</RadzenButton>
-                    @*<MatButton Raised="true" Type="submit" OnClick="@FiltroPonto">Filtrar</MatButton>*@
+                      <div class=col-sm>
+                            @TotalHorasPeriodo
+                            <RadzenTextBox @bind-Value=@TotalHorasPeriodo/>
+                        </div>
+                <div class="col-sm">
+                    <RadzenButton Click="@FiltroPontoProcessados">Filtrar</RadzenButton>
+                    @*<RadzenTextBox @bind-Value=@value MaxLength="5" Change=@(args => OnChange(args, "TextBox with 5 maximum characters")) />*@
                 </div>
+    </div>
+            <p></p>
+            <div class="row">
+                <button class="btn btn-primary" @onclick="Print">Imprimir</button>
             </div>
-        </div>
-    </MatTab>
-    <MatTab Label="3-Processar">
-        <p></p>
-        <div class="row">
-            <div class="col-sm"><MatButton Raised="true" Type="submit" OnClick="@ProcessaPontos" >Processar Horas</MatButton></div>
-            <div class="col-sm align-content-center">
-                <div class="h6">Registros do colaborador no périodo selecionado</div></div>
-        </div>
-        <div class="row">
+    <div class="row">
+@*        <div class="col-sm"><MatButton Raised="true" Type="submit" OnClick="@ProcessaPontos" >Processar Horas</MatButton></div>
+        </div>*@
 
+        <div class="row">
             <div id="PrintDiv">
-                <table class="table table-hover">
+                <table class="table table-hover table-bordered table-sm">
                     <thead>
                         <tr>
+                            <th scope="col">Cód.</th>
                             <th scope="col">Colaborador</th>
                             <th scope="col">DiaSemana</th>
                             <th scope="col">Data</th>
@@ -88,10 +63,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                            @foreach (var item in @rps.registroPontos)
+                            @foreach (var item in filtroPontosProcessados)
                             {
-                                
                                 <tr class=@Convert.ToString(item.TotalHorasDia < TimeSpan.Zero ? "table-danger":"")>
+                                    <td scope="row">@item.Colaborador.CodPonto</td>
                                     <td>@item.Colaborador.Nome</td>
                                     <td>@item.DiaSemanaPtBr</td>
                                     <td>@item.Data.ToShortDateString()</td>
@@ -102,69 +77,22 @@
                                     <td>@item.NOI_ENT.ToString("HH:mm")</td>
                                     <td>@item.NOI_SAI.ToString("HH:mm")</td>
                                     <td>@item.TotalHorasDia</td>
+                                    <td><RadzenButton Text="Editar" Click=@(args => SelectionChangedEvent(item)) ButtonStyle="ButtonStyle.Secondary"/></td>
                                 </tr>
                             }
                     </tbody>
                 </table>
             </div>
-
-
-
-                <MatTable Items="@rps.registroPontos" class="mat-elevation-z5" Striped="true" RequestApiOnlyOnce="true" AllowSelection="true" PageSize=25 SelectionChanged="SelectionChangedEvent" >
-                    <MatTableHeader>
-                        <th>Colaborador</th>
-                        <th>DiaSemana</th>
-                        <th>Data</th>
-                        <th>AM_ENT</th>
-                        <th>AM_SAI</th>
-                        <th>PM_ENT</th>
-                        <th>PM_SAI</th>
-                        <th>NOI_ENT</th>
-                        <th>NOI_SAI</th>
-                        <th>TotalHorasDia</th>
-                    </MatTableHeader>
-                    <MatTableRow>
-                        <td>@context.Colaborador.Nome</td>
-                        <td>@context.DiaSemanaPtBr</td>
-                        <td>@context.Data.ToShortDateString()</td>
-                        <td>@string.Format("{0:HH:mm}", @context.AM_ENT)</td>
-                        <td>@string.Format("{0:HH:mm}", @context.AM_SAI)</td>
-                        <td>@string.Format("{0:HH:mm}", @context.PM_ENT)</td>
-                        <td>@string.Format("{0:HH:mm}", @context.PM_SAI)</td>
-                        <td>@string.Format("{0:HH:mm}", @context.NOI_ENT)</td>
-                        <td>@string.Format("{0:HH:mm}", @context.NOI_SAI)</td>
-                        @if (@context.TotalHorasDia > TimeSpan.Zero)
-                        {
-                            <td>@context.TotalHorasDia</td>
-@*                          <td><MatButton Disabled="true" Icon="edit" OnClick="@OpenDialog">Editar</MatButton></td>
-                            <td><RadzenButton Text="Ediast com RadZen" Click="@OpenDialog">Ediatr</RadzenButton></td>*@
-                        }
-                        else
-                        {
-                            <td style="background:red">@context.TotalHorasDia</td>
-@*                          <td><MatButton Icon="edit" OnClick="@OpenDialog">Editar</MatButton></td>
-                            <td><RadzenButton Text="Ediast com RadZen" Click="@OpenDialog">Ediatr</RadzenButton></td>*@
-                        }
-                    </MatTableRow>
-                </MatTable>
         </div>
-    </MatTab>
-    <MatTab Label="4-Gerar aquivo de ponto">
-        Second Content
-    </MatTab>
-    <MatTab Label="5-Impressão">
-        Second Content
-    </MatTab>
-</MatTabGroup>
+</div>
+
+</div>
 
 
      <MatDialog @bind-IsOpen="@dialogIsOpen">
             <MatDialogTitle>Editar Ponto</MatDialogTitle>
             <MatDialogContent>
                 <EditForm Model="@regPonto" OnValidSubmit="Success">
-@*                    <MatTextField Label="ValorHora" @bind-Value="regPonto.ValorHora"/>
-                    <MatTextField Label="ValorHora" @bind-Value="regPonto.ValorTotal"/>*@
-                    
                     <p><b>Entrada manhã</b></p>
                     <RadzenDatePicker TValue="DateTime" @bind-Value="regPonto.AM_ENT" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"/> @*Change=@(args => OnChange(args, "Time-only DatePicker", "HH:mm"))*@
                     <p><b>Saída manhã</b></p>
@@ -177,6 +105,7 @@
                     <RadzenDatePicker TValue="DateTime" @bind-Value="regPonto.NOI_ENT" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"/>
                     <p><b>Saída noite</b></p>
                     <RadzenDatePicker TValue="DateTime" @bind-Value="regPonto.NOI_SAI" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"/>
+                    <p><b>Total Horas do Dia</b></p>
                     <a>@regPonto.TotalHorasDia</a>
 
                 </EditForm>
@@ -187,35 +116,16 @@
             </MatDialogActions>
         </MatDialog>
 
-      
-
-<div class="row">
-            <p>
-            @if (ListRegPonto.Count >0)
-            {
-                <MatTable Items="@filtro" class="mat-elevation-z5" Striped="true" RequestApiOnlyOnce="true" AllowSelection="true" PageSize=25 >
-                    <MatTableHeader>
-                        <th>Cod</th>
-                        <th class=col-sm>Nome</th>
-                        <th class=col-sm>CPF</th>
-                        <th class=col-sm>Data</th>
-                        <th class=col-sm>Hora</th>
-                    </MatTableHeader>
-                    <MatTableRow>
-                        <td>@context.CodColaborador</td>
-                        <td>@context.Colaborador.Nome</td>
-                        <td>@string.Format("{0:0000.000.000-00}", @context.Cpf)</td>
-                        <td>@context.Data.ToShortDateString()</td>
-                        <td>@string.Format("{0:HH:mm}", @context.Data)</td>
-                    </MatTableRow>
-                </MatTable>
-            }
-        </p>
-</div>
 
 
 @code
 {
+    public async Task Print()
+    {
+        await JSRuntime.InvokeVoidAsync("Print");
+    }
+
+    public string TotalHorasPeriodo { get; set; }
 
     //Evento ao clicar na grid 
     void SelectionChangedEvent(object reg)
@@ -265,8 +175,7 @@
 
     public DateTime Data2 { get; set; }
 
-    public DateTime DataMais1 { get => Data2.AddDays(1); }
-
+    public DateTime DataMais1 { get => Data2.AddHours(23); }
 
     string RegoligoSelecionado = "Nacional";
     string[] value1ItemsCombo = new[]
@@ -283,6 +192,8 @@
 
     List<Data.RegistroRelogio> filtro = new List<RegistroRelogio>();
 
+    List<Data.RegistroPonto> filtroPontosProcessados = new List<RegistroPonto>();
+
     Service.ColaboradorService cs = new Service.ColaboradorService();
 
     Service.RegistroPontoService rps = new Service.RegistroPontoService();
@@ -295,7 +206,12 @@
     void OpenDialog()
     {
         dialogIsOpen = true;
-    }   
+    }
+
+    async Task OpenDialog(Guid Id)
+    {
+        dialogIsOpen = true;
+    }
 
     async Task OpenDialogFromService()
     {
@@ -321,6 +237,12 @@
             else
                 filtro = ListRegPonto.Where<RegistroRelogio>(i => i.Data >= Data1 && i.Data <= DataMais1).ToList();
         }
+    }
+
+    public async void FiltroPontoProcessados()
+    {
+        filtroPontosProcessados = await rps.GetAllRegistroPontoByIdData(idSelectd, Data1, DataMais1);
+        TotalHorasDoPeriodo();
     }
 
 
@@ -416,6 +338,16 @@
             }
         }
         FiltroPonto();
+        await ProcessaPontos();
+        filtroPontosProcessados = await rps.GetAllGeristroPonto();
+        TotalHorasDoPeriodo();
+    }
+
+    void TotalHorasDoPeriodo()
+    {
+        long xx = filtroPontosProcessados.Sum<RegistroPonto>(i => i.TotalHorasDia.Ticks);
+        TimeSpan time = TimeSpan.FromTicks(xx);
+        TotalHorasPeriodo = time.TotalHours.ToString();
     }
 
     public override bool Equals(object obj)
@@ -431,7 +363,6 @@
 
     async Task ProcessaPontos()
     {
-
 
         if (idSelectd != Guid.Empty)
         {
