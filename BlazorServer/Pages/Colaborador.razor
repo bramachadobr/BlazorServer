@@ -1,4 +1,4 @@
-﻿@page "/colaborador/{ColaboradorID}"
+﻿@page "/colaborador"
 
 @using BlazorServer.Service
 @using BlazorServer.Data
@@ -195,6 +195,10 @@
         if (ColaboradorID != Guid.Empty)
         {
             colaborador = colaboradorService.Colaboradores.Where(i => i.Id == ColaboradorID).FirstOrDefault();
+            if (colaborador == null)
+            {
+                colaborador = new Data.Colaborador();
+            }
         }
         else
         {

@@ -1,4 +1,4 @@
-﻿@page "/colaborador"
+﻿@page "/colaboradores"
 
 @using System.Timers
 @using BlazorServer.Service
@@ -19,15 +19,10 @@
         <RadzenButton Text="Reset" Click="ResetGrid" Style="margin-bottom:20px"></RadzenButton>
     </div>
     <div class="row">
-           <RadzenDataGrid @ref="grid" IsLoading="@isLoading" Count="@count" Data="@_Colaboradores" TItem="Data.Colaborador" LoadData="@LoadData" RowDoubleClick="@EditarItem"
+           <RadzenDataGrid @ref="grid" IsLoading="@isLoading" Count="@count" Data="@_Colaboradores" TItem="Data.Colaborador" LoadData="@LoadData" RowDoubleClick="@(args=> OpenColaborador(args))"
            FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterMode="FilterMode.Advanced" AllowSorting="true" AllowFiltering="true"   >
            <Columns>
-        @*        <RadzenDataGridColumn TItem="Colaborador" Property="Id" Filterable="false" Title="ID" Frozen="true" Width="50px" TextAlign="TextAlign.Center" />
-                <RadzenDataGridColumn TItem="Colaborador" Title="Nome" Sortable="false" Filterable="false" Width="200px" > ColumnWidth="200px" PageSize="4" AllowPaging="true"
-                    <Template Context="data">
-                        <RadzenImage Path="@data." style="width: 40px; height: 40px; border-radius: 8px;" />
-                    </Template>
-                </RadzenDataGridColumn>*@
+                @*<RadzenDataGridColumn TItem="Colaborador" Property="Id" Filterable="false" Title="ID" Frozen="true" Width="50px" TextAlign="TextAlign.Center" />*@
                 <RadzenDataGridColumn TItem="Data.Colaborador" Property="CodPonto" Title="Cod." Frozen="true" Width="40px" />
                 <RadzenDataGridColumn TItem="Data.Colaborador" Property="Nome" Title="Nome Completo" Width="200px"/>
                 <RadzenDataGridColumn TItem="Data.Colaborador" Property="Cpf" Title="CPF" Width="100px" />
@@ -36,12 +31,18 @@
                 <RadzenDataGridColumn TItem="Data.Colaborador" Property="Demissao" Title="Data demissão" FormatString="{0:dd/MM/yyyy}" Width="80px" />
                 <RadzenDataGridColumn TItem="Data.Colaborador" Property="Salario" Title="Salario" Width="80px" />
                 <RadzenDataGridColumn TItem="Data.Colaborador" Property="HoraAula" Title="Hora Aula" Width="80px" />
+                
+                @*<RadzenDataGridColumn TItem="Data.Colaborador" Title="Editar" Sortable="false" Filterable="false" Width="80px" > ColumnWidth="200px" PageSize="4" AllowPaging="true"
+                    <Template Context="_Colaboradores">
+                        <RadzenButton Text="Show busy dialog" Click=@(args => OpenColaborador(args)) />
+                    </Template>
+                </RadzenDataGridColumn>*@
            </Columns>
            </RadzenDataGrid>
     </div>
 </div>
 
-
+ <RadzenButton Text="Show confirm dialog" Click=@(args => DialogService.Confirm("Are you sure?", "MyTitle", new ConfirmOptions() { OkButtonText = "Yes", CancelButtonText = "No" })) />
 
 @code {
     RadzenDataGrid<Data.Colaborador> grid;
@@ -85,8 +86,8 @@
         _Colaboradores = _coladoradorService.Colaboradores.AsQueryable();
     }
 
-    async Task EditarItem(RowRenderEventArgs arsg)
-    {   
+    async Task EditarItem()
+    {
     }
 
 
@@ -126,10 +127,19 @@
 
     Guid colaboradorId;
 
-    public async Task OpenOrder()
+    public async Task OpenColaborador(DataGridRowMouseEventArgs<Data.Colaborador> item)
     {
-        await DialogService.OpenAsync<Colaborador>($"colaborador {colaboradorId}",
-               new Dictionary<string, object>() { { "Id", colaboradorId } },
+        colaboradorId = item.Data.Id;
+        await DialogService.OpenAsync<Colaborador>($"Data.Colaborador {colaboradorId}",
+               new Dictionary<string, object>() { { "ColaboradorID", colaboradorId }, { "ColaboradorService",_coladoradorService} },  
+        new DialogOptions() { Width = "800px", Height = "530px", Style="Resizable: true ;  Draggable : true " });
+    }
+
+    public async Task OpenColaborador(Guid id)
+    {
+        colaboradorId = id;
+        await DialogService.OpenAsync<Colaborador>($"Data.Colaborador {colaboradorId}",
+               new Dictionary<string, object>() { { "ColaboradorID", colaboradorId } },
                new DialogOptions() { Width = "800px", Height = "530px", Style="Resizable: true ;  Draggable : true " });
     }
 
