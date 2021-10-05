@@ -33,7 +33,11 @@
                     <RadzenDatePicker @bind-Value=@Data2 DateFormat="dd/MM/yyyy" Change=@(args => OnChange(args, "DatePicker", "dd/MM/yyyy")) />  
                 </div>
                 <div class="col-sm">
-                    <RadzenButton Click="@FiltroPontoProcessados" style="margin-bottom:0px;margin-top:10px;">Filtrar</RadzenButton>
+
+                            <button type="button" class="btn btn-primary btn-lg" @onclick=@FiltroPontoProcessados >Filtrar</button>
+                            <h3 class="text-hide">Selecione o colaborador</h3>
+                            <button type="button" class="btn btn-primary btn-lg" style="margin-bottom:1px; margin-top:10px" @onclick=@FiltroPontoProcessados >Filtrar</button>
+                            @*<RadzenButton Style="" Click="@FiltroPontoProcessados">Filtrar</RadzenButton>*@
                     @*<RadzenTextBox @bind-Value=@value MaxLength="5" Change=@(args => OnChange(args, "TextBox with 5 maximum characters")) />*@
                 </div>
     </div>
