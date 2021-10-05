@@ -87,6 +87,21 @@ namespace BlazorServer.Data
         [Column(TypeName = "decimal(18,2)")]
         public decimal HoraAula { get; set; }
 
+        public string Email { get; set; }
+
+        public string Telefone { get; set; }
+
+        public string Endereco { get; set; }
+
+        public int Numero { get; set; }
+
+        public string Bairro { get; set; }
+
+        public string Cidade { get; set; }
+        public string Estado { get; set; }
+
+        public bool Ativo { get; set; }
+
         public List<RegistroPonto> Registros { get; set; }
 
     }

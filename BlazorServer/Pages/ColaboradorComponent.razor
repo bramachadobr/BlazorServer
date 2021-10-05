@@ -1,10 +1,14 @@
 ﻿@page "/colaborador"
+
+@using System.Timers
 @using BlazorServer.Service
 @using BlazorServer.Data
 @using System.ComponentModel.DataAnnotations
 @using System.IO
 @using System.Net.Http.Headers
 @using System.Linq.Dynamic.Core
+@inject DialogService DialogService
+@implements IDisposable
 
 
 
@@ -15,7 +19,7 @@
         <RadzenButton Text="Reset" Click="ResetGrid" Style="margin-bottom:20px"></RadzenButton>
     </div>
     <div class="row">
-           <RadzenDataGrid @ref="grid" IsLoading="@isLoading" Count="@count" Data="@_Colaboradores" TItem="Data.Colaborador" LoadData="@LoadData" 
+           <RadzenDataGrid @ref="grid" IsLoading="@isLoading" Count="@count" Data="@_Colaboradores" TItem="Data.Colaborador" LoadData="@LoadData" RowDoubleClick="@EditarItem"
            FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterMode="FilterMode.Advanced" AllowSorting="true" AllowFiltering="true"   >
            <Columns>
         @*        <RadzenDataGridColumn TItem="Colaborador" Property="Id" Filterable="false" Title="ID" Frozen="true" Width="50px" TextAlign="TextAlign.Center" />
@@ -39,17 +43,18 @@
 
 
 
-
 @code {
-
-
     RadzenDataGrid<Data.Colaborador> grid;
+
     IEnumerable<Data.Colaborador> _Colaboradores;
+
     bool isLoading;
+
     int count;
 
     public Service.ColaboradorService _coladoradorService;
 
+    public Data.Colaborador ColaboradorObj;
 
     protected override void OnInitialized()
     {
@@ -57,13 +62,31 @@
         _coladoradorService = new ColaboradorService();
         _coladoradorService.LoadColaboradores();
         LoadData(null);
+        DialogService.OnOpen += Open;
+        DialogService.OnClose += Close;
     }
+
+    void Open(string title, Type type, Dictionary<string, object> parameters, DialogOptions options)
+    {
+        
+    }
+
+    void Close(dynamic result)
+    {
+        
+    }
+
+    
 
     async void ResetGrid()
     {
         grid.Reset(true);
         await grid.FirstPage(true);
         _Colaboradores = _coladoradorService.Colaboradores.AsQueryable();
+    }
+
+    async Task EditarItem(RowRenderEventArgs arsg)
+    {   
     }
 
 
@@ -100,5 +123,25 @@
         count = _Colaboradores.Count();
         isLoading = false;
     }
+
+    Guid colaboradorId;
+
+    public async Task OpenOrder()
+    {
+        await DialogService.OpenAsync<Colaborador>($"colaborador {colaboradorId}",
+               new Dictionary<string, object>() { { "Id", colaboradorId } },
+               new DialogOptions() { Width = "800px", Height = "530px", Style="Resizable: true ;  Draggable : true " });
+    }
+
+
+
+    public void Dispose()
+    {
+        // The DialogService is a singleton so it is advisable to unsubscribe.
+        DialogService.OnOpen -= Open;
+        DialogService.OnClose -= Close;
+    }
+
+
 
 }

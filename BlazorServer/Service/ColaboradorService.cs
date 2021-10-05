@@ -56,16 +56,32 @@ namespace BlazorServer.Service
 
         public bool InsertRecord(Colaborador record)
         {
-            _context.Colaboradors.AddAsync(record);
-            int result = _context.SaveChanges();
-            return result > 0;
+            //_context.Colaboradors.AddAsync(record);
+            //int result = _context.SaveChanges();
+            //return result > 0;
+
+            this.Colaboradores.Add(record);
+            return true;
         }
 
         public bool UpdateRecord(Colaborador record)
         {
-            _context.Colaboradors.Update(record);
-            int result = _context.SaveChanges();
-            return result > 0;
+            //_context.Colaboradors.Update(record);
+            //int result = _context.SaveChanges();
+            //return result > 0;
+
+            Colaborador colab = Colaboradores.Find(i => i.Id.Equals(record.Id));
+
+            if (colab != null)
+            {
+                colab = record;
+                return true;
+        }
+            else
+            {
+                return InsertRecord(record);
+            }
+
         }
 
         public void LoadColaboradores()
