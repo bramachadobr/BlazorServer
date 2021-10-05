@@ -131,7 +131,7 @@
     {
         colaboradorId = item.Data.Id;
         await DialogService.OpenAsync<Colaborador>($"Data.Colaborador {colaboradorId}",
-               new Dictionary<string, object>() { { "ColaboradorID", colaboradorId }, { "ColaboradorService",_coladoradorService} },  
+               new Dictionary<string, object>() { { "ColaboradorID", colaboradorId }, { "ColaboradorService",_coladoradorService} }, 
         new DialogOptions() { Width = "800px", Height = "530px", Style="Resizable: true ;  Draggable : true " });
     }
 
