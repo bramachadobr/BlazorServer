@@ -1,5 +1,6 @@
 ﻿
-
+---------------------------------------------------------------------------------------------------------
+COMANDO USADOS PARA CRIAR O BANCO DE DADOS DO ENTITY FRAMEWORK USANDO MIGRATIONS
 
 Add-Migration InitialMigration
 
@@ -14,6 +15,18 @@ dotnet ef database update
 
 dotnet ef migrations add seeding -> enviar todos os dados do context (Update) para o banco
 
+----------------------------------------------------------------------------------------------------------
+
+
+
+--------------------------------------------------------------
+Comando para usar no mac para subir o codigo no terminal
+
+git add* -> para add todos arquivos alterados para a branch
+git commit -m "mensagem" -> para comitar tudo
+git push origin master -> para subir os arquivos para o github
+
+----------------------------------------------------------------
 
 
 
