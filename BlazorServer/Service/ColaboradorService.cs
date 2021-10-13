@@ -76,7 +76,7 @@ namespace BlazorServer.Service
             {
                 colab = record;
                 return true;
-        }
+            }
             else
             {
                 return InsertRecord(record);

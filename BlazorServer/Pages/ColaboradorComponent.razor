@@ -7,9 +7,9 @@
 @using System.IO
 @using System.Net.Http.Headers
 @using System.Linq.Dynamic.Core
+
 @inject DialogService DialogService
 @implements IDisposable
-
 
 
 <h3>Colaborador Component</h3>
@@ -20,7 +20,7 @@
     </div>
     <div class="row">
            <RadzenDataGrid @ref="grid" IsLoading="@isLoading" Count="@count" Data="@_Colaboradores" TItem="Data.Colaborador" LoadData="@LoadData" RowDoubleClick="@(args=> OpenColaborador(args))"
-           FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterMode="FilterMode.Advanced" AllowSorting="true" AllowFiltering="true"   >
+           FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterMode="FilterMode.Advanced" AllowSorting="true" AllowFiltering="true"    >
            <Columns>
                 @*<RadzenDataGridColumn TItem="Colaborador" Property="Id" Filterable="false" Title="ID" Frozen="true" Width="50px" TextAlign="TextAlign.Center" />*@
                 <RadzenDataGridColumn TItem="Data.Colaborador" Property="CodPonto" Title="Cod." Frozen="true" Width="40px" />
@@ -32,7 +32,7 @@
                 <RadzenDataGridColumn TItem="Data.Colaborador" Property="Salario" Title="Salario" Width="80px" />
                 <RadzenDataGridColumn TItem="Data.Colaborador" Property="HoraAula" Title="Hora Aula" Width="80px" />
                 
-                @*<RadzenDataGridColumn TItem="Data.Colaborador" Title="Editar" Sortable="false" Filterable="false" Width="80px" > ColumnWidth="200px" PageSize="4" AllowPaging="true"
+                @*<RadzenDataGridColumn TItem="Data.Colaborador" Title="Editar" Sortable="false" Filterable="false" Width="80px" > ColumnWidth="200px" PageSize="4" AllowPaging="true"ca
                     <Template Context="_Colaboradores">
                         <RadzenButton Text="Show busy dialog" Click=@(args => OpenColaborador(args)) />
                     </Template>
@@ -43,6 +43,8 @@
 </div>
 
  <RadzenButton Text="Show confirm dialog" Click=@(args => DialogService.Confirm("Are you sure?", "MyTitle", new ConfirmOptions() { OkButtonText = "Yes", CancelButtonText = "No" })) />
+
+
 
 @code {
     RadzenDataGrid<Data.Colaborador> grid;

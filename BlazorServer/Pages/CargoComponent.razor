@@ -1,0 +1,101 @@
+﻿@page "/cargo"
+
+@using System.Timers
+@inject DialogService DialogService
+@implements IDisposable
+
+<h3>Cargo Component</h3>
+
+
+<div class="container">
+    <RadzenTemplateForm Data="CargoObj"  TItem="@Data.Cargo" Submit="@((Data.Cargo args)=> {Submit(args);})">
+
+            <RadzenFieldset Text="Cargo">
+            <div class="row">
+                <div class="col-md-2">
+                    <RadzenLabel Text="Cargo: "></RadzenLabel>
+                </div>
+            <div class="col-md-5">
+                <RadzenTextBox @bind-Value="CargoObj.NomeCargo"></RadzenTextBox>
+            </div>
+                <div class="col-md-5">
+                    <RadzenButton ButtonType="ButtonType.Submit" Text="Adiconar Cargo"></RadzenButton>
+                </div>
+            </div>
+            </RadzenFieldset>
+
+    </RadzenTemplateForm>
+
+
+        <div class="row">
+            <CargoComponentList @ref="grid" _cargoService="@_cargoService"></CargoComponentList>
+        </div>
+
+</div>
+
+
+
+
+@code {
+    CargoComponentList grid;
+
+    [Parameter]
+    public Data.Cargo CargoObj { get; set; }
+
+    public Service.CargoService _cargoService;
+
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        _cargoService = new Service.CargoService();
+        _cargoService.LoadCargos();
+
+        //grid._cargoService = this._cargoService;
+
+        if (CargoObj is null)
+        {
+            CargoObj = new Data.Cargo();
+        }
+        //DialogService.OnOpen += Open;
+        //DialogService.OnClose += Close;
+
+    }
+
+
+
+    void Submit(Data.Cargo cargo)
+    {
+        if (cargo !=null)
+        {
+            if (cargo.NomeCargo != "")
+            {
+                _cargoService.AddRecord(cargo);
+                ShowInlineDialog();
+                CargoObj = new Data.Cargo();
+                grid.ResetGrid();
+            }
+        }
+    }
+
+    async Task ShowInlineDialog()
+    {
+     var result = await DialogService.OpenAsync("Registro adicionado com sucesso! ", ds =>
+        @<div>
+            <p Style="margin-bottom: 1rem">Ok!</p>
+            <div class="row">
+                <div class="col-md-12">
+                    <RadzenButton Text="Ok" Click="() => ds.Close(true)" Style="margin-bottom: 10px; width: 150px" />
+                </div>
+            </div>
+        </div>);
+    }
+
+    public void Dispose()
+    {
+        // The DialogService is a singleton so it is advisable to unsubscribe.
+        //DialogService.OnOpen -= Open;
+        //DialogService.OnClose -= Close;
+    }
+
+}

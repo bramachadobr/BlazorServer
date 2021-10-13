@@ -1,12 +1,12 @@
-﻿using System;
-using BlazorServer.Data;
-using System.Threading.Tasks;
+﻿using BlazorServer.Data;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BlazorServer.Service
 {
     public interface IServiceUnidade
-    { 
+    {
 
 
         public bool AddRecord(Unidade record);

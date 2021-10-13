@@ -45,10 +45,12 @@
             <div class="row">
                 <button class="btn btn-primary" @onclick="Print">Imprimir</button>
             </div>
-    <div class="row">
+
+
+
+    <div class="row" hidden=false>
 @*        <div class="col-sm"><MatButton Raised="true" Type="submit" OnClick="@ProcessaPontos" >Processar Horas</MatButton></div>
         </div>*@
-
         <div class="row">
             <div id="PrintDiv">
                 <table class="table table-hover table-bordered table-sm">
@@ -91,8 +93,29 @@
         </div>
 </div>
 
+
+<div class="row" id="PrintDiv2">
+    <RadzenDataGrid Data="filtroPontosProcessados" TItem="Data.RegistroPonto" RowDoubleClick="@(args=> SelectionChangedEvent(args))" FilterMode="FilterMode.Advanced" 
+        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowSorting="true" AllowFiltering="true">
+        <Columns>
+            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="Colaborador.CodPonto" Title="Cod" Frozen="true" Width="40px"/>
+            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="Colaborador.Nome" Title="Nome" Width="120px"/>
+            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="DiaSemanaPtBr" Title="Cod" Width="60px"/>
+            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="Data" Title="Cod" Width="60px" FormatString="{0:dd/MM/yyyy}"/>
+            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="AM_ENT" Title="AM_ENT" FormatString="{0:HH:mm}"   Width="40px"/>
+            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="AM_SAI" Title="AM_SAI" FormatString="{0:HH:mm}"   Width="40px"/>
+            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="PM_ENT" Title="PM_ENT" FormatString="{0:HH:mm}"   Width="40px"/>
+            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="PM_SAI" Title="PM_SAI" FormatString="{0:HH:mm}"   Width="40px"/>
+            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="NOI_ENT" Title="NOI_ENT" FormatString="{0:HH:mm}"  Width="40px"/>
+            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="NOI_SAI" Title="NOI_SAI" FormatString="{0:HH:mm}"  Width="40px"/>
+            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="TotalHorasDia" Title="Total Horas Dia"  Width="40px"/>
+            
+        </Columns>
+    </RadzenDataGrid>
 </div>
 
+
+</div>
 
      <MatDialog @bind-IsOpen="@dialogIsOpen">
             <MatDialogTitle>Editar Ponto</MatDialogTitle>
@@ -112,7 +135,6 @@
                     <RadzenDatePicker TValue="DateTime" @bind-Value="regPonto.NOI_SAI" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"/>
                     <p><b>Total Horas do Dia</b></p>
                     <a>@regPonto.TotalHorasDia</a>
-
                 </EditForm>
             </MatDialogContent>
             <MatDialogActions>
@@ -135,12 +157,25 @@
 
     //Evento ao clicar na grid 
     void SelectionChangedEvent(object reg)
-    {
+    {   
         if(reg !=null)
         {
             if (((RegistroPonto)reg).TotalHorasDia.TotalHours < 0)
             {
                 regPonto = (RegistroPonto)reg;
+                this.StateHasChanged();
+                dialogIsOpen = true;
+            }
+        }
+    }
+
+    void SelectionChangedEvent(DataGridRowMouseEventArgs<Data.RegistroPonto> reg)
+    {
+        if(reg !=null)
+        {
+            if (((RegistroPonto)reg.Data).TotalHorasDia.TotalHours < 0)
+            {
+                regPonto = (RegistroPonto)reg.Data;
                 this.StateHasChanged();
                 dialogIsOpen = true;
             }

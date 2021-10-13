@@ -1,0 +1,52 @@
+﻿@page "/cargolist"
+
+@using System.Timers
+@inject DialogService DialogService
+
+<h3>Cargo</h3>
+
+
+<div class="container">
+
+        <RadzenFieldset Text="Cargos cadastrados">
+        <RadzenDataGrid Data="@_cargos" @ref="grid" TItem="@Data.Cargo"  AllowFiltering="true" FilterMode="FilterMode.Advanced" AllowSorting="true">
+            <Columns>
+                <RadzenDataGridColumn TItem="Data.Cargo" Property="Id" Title="Id"></RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Data.Cargo" Property="NomeCargo" Title="Cargo"></RadzenDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>        
+    </RadzenFieldset>
+
+</div>
+
+
+
+@code {
+
+    [Parameter]
+    public Data.Cargo CargoObj { get; set; }
+
+    public IEnumerable<Data.Cargo> _cargos { get; set; }
+
+    [Parameter]
+    public Service.CargoService _cargoService { get; set; }
+
+    RadzenDataGrid<Data.Cargo> grid;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        if (_cargoService!=null)
+        {
+            _cargos = _cargoService.Cargos;
+        }
+    }
+
+    public async void ResetGrid()
+    {
+        
+        grid.Reset(true);
+        await grid.FirstPage(true);
+    }
+
+}

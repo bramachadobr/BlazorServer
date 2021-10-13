@@ -1,13 +1,11 @@
 ﻿using BlazorServer.Data;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BlazorServer.Service
 {
-    public class UnidadeService: IServiceUnidade
+    public class UnidadeService : IServiceUnidade
     {
 
 
@@ -30,7 +28,7 @@ namespace BlazorServer.Service
             {
                 return false;
             }
-           
+
         }
 
         public bool DeleteRecor(Unidade record)
@@ -53,7 +51,8 @@ namespace BlazorServer.Service
             throw new NotImplementedException();
         }
 
-        public void LoadUnidades() {
+        public void LoadUnidades()
+        {
 
             Unidades = new List<Unidade> {
                 new Unidade(){ Nome="Parauapebas", Bairro="Bairro da Paz", Numero=152, Cidade="Parauapebas", CNPJ="123123123/1234-12", Endereco="Rua Sol Poente", RazaoSocial="EDIVALDO MACHADO BARBALHO"},

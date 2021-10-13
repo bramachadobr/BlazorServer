@@ -44,6 +44,19 @@ namespace BlazorServer
             services.AddScoped<HttpClient>();
             services.AddMatBlazor();
 
+            var supportedCultures = new[]
+            {
+                new System.Globalization.CultureInfo("pt-BR"),
+            };
+
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("pt-BR");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });
+
+
 
         }
 
@@ -58,6 +71,19 @@ namespace BlazorServer
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
+
+            var supportedCultures = new[]
+            {
+                new System.Globalization.CultureInfo("pt-BR"),
+            };
+
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("pt-BR"),
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
+            });
+
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
