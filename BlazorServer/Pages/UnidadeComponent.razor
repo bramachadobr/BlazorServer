@@ -1,43 +1,114 @@
-﻿@page "/emailcrud"
-<h3>Emails</h3>
+﻿@page "/unidades"
 
-<MatTable Items="@cars" class="mat-elevation-z5">
-    <MatTableHeader>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Horsepower</th>
-    </MatTableHeader>
-    <MatTableRow>
-        <td>@context.Name</td>
-        <td>@string.Format("${0:f2}", @context.Price)</td>
-        <td>@context.Horsepower</td>
-    </MatTableRow>
-</MatTable>
+@using System.Timers
+@using BlazorServer.Service
+@using BlazorServer.Data
+@using System.ComponentModel.DataAnnotations
+@using System.IO
+@using System.Net.Http.Headers
+@using System.Linq.Dynamic.Core
+@inject DialogService DialogService
+@implements IDisposable
+
+<h3>Unidades Polos</h3>s
+
+<div>
+    <div class="row">
+        <RadzenButton Text="Reset" Click="ResetGrid" Style="margin-bottom:20px"></RadzenButton>
+    </div>
+    <div class="row">
+        <RadzenDataGrid @ref="grid" IsLoading="@isLoading" Count="@count" Data="@_Unidades" TItem="Data.Unidade" LoadData="@LoadData" RowDoubleClick="@(args=> OpenUnidades(args))"
+                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterMode="FilterMode.Advanced" AllowSorting="true" AllowFiltering="true">
+            <Columns>
+                @*<RadzenDataGridColumn TItem="Colaborador" Property="Id" Filterable="false" Title="ID" Frozen="true" Width="50px" TextAlign="TextAlign.Center" />*@
+                <RadzenDataGridColumn TItem="Data.Unidade" Property="Nome" Title="Nome." Frozen="false" Width="200px" />
+                <RadzenDataGridColumn TItem="Data.Unidade" Property="RazaoSocial" Title="Razao" Width="200px" />
+                <RadzenDataGridColumn TItem="Data.Unidade" Property="CNPJ" Title="CNPJ" Width="80px" />
+                <RadzenDataGridColumn TItem="Data.Unidade" Property="Endereco" Title="Endereço" Width="100px" />
+                <RadzenDataGridColumn TItem="Data.Unidade" Property="Numero" Title="Numero" Width="15px" />
+                <RadzenDataGridColumn TItem="Data.Unidade" Property="Bairro" Title="Bairro" Width="80px" />
+                <RadzenDataGridColumn TItem="Data.Unidade" Property="Cidade" Title="Cidade" Width="80px" />
+            </Columns>
+        </RadzenDataGrid>
+    </div>
+</div>
+
+
+
 
 @code {
-    public class Car
-    {
-        public string Name { get; set; }
-        public double Price { get; set; }
-        public int Horsepower { get; set; }
 
-        public Car(string name, double price, int horsepower)
-        {
-            Name = name;
-            Price = price;
-            Horsepower = horsepower;
-        }
+    RadzenDataGrid<Data.Unidade> grid;
+
+    IEnumerable<Data.Unidade> _Unidades;
+
+    bool isLoading;
+
+    int count;
+
+    public Service.UnidadeService _unidadesService = new UnidadeService();
+
+    public Data.Unidade UnidadeObj;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        _unidadesService = new UnidadeService();
+
+        _unidadesService.LoadUnidades();
     }
 
-    Car[] cars = new[]
+    async Task LoadData(LoadDataArgs args)
     {
-        new Car("Volkswagen Golf", 10000, 220),
-        new Car("Volkswagen Passat", 11000, 240),
-        new Car("Volkswagen Polo", 12000, 110),
-        new Car("Ford Focus", 13000, 200),
-        new Car("Ford Fiesta", 14000, 160),
-        new Car("Ford Fusion", 15000, 260),
-        new Car("Ford Mondeo", 16000, 120),
-    };
+        isLoading = true;
+
+        var query = _unidadesService.Unidades.AsQueryable();
+
+        _Unidades = query;
+
+        if (args != null)
+        {
+            if (!string.IsNullOrEmpty(args.Filter))
+            {
+                // Filter via the Where method
+                query = query.Where(args.Filter);
+            }
+
+            if (!string.IsNullOrEmpty(args.OrderBy))
+            {
+                // Sort via the OrderBy method
+                query = query.OrderBy(args.OrderBy);
+            }
+            if (args.Skip > 0)
+            {
+                // Perform paginv via Skip and Take.
+                _Unidades = query.Skip(args.Skip.Value).Take(args.Top.Value).ToList();
+            }
+            _Unidades = query;
+            // Important!!! Make sure the Count property of RadzenDataGrid is set.
+            count = query.Count();
+        }
+        count = _Unidades.Count();
+        isLoading = false;
+    }
+
+
+    void OpenUnidades(DataGridRowMouseEventArgs<Data.Unidade> args)
+    {
+    }
+
+    async void ResetGrid()
+    {
+        grid.Reset(true);
+        await grid.FirstPage(true);
+        _Unidades = _unidadesService.Unidades.AsQueryable();
+    }
+
+
+    public void Dispose()
+    {
+        // The DialogService is a singleton so it is advisable to unsubscribe.
+
+    }
 
 }

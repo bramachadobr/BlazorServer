@@ -104,6 +104,10 @@ namespace BlazorServer.Data
 
         public List<RegistroPonto> Registros { get; set; }
 
+        public Unidade Unidade { get; set; }
+
+        public Guid IdUnidade { get; set; }
+
     }
 
     public class RegistroPonto
@@ -212,6 +216,26 @@ namespace BlazorServer.Data
         public Guid Id { get; set; }
         public DateTime? DataFeriado { get; set; }
         public string NomeFeriado { get; set; }
+    }
+
+
+    public class Unidade
+    {
+        public Unidade()
+        {
+            Id = Guid.NewGuid();
+        }
+
+        public Guid Id { get; set; }
+        public string Nome { get; set; }
+        public string RazaoSocial { get; set; }
+        public string CNPJ { get; set; }
+        public string Endereco { get; set; }
+        public int Numero { get; set; }
+        public string Bairro { get; set; }
+        public string Cidade { get; set; }
+
+        public List<Colaborador> Colaboradores { get; set; }
     }
 
 }
