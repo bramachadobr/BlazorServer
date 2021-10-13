@@ -1,4 +1,13 @@
 ﻿
+add-migration createmigrate -> inicia o migration
+
+update-database -> update do banco
+
+dotnet ef migrations add datetime -> addiciona as mudanças para o controle migrtions
+
+dotnet ef database update -> faz as mudancas no banco 
+
+
 ---------------------------------------------------------------------------------------------------------
 COMANDO USADOS PARA CRIAR O BANCO DE DADOS DO ENTITY FRAMEWORK USANDO MIGRATIONS
 
@@ -6,7 +15,7 @@ Add-Migration InitialMigration
 
 Remove-Migration.
 
-dotnet ef migrations remove
+dotnet ef migrations remove -> remove a ultima migração
 
 dotnet ef migrations add initial
 

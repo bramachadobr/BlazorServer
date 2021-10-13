@@ -16,15 +16,13 @@ namespace BlazorServer.Data
         {
         }
 
-        public DbSet<Colaborador> Colaboradors { get; set; }
-
         public DbSet<Cargo> Cargo { get; set; }
-
-        public DbSet<Feriado> Feriado { get; set; }
-
+        public DbSet<Arquivo> Arquivo { get; set; }
         public DbSet<Email> Email { get; set; }
-
+        public DbSet<Colaborador> Colaboradors { get; set; }
         public DbSet<RegistroPonto> RegistroPontos { get; set; }
+        public DbSet<Feriado> Feriado { get; set; }
+        public DbSet<Unidade> Unidade { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

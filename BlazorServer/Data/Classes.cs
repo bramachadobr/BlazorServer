@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
 
@@ -18,11 +19,13 @@ namespace BlazorServer.Data
 
     public class Cargo
     {
+
         public Cargo()
         {
             Id = Guid.NewGuid();
         }
 
+        [Key]
         public Guid Id { get; set; }
         public string NomeCargo { get; set; }
         public List<Colaborador> Colaboradores { get; set; }
@@ -35,6 +38,7 @@ namespace BlazorServer.Data
         {
             Id = Guid.NewGuid();
         }
+        [Key]
         public Guid Id { get; set; }
         public string NomeArquivo { get; set; }
 
@@ -50,7 +54,7 @@ namespace BlazorServer.Data
         {
             Id = Guid.NewGuid();
         }
-
+        [Key]
         public Guid Id { get; set; }
         public string Nome { get; set; }
         public string EnderecoEmail { get; set; }
@@ -63,7 +67,7 @@ namespace BlazorServer.Data
         {
             Id = Guid.NewGuid();
         }
-
+        [Key]
         public Guid Id { get; set; }
 
         public int CodPonto { get; set; }
@@ -113,6 +117,7 @@ namespace BlazorServer.Data
     public class RegistroPonto
     {
         CultureInfo Cultura = new CultureInfo("pt-BR");
+        [Key]
         public Guid Id { get; set; }
 
         public RegistroPonto()
@@ -196,7 +201,7 @@ namespace BlazorServer.Data
         {
             Id = Guid.NewGuid();
         }
-
+        [Key]
         public Guid Id { get; set; }
         public int CodColaborador { get; set; }
         public Colaborador Colaborador { get; set; }
@@ -212,7 +217,7 @@ namespace BlazorServer.Data
         {
             Id = Guid.NewGuid();
         }
-
+        [Key]
         public Guid Id { get; set; }
         public DateTime? DataFeriado { get; set; }
         public string NomeFeriado { get; set; }
@@ -225,7 +230,7 @@ namespace BlazorServer.Data
         {
             Id = Guid.NewGuid();
         }
-
+        [Key]
         public Guid Id { get; set; }
         public string Nome { get; set; }
         public string RazaoSocial { get; set; }
@@ -234,7 +239,6 @@ namespace BlazorServer.Data
         public int Numero { get; set; }
         public string Bairro { get; set; }
         public string Cidade { get; set; }
-
         public List<Colaborador> Colaboradores { get; set; }
     }
 

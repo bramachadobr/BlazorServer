@@ -4,6 +4,7 @@
 @using BlazorServer.Data
 @using System.Globalization
 @using System.Timers
+@using System.Linq.Dynamic.Core
 @inject IJSRuntime JSRuntime
 @inject IMatDialogService MatDialogService
 
@@ -14,10 +15,12 @@
 @*<ComponetAlertMessege Enumtipo=EnumTipoAlerts.info Message="Bem vindo ao novo app G-Ponto (Gerenciamento do Ponto de Colaboradores) v4.0" />*@
 <div class="container">
     <div Class="row">
-        <MatFileUpload OnChange="@ProcessaFile" AllowMultiple="false" Label="Selecione um único arquivo aqui no navegador"></MatFileUpload>
+            <MatFileUpload OnChange="@ProcessaFile" AllowMultiple="false" Label="Selecione um único arquivo aqui no navegador"></MatFileUpload>
     </div>
-        <p></p>
-    <div class="row">
+      
+    
+    
+@*    <div class="row">
                 <div class="col-sm-5">
                     <h3>Selecione o colaborador</h3>
                     <RadzenDropDownDataGrid TValue="Guid" @bind-Value="@idSelectd" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith"
@@ -37,20 +40,11 @@
                             <button type="button" class="btn btn-primary btn-lg" @onclick=@FiltroPontoProcessados >Filtrar</button>
                             <h3 class="text-hide">Selecione o colaborador</h3>
                             <button type="button" class="btn btn-primary btn-lg" style="margin-bottom:1px; margin-top:10px" @onclick=@FiltroPontoProcessados >Filtrar</button>
-                            @*<RadzenButton Style="" Click="@FiltroPontoProcessados">Filtrar</RadzenButton>*@
-                    @*<RadzenTextBox @bind-Value=@value MaxLength="5" Change=@(args => OnChange(args, "TextBox with 5 maximum characters")) />*@
+                            <RadzenButton Style="" Click="@FiltroPontoProcessados">Filtrar</RadzenButton>
+                            <RadzenTextBox @bind-Value=@value MaxLength="5" Change=@(args => OnChange(args, "TextBox with 5 maximum characters")) />
                 </div>
-    </div>
-            <p></p>
-            <div class="row">
-                <button class="btn btn-primary" @onclick="Print">Imprimir</button>
-            </div>
-
-
-
-    <div class="row" hidden=false>
-@*        <div class="col-sm"><MatButton Raised="true" Type="submit" OnClick="@ProcessaPontos" >Processar Horas</MatButton></div>
-        </div>*@
+      </div>*@           
+@*    <div class="row" hidden=false>
         <div class="row">
             <div id="PrintDiv">
                 <table class="table table-hover table-bordered table-sm">
@@ -91,31 +85,37 @@
                 </table>
             </div>
         </div>
+      </div>*@
+
+    <div class="PrintDiv2">
+            <div class="row">
+                <div class="col-sm">
+                    <button class="btn btn-primary" @onclick="Print">Imprimir</button>
+                </div>
+                <div class="col-sm">@TotalHorasPeriodo</div>
+            </div>
+            <div class="row" >
+                <RadzenDataGrid Data="filtroPontosProcessados" LoadData="@(args2 => LoadData(args2))" TItem="Data.RegistroPonto" RowDoubleClick="@(args=> SelectionChangedEvent(args))"  FilterMode="FilterMode.Advanced" 
+                    FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowSorting="true" AllowFiltering="true"> 
+                    <Columns>
+                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="Colaborador.CodPonto" Title="Cod" Frozen="true" Width="30px"/>
+                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="Colaborador.Nome" Title="Nome Completo" Width="120px"/>
+                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="DiaSemanaPtBr" Title="Dia semana" Width="60px"/>
+                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="Data" Title="Data" Width="60px" FormatString="{0:dd/MM/yyyy}"/>
+                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="AM_ENT" Title="AM_ENT" FormatString="{0:HH:mm}"   Width="45px"/>
+                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="AM_SAI" Title="AM_SAI" FormatString="{0:HH:mm}"   Width="45px"/>
+                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="PM_ENT" Title="PM_ENT" FormatString="{0:HH:mm}"   Width="45px"/>
+                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="PM_SAI" Title="PM_SAI" FormatString="{0:HH:mm}"   Width="45px"/>
+                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="NOI_ENT" Title="NOI_ENT" FormatString="{0:HH:mm}"  Width="45px"/>
+                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="NOI_SAI" Title="NOI_SAI" FormatString="{0:HH:mm}"  Width="45px"/>
+                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="TotalHorasDia" Title="Total Horas Dia"  Width="45px"/> 
+                    </Columns>
+                </RadzenDataGrid>
+            </div>
+    </div>
 </div>
 
 
-<div class="row" id="PrintDiv2">
-    <RadzenDataGrid Data="filtroPontosProcessados" TItem="Data.RegistroPonto" RowDoubleClick="@(args=> SelectionChangedEvent(args))" FilterMode="FilterMode.Advanced" 
-        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowSorting="true" AllowFiltering="true">
-        <Columns>
-            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="Colaborador.CodPonto" Title="Cod" Frozen="true" Width="40px"/>
-            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="Colaborador.Nome" Title="Nome" Width="120px"/>
-            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="DiaSemanaPtBr" Title="Cod" Width="60px"/>
-            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="Data" Title="Cod" Width="60px" FormatString="{0:dd/MM/yyyy}"/>
-            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="AM_ENT" Title="AM_ENT" FormatString="{0:HH:mm}"   Width="40px"/>
-            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="AM_SAI" Title="AM_SAI" FormatString="{0:HH:mm}"   Width="40px"/>
-            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="PM_ENT" Title="PM_ENT" FormatString="{0:HH:mm}"   Width="40px"/>
-            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="PM_SAI" Title="PM_SAI" FormatString="{0:HH:mm}"   Width="40px"/>
-            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="NOI_ENT" Title="NOI_ENT" FormatString="{0:HH:mm}"  Width="40px"/>
-            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="NOI_SAI" Title="NOI_SAI" FormatString="{0:HH:mm}"  Width="40px"/>
-            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="TotalHorasDia" Title="Total Horas Dia"  Width="40px"/>
-            
-        </Columns>
-    </RadzenDataGrid>
-</div>
-
-
-</div>
 
      <MatDialog @bind-IsOpen="@dialogIsOpen">
             <MatDialogTitle>Editar Ponto</MatDialogTitle>
@@ -147,6 +147,25 @@
 
 @code
 {
+
+    async Task LoadData(LoadDataArgs args)
+    {
+        var query = rps.registroPontos.AsQueryable();
+
+        if (!string.IsNullOrEmpty(args.Filter))
+        {
+            query = query.Where(args.Filter);
+        }
+
+        if (!string.IsNullOrEmpty(args.OrderBy))
+        {
+            query = query.OrderBy(args.OrderBy);
+        }
+        filtroPontosProcessados = query.Skip(args.Skip.Value).Take(args.Top.Value).ToList();
+    }
+
+    TimeSpan TotalHorasTrabalhadasNoPeriodo;
+
     public async Task Print()
     {
         await JSRuntime.InvokeVoidAsync("console.log", "asdsadasaa");
@@ -182,11 +201,11 @@
         }
     }
 
-    
 
-   void ButtonClicked()
-   {
-   }
+
+    void ButtonClicked()
+    {
+    }
 
     void OnChange(DateTime? value, string name, string format)
     {
@@ -232,6 +251,8 @@
     List<Data.RegistroRelogio> filtro = new List<RegistroRelogio>();
 
     List<Data.RegistroPonto> filtroPontosProcessados = new List<RegistroPonto>();
+
+    //IEnumerable<Data.RegistroPonto> filtroPontosProcessados;
 
     Service.ColaboradorService cs = new Service.ColaboradorService();
 
