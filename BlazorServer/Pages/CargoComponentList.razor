@@ -2,6 +2,7 @@
 
 @using System.Timers
 @inject DialogService DialogService
+@inherits OwningComponentBase<Service.CargoService>
 
 <h3>Cargo</h3>
 
@@ -28,23 +29,23 @@
 
     public IEnumerable<Data.Cargo> _cargos { get; set; }
 
-    [Parameter]
-    public Service.CargoService _cargoService { get; set; }
+    //[Parameter]
+    //public Service.CargoService _cargoService { get; set; }
 
     RadzenDataGrid<Data.Cargo> grid;
 
-    protected override void OnInitialized()
+    protected override async void OnInitialized()
     {
         base.OnInitialized();
-        if (_cargoService!=null)
+        if (_cargos is null)
         {
-            _cargos = _cargoService.Cargos;
+            _cargos = await Service.GetAllRecords();
         }
     }
 
     public async void ResetGrid()
     {
-        
+        _cargos = await Service.GetAllRecords();
         grid.Reset(true);
         await grid.FirstPage(true);
     }

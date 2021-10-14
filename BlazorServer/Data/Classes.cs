@@ -19,14 +19,15 @@ namespace BlazorServer.Data
 
     public class Cargo
     {
-
         public Cargo()
         {
-            Id = Guid.NewGuid();
+            CargoId = Guid.NewGuid();
         }
 
         [Key]
-        public Guid Id { get; set; }
+        [Column(TypeName = "uniqueidentifier")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid CargoId { get; set; }
         public string NomeCargo { get; set; }
         public List<Colaborador> Colaboradores { get; set; }
     }
@@ -38,7 +39,10 @@ namespace BlazorServer.Data
         {
             Id = Guid.NewGuid();
         }
+
         [Key]
+        [Column(TypeName = "uniqueidentifier")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
         public string NomeArquivo { get; set; }
 
@@ -54,7 +58,10 @@ namespace BlazorServer.Data
         {
             Id = Guid.NewGuid();
         }
+
         [Key]
+        [Column(TypeName = "uniqueidentifier")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
         public string Nome { get; set; }
         public string EnderecoEmail { get; set; }
@@ -67,7 +74,10 @@ namespace BlazorServer.Data
         {
             Id = Guid.NewGuid();
         }
+
         [Key]
+        [Column(TypeName = "uniqueidentifier")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
         public int CodPonto { get; set; }
@@ -78,9 +88,8 @@ namespace BlazorServer.Data
 
         public string CpfComMascara { get => string.Format(@"{0:000\.###\.###-##}", Cpf); }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public Cargo Cargo { get; set; }
-
-        public int CargoId { get; set; }
 
         public DateTime? Contratacao { get; set; }
 
@@ -110,14 +119,15 @@ namespace BlazorServer.Data
 
         public Unidade Unidade { get; set; }
 
-        public Guid IdUnidade { get; set; }
-
     }
 
     public class RegistroPonto
     {
         CultureInfo Cultura = new CultureInfo("pt-BR");
+
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Column(TypeName = "uniqueidentifier")]
         public Guid Id { get; set; }
 
         public RegistroPonto()
@@ -137,12 +147,7 @@ namespace BlazorServer.Data
         public DateTime PM_SAI { get; set; }
         public DateTime NOI_ENT { get; set; }
         public DateTime NOI_SAI { get; set; }
-        //public string AM_ENT_bind { get => AM_ENT.ToString(); set => TimeSpan.Parse(value); }
-        //public string AM_SAI_bind { get => AM_SAI.ToString(); set => TimeSpan.Parse(value); }
-        //public string PM_ENT_bind { get => PM_ENT.ToString(); set => TimeSpan.Parse(value); }
-        //public string PM_SAI_bind { get => PM_SAI.ToString(); set => TimeSpan.Parse(value); }
-        //public string NOI_ENT_bind { get => NOI_ENT.ToString(); set => TimeSpan.Parse(value); }
-        //public string NOI_SAI_bind { get => NOI_SAI.ToString(); set => TimeSpan.Parse(value); }
+
         public TimeSpan TotalHorasDia { get => TimeSpan.FromTicks((AM_SAI.TimeOfDay.Ticks - AM_ENT.TimeOfDay.Ticks) + (PM_SAI.TimeOfDay.Ticks - PM_ENT.TimeOfDay.Ticks) + (NOI_SAI.TimeOfDay.Ticks - NOI_ENT.TimeOfDay.Ticks)); }
         [Column(TypeName = "decimal(18,2)")]
         public decimal ValorHora { get; set; }
@@ -201,7 +206,10 @@ namespace BlazorServer.Data
         {
             Id = Guid.NewGuid();
         }
+
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Column(TypeName = "uniqueidentifier")]
         public Guid Id { get; set; }
         public int CodColaborador { get; set; }
         public Colaborador Colaborador { get; set; }
@@ -217,7 +225,10 @@ namespace BlazorServer.Data
         {
             Id = Guid.NewGuid();
         }
+
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Column(TypeName = "uniqueidentifier")]
         public Guid Id { get; set; }
         public DateTime? DataFeriado { get; set; }
         public string NomeFeriado { get; set; }
@@ -230,7 +241,10 @@ namespace BlazorServer.Data
         {
             Id = Guid.NewGuid();
         }
+
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Column(TypeName = "uniqueidentifier")]
         public Guid Id { get; set; }
         public string Nome { get; set; }
         public string RazaoSocial { get; set; }

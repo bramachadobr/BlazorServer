@@ -26,14 +26,13 @@ namespace BlazorServer
             services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
-                options.EnableSensitiveDataLogging(true);
+                //options.EnableSensitiveDataLogging(true);
             });
 
             services.AddScoped<DialogService>();
             services.AddScoped<NotificationService>();
             services.AddScoped<TooltipService>();
             services.AddScoped<ContextMenuService>();
-
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
@@ -41,6 +40,7 @@ namespace BlazorServer
             services.AddScoped<EMailService>();
             services.AddScoped<RegistroRelogioService>();
             services.AddScoped<RegistroPontoService>();
+            services.AddScoped<CargoService>();
             services.AddScoped<HttpClient>();
             services.AddMatBlazor();
 
@@ -55,9 +55,6 @@ namespace BlazorServer
                 options.SupportedCultures = supportedCultures;
                 options.SupportedUICultures = supportedCultures;
             });
-
-
-
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -1,8 +1,11 @@
 ﻿@page "/cargo"
 
 @using System.Timers
+@using BlazorServer.Data
 @inject DialogService DialogService
 @implements IDisposable
+
+@inherits OwningComponentBase<Service.CargoService>
 
 <h3>Cargo Component</h3>
 
@@ -28,7 +31,7 @@
 
 
         <div class="row">
-            <CargoComponentList @ref="grid" _cargoService="@_cargoService"></CargoComponentList>
+            <CargoComponentList @ref="grid" ></CargoComponentList>
         </div>
 
 </div>
@@ -42,14 +45,15 @@
     [Parameter]
     public Data.Cargo CargoObj { get; set; }
 
-    public Service.CargoService _cargoService;
+    //public Service.CargoService _cargoService;
+
+    public AppDbContext _context;
 
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        _cargoService = new Service.CargoService();
-        _cargoService.LoadCargos();
+        //_cargoService = new Service.CargoService(_context);
 
         //grid._cargoService = this._cargoService;
 
@@ -70,8 +74,9 @@
         {
             if (cargo.NomeCargo != "")
             {
-                _cargoService.AddRecord(cargo);
-                ShowInlineDialog();
+                Service.AddRecord(cargo);
+                //_cargoService.AddRecord(cargo);
+                Task.Run(()=> ShowInlineDialog());
                 CargoObj = new Data.Cargo();
                 grid.ResetGrid();
             }

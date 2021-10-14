@@ -5,14 +5,17 @@
 @using System.Globalization
 @using System.Timers
 @using System.Linq.Dynamic.Core
+
 @inject IJSRuntime JSRuntime
 @inject IMatDialogService MatDialogService
-
 @inject DialogService DialogService
+
 @implements IDisposable
 
+@inherits OwningComponentBase
 
-@*<ComponetAlertMessege Enumtipo=EnumTipoAlerts.info Message="Bem vindo ao novo app G-Ponto (Gerenciamento do Ponto de Colaboradores) v4.0" />*@
+
+
 <div class="container">
     <div Class="row">
             <MatFileUpload OnChange="@ProcessaFile" AllowMultiple="false" Label="Selecione um único arquivo aqui no navegador"></MatFileUpload>
@@ -254,9 +257,9 @@
 
     //IEnumerable<Data.RegistroPonto> filtroPontosProcessados;
 
-    Service.ColaboradorService cs = new Service.ColaboradorService();
+    Service.ColaboradorService cs;
 
-    Service.RegistroPontoService rps = new Service.RegistroPontoService();
+    Service.RegistroPontoService rps;
 
     void OkClick()
     {
@@ -280,23 +283,22 @@
 
     public void FiltroPonto()
     {
-        filtro = ListRegPonto;
-
-        if (idSelectd!=Guid.Empty)
-        {
-            int codigo = cs.Colaboradores.FirstOrDefault(x => x.Id.Equals(idSelectd)).CodPonto;
-            filtro = ListRegPonto.Where<RegistroRelogio>(i => i.CodColaborador.Equals(codigo)).ToList();
-        }
-        if (Data1 != DateTime.MinValue && Data2 != DateTime.MinValue)
-        {
-            if(idSelectd != Guid.Empty)
-            {
-                int codigo = cs.Colaboradores.FirstOrDefault(x => x.Id.Equals(idSelectd)).CodPonto;
-                filtro = ListRegPonto.Where<RegistroRelogio>(i => i.CodColaborador.Equals(codigo) && i.Data >= Data1 && i.Data <= DataMais1).ToList();
-            }
-            else
-                filtro = ListRegPonto.Where<RegistroRelogio>(i => i.Data >= Data1 && i.Data <= DataMais1).ToList();
-        }
+        //filtro = ListRegPonto;
+        //if (idSelectd!=Guid.Empty)
+        //{
+        //    int codigo = cs.Colaboradores.FirstOrDefault(x => x.Id.Equals(idSelectd)).CodPonto;
+        //    filtro = ListRegPonto.Where<RegistroRelogio>(i => i.CodColaborador.Equals(codigo)).ToList();
+        //}
+        //if (Data1 != DateTime.MinValue && Data2 != DateTime.MinValue)
+        //{
+        //    if(idSelectd != Guid.Empty)
+        //    {
+        //        int codigo = cs.Colaboradores.FirstOrDefault(x => x.Id.Equals(idSelectd)).CodPonto;
+        //        filtro = ListRegPonto.Where<RegistroRelogio>(i => i.CodColaborador.Equals(codigo) && i.Data >= Data1 && i.Data <= DataMais1).ToList();
+        //    }
+        //    else
+        //        filtro = ListRegPonto.Where<RegistroRelogio>(i => i.Data >= Data1 && i.Data <= DataMais1).ToList();
+        //}
     }
 
     public async void FiltroPontoProcessados()
@@ -309,8 +311,8 @@
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        cs.LoadColaboradores();
-        rps.colaboradores = cs.Colaboradores;
+        cs = (Service.ColaboradorService)ScopedServices.GetService(typeof(Service.ColaboradorService));
+        rps = (Service.RegistroPontoService)ScopedServices.GetService(typeof(Service.RegistroPontoService));
     }
 
     
@@ -321,8 +323,8 @@
 
     public void Dispose()
     {
-                //DialogService.OnOpen -= Open;
-                //DialogService.OnClose -= Close;                 
+        //DialogService.OnOpen =- Open;
+        //DialogService.OnClose -= Close;                 
     }
 
     async Task BusyDialog()

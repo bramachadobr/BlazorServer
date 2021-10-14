@@ -1,4 +1,42 @@
-﻿
+﻿#Criação de uma migração
+
+[Command Line]
+dotnet ef migrations add <name of migration>
+[Package Manager console]
+add-migration <name of migration>
+
+
+#Removendo uma migração
+
+[Command Line]
+dotnet ef migrations remove
+[Package Manager Console]
+remove-migration
+
+#Aplicação de uma migração   
+
+[Command Line]
+dotnet ef migrations remove
+[Package Manager Console]
+remove-migration
+
+#Revertendo uma migração
+
+[Command line]
+dotnet ef database update Create
+[Package Manager Console]
+update-database Create
+
+#Aplicação de uma migração para um banco de dados remoto
+
+[Command Line]
+dotnet ef migrations script
+[Package Manager Console]
+script-migration
+
+
+
+----------------------------------------------------------------------------------------------------------
 add-migration createmigrate -> inicia o migration
 
 update-database -> update do banco
@@ -20,7 +58,6 @@ dotnet ef migrations remove -> remove a ultima migração
 dotnet ef migrations add initial
 
 dotnet ef database update 
-
 
 dotnet ef migrations add seeding -> enviar todos os dados do context (Update) para o banco
 

@@ -16,8 +16,7 @@ namespace BlazorServer.Service
 
         public RegistroRelogioService()
         {
-            colaboradorService = new ColaboradorService();
-            colaboradorService.LoadColaboradores();
+            colaboradorService = new ColaboradorService(new Data.AppDbContext());
             registroRelogios = new List<RegistroRelogio>();
         }
 

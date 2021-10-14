@@ -3,13 +3,14 @@
 @using System.Timers
 @using BlazorServer.Service
 @using BlazorServer.Data
-@using System.ComponentModel.DataAnnotations
 @using System.IO
 @using System.Net.Http.Headers
 @using System.Linq.Dynamic.Core
+@using System.ComponentModel.DataAnnotations
 
 @inject DialogService DialogService
 @implements IDisposable
+@inherits OwningComponentBase<Service.ColaboradorService>
 
 
 <h3>Colaborador Component</h3>
@@ -18,15 +19,18 @@
     <div class="row">
         <RadzenButton Text="Reset" Click="ResetGrid" Style="margin-bottom:20px"></RadzenButton>
     </div>
+
+    @*Data="@(_Colaboradores.Select(i=> new {CodPonto = i.CodPonto, Nome=i.Nome, Cpf=i.Cpf, Cargo=i.Cargo.NomeCargo, Contratacao = i.Contratacao, Salario=i.Salario, HoraAula = i.HoraAula}).Distinct().AsQueryable())"*@
+
     <div class="row">
-           <RadzenDataGrid @ref="grid" IsLoading="@isLoading" Count="@count" Data="@_Colaboradores" TItem="Data.Colaborador" LoadData="@LoadData" RowDoubleClick="@(args=> OpenColaborador(args))"
-           FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterMode="FilterMode.Advanced" AllowSorting="true" AllowFiltering="true"    >
+           <RadzenDataGrid @ref="grid" IsLoading="@isLoading" Count="@count" TItem="Data.Colaborador"  RowDoubleClick="@(args=> OpenColaborador(args))"  
+                FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterMode="FilterMode.Advanced" AllowSorting="true" AllowFiltering="true" Data="@_Colaboradores">
            <Columns>
                 @*<RadzenDataGridColumn TItem="Colaborador" Property="Id" Filterable="false" Title="ID" Frozen="true" Width="50px" TextAlign="TextAlign.Center" />*@
                 <RadzenDataGridColumn TItem="Data.Colaborador" Property="CodPonto" Title="Cod." Frozen="true" Width="40px" />
                 <RadzenDataGridColumn TItem="Data.Colaborador" Property="Nome" Title="Nome Completo" Width="200px"/>
                 <RadzenDataGridColumn TItem="Data.Colaborador" Property="Cpf" Title="CPF" Width="100px" />
-                <RadzenDataGridColumn TItem="Data.Colaborador" Property="Cargo.Nome" Title="Cargo" Width="100px" />
+                <RadzenDataGridColumn TItem="Data.Colaborador" Property="Cargo.NomeCargo" Title="Cargo" Width="100px" />
                 <RadzenDataGridColumn TItem="Data.Colaborador" Property="Contratacao" Title="Data adminissão" FormatString="{0:dd/MM/yyyy}" Width="80px" />
                 <RadzenDataGridColumn TItem="Data.Colaborador" Property="Demissao" Title="Data demissão" FormatString="{0:dd/MM/yyyy}" Width="80px" />
                 <RadzenDataGridColumn TItem="Data.Colaborador" Property="Salario" Title="Salario" Width="80px" />
@@ -62,21 +66,18 @@
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        _coladoradorService = new ColaboradorService();
-        _coladoradorService.LoadColaboradores();
-        LoadData(null);
+        _coladoradorService = Service;
+        Task.Run(()=>LoadData(null));
         DialogService.OnOpen += Open;
         DialogService.OnClose += Close;
     }
 
     void Open(string title, Type type, Dictionary<string, object> parameters, DialogOptions options)
-    {
-        
+    {   
     }
 
     void Close(dynamic result)
     {
-        
     }
 
     
@@ -85,7 +86,7 @@
     {
         grid.Reset(true);
         await grid.FirstPage(true);
-        _Colaboradores = _coladoradorService.Colaboradores.AsQueryable();
+        _Colaboradores = _coladoradorService.Colaboradores;
     }
 
     async Task EditarItem()
@@ -99,7 +100,7 @@
 
         var query = _coladoradorService.Colaboradores.AsQueryable();
 
-        _Colaboradores = query;
+        _Colaboradores = query.ToList();
 
         if (args != null)
         {
@@ -119,7 +120,7 @@
                 // Perform paginv via Skip and Take.
                 _Colaboradores = query.Skip(args.Skip.Value).Take(args.Top.Value).ToList();
             }
-            _Colaboradores = query;
+            _Colaboradores = query.ToList();
             // Important!!! Make sure the Count property of RadzenDataGrid is set.
             count = query.Count();
         }
@@ -132,9 +133,9 @@
     public async Task OpenColaborador(DataGridRowMouseEventArgs<Data.Colaborador> item)
     {
         colaboradorId = item.Data.Id;
-        await DialogService.OpenAsync<Colaborador>($"Data.Colaborador {colaboradorId}",
-               new Dictionary<string, object>() { { "ColaboradorID", colaboradorId }, { "ColaboradorService",_coladoradorService} }, 
-        new DialogOptions() { Width = "800px", Height = "530px", Style="Resizable: true ;  Draggable : true " });
+        var resposta = await DialogService.OpenAsync<Colaborador>($"Data.Colaborador {colaboradorId}",
+               new Dictionary<string, object>() { { "ColaboradorID", colaboradorId } }, 
+        new DialogOptions() { Width = "800px", Height = "550px", Style="Resizable: true " });  /*;  Draggable : true*/
     }
 
     public async Task OpenColaborador(Guid id)
@@ -142,14 +143,13 @@
         colaboradorId = id;
         await DialogService.OpenAsync<Colaborador>($"Data.Colaborador {colaboradorId}",
                new Dictionary<string, object>() { { "ColaboradorID", colaboradorId } },
-               new DialogOptions() { Width = "800px", Height = "530px", Style="Resizable: true ;  Draggable : true " });
+               new DialogOptions() { Width = "800px", Height = "550px", Style="Resizable: true " }); ;  /*Draggable : true */
     }
 
 
 
     public void Dispose()
     {
-        // The DialogService is a singleton so it is advisable to unsubscribe.
         DialogService.OnOpen -= Open;
         DialogService.OnClose -= Close;
     }
