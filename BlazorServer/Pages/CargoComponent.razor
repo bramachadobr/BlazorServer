@@ -2,7 +2,7 @@
 
 @using System.Timers
 @using BlazorServer.Data
-@inject DialogService DialogService
+@inject Radzen.DialogService DialogService
 @implements IDisposable
 
 @inherits OwningComponentBase<Service.CargoService>
@@ -22,7 +22,7 @@
                 <RadzenTextBox @bind-Value="CargoObj.NomeCargo"></RadzenTextBox>
             </div>
                 <div class="col-md-5">
-                    <RadzenButton ButtonType="ButtonType.Submit" Text="Adiconar Cargo"></RadzenButton>
+                    <RadzenButton ButtonType="Radzen.ButtonType.Submit" Text="Adiconar Cargo"></RadzenButton>
                 </div>
             </div>
             </RadzenFieldset>

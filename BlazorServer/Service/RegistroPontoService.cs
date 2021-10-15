@@ -17,16 +17,11 @@ namespace BlazorServer.Service
 
         public List<Colaborador> colaboradores { get; set; }
 
-
         public void AddRecord(RegistroPonto record)
         {
             registroPontos.Add(record);
         }
-        /// <summary>
-        /// Retorna True caso haja um registro e false caso não exista
-        /// </summary>
-        /// <param name="record"></param>
-        /// <returns></returns>
+
         public bool ValidaPontoExiste(RegistroPonto record)
         {
             RegistroPonto reg = registroPontos.FirstOrDefault(i => i.AM_ENT == record.AM_ENT && i.ColaboradorId == record.ColaboradorId);
@@ -51,7 +46,7 @@ namespace BlazorServer.Service
             registroPontos.Remove(reg);
         }
 
-        public async Task<List<RegistroPonto>> GetAllGeristroPonto()
+        public virtual async Task<List<RegistroPonto>> GetAllGeristroPonto()
         {
             return registroPontos;
         }
@@ -64,8 +59,6 @@ namespace BlazorServer.Service
 
         public async Task<List<RegistroPonto>> GetAllRegistroPontoByIdData(Guid id, DateTime data1, DateTime data2)
         {
-            //Guid idGuid = this.colaboradores.Find(i => i.CodPonto == id).Id;
-            //return registroPontos.Where(i => i.Colaborador.Id == idGuid && i.Data >= data1 && i.Data <= data2).ToList();
             if (id == Guid.Empty && data1 == DateTime.MinValue)
             {
                 return registroPontos;
@@ -88,8 +81,6 @@ namespace BlazorServer.Service
                     return registroPontos.Where(i => i.Data >= data1 && i.Data <= data2).ToList();
                 }
             }
-
-
         }
 
         public void UpdateRecord(RegistroPonto record)

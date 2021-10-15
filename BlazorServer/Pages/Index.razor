@@ -5,90 +5,30 @@
 @using System.Globalization
 @using System.Timers
 @using System.Linq.Dynamic.Core
+@using MudBlazor
+@using MudBlazor.Components
 
 @inject IJSRuntime JSRuntime
-@inject IMatDialogService MatDialogService
-@inject DialogService DialogService
+
+@inject MudBlazor.DialogService DialogService
+@inject Radzen.DialogService DialogServiceRad
 
 @implements IDisposable
 
 @inherits OwningComponentBase
 
-
-
 <div class="container">
     <div Class="row">
-            <MatFileUpload OnChange="@ProcessaFile" AllowMultiple="false" Label="Selecione um único arquivo aqui no navegador"></MatFileUpload>
+             <InputFile id="fileInput112" OnChange="ProcessaFile" hidden multiple accept=".txt"/>
+                <MudButton HtmlTag="label" 
+                           Variant="Variant.Filled" 
+                           Color="Color.Primary" 
+                           StartIcon="@Icons.Filled.CloudUpload" 
+                           for="fileInput112">
+                           Upload do arquivo
+                </MudButton>
     </div>
-      
     
-    
-@*    <div class="row">
-                <div class="col-sm-5">
-                    <h3>Selecione o colaborador</h3>
-                    <RadzenDropDownDataGrid TValue="Guid" @bind-Value="@idSelectd" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith"
-                                        AllowFiltering="true" AllowClear="true" Data="@cs.Colaboradores" TextProperty="Nome" ValueProperty="Id" 
-                                        Style="width:100%" />
-                </div>
-                <div class="col-sm">
-                    <h3>Data inicial</h3>
-                    <RadzenDatePicker @bind-Value=@Data1 DateFormat="dd/MM/yyyy" Change=@(args => OnChange(args, "DatePicker", "dd/MM/yyyy")) />
-                </div>
-                <div class="col-sm">
-                    <h3>Data final</h3>
-                    <RadzenDatePicker @bind-Value=@Data2 DateFormat="dd/MM/yyyy" Change=@(args => OnChange(args, "DatePicker", "dd/MM/yyyy")) />  
-                </div>
-                <div class="col-sm">
-
-                            <button type="button" class="btn btn-primary btn-lg" @onclick=@FiltroPontoProcessados >Filtrar</button>
-                            <h3 class="text-hide">Selecione o colaborador</h3>
-                            <button type="button" class="btn btn-primary btn-lg" style="margin-bottom:1px; margin-top:10px" @onclick=@FiltroPontoProcessados >Filtrar</button>
-                            <RadzenButton Style="" Click="@FiltroPontoProcessados">Filtrar</RadzenButton>
-                            <RadzenTextBox @bind-Value=@value MaxLength="5" Change=@(args => OnChange(args, "TextBox with 5 maximum characters")) />
-                </div>
-      </div>*@           
-@*    <div class="row" hidden=false>
-        <div class="row">
-            <div id="PrintDiv">
-                <table class="table table-hover table-bordered table-sm">
-                    <thead>
-                        <tr>
-                            <th scope="col">Cód.</th>
-                            <th scope="col">Colaborador</th>
-                            <th scope="col">DiaSemana</th>
-                            <th scope="col">Data</th>
-                            <th scope="col">AM_ENT</th>
-                            <th scope="col">AM_SAI</th>
-                            <th scope="col">PM_ENT</th>
-                            <th scope="col">PM_SAI</th>
-                            <th scope="col">NOI_ENT</th>
-                            <th scope="col">NOI_SAI</th>
-                            <th scope="col">TotalHorasDia</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                            @foreach (var item in filtroPontosProcessados)
-                            {
-                                <tr class=@Convert.ToString(item.TotalHorasDia < TimeSpan.Zero ? "table-danger":"")>
-                                    <td scope="row">@item.Colaborador.CodPonto</td>
-                                    <td>@item.Colaborador.Nome</td>
-                                    <td>@item.DiaSemanaPtBr</td>
-                                    <td>@item.Data.ToShortDateString()</td>
-                                    <td>@item.AM_ENT.ToString("HH:mm")</td>
-                                    <td>@item.AM_SAI.ToString("HH:mm")</td>
-                                    <td>@item.PM_ENT.ToString("HH:mm")</td>
-                                    <td>@item.PM_SAI.ToString("HH:mm")</td>
-                                    <td>@item.NOI_ENT.ToString("HH:mm")</td>
-                                    <td>@item.NOI_SAI.ToString("HH:mm")</td>
-                                    <td>@item.TotalHorasDia</td>
-                                    <td><RadzenButton Text="Editar" Click=@(args => SelectionChangedEvent(item)) ButtonStyle="ButtonStyle.Secondary"/></td>
-                                </tr>
-                            }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-      </div>*@
 
     <div class="PrintDiv2">
             <div class="row">
@@ -119,39 +59,55 @@
 </div>
 
 
-
-     <MatDialog @bind-IsOpen="@dialogIsOpen">
-            <MatDialogTitle>Editar Ponto</MatDialogTitle>
-            <MatDialogContent>
-                <EditForm Model="@regPonto" OnValidSubmit="Success">
-                    <p><b>Entrada manhã</b></p>
-                    <RadzenDatePicker TValue="DateTime" @bind-Value="regPonto.AM_ENT" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"/> @*Change=@(args => OnChange(args, "Time-only DatePicker", "HH:mm"))*@
-                    <p><b>Saída manhã</b></p>
-                    <RadzenDatePicker TValue="DateTime" @bind-Value="regPonto.AM_SAI" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"/>
-                    <p><b>Entrada tarde</b></p>
-                    <RadzenDatePicker TValue="DateTime" @bind-Value="regPonto.PM_ENT" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"/>
-                    <p><b>Saída tarde</b></p>
-                    <RadzenDatePicker TValue="DateTime" @bind-Value="regPonto.PM_SAI" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"/>
-                    <p><b>Entrada noite</b></p>
-                    <RadzenDatePicker TValue="DateTime" @bind-Value="regPonto.NOI_ENT" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"/>
-                    <p><b>Saída noite</b></p>
-                    <RadzenDatePicker TValue="DateTime" @bind-Value="regPonto.NOI_SAI" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"/>
-                    <p><b>Total Horas do Dia</b></p>
-                    <a>@regPonto.TotalHorasDia</a>
-                </EditForm>
-            </MatDialogContent>
-            <MatDialogActions>
-                <MatButton OnClick="@(e => { dialogIsOpen = false; })">Cancelar</MatButton>
-                <MatButton OnClick="@OkClick">Salvar</MatButton>
-            </MatDialogActions>
-        </MatDialog>
-
-
-
 @code
 {
+     public Data.RegistroPonto regPonto = new RegistroPonto();
 
-    async Task LoadData(LoadDataArgs args)
+    public bool dialogIsOpen = false;
+
+    CultureInfo Cultura = new CultureInfo("pt-BR");
+
+    public string Nome { get; set; }
+
+    public DateTime? Data { get; set; }
+
+    public Guid idSelectd { get; set; }
+
+    public DateTime Data1 { get; set; }
+
+    public DateTime Data2 { get; set; }
+
+    public DateTime DataMais1 { get => Data2.AddHours(23); }
+
+    string RegoligoSelecionado = "Nacional";
+
+    List<Arquivo> listArquivo = new List<Arquivo>();
+
+    List<string> listAlert = new List<string>();
+
+    List<Data.RegistroRelogio> ListRegPonto = new List<RegistroRelogio>();
+
+    List<Data.RegistroRelogio> filtro = new List<RegistroRelogio>();
+
+    List<Data.RegistroPonto> filtroPontosProcessados = new List<RegistroPonto>();
+
+    //IEnumerable<Data.RegistroPonto> filtroPontosProcessados;
+
+    Service.ColaboradorService cs;
+
+    Service.RegistroPontoService rps;
+
+    string[] value1ItemsCombo = new[]
+    {
+        "Nacional",
+        "Chines",
+    };
+
+    TimeSpan TotalHorasTrabalhadasNoPeriodo;
+
+    public string TotalHorasPeriodo { get; set; }
+
+    void LoadData(LoadDataArgs args)
     {
         var query = rps.registroPontos.AsQueryable();
 
@@ -166,8 +122,7 @@
         }
         filtroPontosProcessados = query.Skip(args.Skip.Value).Take(args.Top.Value).ToList();
     }
-
-    TimeSpan TotalHorasTrabalhadasNoPeriodo;
+    
 
     public async Task Print()
     {
@@ -175,7 +130,6 @@
         await JSRuntime.InvokeVoidAsync("Print");
     }
 
-    public string TotalHorasPeriodo { get; set; }
 
     //Evento ao clicar na grid 
     void SelectionChangedEvent(object reg)
@@ -205,11 +159,6 @@
     }
 
 
-
-    void ButtonClicked()
-    {
-    }
-
     void OnChange(DateTime? value, string name, string format)
     {
         JSRuntime.InvokeAsync<object>("console.log", $"{name} value changed to {value?.ToString(format)}");
@@ -221,85 +170,7 @@
     {
         await JSRuntime.InvokeAsync<object>("alert", "Successful login!");
     }
-
-    public Data.RegistroPonto regPonto = new RegistroPonto();
-    public bool dialogIsOpen = false;
-
-    CultureInfo Cultura = new CultureInfo("pt-BR");
-
-    public string Nome { get; set; }
-    public DateTime? Data { get; set; }
-
-    public Guid idSelectd { get; set; }
-
-    public DateTime Data1 { get; set; }
-
-    public DateTime Data2 { get; set; }
-
-    public DateTime DataMais1 { get => Data2.AddHours(23); }
-
-    string RegoligoSelecionado = "Nacional";
-    string[] value1ItemsCombo = new[]
-    {
-        "Nacional",
-        "Chines",
-    };
-
-    List<Arquivo> listArquivo = new List<Arquivo>();
-
-    List<string> listAlert = new List<string>();
-
-    List<Data.RegistroRelogio> ListRegPonto = new List<RegistroRelogio>();
-
-    List<Data.RegistroRelogio> filtro = new List<RegistroRelogio>();
-
-    List<Data.RegistroPonto> filtroPontosProcessados = new List<RegistroPonto>();
-
-    //IEnumerable<Data.RegistroPonto> filtroPontosProcessados;
-
-    Service.ColaboradorService cs;
-
-    Service.RegistroPontoService rps;
-
-    void OkClick()
-    {
-        dialogIsOpen = false;
-    }
-
-    void OpenDialog()
-    {
-        dialogIsOpen = true;
-    }
-
-    async Task OpenDialog(Guid Id)
-    {
-        dialogIsOpen = true;
-    }
-
-    async Task OpenDialogFromService()
-    {
-        await MatDialogService.OpenAsync(typeof(DemoDialogItem), null);
-    }
-
-    public void FiltroPonto()
-    {
-        //filtro = ListRegPonto;
-        //if (idSelectd!=Guid.Empty)
-        //{
-        //    int codigo = cs.Colaboradores.FirstOrDefault(x => x.Id.Equals(idSelectd)).CodPonto;
-        //    filtro = ListRegPonto.Where<RegistroRelogio>(i => i.CodColaborador.Equals(codigo)).ToList();
-        //}
-        //if (Data1 != DateTime.MinValue && Data2 != DateTime.MinValue)
-        //{
-        //    if(idSelectd != Guid.Empty)
-        //    {
-        //        int codigo = cs.Colaboradores.FirstOrDefault(x => x.Id.Equals(idSelectd)).CodPonto;
-        //        filtro = ListRegPonto.Where<RegistroRelogio>(i => i.CodColaborador.Equals(codigo) && i.Data >= Data1 && i.Data <= DataMais1).ToList();
-        //    }
-        //    else
-        //        filtro = ListRegPonto.Where<RegistroRelogio>(i => i.Data >= Data1 && i.Data <= DataMais1).ToList();
-        //}
-    }
+       
 
     public async void FiltroPontoProcessados()
     {
@@ -321,15 +192,14 @@
         await JSRuntime.InvokeVoidAsync("console.log", "teste", files);
     }
 
-    public void Dispose()
+    private void UploadFiles(InputFileChangeEventArgs e)
     {
-        //DialogService.OnOpen =- Open;
-        //DialogService.OnClose -= Close;                 
+        var entries = e.GetMultipleFiles();
     }
 
     async Task BusyDialog()
     {
-        await DialogService.OpenAsync("", ds =>
+        await DialogServiceRad.OpenAsync("", ds =>
             @<div>
                 <div class="row">
                     <div class="col-md-12">
@@ -337,25 +207,28 @@
                     </div>
                 </div>
         </div>
-    , new DialogOptions() { ShowTitle = false, Style = "min-height:auto;min-width:auto;width:auto" });
+    , new Radzen.DialogOptions() { ShowTitle = false, Style = "min-height:auto;min-width:auto;width:auto" });
     }
 
 
-    async Task ProcessaFile(IMatFileUploadEntry[] files)
+
+    async Task ProcessaFile(InputFileChangeEventArgs files)
     {
+
         InvokeAsync(async () =>
         {
             await FilesReady(files);
-            DialogService.Close();
+            DialogServiceRad.Close();
         });
-
         await BusyDialog();
     }
 
-    async Task FilesReady(IMatFileUploadEntry[] files)
+    async Task FilesReady(InputFileChangeEventArgs e)
     {
         string extensao = string.Empty;
-        var file = files.FirstOrDefault();
+
+        var entries = e.GetMultipleFiles();
+        var file = entries.FirstOrDefault();
         extensao = file.Name.Substring(file.Name.IndexOf("."), file.Name.Length - file.Name.IndexOf("."));
 
         if (!extensao.Equals(".txt"))
@@ -370,28 +243,13 @@
 
         var ms = new MemoryStream();
 
-        await file.WriteToStreamAsync(ms);
+        await e.File.OpenReadStream().CopyToAsync(ms);
 
         StreamReader sr = new StreamReader(ms);
 
-        List<string> linhas = new List<string>();
-
         ms.Position = 0;
-
-        string linha = "";
-        
-        while (!(linha is null))
-        {
-            linha = sr.ReadLine();
-            if (linha != null)
-            {
-                linhas.Add(linha);
-            }
-        }
 
         List<string> lista = new List<string>();
-
-        ms.Position = 0;
 
         string sline = "";
 
@@ -429,8 +287,8 @@
                 ListRegPonto.Add(reg);
             }
         }
-        FiltroPonto();
         await ProcessaPontos();
+        //filtroPontosProcessados = await rps.GetAllGeristroPonto();
         filtroPontosProcessados = await rps.GetAllGeristroPonto();
         TotalHorasDoPeriodo();
     }

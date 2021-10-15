@@ -1,12 +1,12 @@
 using BlazorServer.Data;
 using BlazorServer.Service;
-using MatBlazor;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MudBlazor.Services;
 using Radzen;
 using System.Net.Http;
 
@@ -29,7 +29,8 @@ namespace BlazorServer
                 //options.EnableSensitiveDataLogging(true);
             });
 
-            services.AddScoped<DialogService>();
+            services.AddScoped<MudBlazor.DialogService>();
+            services.AddScoped<Radzen.DialogService>();
             services.AddScoped<NotificationService>();
             services.AddScoped<TooltipService>();
             services.AddScoped<ContextMenuService>();
@@ -42,7 +43,8 @@ namespace BlazorServer
             services.AddScoped<RegistroPontoService>();
             services.AddScoped<CargoService>();
             services.AddScoped<HttpClient>();
-            services.AddMatBlazor();
+            services.AddMudServices();
+            //services.AddMudServices();
 
             var supportedCultures = new[]
             {

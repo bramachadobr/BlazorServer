@@ -34,20 +34,21 @@ namespace BlazorServer.Service
 
         public List<Colaborador> GetAllColaboradoresList()
         {
-            return _context.Colaboradors.ToList();
+            this.Colaboradores = _context.Colaboradors.ToList();
+            return this.Colaboradores;
         }
 
         public async Task<Colaborador> GetColaboradorById(Guid id)
         {
             //return await _context.Colaboradors.Where<Colaborador>(a => a.Id.Equals(id)).FirstOrDefaultAsync();
             //return await _context.Colaboradors.FirstOrDefaultAsync(a => a.Id.Equals(id));
-            return _context.Colaboradors.FirstOrDefault(i => i.Id == id);
+            return  _context.Colaboradors.FirstOrDefault(i => i.Id == id);
         }
 
         public async Task<Colaborador> GetColaboradorByIdPonto(int id)
         {
             //return await _context.Colaboradors.Where<Colaborador>(x => x.CodPonto == id).FirstOrDefaultAsync();
-            return _context.Colaboradors.FirstOrDefault(i => i.CodPonto == id);
+            return await _context.Colaboradors.FirstOrDefaultAsync(i => i.CodPonto == id);
         }
 
         public async Task<List<Colaborador>> GetColaboradorsByCargo(string cargoUrl)

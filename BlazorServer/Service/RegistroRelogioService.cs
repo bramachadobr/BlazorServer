@@ -1,8 +1,9 @@
 ﻿using BlazorServer.Data;
-using MatBlazor;
+using Microsoft.AspNetCore.Components.Forms;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BlazorServer.Service
@@ -20,8 +21,10 @@ namespace BlazorServer.Service
             registroRelogios = new List<RegistroRelogio>();
         }
 
-        public bool ValidaArquivo(IMatFileUploadEntry file)
+        public bool ValidaArquivo(InputFileChangeEventArgs e)
         {
+            var entidade = e.GetMultipleFiles();
+            var file = entidade.FirstOrDefault();
             string extensao = string.Empty;
             extensao = file.Name.Substring(file.Name.IndexOf("."), file.Name.Length - file.Name.IndexOf("."));
 
@@ -64,11 +67,14 @@ namespace BlazorServer.Service
         }
 
 
-        public async Task<List<string>> ConvertFileInList(IMatFileUploadEntry file)
+        public async Task<List<string>> ConvertFileInList(InputFileChangeEventArgs e)
         {
+            var files = e.GetMultipleFiles();
+            var file = files.FirstOrDefault();
+
             var ms = new MemoryStream();
 
-            await file.WriteToStreamAsync(ms);
+            await file.OpenReadStream().CopyToAsync(ms);
 
             StreamReader sr = new StreamReader(ms);
 

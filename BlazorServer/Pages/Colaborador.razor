@@ -6,16 +6,16 @@
 @using System.IO
 @using System.Net.Http.Headers
 
-@inject DialogService DialogService
-@implements IDisposable
+@inject MudBlazor.DialogService DialogService
+@*@inject Radzen.DialogService DialogServiceRad*@
 @inherits OwningComponentBase
 
 
 
-    <dialog></dialog>
-
 <div class="container">
-    <RadzenTemplateForm Data="@colaborador" Submit="@((Data.Colaborador args) => { Submit(args); })">
+<MudDialog>
+    <DialogContent>
+        <RadzenTemplateForm Data="@colaborador" Submit="@((Data.Colaborador args) => { Submit(); })">
      <div class="row">
             <div class="col-md-6">
                <RadzenFieldset Text="Cadastro">
@@ -167,39 +167,44 @@
                 </RadzenFieldset>
             </div>
         </div>
+    </RadzenTemplateForm>
+    </DialogContent>
+    <DialogActions>
         <div class="row justify-content-center">
             <div class="col-md-12 d-flex align-items-end justify-content-center" style="margin-top: 16px;">
-                <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Salvar"  /> @*Click="@((args) => DialogService.Close(true))"*@
-                <RadzenButton ButtonStyle="ButtonStyle.Light" Icon="cancel" style="display: inline-block; margin-left: 10px;" Text="Fechar" Click="@Cancel" />
+                @*<RadzenButton ButtonType="Radzen.ButtonType.Submit" Click="@(args => Submit(args))"  Icon="save" Text="Salvar"  /> *@
+                <MudButton Color="Color.Primary" OnClick="Submit">Salvar</MudButton>
+                <MudButton Color="Color.Primary" OnClick="Close">Cancelar</MudButton>
             </div>
         </div>
-    </RadzenTemplateForm>
+        
+    </DialogActions>
+</MudDialog>
 </div>
 
 
 
 @code {
 
-    bool editCodigo;
 
-    Data.Colaborador colaborador;
-
-    IEnumerable<Data.Cargo> cargos;
+    [Parameter] public RadzenButton ButtonFecha { get; set; }
+    [CascadingParameter] public MudDialogInstance MudDialog { get; set; }
+    [Parameter] public Guid ColaboradorID { get; set; }
     
     Service.ColaboradorService _colaboradorService;
     Service.CargoService _cargoService;
+    IEnumerable<Data.Cargo> cargos;
+    Data.Colaborador colaborador;
+    bool editCodigo;
 
-    
 
-    [Parameter]
-    public Guid ColaboradorID { get; set; }
+    void Close() => MudDialog.Close(DialogResult.Cancel());
 
+    //void Salvar() => MudDialog.Close(DialogResult.Ok(true));
 
     protected override async void OnInitialized()
     {
         base.OnInitialized();
-        DialogService.OnOpen += Open;
-        DialogService.OnClose += Close;
         editCodigo = true;
 
         if (_colaboradorService ==null)
@@ -222,25 +227,26 @@
         }
     }
 
-    void Open(string title, Type type, Dictionary<string, object> parameters, DialogOptions options)
-    {
+    //void Open(string title, Type type, Dictionary<string, object> parameters, MudBlazor.DialogOptions options)
+    //{
         
-    }
+    //}
 
-    async void Close(dynamic result)
-    {
-        //if (result)
-        //{
-        //    var dialog = DialogService.Confirm("Deseja salvar as alterações ?", "Salvar alterações", new ConfirmOptions() { OkButtonText = "Sim", CancelButtonText = "Não" });
-        //    dialog.Wait();
-        //    bool isValid = dialog.Result.Value;
-        //    if (isValid)
-        //    {
-        //        Service.UpdateRecord(colaborador);
-        //        await DialogService.Confirm("Registro salvo/atualizado", "Salvar", new ConfirmOptions() { OkButtonText = "ok"});
-        //    }
-        //}
-    }
+    //async void Close(dynamic result)
+    //{
+
+    //    //if (result)
+    //    //{
+    //    //    var dialog = DialogService.Confirm("Deseja salvar as alterações ?", "Salvar alterações", new ConfirmOptions() { OkButtonText = "Sim", CancelButtonText = "Não" });
+    //    //    dialog.Wait();
+    //    //    bool isValid = dialog.Result.Value;
+    //    //    if (isValid)
+    //    //    {
+    //    //        Service.UpdateRecord(colaborador);
+    //    //        await DialogService.Confirm("Registro salvo/atualizado", "Salvar", new ConfirmOptions() { OkButtonText = "ok"});
+    //    //    }
+    //    //}
+    //}
 
     void OnChange(object value, string name)
     {
@@ -254,34 +260,38 @@
 
     async void AlteraCodigo()
     {
-        var ok = await DialogService.Confirm("Deseja realmente Alterar o código?", "Alterar", new ConfirmOptions() { OkButtonText = "Sim", CancelButtonText = "Não" });
-        editCodigo = !Convert.ToBoolean(ok);
+        //var ok = await DialogServiceRad.Confirm("Deseja realmente Alterar o código?", "Alterar", new ConfirmOptions() { OkButtonText = "Sim", CancelButtonText = "Não" });
+        //editCodigo = !Convert.ToBoolean(ok);
     }
 
 
-    async void Submit(Data.Colaborador args)
+    void Submit()
     {
-        var dialog = await DialogService.Confirm("Deseja salvar as alterações ?", "Salvar alterações", new ConfirmOptions() { OkButtonText = "Sim", CancelButtonText = "Não" });
+        _colaboradorService.UpdateRecord(colaborador);
+        MudDialog.Close(DialogResult.Ok(true));
+
+        //var parameters = new DialogParameters {[ "server" ] = server};
+
+        //var parametros = new MudBlazor.DialogParameters();
+        //parametros.Add("ContentText", "Deseja salvar as alterações ?");
+        //parametros.Add("ButtonText", "Sim");
+        //parametros.Add("Color", Color.Success);
+
+        //var option = new MudBlazor.DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
         
-        bool isValid = Convert.ToBoolean(dialog);
+        //var result = await DialogService.Show<DialogoSimplesMudBlazor>("Confirmar",parametros, option).Result;
 
-        if (isValid)
-        {
-            _colaboradorService.UpdateRecord(args);
-        }
-    }
+        //if (!result.Cancelled)
+        //{
+            
+        //}
 
-    void Cancel()
-    {
+        //var dialog = await DialogServiceRad.Confirm("Deseja salvar as alterações ?", "Salvar alterações", new ConfirmOptions() { OkButtonText = "Sim", CancelButtonText = "Não",  });
         
+        //bool isValid = Convert.ToBoolean(dialog);
+        //if (isValid)
+        //{
+        //    _colaboradorService.UpdateRecord(args);
+        //}
     }
-
-    public void Dispose()
-    {
-        DialogService.OnOpen -= Open;
-        DialogService.OnClose -= Close;
-    }
-
-
-
 }

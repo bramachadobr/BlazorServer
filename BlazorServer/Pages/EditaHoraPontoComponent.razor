@@ -1,0 +1,29 @@
+﻿     @*<MatDialog @bind-IsOpen="@dialogIsOpen">
+            <MatDialogTitle>Editar Ponto</MatDialogTitle>
+            <MatDialogContent>
+                <EditForm Model="@regPonto" OnValidSubmit="Success">
+                    <p><b>Entrada manhã</b></p>
+                    <RadzenDatePicker TValue="DateTime" @bind-Value="regPonto.AM_ENT" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"/> @*Change=@(args => OnChange(args, "Time-only DatePicker", "HH:mm"))
+                    <p><b>Saída manhã</b></p>
+                    <RadzenDatePicker TValue="DateTime" @bind-Value="regPonto.AM_SAI" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"/>
+                    <p><b>Entrada tarde</b></p>
+                    <RadzenDatePicker TValue="DateTime" @bind-Value="regPonto.PM_ENT" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"/>
+                    <p><b>Saída tarde</b></p>
+                    <RadzenDatePicker TValue="DateTime" @bind-Value="regPonto.PM_SAI" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"/>
+                    <p><b>Entrada noite</b></p>
+                    <RadzenDatePicker TValue="DateTime" @bind-Value="regPonto.NOI_ENT" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"/>
+                    <p><b>Saída noite</b></p>
+                    <RadzenDatePicker TValue="DateTime" @bind-Value="regPonto.NOI_SAI" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"/>
+                    <p><b>Total Horas do Dia</b></p>
+                    <a>@regPonto.TotalHorasDia</a>
+                </EditForm>
+            </MatDialogContent>
+            <MatDialogActions>
+                <MatButton OnClick="@(e => { dialogIsOpen = false; })">Cancelar</MatButton>
+                <MatButton OnClick="@OkClick">Salvar</MatButton>
+            </MatDialogActions>
+        </MatDialog>*@
+
+@code {
+
+}

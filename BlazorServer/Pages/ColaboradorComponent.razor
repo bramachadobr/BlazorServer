@@ -8,9 +8,10 @@
 @using System.Linq.Dynamic.Core
 @using System.ComponentModel.DataAnnotations
 
-@inject DialogService DialogService
+@*@inject  MudBlazor.DialogService DialogService*@
 @implements IDisposable
 @inherits OwningComponentBase<Service.ColaboradorService>
+@inject IDialogService DialogService
 
 
 <h3>Colaborador Component</h3>
@@ -46,7 +47,7 @@
     </div>
 </div>
 
- <RadzenButton Text="Show confirm dialog" Click=@(args => DialogService.Confirm("Are you sure?", "MyTitle", new ConfirmOptions() { OkButtonText = "Yes", CancelButtonText = "No" })) />
+@* <RadzenButton Text="Show confirm dialog" Click=@(args => Radzen.DialogService .DialogService.Confirm("Are you sure?", "MyTitle", new ConfirmOptions() { OkButtonText = "Yes", CancelButtonText = "No" })) />*@
 
 
 
@@ -59,48 +60,44 @@
 
     int count;
 
-    public Service.ColaboradorService _coladoradorService;
+    //public Service.ColaboradorService _coladoradorService;
 
     public Data.Colaborador ColaboradorObj;
 
-    protected override void OnInitialized()
+    MudBlazor.DialogService dialogService;
+
+    protected override async void OnInitialized()
     {
         base.OnInitialized();
-        _coladoradorService = Service;
-        Task.Run(()=>LoadData(null));
-        DialogService.OnOpen += Open;
-        DialogService.OnClose += Close;
+        //Task.Run(() => LoadData(ultimoFiltro));
+        await LoadData(ultimoFiltro);
     }
 
-    void Open(string title, Type type, Dictionary<string, object> parameters, DialogOptions options)
-    {   
-    }
-
-    void Close(dynamic result)
-    {
-    }
-
-    
 
     async void ResetGrid()
     {
         grid.Reset(true);
         await grid.FirstPage(true);
-        _Colaboradores = _coladoradorService.Colaboradores;
+        await LoadData(ultimoFiltro);
     }
 
     async Task EditarItem()
     {
     }
 
+    Radzen.LoadDataArgs ultimoFiltro;
 
-    async Task LoadData(LoadDataArgs args)
+    async Task LoadData(Radzen.LoadDataArgs args)
     {
+        ultimoFiltro = args;
         isLoading = true;
 
-        var query = _coladoradorService.Colaboradores.AsQueryable();
+        Service.GetAllColaboradoresList();
+
+        var query =  Service.Colaboradores.AsQueryable();
 
         _Colaboradores = query.ToList();
+
 
         if (args != null)
         {
@@ -124,34 +121,90 @@
             // Important!!! Make sure the Count property of RadzenDataGrid is set.
             count = query.Count();
         }
+        else
+        {
+            _Colaboradores = query.ToList();
+        }
+
         count = _Colaboradores.Count();
         isLoading = false;
     }
 
     Guid colaboradorId;
 
-    public async Task OpenColaborador(DataGridRowMouseEventArgs<Data.Colaborador> item)
-    {
-        colaboradorId = item.Data.Id;
-        var resposta = await DialogService.OpenAsync<Colaborador>($"Data.Colaborador {colaboradorId}",
-               new Dictionary<string, object>() { { "ColaboradorID", colaboradorId } }, 
-        new DialogOptions() { Width = "800px", Height = "550px", Style="Resizable: true " });  /*;  Draggable : true*/
+    void Open(string title, Type type, Dictionary<string, object> parameters, MudBlazor.DialogOptions options)
+    {   
     }
 
-    public async Task OpenColaborador(Guid id)
-    {
-        colaboradorId = id;
-        await DialogService.OpenAsync<Colaborador>($"Data.Colaborador {colaboradorId}",
-               new Dictionary<string, object>() { { "ColaboradorID", colaboradorId } },
-               new DialogOptions() { Width = "800px", Height = "550px", Style="Resizable: true " }); ;  /*Draggable : true */
+    void Close(dynamic result)
+    {   
     }
+
+    RadzenButton buttonFecharDialog;
+
+    //public async Task OpenColaborador(DataGridRowMouseEventArgs<Data.Colaborador> item)
+    //{
+    //    colaboradorId = item.Data.Id;
+    //    await DialogService.OpenAsync<Colaborador>($"Data.Colaborador {colaboradorId}",
+    //               new Dictionary<string, object>() { { "ColaboradorID", colaboradorId }, { "ButtonFecha", buttonFecharDialog} },
+    //        new DialogOptions() { Width = "800px", Height = "600px", Style = "Resizable: true ;  Draggable : true ", ShowClose = true, ShowTitle = true, 
+    //        });
+    //}
+
+    public async void OpenColaborador(DataGridRowMouseEventArgs<Data.Colaborador> item)
+    {
+        Data.Colaborador colab = (Data.Colaborador)item.Data;
+        var dialog = DialogService.Show<Colaborador>("Cadastro do Colaborador", new MudBlazor.DialogParameters () { ["ColaboradorID"]=colab.Id });
+        var result = await dialog.Result;
+
+        if (!result.Cancelled)
+        {
+            ResetGrid();
+        }
+
+        //InvokeAsync(async () =>
+        //{
+        //    var dialog = DialogService.Show<Colaborador>();
+        //    var result = dialog.Result;
+        //});
+
+    }
+
+    //public async void OpenColaborador(DataGridRowMouseEventArgs<Data.Colaborador> item)
+    //{
+
+    //    var dialog = DialogService.Show<Colaborador>("", new DialogParameters(){["ColaboradorID"]=colaboradorId});
+    //    var result = await dialog.Result;
+
+    //    //InvokeAsync(async () =>
+    //    //{
+    //    //    colaboradorId = item.Data.Id;
+    //    //    await DialogService.OpenAsync<Colaborador>($"Data.Colaborador {colaboradorId}",
+    //    //           new Dictionary<string, object>() { { "ColaboradorID", colaboradorId }, { "ButtonFecha", buttonFecharDialog} },
+    //    //    new DialogOptions() { Width = "800px", Height = "600px", Style = "Resizable: true ;  Draggable : true ", ShowClose = true, ShowTitle = true, 
+    //    //    });
+    //    //});
+    //}
+
+    public void CloseDialog()
+    {
+        
+    }
+
+    //public async Task OpenColaborador(Guid id)
+    //{
+    //    colaboradorId = id;
+    //    await DialogService.OpenAsync<Colaborador>($"Data.Colaborador {colaboradorId}",
+    //           new Dictionary<string, object>() { { "ColaboradorID", colaboradorId } },
+    //           new DialogOptions() { Width = "800px", Height = "550px", Style="Resizable: true " }); ;  /*Draggable : true */
+    //}
 
 
 
     public void Dispose()
     {
-        DialogService.OnOpen -= Open;
-        DialogService.OnClose -= Close;
+        //DialogService.OnOpen -= Open;
+        //DialogService.OnClose -= Close;
     }
 
 
