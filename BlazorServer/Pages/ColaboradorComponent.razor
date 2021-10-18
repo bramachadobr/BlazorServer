@@ -77,8 +77,8 @@
     async void ResetGrid()
     {
         grid.Reset(true);
-        await grid.FirstPage(true);
-        await LoadData(ultimoFiltro);
+        await grid.Reload();
+        await LoadData(ultimoFiltro);   
     }
 
     async Task EditarItem()
@@ -92,9 +92,9 @@
         ultimoFiltro = args;
         isLoading = true;
 
-        Service.GetAllColaboradoresList();
-
-        var query =  Service.Colaboradores.AsQueryable();
+        
+        //var query =  Service.Colaboradores.AsQueryable();
+        var query =  Service.GetAllColaboradoresList().AsQueryable();
 
         _Colaboradores = query.ToList();
 
@@ -154,7 +154,9 @@
     public async void OpenColaborador(DataGridRowMouseEventArgs<Data.Colaborador> item)
     {
         Data.Colaborador colab = (Data.Colaborador)item.Data;
-        var dialog = DialogService.Show<Colaborador>("Cadastro do Colaborador", new MudBlazor.DialogParameters () { ["ColaboradorID"]=colab.Id });
+        var dialog = DialogService.Show<Colaborador>("Cadastro do Colaborador", new MudBlazor.DialogParameters () 
+            { ["ColaboradorID"]=colab.Id, 
+              ["colaborador"]=colab });
         var result = await dialog.Result;
 
         if (!result.Cancelled)

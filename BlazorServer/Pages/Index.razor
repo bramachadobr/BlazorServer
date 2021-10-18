@@ -61,7 +61,7 @@
 
 @code
 {
-     public Data.RegistroPonto regPonto = new RegistroPonto();
+    public Data.RegistroPonto regPonto = new RegistroPonto();
 
     public bool dialogIsOpen = false;
 
@@ -89,9 +89,9 @@
 
     List<Data.RegistroRelogio> filtro = new List<RegistroRelogio>();
 
-    List<Data.RegistroPonto> filtroPontosProcessados = new List<RegistroPonto>();
+    //List<Data.RegistroPonto> filtroPontosProcessados;
 
-    //IEnumerable<Data.RegistroPonto> filtroPontosProcessados;
+    IEnumerable<Data.RegistroPonto> filtroPontosProcessados;
 
     Service.ColaboradorService cs;
 
@@ -289,7 +289,8 @@
         }
         await ProcessaPontos();
         //filtroPontosProcessados = await rps.GetAllGeristroPonto();
-        filtroPontosProcessados = await rps.GetAllGeristroPonto();
+        var query = await rps.GetAllGeristroPonto();
+        filtroPontosProcessados = query.ToList().AsQueryable();
         TotalHorasDoPeriodo();
     }
 

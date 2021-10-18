@@ -69,11 +69,25 @@ namespace BlazorServer.Service
 
         public bool UpdateRecord(Colaborador record)
         {
-            Colaborador colab = _context.Colaboradors.Single(i => i.Id.Equals(record.Id));
+            Colaborador colabUpdate = _context.Colaboradors.Where(i => i.Id == record.Id).FirstOrDefault();
 
-            if (colab != null)
+            if (colabUpdate != null)
             {
-                colab = record;
+                colabUpdate.Ativo = record.Ativo;
+                colabUpdate.Bairro = record.Bairro;
+                colabUpdate.Cargo=record.Cargo;
+                colabUpdate.Cidade= record.Cidade;
+                colabUpdate.Nome=record.Nome;
+                colabUpdate.Numero=record.Numero;
+                colabUpdate.CodPonto=record.CodPonto;   
+                colabUpdate.Registros=record.Registros;
+                colabUpdate.Salario=record.Salario;
+                colabUpdate.Telefone=record.Telefone;
+                colabUpdate.Unidade=record.Unidade;
+                colabUpdate.Cpf = record.Cpf;
+                colabUpdate.Email = record.Email;
+                
+                _context.Colaboradors.Update(colabUpdate);
                 _context.SaveChanges();
                 return true;
             }

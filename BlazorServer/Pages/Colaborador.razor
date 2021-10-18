@@ -186,21 +186,18 @@
 
 @code {
 
-
-    [Parameter] public RadzenButton ButtonFecha { get; set; }
     [CascadingParameter] public MudDialogInstance MudDialog { get; set; }
+    [Parameter] public RadzenButton ButtonFecha { get; set; }
     [Parameter] public Guid ColaboradorID { get; set; }
-    
+    [Parameter] public Data.Colaborador colaborador{ get; set; }
+
     Service.ColaboradorService _colaboradorService;
     Service.CargoService _cargoService;
     IEnumerable<Data.Cargo> cargos;
-    Data.Colaborador colaborador;
+    
     bool editCodigo;
 
-
     void Close() => MudDialog.Close(DialogResult.Cancel());
-
-    //void Salvar() => MudDialog.Close(DialogResult.Ok(true));
 
     protected override async void OnInitialized()
     {
@@ -213,7 +210,15 @@
             _cargoService = (CargoService)ScopedServices.GetService(typeof(CargoService));
             cargos = await _cargoService.GetAllRecords();
         }
-        if (ColaboradorID != Guid.Empty)
+        if (colaborador != null)
+        {
+            ColaboradorID = colaborador.Id;
+        }
+        else
+        {
+            colaborador = new Data.Colaborador();
+        }
+        if (ColaboradorID != Guid.Empty && colaborador ==null)
         {
             colaborador = await _colaboradorService.GetColaboradorById(ColaboradorID);
             if (colaborador == null)
@@ -221,32 +226,8 @@
                 colaborador = new Data.Colaborador();
             }
         }
-        else
-        {
-            colaborador = new Data.Colaborador();
-        }
+
     }
-
-    //void Open(string title, Type type, Dictionary<string, object> parameters, MudBlazor.DialogOptions options)
-    //{
-        
-    //}
-
-    //async void Close(dynamic result)
-    //{
-
-    //    //if (result)
-    //    //{
-    //    //    var dialog = DialogService.Confirm("Deseja salvar as alterações ?", "Salvar alterações", new ConfirmOptions() { OkButtonText = "Sim", CancelButtonText = "Não" });
-    //    //    dialog.Wait();
-    //    //    bool isValid = dialog.Result.Value;
-    //    //    if (isValid)
-    //    //    {
-    //    //        Service.UpdateRecord(colaborador);
-    //    //        await DialogService.Confirm("Registro salvo/atualizado", "Salvar", new ConfirmOptions() { OkButtonText = "ok"});
-    //    //    }
-    //    //}
-    //}
 
     void OnChange(object value, string name)
     {
@@ -268,26 +249,19 @@
     void Submit()
     {
         _colaboradorService.UpdateRecord(colaborador);
-        MudDialog.Close(DialogResult.Ok(true));
+        MudDialog.Close(DialogResult.Ok(colaborador));
 
         //var parameters = new DialogParameters {[ "server" ] = server};
-
         //var parametros = new MudBlazor.DialogParameters();
         //parametros.Add("ContentText", "Deseja salvar as alterações ?");
         //parametros.Add("ButtonText", "Sim");
         //parametros.Add("Color", Color.Success);
-
         //var option = new MudBlazor.DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
-        
         //var result = await DialogService.Show<DialogoSimplesMudBlazor>("Confirmar",parametros, option).Result;
-
         //if (!result.Cancelled)
-        //{
-            
+        //{ 
         //}
-
         //var dialog = await DialogServiceRad.Confirm("Deseja salvar as alterações ?", "Salvar alterações", new ConfirmOptions() { OkButtonText = "Sim", CancelButtonText = "Não",  });
-        
         //bool isValid = Convert.ToBoolean(dialog);
         //if (isValid)
         //{
