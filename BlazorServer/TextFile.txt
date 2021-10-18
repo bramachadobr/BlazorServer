@@ -1,4 +1,6 @@
-﻿#Criação de uma migração
+﻿dotnet tool install --global dotnet-ef --version 5.0.11
+
+#Criação de uma migração
 
 [Command Line]
 dotnet ef migrations add <name of migration>

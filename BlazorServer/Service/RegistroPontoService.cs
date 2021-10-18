@@ -8,18 +8,23 @@ namespace BlazorServer.Service
 {
     public class RegistroPontoService : IRegistroPontoService
     {
-        public RegistroPontoService()
+
+        private readonly AppDbContext _context;
+
+        public RegistroPontoService(AppDbContext _context)
         {
-            registroPontos = new List<RegistroPonto>();
+            this._context = _context;
         }
 
-        public List<RegistroPonto> registroPontos { get; set; }
+        private List<RegistroPonto> registroPontos { get; set; }
 
-        public List<Colaborador> colaboradores { get; set; }
+        private List<Colaborador> colaboradores { get; set; }
 
         public void AddRecord(RegistroPonto record)
         {
-            registroPontos.Add(record);
+            _context.RegistroPontos.Add(record);
+            _context.SaveChanges();
+            //registroPontos.Add(record);
         }
 
         public bool ValidaPontoExiste(RegistroPonto record)
@@ -37,31 +42,52 @@ namespace BlazorServer.Service
 
         public void DeleteRecord(RegistroPonto record)
         {
-            registroPontos.Remove(record);
+            var recor = _context.RegistroPontos.Where(i => i.Id == record.Id).FirstOrDefault();
+            if (recor != null)
+            { 
+                _context.RegistroPontos.Remove(recor);
+                this._context.SaveChanges();
+            }
+            //registroPontos.Remove(record);
         }
 
         public void DeleteRecord(Guid id)
         {
-            RegistroPonto reg = registroPontos.Find(i => i.Id == id);
-            registroPontos.Remove(reg);
+            var recor = _context.RegistroPontos.Where(i => i.Id == id).FirstOrDefault();
+            if (recor != null)
+            {
+                _context.RegistroPontos.Remove(recor);
+            }
+            //RegistroPonto reg = registroPontos.Find(i => i.Id == id);
+            //registroPontos.Remove(reg);
         }
 
-        public virtual async Task<List<RegistroPonto>> GetAllGeristroPonto()
+        public virtual async Task<List<RegistroPonto>> GetAllRegistroPonto()
         {
-            return registroPontos;
+            return  _context.RegistroPontos.ToList();
+            //return registroPontos;
         }
 
-        public async Task<List<RegistroPonto>> GetAllGeristroPontoById(int id)
+        public async Task<List<RegistroPonto>> GetAllRegistroPontoById(int id)
         {
-            Guid idGuid = this.colaboradores.Find(i => i.CodPonto == id).Id;
-            return registroPontos.Where(i => i.Colaborador.Id == idGuid).ToList();
+            Guid idGuid = _context.Colaboradors.Where(i => i.CodPonto == id).FirstOrDefault().Id; /*  this.colaboradores.Find(i => i.CodPonto == id).Id;*/
+
+            if (idGuid != null)
+            {
+                return _context.RegistroPontos.Where(i => i.Colaborador.Id == idGuid).ToList();
+            }
+            else
+            { 
+                return null;
+            }
+            //return registroPontos.Where(i => i.Colaborador.Id == idGuid).ToList();
         }
 
         public async Task<List<RegistroPonto>> GetAllRegistroPontoByIdData(Guid id, DateTime data1, DateTime data2)
         {
             if (id == Guid.Empty && data1 == DateTime.MinValue)
             {
-                return registroPontos;
+                return await GetAllRegistroPonto(); 
             }
             else
             {
@@ -69,16 +95,19 @@ namespace BlazorServer.Service
                 {
                     if (data1 != DateTime.MinValue && data2 != DateTime.MinValue)
                     {
-                        return registroPontos.Where(i => i.Colaborador.Id.Equals(id) && i.Data >= data1 && i.Data <= data2).ToList();
+                        return _context.RegistroPontos.Where(i => i.Colaborador.Id.Equals(id) && i.Data >= data1 && i.Data <= data2).ToList();
+                        //return registroPontos.Where(i => i.Colaborador.Id.Equals(id) && i.Data >= data1 && i.Data <= data2).ToList();
                     }
                     else
                     {
-                        return registroPontos.Where(i => i.Colaborador.Id.Equals(id)).ToList();
+                        return _context.RegistroPontos.Where(i => i.Colaborador.Id.Equals(id)).ToList();
+                        //return registroPontos.Where(i => i.Colaborador.Id.Equals(id)).ToList();
                     }
                 }
                 else
                 {
-                    return registroPontos.Where(i => i.Data >= data1 && i.Data <= data2).ToList();
+                    return _context.RegistroPontos.Where(i => i.Data >= data1 && i.Data <= data2).ToList();
+                    //return registroPontos.Where(i => i.Data >= data1 && i.Data <= data2).ToList();
                 }
             }
         }
@@ -87,6 +116,17 @@ namespace BlazorServer.Service
         {
             RegistroPonto reg = registroPontos.Find(i => i.Id == record.Id);
             reg = record;
+        }
+
+        public bool ContextSaveCharges()
+        {
+            int value =  this._context.SaveChanges();
+            return value == 0 ? true : false;
+        }
+
+        public List<RegistroPonto> GetAllRegistroPontoList()
+        {
+            return _context.RegistroPontos.ToList();
         }
     }
 }

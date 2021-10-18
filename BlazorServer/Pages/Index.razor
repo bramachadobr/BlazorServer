@@ -13,7 +13,6 @@
 @inject MudBlazor.DialogService DialogService
 @inject Radzen.DialogService DialogServiceRad
 
-@implements IDisposable
 
 @inherits OwningComponentBase
 
@@ -28,7 +27,8 @@
                            Upload do arquivo
                 </MudButton>
     </div>
-    
+    <br />
+    <p></p>
 
     <div class="PrintDiv2">
             <div class="row">
@@ -38,8 +38,8 @@
                 <div class="col-sm">@TotalHorasPeriodo</div>
             </div>
             <div class="row" >
-                <RadzenDataGrid Data="filtroPontosProcessados" LoadData="@(args2 => LoadData(args2))" TItem="Data.RegistroPonto" RowDoubleClick="@(args=> SelectionChangedEvent(args))"  FilterMode="FilterMode.Advanced" 
-                    FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowSorting="true" AllowFiltering="true"> 
+                <RadzenDataGrid @ref=grid IsLoading=@isLoading Count=@Count Data="@filtroPontosProcessados" TItem="Data.RegistroPonto" LoadData="@(args => LoadData(args))"  RowDoubleClick="@(args=> SelectionChangedEvent(args))"  
+                    FilterMode="FilterMode.Advanced" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowSorting="true" AllowFiltering="true" AllowPaging="true" PageSize="30">
                     <Columns>
                         <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="Colaborador.CodPonto" Title="Cod" Frozen="true" Width="30px"/>
                         <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="Colaborador.Nome" Title="Nome Completo" Width="120px"/>
@@ -62,6 +62,12 @@
 @code
 {
     public Data.RegistroPonto regPonto = new RegistroPonto();
+
+    RadzenDataGrid<Data.RegistroPonto> grid;
+
+    bool isLoading;
+
+    int Count;
 
     public bool dialogIsOpen = false;
 
@@ -107,77 +113,7 @@
 
     public string TotalHorasPeriodo { get; set; }
 
-    void LoadData(LoadDataArgs args)
-    {
-        var query = rps.registroPontos.AsQueryable();
-
-        if (!string.IsNullOrEmpty(args.Filter))
-        {
-            query = query.Where(args.Filter);
-        }
-
-        if (!string.IsNullOrEmpty(args.OrderBy))
-        {
-            query = query.OrderBy(args.OrderBy);
-        }
-        filtroPontosProcessados = query.Skip(args.Skip.Value).Take(args.Top.Value).ToList();
-    }
-    
-
-    public async Task Print()
-    {
-        await JSRuntime.InvokeVoidAsync("console.log", "asdsadasaa");
-        await JSRuntime.InvokeVoidAsync("Print");
-    }
-
-
-    //Evento ao clicar na grid 
-    void SelectionChangedEvent(object reg)
-    {   
-        if(reg !=null)
-        {
-            if (((RegistroPonto)reg).TotalHorasDia.TotalHours < 0)
-            {
-                regPonto = (RegistroPonto)reg;
-                this.StateHasChanged();
-                dialogIsOpen = true;
-            }
-        }
-    }
-
-    void SelectionChangedEvent(DataGridRowMouseEventArgs<Data.RegistroPonto> reg)
-    {
-        if(reg !=null)
-        {
-            if (((RegistroPonto)reg.Data).TotalHorasDia.TotalHours < 0)
-            {
-                regPonto = (RegistroPonto)reg.Data;
-                this.StateHasChanged();
-                dialogIsOpen = true;
-            }
-        }
-    }
-
-
-    void OnChange(DateTime? value, string name, string format)
-    {
-        JSRuntime.InvokeAsync<object>("console.log", $"{name} value changed to {value?.ToString(format)}");
-    }
-
-    //async Task Success() => await JSRuntime.InvokeAsync<object>("alert", "Successful login!");
-
-    async Task Success()
-    {
-        await JSRuntime.InvokeAsync<object>("alert", "Successful login!");
-    }
-       
-
-    public async void FiltroPontoProcessados()
-    {
-        filtroPontosProcessados = await rps.GetAllRegistroPontoByIdData(idSelectd, Data1, DataMais1);
-        TotalHorasDoPeriodo();
-    }
-
+    LoadDataArgs ultimoFiltro;
 
     protected override void OnInitialized()
     {
@@ -186,31 +122,43 @@
         rps = (Service.RegistroPontoService)ScopedServices.GetService(typeof(Service.RegistroPontoService));
     }
 
-    
-    async Task FilesReady2(string files)
+    async Task LoadData(LoadDataArgs args)
     {
-        await JSRuntime.InvokeVoidAsync("console.log", "teste", files);
+        ultimoFiltro = args;
+
+        isLoading = true;
+
+        var query = rps.GetAllRegistroPontoList().AsQueryable();
+
+        //filtroPontosProcessados = query.ToList();
+
+        if (args != null)
+        {
+            if (!string.IsNullOrEmpty(args.Filter))
+            {
+                query = query.Where(args.Filter);
+            }
+            if (!string.IsNullOrEmpty(args.OrderBy))
+            {
+                query = query.OrderBy(args.OrderBy);
+            }
+            //filtroPontosProcessados = query.Skip(args.Skip.Value).Take(args.Top.Value).ToList();
+            filtroPontosProcessados = query.Skip(args.Skip.Value).Take(args.Top.Value).ToList();
+        }
+        else
+        {
+            filtroPontosProcessados = query.ToList();
+        }
+        Count = filtroPontosProcessados.Count();
+        isLoading = false;
     }
 
-    private void UploadFiles(InputFileChangeEventArgs e)
+    async void ResetGrid()
     {
-        var entries = e.GetMultipleFiles();
+        grid.Reset(true);
+        await grid.Reload();
+        await LoadData(ultimoFiltro);   
     }
-
-    async Task BusyDialog()
-    {
-        await DialogServiceRad.OpenAsync("", ds =>
-            @<div>
-                <div class="row">
-                    <div class="col-md-12">
-                        Loading...
-                    </div>
-                </div>
-        </div>
-    , new Radzen.DialogOptions() { ShowTitle = false, Style = "min-height:auto;min-width:auto;width:auto" });
-    }
-
-
 
     async Task ProcessaFile(InputFileChangeEventArgs files)
     {
@@ -261,7 +209,6 @@
                 lista.Add(sline);
             }
         }
-
         //U{5}P{12}D{2}M{2}A{4}H{2}N{2}
 
         foreach (var item in lista)
@@ -288,9 +235,7 @@
             }
         }
         await ProcessaPontos();
-        //filtroPontosProcessados = await rps.GetAllGeristroPonto();
-        var query = await rps.GetAllGeristroPonto();
-        filtroPontosProcessados = query.ToList().AsQueryable();
+        ResetGrid();
         TotalHorasDoPeriodo();
     }
 
@@ -324,7 +269,7 @@
 
             foreach (var item in filtro)
             {
-                await JSRuntime.InvokeVoidAsync("console.log", "teste", item);
+                //await JSRuntime.InvokeVoidAsync("console.log", "teste", item);
                 RegistroPonto ponto = new RegistroPonto();
                 ponto.Data = Convert.ToDateTime(item.Key);
                 ponto.Colaborador = colab;
@@ -332,11 +277,12 @@
                 foreach (var i in item)
                 {
                     ponto.AddHora(i.Data);
-                    await JSRuntime.InvokeVoidAsync("console.log", "teste", i);
+                    //await JSRuntime.InvokeVoidAsync("console.log", "teste", i);
                 }
                 if(rps.ValidaPontoExiste(ponto) == false)
                     rps.AddRecord(ponto);
             }
+            rps.ContextSaveCharges();
         }
         else
         {
@@ -348,7 +294,7 @@
 
                 foreach (var colab in colaboradores)
                 {
-                    await JSRuntime.InvokeVoidAsync("console.log", "todos", item);
+                    //await JSRuntime.InvokeVoidAsync("console.log", "todos", item);
                     RegistroPonto ponto = new RegistroPonto();
                     ponto.Data = Convert.ToDateTime(item.Key);
                     ponto.Colaborador = colab.FirstOrDefault().Colaborador;
@@ -356,12 +302,88 @@
                     foreach (var i in colab)
                     {
                         ponto.AddHora(i.Data);
-                        await JSRuntime.InvokeVoidAsync("console.log", "teste", i);
+                        //await JSRuntime.InvokeVoidAsync("console.log", "teste", i);
                     }
                     rps.AddRecord(ponto);
                 }
             }
+            rps.ContextSaveCharges();
         }
     }
+
+    public async Task Print()
+    {
+        await JSRuntime.InvokeVoidAsync("console.log", "asdsadasaa");
+        await JSRuntime.InvokeVoidAsync("Print");
+    }
+
+    void SelectionChangedEvent(object reg)
+    {   
+        if(reg !=null)
+        {
+            if (((RegistroPonto)reg).TotalHorasDia.TotalHours < 0)
+            {
+                regPonto = (RegistroPonto)reg;
+                this.StateHasChanged();
+                dialogIsOpen = true;
+            }
+        }
+    }
+
+    void SelectionChangedEvent(DataGridRowMouseEventArgs<Data.RegistroPonto> reg)
+    {
+        if(reg !=null)
+        {
+            if (((RegistroPonto)reg.Data).TotalHorasDia.TotalHours < 0)
+            {
+                regPonto = (RegistroPonto)reg.Data;
+                this.StateHasChanged();
+                dialogIsOpen = true;
+            }
+        }
+    }
+
+    void OnChange(DateTime? value, string name, string format)
+    {
+        JSRuntime.InvokeAsync<object>("console.log", $"{name} value changed to {value?.ToString(format)}");
+    }
+
+    //async Task Success() => await JSRuntime.InvokeAsync<object>("alert", "Successful login!");
+
+    async Task Success()
+    {
+        await JSRuntime.InvokeAsync<object>("alert", "Successful login!");
+    }
+
+
+    public async void FiltroPontoProcessados()
+    {
+        filtroPontosProcessados = await rps.GetAllRegistroPontoByIdData(idSelectd, Data1, DataMais1);
+        TotalHorasDoPeriodo();
+    }
+
+    async Task FilesReady2(string files)
+    {
+        await JSRuntime.InvokeVoidAsync("console.log", "teste", files);
+    }
+
+    private void UploadFiles(InputFileChangeEventArgs e)
+    {
+        var entries = e.GetMultipleFiles();
+    }
+
+    async Task BusyDialog()
+    {
+        await DialogServiceRad.OpenAsync("", ds =>
+            @<div>
+                <div class="row">
+                    <div class="col-md-12">
+                        Loading...
+                    </div>
+                </div>
+    </div>
+    , new Radzen.DialogOptions() { ShowTitle = false, Style = "min-height:auto;min-width:auto;width:auto" });
+    }
+
 
 }

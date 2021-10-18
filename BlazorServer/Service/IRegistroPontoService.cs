@@ -16,11 +16,15 @@ namespace BlazorServer.Service
 
         void DeleteRecord(Guid id);
 
-        Task<List<RegistroPonto>> GetAllGeristroPonto();
+        Task<List<RegistroPonto>> GetAllRegistroPonto();
 
-        Task<List<RegistroPonto>> GetAllGeristroPontoById(int id);
+        List<RegistroPonto> GetAllRegistroPontoList();
+
+        Task<List<RegistroPonto>> GetAllRegistroPontoById(int id);
 
         Task<List<RegistroPonto>> GetAllRegistroPontoByIdData(Guid id, DateTime data1, DateTime data2);
+
+        bool ContextSaveCharges();
 
 
 

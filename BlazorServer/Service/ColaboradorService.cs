@@ -42,7 +42,7 @@ namespace BlazorServer.Service
         {
             //return await _context.Colaboradors.Where<Colaborador>(a => a.Id.Equals(id)).FirstOrDefaultAsync();
             //return await _context.Colaboradors.FirstOrDefaultAsync(a => a.Id.Equals(id));
-            return  _context.Colaboradors.FirstOrDefault(i => i.Id == id);
+            return _context.Colaboradors.FirstOrDefault(i => i.Id == id);
         }
 
         public async Task<Colaborador> GetColaboradorByIdPonto(int id)
@@ -75,18 +75,18 @@ namespace BlazorServer.Service
             {
                 colabUpdate.Ativo = record.Ativo;
                 colabUpdate.Bairro = record.Bairro;
-                colabUpdate.Cargo=record.Cargo;
-                colabUpdate.Cidade= record.Cidade;
-                colabUpdate.Nome=record.Nome;
-                colabUpdate.Numero=record.Numero;
-                colabUpdate.CodPonto=record.CodPonto;   
-                colabUpdate.Registros=record.Registros;
-                colabUpdate.Salario=record.Salario;
-                colabUpdate.Telefone=record.Telefone;
-                colabUpdate.Unidade=record.Unidade;
+                colabUpdate.Cargo = record.Cargo;
+                colabUpdate.Cidade = record.Cidade;
+                colabUpdate.Nome = record.Nome;
+                colabUpdate.Numero = record.Numero;
+                colabUpdate.CodPonto = record.CodPonto;
+                colabUpdate.Registros = record.Registros;
+                colabUpdate.Salario = record.Salario;
+                colabUpdate.Telefone = record.Telefone;
+                colabUpdate.Unidade = record.Unidade;
                 colabUpdate.Cpf = record.Cpf;
                 colabUpdate.Email = record.Email;
-                
+
                 _context.Colaboradors.Update(colabUpdate);
                 _context.SaveChanges();
                 return true;
