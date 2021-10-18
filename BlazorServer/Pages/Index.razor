@@ -107,9 +107,10 @@
 
     public string TotalHorasPeriodo { get; set; }
 
-    void LoadData(LoadDataArgs args)
+    async void LoadData(LoadDataArgs args)
     {
-        var query = rps.registroPontos.AsQueryable();
+
+        var query = await rps.GetAllGeristroPonto.AsQueryable();
 
         if (!string.IsNullOrEmpty(args.Filter))
         {
