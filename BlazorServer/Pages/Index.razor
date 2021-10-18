@@ -113,7 +113,9 @@
 
     public string TotalHorasPeriodo { get; set; }
 
-    LoadDataArgs ultimoFiltro;
+    void LoadData(LoadDataArgs args)
+    {
+        var query = rps.registroPontos.AsQueryable();
 
     protected override void OnInitialized()
     {
