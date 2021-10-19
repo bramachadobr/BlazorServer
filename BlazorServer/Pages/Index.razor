@@ -30,7 +30,7 @@
     <br />
     <p></p>
 
-    <div class="PrintDiv2">
+    <div class="PrintDiv" id="PrintDiv">
             <div class="row">
                 <div class="col-sm">
                     <button class="btn btn-primary" @onclick="Print">Imprimir</button>
@@ -103,6 +103,8 @@
 
     Service.RegistroPontoService rps;
 
+    LoadDataArgs ultimoFiltro;
+
     string[] value1ItemsCombo = new[]
     {
         "Nacional",
@@ -113,9 +115,6 @@
 
     public string TotalHorasPeriodo { get; set; }
 
-    void LoadData(LoadDataArgs args)
-    {
-        var query = rps.registroPontos.AsQueryable();
 
     protected override void OnInitialized()
     {
@@ -313,10 +312,10 @@
         }
     }
 
-    public async Task Print()
+    public void Print()
     {
-        await JSRuntime.InvokeVoidAsync("console.log", "asdsadasaa");
-        await JSRuntime.InvokeVoidAsync("Print");
+        JSRuntime.InvokeVoidAsync("console.log", "Impressão da DivPrint");
+        JSRuntime.InvokeVoidAsync("Print");
     }
 
     void SelectionChangedEvent(object reg)
