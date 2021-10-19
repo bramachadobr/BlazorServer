@@ -280,8 +280,10 @@
                     ponto.AddHora(i.Data);
                     //await JSRuntime.InvokeVoidAsync("console.log", "teste", i);
                 }
-                if(rps.ValidaPontoExiste(ponto) == false)
+               if (rps.ValidaPontoExiste(ponto))
+                {
                     rps.AddRecord(ponto);
+                }
             }
             rps.ContextSaveCharges();
         }
@@ -305,7 +307,10 @@
                         ponto.AddHora(i.Data);
                         //await JSRuntime.InvokeVoidAsync("console.log", "teste", i);
                     }
-                    rps.AddRecord(ponto);
+                    if (rps.ValidaPontoExiste(ponto))
+                    {
+                        rps.AddRecord(ponto);
+                    }
                 }
             }
             rps.ContextSaveCharges();

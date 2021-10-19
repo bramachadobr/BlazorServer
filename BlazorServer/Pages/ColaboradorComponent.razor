@@ -10,7 +10,7 @@
 
 @*@inject  MudBlazor.DialogService DialogService*@
 @implements IDisposable
-@inherits OwningComponentBase<Service.ColaboradorService>
+@inherits OwningComponentBase
 @inject IDialogService DialogService
 
 
@@ -31,7 +31,7 @@
                 <RadzenDataGridColumn TItem="Data.Colaborador" Property="CodPonto" Title="Cod." Frozen="true" Width="40px" />
                 <RadzenDataGridColumn TItem="Data.Colaborador" Property="Nome" Title="Nome Completo" Width="200px"/>
                 <RadzenDataGridColumn TItem="Data.Colaborador" Property="Cpf" Title="CPF" Width="100px" />
-                <RadzenDataGridColumn TItem="Data.Colaborador" Property="Cargo.NomeCargo" Title="Cargo" Width="100px" />
+                <RadzenDataGridColumn TItem="Data.Colaborador" Property="Cargo.NomeCargo" Title="Cargo" Width="110px" />
                 <RadzenDataGridColumn TItem="Data.Colaborador" Property="Contratacao" Title="Data adminissão" FormatString="{0:dd/MM/yyyy}" Width="80px" />
                 <RadzenDataGridColumn TItem="Data.Colaborador" Property="Demissao" Title="Data demissão" FormatString="{0:dd/MM/yyyy}" Width="80px" />
                 <RadzenDataGridColumn TItem="Data.Colaborador" Property="Salario" Title="Salario" Width="80px" />
@@ -47,11 +47,14 @@
     </div>
 </div>
 
+
 @* <RadzenButton Text="Show confirm dialog" Click=@(args => Radzen.DialogService .DialogService.Confirm("Are you sure?", "MyTitle", new ConfirmOptions() { OkButtonText = "Yes", CancelButtonText = "No" })) />*@
 
 
 
-@code {
+@code 
+{
+
     RadzenDataGrid<Data.Colaborador> grid;
 
     IEnumerable<Data.Colaborador> _Colaboradores;
@@ -60,18 +63,21 @@
 
     int count;
 
-    //public Service.ColaboradorService _coladoradorService;
-
     public Data.Colaborador ColaboradorObj;
 
     MudBlazor.DialogService dialogService;
 
+    ColaboradorService _colaboradorService;
+    CargoService _cargoService;
+
     protected override async void OnInitialized()
     {
         base.OnInitialized();
+        _colaboradorService = (ColaboradorService)ScopedServices.GetService(typeof(ColaboradorService));
+        _cargoService = (CargoService)ScopedServices.GetService(typeof(CargoService));
+
         await LoadData(ultimoFiltro);
     }
-
 
     async void ResetGrid()
     {
@@ -91,7 +97,7 @@
         ultimoFiltro = args;
         isLoading = true;
 
-        var query =  Service.GetAllColaboradoresList().AsQueryable();
+        var query =  _colaboradorService.GetAllColaboradoresList().AsQueryable();
 
         if (args != null)
         {

@@ -100,4 +100,13 @@ Restaurar pacotes
 dotnet restore 
 
 
------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+Formatar a impressão da tela
+Formatar os compos de total de horas trabalhada no periodo e count e tamnaho das colunas
+Não permitir a duplicacao de registro no bando com o mesmo colaborador e mesmo horario
+exibir cargo nos filtros da grid de colaboradores para fazer o filtro 
+fazer o bind da detail do colaborador para fazer o upload correto
+Implementar login e senha de usuarios
+Implementar o dashboar com os funcionario que mais tem acarga horaria no mes, os top 5 que mais trabalharam e os que tem horas passando
+pegar as carga horaria do mes e dar como dia de folga em um sabado apenas

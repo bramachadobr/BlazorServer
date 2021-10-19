@@ -18,7 +18,7 @@ namespace BlazorServer.Service
 
         private List<RegistroPonto> registroPontos { get; set; }
 
-        private List<Colaborador> colaboradores { get; set; }
+        //private List<Colaborador> colaboradores { get; set; }
 
         public void AddRecord(RegistroPonto record)
         {
@@ -29,15 +29,11 @@ namespace BlazorServer.Service
 
         public bool ValidaPontoExiste(RegistroPonto record)
         {
-            RegistroPonto reg = registroPontos.FirstOrDefault(i => i.AM_ENT == record.AM_ENT && i.ColaboradorId == record.ColaboradorId);
-            if (reg != null)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            RegistroPonto reg = _context.RegistroPontos.Where(i => i.AM_ENT.Equals(record.AM_ENT) && i.ColaboradorId.Equals(record.ColaboradorId)).FirstOrDefault();
+
+            
+
+            return reg == null?true:false;
         }
 
         public void DeleteRecord(RegistroPonto record)
