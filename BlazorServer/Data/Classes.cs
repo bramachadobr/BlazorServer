@@ -21,13 +21,13 @@ namespace BlazorServer.Data
     {
         public Cargo()
         {
-            CargoId = Guid.NewGuid();
+            Id = Guid.NewGuid();
         }
 
         [Key]
         [Column(TypeName = "uniqueidentifier")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid CargoId { get; set; }
+        public Guid Id { get; set; }
         public string NomeCargo { get; set; }
         public List<Colaborador> Colaboradores { get; set; }
     }
@@ -88,8 +88,8 @@ namespace BlazorServer.Data
 
         public string CpfComMascara { get => string.Format(@"{0:000\.###\.###-##}", Cpf); }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public Cargo Cargo { get; set; }
+        public Guid CargoId { get; set; }
 
         public DateTime? Contratacao { get; set; }
 

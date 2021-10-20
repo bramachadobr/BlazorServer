@@ -9,8 +9,9 @@
 @using System.ComponentModel.DataAnnotations
 
 @*@inject  MudBlazor.DialogService DialogService*@
+@inherits OwningComponentBase<Service.ColaboradorService>
 @implements IDisposable
-@inherits OwningComponentBase
+@*@inherits OwningComponentBase*@
 @inject IDialogService DialogService
 
 
@@ -73,8 +74,8 @@
     protected override async void OnInitialized()
     {
         base.OnInitialized();
-        _colaboradorService = (ColaboradorService)ScopedServices.GetService(typeof(ColaboradorService));
-        _cargoService = (CargoService)ScopedServices.GetService(typeof(CargoService));
+        //_colaboradorService = (ColaboradorService)ScopedServices.GetService(typeof(ColaboradorService));
+        //_cargoService = (CargoService)ScopedServices.GetService(typeof(CargoService));
 
         await LoadData(ultimoFiltro);
     }
@@ -97,7 +98,7 @@
         ultimoFiltro = args;
         isLoading = true;
 
-        var query =  _colaboradorService.GetAllColaboradoresList().AsQueryable();
+        var query =  Service.GetAllColaboradoresList().AsQueryable();
 
         if (args != null)
         {

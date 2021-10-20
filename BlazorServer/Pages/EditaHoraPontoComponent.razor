@@ -6,6 +6,8 @@
 @using System.Net.Http.Headers
 
 @inject MudBlazor.DialogService DialogService
+@*@inject Service.RegistroPontoService Service*@
+@inherits OwningComponentBase<Service.RegistroPontoService>
 
 <div class="container">
          <MudDialog>
@@ -63,6 +65,17 @@
 
     [Parameter] public RegistroPonto registroPonto { get; set; }
 
+    [Parameter] public Guid registroPontoGuid { get; set; }
+
+    protected override void OnInitialized()
+    {
+        registroPonto = new RegistroPonto();     
+        if (registroPontoGuid != Guid.Empty)
+        {
+            registroPonto = Service.GetRecord(registroPontoGuid);
+        }
+    }
+
     void Success()
     { 
     }
@@ -74,7 +87,15 @@
 
     void OkClick()
     {
-        MudDialog.Close(DialogResult.Ok(registroPonto));
+        try
+        {
+            Service.UpdateRecord(registroPonto);
+            MudDialog.Close(DialogResult.Ok(registroPonto));
+        }
+        catch(Exception ex)
+        {
+            throw ex;
+        }
     }
 
 }

@@ -22,7 +22,7 @@ dotnet ef migrations remove
 [Package Manager Console]
 remove-migration
 
-#Revertendo uma migração
+#Revertendo uma migração	
 
 [Command line]
 dotnet ef database update Create

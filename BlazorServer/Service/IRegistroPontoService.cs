@@ -26,6 +26,8 @@ namespace BlazorServer.Service
 
         bool ContextSaveCharges();
 
+        RegistroPonto GetRecord(Guid id);
+
 
 
     }

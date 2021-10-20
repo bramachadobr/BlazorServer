@@ -39,7 +39,7 @@ namespace BlazorServer.Service
 
         public async Task<Data.Cargo> GetRecords(System.Guid id)
         {
-            return _context.Cargo.FirstOrDefault(i => i.CargoId == id);
+            return _context.Cargo.FirstOrDefault(i => i.Id == id);
         }
 
         //public void LoadCargos()

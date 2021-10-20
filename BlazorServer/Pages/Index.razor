@@ -79,7 +79,7 @@
 
 @code
 {
-    bool visible;
+    public bool visible;
 
     string mensagemDialog;
     string tituloDialog;
@@ -409,20 +409,16 @@
         }
         else
         {
-            var parameters = new MudBlazor.DialogParameters() { ["registroPonto"] = registro };
+            var parameters = new MudBlazor.DialogParameters() { ["registroPontoGuid"] = registro.Id };
             var dialog = MudDialogService.Show<EditaHoraPontoComponent>("Editar Ponto", parameters);
             var result = await dialog.Result;
 
             if (!result.Cancelled)
             {
-                rps.UpdateRecord(registro);
                 OpenDialogModal("Atualizado", "Registro atualizado!");
             }
         }
     }
-
-
-
 
 
     void OnChange(DateTime? value, string name, string format)
@@ -430,7 +426,6 @@
         JSRuntime.InvokeAsync<object>("console.log", $"{name} value changed to {value?.ToString(format)}");
     }
 
-    //async Task Success() => await JSRuntime.InvokeAsync<object>("alert", "Successful login!");
 
     async Task Success()
     {
@@ -449,10 +444,12 @@
         await JSRuntime.InvokeVoidAsync("console.log", "teste", files);
     }
 
+
     private void UploadFiles(InputFileChangeEventArgs e)
     {
         var entries = e.GetMultipleFiles();
     }
+
 
     async Task BusyDialog()
     {

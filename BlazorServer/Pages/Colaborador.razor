@@ -27,7 +27,7 @@
                             <RadzenNumeric style="width: 100%;" Name="CodPonto" @bind-Value="colaborador.CodPonto" Disabled="@editCodigo" />
                         </div>
                         <div class="col-md-4">
-                            <RadzenButton Text="aaaa" ButtonStyle="ButtonStyle.Light" Icon="edit" Click="@AlteraCodigo" />
+                            <RadzenButton Text="" ButtonStyle="ButtonStyle.Light" Icon="edit" Click="@AlteraCodigo" />
                             @*<RadzenButton  Text="alter" Click="@AlteraCodigo" @onclick="AlteraCodigo" /> *@
                         </div>
                     </div> 
@@ -55,7 +55,7 @@
                             <RadzenLabel Text="Cargo" />
                         </div>
                         <div class="col-md-8">
-                            <RadzenDropDown TValue="System.Guid" SelectedItem="@cargos"  Name="Cargo" Data=@cargos Change=@(args=>OnChange(args, "DropDown")) TextProperty="NomeCargo" ValueProperty="CargoId" AllowClear="true" Placeholder="Selecione um cargo"  style="width: 100%;" />
+                            <RadzenDropDown TValue="Data.Cargo" SelectedItem="@cargos"  Name="Cargo" Data=@cargos Change=@(args=>OnChange(args, "DropDown")) TextProperty="NomeCargo" ValueProperty="Cargo" AllowClear="true" Placeholder="Selecione um cargo"  style="width: 100%;" />
                                 <RadzenDropDown TValue="Data.Cargo" SelectedItem="@cargos" @bind-Value="colaborador.Cargo" Name="Cargo2" TextProperty="NomeCargo" ValueProperty="CargoId" AllowClear="true" Placeholder="Selecione um cargo"  style="width: 100%;" />
                         </div>
                     </div>
@@ -194,7 +194,7 @@
     Service.ColaboradorService _colaboradorService;
     Service.CargoService _cargoService;
     IEnumerable<Data.Cargo> cargos;
-    
+
     bool editCodigo;
 
     void Close() => MudDialog.Close(DialogResult.Cancel());
@@ -233,7 +233,8 @@
     {
         if(name=="DropDown")
         {
-            colaborador.Cargo = cargos.Single(i => i.CargoId.Equals(value));
+            Data.Cargo c = (Data.Cargo)value;
+            colaborador.Cargo = cargos.FirstOrDefault(i => i.Id == c.Id);
         }
         
         //var str = value is IEnumerable<object> ? string.Join(", ", (IEnumerable<object>)value) : value;

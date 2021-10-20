@@ -15,7 +15,7 @@ namespace BlazorServer.Service
         public ColaboradorService(AppDbContext context)
         {
             _context = context;
-            Colaboradores = GetAllColaboradoresList();
+            //Colaboradores = GetAllColaboradoresList();
         }
 
         public List<Colaborador> Colaboradores { get; set; }
@@ -58,36 +58,32 @@ namespace BlazorServer.Service
 
         public bool InsertRecord(Colaborador record)
         {
-            //_context.Colaboradors.AddAsync(record);
-            //int result = _context.SaveChanges();
-            //return result > 0;
             _context.Colaboradors.Add(record);
             _context.SaveChanges();
-            //this.Colaboradores.Add(record);
             return true;
         }
 
-        public bool UpdateRecord(Colaborador record)
+        public bool UpdateRecord(Colaborador newRecord)
         {
-            Colaborador colabUpdate = _context.Colaboradors.Where(i => i.Id == record.Id).FirstOrDefault();
+            Colaborador record = _context.Colaboradors.Where(i => i.Id == newRecord.Id).FirstOrDefault();
 
-            if (colabUpdate != null)
+            if (record != null)
             {
-                colabUpdate.Ativo = record.Ativo;
-                colabUpdate.Bairro = record.Bairro;
-                colabUpdate.Cargo = record.Cargo;
-                colabUpdate.Cidade = record.Cidade;
-                colabUpdate.Nome = record.Nome;
-                colabUpdate.Numero = record.Numero;
-                colabUpdate.CodPonto = record.CodPonto;
-                colabUpdate.Registros = record.Registros;
-                colabUpdate.Salario = record.Salario;
-                colabUpdate.Telefone = record.Telefone;
-                colabUpdate.Unidade = record.Unidade;
-                colabUpdate.Cpf = record.Cpf;
-                colabUpdate.Email = record.Email;
+                record.Ativo = newRecord.Ativo;
+                record.Bairro = newRecord.Bairro;
+                record.Cargo = newRecord.Cargo;
+                record.Cidade = newRecord.Cidade;
+                record.Nome = newRecord.Nome;
+                record.Numero = newRecord.Numero;
+                record.CodPonto = newRecord.CodPonto;
+                record.Registros = newRecord.Registros;
+                record.Salario = newRecord.Salario;
+                record.Telefone = newRecord.Telefone;
+                record.Unidade = newRecord.Unidade;
+                record.Cpf = newRecord.Cpf;
+                record.Email = newRecord.Email;
 
-                _context.Colaboradors.Update(colabUpdate);
+                _context.Colaboradors.Update(record);
                 _context.SaveChanges();
                 return true;
             }

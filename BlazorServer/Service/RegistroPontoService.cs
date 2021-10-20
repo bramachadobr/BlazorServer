@@ -148,5 +148,10 @@ namespace BlazorServer.Service
         {
             return _context.RegistroPontos.ToList();
         }
+
+        public RegistroPonto GetRecord(Guid id)
+        {
+            return _context.RegistroPontos.Where(i => i.Id == id).FirstOrDefault();
+        }
     }
 }
