@@ -1,29 +1,80 @@
-﻿     @*<MatDialog @bind-IsOpen="@dialogIsOpen">
-            <MatDialogTitle>Editar Ponto</MatDialogTitle>
-            <MatDialogContent>
-                <EditForm Model="@regPonto" OnValidSubmit="Success">
-                    <p><b>Entrada manhã</b></p>
-                    <RadzenDatePicker TValue="DateTime" @bind-Value="regPonto.AM_ENT" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"/> @*Change=@(args => OnChange(args, "Time-only DatePicker", "HH:mm"))
-                    <p><b>Saída manhã</b></p>
-                    <RadzenDatePicker TValue="DateTime" @bind-Value="regPonto.AM_SAI" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"/>
-                    <p><b>Entrada tarde</b></p>
-                    <RadzenDatePicker TValue="DateTime" @bind-Value="regPonto.PM_ENT" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"/>
-                    <p><b>Saída tarde</b></p>
-                    <RadzenDatePicker TValue="DateTime" @bind-Value="regPonto.PM_SAI" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"/>
-                    <p><b>Entrada noite</b></p>
-                    <RadzenDatePicker TValue="DateTime" @bind-Value="regPonto.NOI_ENT" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"/>
-                    <p><b>Saída noite</b></p>
-                    <RadzenDatePicker TValue="DateTime" @bind-Value="regPonto.NOI_SAI" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"/>
-                    <p><b>Total Horas do Dia</b></p>
-                    <a>@regPonto.TotalHorasDia</a>
-                </EditForm>
-            </MatDialogContent>
-            <MatDialogActions>
-                <MatButton OnClick="@(e => { dialogIsOpen = false; })">Cancelar</MatButton>
-                <MatButton OnClick="@OkClick">Salvar</MatButton>
-            </MatDialogActions>
-        </MatDialog>*@
+﻿
+@using BlazorServer.Service
+@using BlazorServer.Data
+@using System.ComponentModel.DataAnnotations
+@using System.IO
+@using System.Net.Http.Headers
 
-@code {
+@inject MudBlazor.DialogService DialogService
+
+<div class="container">
+         <MudDialog>
+            <DialogContent>
+                <EditForm Model="@registroPonto" OnValidSubmit="Success">
+                        <div class="row">
+                        <h2>Edição de ponto</h2>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col">
+                            <h6>Entrada manhã</h6>
+                            <RadzenDatePicker TValue="DateTime" @bind-Value="registroPonto.AM_ENT" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"/> 
+                        </div>
+                        <div class="col">
+                            <h6>Entrada tarde</h6>
+                            <RadzenDatePicker TValue="DateTime" @bind-Value="registroPonto.PM_ENT" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"/>
+                        </div>
+                        <div class="col">
+                            <h6>Entrada noite</h6>
+                            <RadzenDatePicker TValue="DateTime" @bind-Value="registroPonto.NOI_ENT" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"/>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col">
+                            <h6>Saída manhã</h6>
+                            <RadzenDatePicker TValue="DateTime" @bind-Value="registroPonto.AM_SAI" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"/>
+                        </div>
+                        <div class="col">
+                            <h6>Saída tarde</h6>
+                            <RadzenDatePicker TValue="DateTime" @bind-Value="registroPonto.PM_SAI" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"/>
+                        </div>
+                        <div class="col">
+                            <h6>Saída noite</h6>
+                            <RadzenDatePicker TValue="DateTime" @bind-Value="registroPonto.NOI_SAI" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"/>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row"><h6>Total de Horas: @registroPonto.TotalHorasDia</h6></div>
+                </EditForm>
+            </DialogContent>
+            <DialogActions>
+                <MudButton OnClick="Cancel">Cancelar</MudButton>
+                <MudButton OnClick="OkClick">Salvar</MudButton>
+            </DialogActions>
+        </MudDialog>
+</div>
+
+
+
+@code 
+{
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    [Parameter] public RegistroPonto registroPonto { get; set; }
+
+    void Success()
+    { 
+    }
+
+    void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+    void OkClick()
+    {
+        MudDialog.Close(DialogResult.Ok(registroPonto));
+    }
 
 }

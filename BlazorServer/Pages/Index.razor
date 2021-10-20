@@ -10,6 +10,7 @@
 @inject IJSRuntime JSRuntime
 
 @inject MudBlazor.DialogService DialogService
+@inject IDialogService MudDialogService
 @inject Radzen.DialogService DialogServiceRad
 
 
@@ -41,7 +42,7 @@
             </div>
             <div class="row" >
                 <RadzenDataGrid @ref=grid IsLoading=@isLoading Count=@Count Data="@filtroPontosProcessados" TItem="Data.RegistroPonto" LoadData="@(args => LoadData(args))"  
-                    RowDoubleClick="@(args=> SelectionChangedEvent(args))" FilterMode="FilterMode.Advanced" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" 
+                    RowDoubleClick="@(args=> OpenRegistroPonto(args))" FilterMode="FilterMode.Advanced" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" 
                     AllowSorting="true" AllowFiltering="true" AllowPaging="true" PageSize="30" AllowColumnResize="true" Style="border-radius: 6px;">
                     <Columns>
                         <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="Colaborador.CodPonto" Title="Cod" Frozen="true" Width="35px"/>
@@ -369,6 +370,23 @@
             }
         }
     }
+
+    public async void OpenRegistroPonto(DataGridRowMouseEventArgs<Data.RegistroPonto> reg)
+    {
+        RegistroPonto registro = (RegistroPonto)reg.Data;
+
+        var parameters = new MudBlazor.DialogParameters() { ["registroPonto"] = registro };
+
+        var dialog = MudDialogService.Show<EditaHoraPontoComponent>("Editar Ponto", parameters);
+        var result = await dialog.Result;
+
+        rps.UpdateRecord(registro);
+
+    }
+
+
+
+
 
     void OnChange(DateTime? value, string name, string format)
     {
