@@ -62,9 +62,28 @@
     </div>
 </div>
 
+<MudDialog @bind-IsVisible="visible">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Edit" Class="mr-3"/>@tituloDialog
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <h6>@mensagemDialog</h6>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="FecharDialogModal" Class="px-10">Fechas</MudButton>
+    </DialogActions>
+</MudDialog>
+
 
 @code
 {
+    bool visible;
+
+    string mensagemDialog;
+    string tituloDialog;
+
     public Data.RegistroPonto regPonto = new RegistroPonto();
 
     RadzenDataGrid<Data.RegistroPonto> grid;
@@ -110,7 +129,7 @@
     LoadDataArgs ultimoFiltro;
 
     string[] value1ItemsCombo = new[]
-    {
+        {
         "Nacional",
         "Chines",
     };
@@ -118,6 +137,15 @@
     string TotalHorasTrabalhadasNoPeriodo;
 
     public string TotalHorasPeriodo { get; set; }
+
+    void OpenDialogModal(string titulo, string msg)
+    {
+        tituloDialog = titulo;
+        mensagemDialog = msg;
+        visible = true;
+    } 
+
+    void FecharDialogModal() => visible = false;
 
 
     protected override void OnInitialized()
@@ -375,13 +403,22 @@
     {
         RegistroPonto registro = (RegistroPonto)reg.Data;
 
-        var parameters = new MudBlazor.DialogParameters() { ["registroPonto"] = registro };
+        if (registro.TotalHorasDia.Ticks > 0)
+        {
+            OpenDialogModal("Atenção", "registros positivos não podem ser editados");
+        }
+        else
+        {
+            var parameters = new MudBlazor.DialogParameters() { ["registroPonto"] = registro };
+            var dialog = MudDialogService.Show<EditaHoraPontoComponent>("Editar Ponto", parameters);
+            var result = await dialog.Result;
 
-        var dialog = MudDialogService.Show<EditaHoraPontoComponent>("Editar Ponto", parameters);
-        var result = await dialog.Result;
-
-        rps.UpdateRecord(registro);
-
+            if (!result.Cancelled)
+            {
+                rps.UpdateRecord(registro);
+                OpenDialogModal("Atualizado", "Registro atualizado!");
+            }
+        }
     }
 
 

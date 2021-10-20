@@ -153,11 +153,20 @@
 
     public async void OpenColaborador(DataGridRowMouseEventArgs<Data.Colaborador> item)
     {
+        MudBlazor.DialogOptions DialogOptions = new MudBlazor.DialogOptions()
+        {
+             //Position = DialogPosition.TopCenter, FullWidth = true
+             //FullScreen = true, CloseButton = true, DisableBackdropClick = true, CloseButton = true
+             MaxWidth = MaxWidth.Medium,
+             NoHeader = true
+        };
+
+
         Data.Colaborador colab = (Data.Colaborador)item.Data;
 
         var dialog = DialogService.Show<Colaborador>("Cadastro do Colaborador", new MudBlazor.DialogParameters () 
             { ["ColaboradorID"]=colab.Id, 
-              ["colaborador"]=colab });
+              ["colaborador"]=colab }, DialogOptions);
         var result = await dialog.Result;
 
         if (!result.Cancelled)

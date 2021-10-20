@@ -122,8 +122,20 @@ namespace BlazorServer.Service
 
         public void UpdateRecord(RegistroPonto record)
         {
-            RegistroPonto reg = registroPontos.Find(i => i.Id == record.Id);
-            reg = record;
+            if (record!=null)
+            {
+                RegistroPonto reg = _context.RegistroPontos.Where(i => i.Id == record.Id).FirstOrDefault();
+                if (reg != null)
+                { 
+                    reg.AM_ENT = record.AM_ENT;
+                    reg.AM_SAI=record.AM_SAI;
+                    reg.PM_ENT= record.PM_SAI;
+                    reg.PM_SAI=record.PM_SAI;   
+                    reg.NOI_ENT= record.NOI_SAI;
+                    reg.NOI_SAI=record.NOI_SAI;
+                    _context.SaveChanges(); 
+                }
+            }
         }
 
         public bool ContextSaveCharges()
