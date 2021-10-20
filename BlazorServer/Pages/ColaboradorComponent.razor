@@ -154,6 +154,7 @@
     public async void OpenColaborador(DataGridRowMouseEventArgs<Data.Colaborador> item)
     {
         Data.Colaborador colab = (Data.Colaborador)item.Data;
+
         var dialog = DialogService.Show<Colaborador>("Cadastro do Colaborador", new MudBlazor.DialogParameters () 
             { ["ColaboradorID"]=colab.Id, 
               ["colaborador"]=colab });

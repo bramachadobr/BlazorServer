@@ -1,6 +1,5 @@
 ﻿@page "/"
 @using System
-@using System.IO
 @using BlazorServer.Data
 @using System.Globalization
 @using System.Timers
@@ -17,8 +16,9 @@
 @inherits OwningComponentBase
 
 <div class="container">
-    <div Class="row">
-             <InputFile id="fileInput112" OnChange="ProcessaFile" hidden multiple accept=".txt"/>
+    <div Class="row border-dark">
+        <div class="col-auto mr-auto">
+                <InputFile id="fileInput112" OnChange="ProcessaFile" hidden multiple accept=".txt"/>
                 <MudButton HtmlTag="label" 
                            Variant="Variant.Filled" 
                            Color="Color.Primary" 
@@ -26,32 +26,35 @@
                            for="fileInput112">
                            Upload do arquivo
                 </MudButton>
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-primary" @onclick="Print">Imprimir</button>
+        </div>
     </div>
     <br />
     <p></p>
 
     <div class="PrintDiv" id="PrintDiv">
             <div class="row">
-                <div class="col-sm">
-                    <button class="btn btn-primary" @onclick="Print">Imprimir</button>
-                </div>
-                <div class="col-sm">@TotalHorasPeriodo</div>
+                <div class="col-sm mr-auto"><h5>Total de Horas do periodo: @TotalHorasPeriodo</h5></div>
+                <div class="col-sm mr-auto"><h5>Total registros: @Count</h5></div>
             </div>
             <div class="row" >
-                <RadzenDataGrid @ref=grid IsLoading=@isLoading Count=@Count Data="@filtroPontosProcessados" TItem="Data.RegistroPonto" LoadData="@(args => LoadData(args))"  RowDoubleClick="@(args=> SelectionChangedEvent(args))"  
-                    FilterMode="FilterMode.Advanced" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowSorting="true" AllowFiltering="true" AllowPaging="true" PageSize="30">
+                <RadzenDataGrid @ref=grid IsLoading=@isLoading Count=@Count Data="@filtroPontosProcessados" TItem="Data.RegistroPonto" LoadData="@(args => LoadData(args))"  
+                    RowDoubleClick="@(args=> SelectionChangedEvent(args))" FilterMode="FilterMode.Advanced" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" 
+                    AllowSorting="true" AllowFiltering="true" AllowPaging="true" PageSize="30" AllowColumnResize="true" Style="border-radius: 6px;">
                     <Columns>
-                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="Colaborador.CodPonto" Title="Cod" Frozen="true" Width="30px"/>
-                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="Colaborador.Nome" Title="Nome Completo" Width="120px"/>
-                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="DiaSemanaPtBr" Title="Dia semana" Width="60px"/>
+                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="Colaborador.CodPonto" Title="Cod" Frozen="true" Width="35px"/>
+                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="Colaborador.Nome" Title="Nome Completo" Width="250px"/>
+                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="DiaSemanaPtBr" Title="Dia semana" Width="80px"/>
                         <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="Data" Title="Data" Width="60px" FormatString="{0:dd/MM/yyyy}"/>
-                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="AM_ENT" Title="AM_ENT" FormatString="{0:HH:mm}"   Width="45px"/>
-                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="AM_SAI" Title="AM_SAI" FormatString="{0:HH:mm}"   Width="45px"/>
-                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="PM_ENT" Title="PM_ENT" FormatString="{0:HH:mm}"   Width="45px"/>
-                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="PM_SAI" Title="PM_SAI" FormatString="{0:HH:mm}"   Width="45px"/>
-                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="NOI_ENT" Title="NOI_ENT" FormatString="{0:HH:mm}"  Width="45px"/>
-                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="NOI_SAI" Title="NOI_SAI" FormatString="{0:HH:mm}"  Width="45px"/>
-                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="TotalHorasDia" Title="Total Horas Dia"  Width="45px"/> 
+                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="AM_ENT" Title="AM_ENT" FormatString="{0:HH:mm}"   Width="50px"/>
+                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="AM_SAI" Title="AM_SAI" FormatString="{0:HH:mm}"   Width="50px"/>
+                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="PM_ENT" Title="PM_ENT" FormatString="{0:HH:mm}"   Width="50px"/>
+                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="PM_SAI" Title="PM_SAI" FormatString="{0:HH:mm}"   Width="50px"/>
+                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="NOI_ENT" Title="NOI_ENT" FormatString="{0:HH:mm}"  Width="50px"/>
+                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="NOI_SAI" Title="NOI_SAI" FormatString="{0:HH:mm}"  Width="50px"/>
+                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="TotalHorasDia" Title="Total Horas Dia"  Width="50px"/> 
                     </Columns>
                 </RadzenDataGrid>
             </div>
@@ -111,7 +114,7 @@
         "Chines",
     };
 
-    TimeSpan TotalHorasTrabalhadasNoPeriodo;
+    string TotalHorasTrabalhadasNoPeriodo;
 
     public string TotalHorasPeriodo { get; set; }
 
@@ -121,6 +124,22 @@
         base.OnInitialized();
         cs = (Service.ColaboradorService)ScopedServices.GetService(typeof(Service.ColaboradorService));
         rps = (Service.RegistroPontoService)ScopedServices.GetService(typeof(Service.RegistroPontoService));
+    }
+
+    public static decimal MultiplyPerMinute(TimeSpan a, decimal b)
+	{
+	    return Math.Round(Convert.ToDecimal(a.TotalHours * (double)b), 2, MidpointRounding.AwayFromZero);
+	}
+
+    private void TotalHorasTrabalhadas(TimeSpan totalHorasPeriodo)
+	{
+		TimeSpan times = new TimeSpan(0, 0, 0, 0);
+		times = totalHorasPeriodo;
+
+		TotalHorasPeriodo = string.Format("{0}:{1}:{2}", times.Days > 0 ? ((times.Days * 24) + times.Hours) : times.Hours,
+						            times.Minutes < 10 ? ("0" + times.Minutes) : times.Minutes.ToString(),
+						            times.Seconds < 10 ? ("0" + times.Seconds) : times.Seconds.ToString());
+		//txtValorTotal.Text = string.Format("R$ {0:#.##}", valor.ToString());
     }
 
     async Task LoadData(LoadDataArgs args)
@@ -145,10 +164,13 @@
             }
             //filtroPontosProcessados = query.Skip(args.Skip.Value).Take(args.Top.Value).ToList();
             filtroPontosProcessados = query.Skip(args.Skip.Value).Take(args.Top.Value).ToList();
+            TotalHorasDoPeriodo();
+
         }
         else
         {
             filtroPontosProcessados = query.ToList();
+            TotalHorasDoPeriodo();
         }
         Count = filtroPontosProcessados.Count();
         isLoading = false;
@@ -157,8 +179,8 @@
     async void ResetGrid()
     {
         grid.Reset(true);
-        await grid.Reload();
-        await LoadData(ultimoFiltro);   
+        await LoadData(ultimoFiltro);
+        TotalHorasDoPeriodo();
     }
 
     async Task ProcessaFile(InputFileChangeEventArgs files)
@@ -237,14 +259,13 @@
         }
         await ProcessaPontos();
         ResetGrid();
-        TotalHorasDoPeriodo();
     }
 
     void TotalHorasDoPeriodo()
     {
-        long xx = filtroPontosProcessados.Sum<RegistroPonto>(i => i.TotalHorasDia.Ticks);
-        TimeSpan time = TimeSpan.FromTicks(xx);
-        TotalHorasPeriodo = time.TotalHours.ToString();
+        long soma = filtroPontosProcessados.Sum<RegistroPonto>(i => i.TotalHorasDia.Ticks);
+        TimeSpan time = TimeSpan.FromTicks(soma);
+        TotalHorasTrabalhadas(time);
     }
 
     public override bool Equals(object obj)
@@ -307,7 +328,7 @@
                         ponto.AddHora(i.Data);
                         //await JSRuntime.InvokeVoidAsync("console.log", "teste", i);
                     }
-                    if (rps.ValidaPontoExiste(ponto))
+                    if (!rps.ValidaPontoExiste(ponto))
                     {
                         rps.AddRecord(ponto);
                     }
@@ -384,7 +405,7 @@
             @<div>
                 <div class="row">
                     <div class="col-md-12">
-                        Loading...
+                        Processando arquivo...
                     </div>
                 </div>
     </div>

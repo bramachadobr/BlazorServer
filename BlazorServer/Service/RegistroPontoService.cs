@@ -29,11 +29,23 @@ namespace BlazorServer.Service
 
         public bool ValidaPontoExiste(RegistroPonto record)
         {
-            RegistroPonto reg = _context.RegistroPontos.Where(i => i.AM_ENT.Equals(record.AM_ENT) && i.ColaboradorId.Equals(record.ColaboradorId)).FirstOrDefault();
 
-            
+            var obj = from n in _context.RegistroPontos 
+                      where n.Colaborador == record.Colaborador 
+                      && n.AM_ENT == record.AM_ENT
+                      select n;
 
-            return reg == null?true:false;
+            if (obj.Count() > 0)
+            {
+                return true;
+            }
+            else
+            { 
+                return false;
+            }
+
+            //RegistroPonto reg = _context.RegistroPontos.Where(i => i.AM_ENT.Equals(record.AM_ENT) && i.ColaboradorId.Equals(record.ColaboradorId)).FirstOrDefault();
+            //return reg == null?true:false;
         }
 
         public void DeleteRecord(RegistroPonto record)
