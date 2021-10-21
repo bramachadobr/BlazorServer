@@ -17,6 +17,7 @@
 @inherits OwningComponentBase
 
 <div class="container">
+    <p></p>
     <div Class="row border-dark">
         <div class="col-auto mr-auto">
                 <InputFile id="fileInput112" OnChange="ProcessaFile" hidden multiple accept=".txt"/>
@@ -29,7 +30,10 @@
                 </MudButton>
         </div>
         <div class="col-auto">
-            <button class="btn btn-primary" @onclick="Print">Imprimir</button>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Filled.Print" OnClick="Print">
+                           Imprimir
+                </MudButton>
+            @*<button class="btn btn-primary" @onclick="Print">Imprimir</button>*@
         </div>
     </div>
     <br />

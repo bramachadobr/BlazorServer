@@ -15,15 +15,10 @@
 @inject IDialogService DialogService
 
 
-<h3>Colaborador Component</h3>
-
-<div>
+<div class="container">
     <div class="row">
         <RadzenButton Text="Reset" Click="ResetGrid" Style="margin-bottom:20px"></RadzenButton>
     </div>
-
-    @*Data="@(_Colaboradores.Select(i=> new {CodPonto = i.CodPonto, Nome=i.Nome, Cpf=i.Cpf, Cargo=i.Cargo.NomeCargo, Contratacao = i.Contratacao, Salario=i.Salario, HoraAula = i.HoraAula}).Distinct().AsQueryable())"*@
-
     <div class="row">
            <RadzenDataGrid @ref="grid" IsLoading="@isLoading" Count="@count" TItem="Data.Colaborador"  RowDoubleClick="@(args=> OpenColaborador(args))"  
                 FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterMode="FilterMode.Advanced" AllowSorting="true" AllowFiltering="true" Data="@_Colaboradores">
@@ -37,20 +32,10 @@
                 <RadzenDataGridColumn TItem="Data.Colaborador" Property="Demissao" Title="Data demissão" FormatString="{0:dd/MM/yyyy}" Width="80px" />
                 <RadzenDataGridColumn TItem="Data.Colaborador" Property="Salario" Title="Salario" Width="80px" />
                 <RadzenDataGridColumn TItem="Data.Colaborador" Property="HoraAula" Title="Hora Aula" Width="80px" />
-                
-                @*<RadzenDataGridColumn TItem="Data.Colaborador" Title="Editar" Sortable="false" Filterable="false" Width="80px" > ColumnWidth="200px" PageSize="4" AllowPaging="true"ca
-                    <Template Context="_Colaboradores">
-                        <RadzenButton Text="Show busy dialog" Click=@(args => OpenColaborador(args)) />
-                    </Template>
-                </RadzenDataGridColumn>*@
            </Columns>
            </RadzenDataGrid>
     </div>
 </div>
-
-
-@* <RadzenButton Text="Show confirm dialog" Click=@(args => Radzen.DialogService .DialogService.Confirm("Are you sure?", "MyTitle", new ConfirmOptions() { OkButtonText = "Yes", CancelButtonText = "No" })) />*@
-
 
 
 @code 
