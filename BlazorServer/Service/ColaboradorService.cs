@@ -15,7 +15,7 @@ namespace BlazorServer.Service
         public ColaboradorService(AppDbContext context)
         {
             _context = context;
-            //Colaboradores = GetAllColaboradoresList();
+            Colaboradores = GetAllColaboradoresList();
         }
 
         public List<Colaborador> Colaboradores { get; set; }

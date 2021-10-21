@@ -17,22 +17,6 @@ namespace BlazorServer.Data
         danger
     }
 
-    public class Cargo
-    {
-        public Cargo()
-        {
-            Id = Guid.NewGuid();
-        }
-
-        [Key]
-        [Column(TypeName = "uniqueidentifier")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Id { get; set; }
-        public string NomeCargo { get; set; }
-        public List<Colaborador> Colaboradores { get; set; }
-    }
-
-
     public class Arquivo
     {
         public Arquivo()
@@ -67,6 +51,21 @@ namespace BlazorServer.Data
         public string EnderecoEmail { get; set; }
     }
 
+    public class Cargo
+    {
+        public Cargo()
+        {
+            Id = Guid.NewGuid();
+        }
+
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Column(TypeName = "uniqueidentifier")]
+        public Guid Id { get; set; }
+        public string NomeCargo { get; set; }
+        public List<Colaborador> Colaboradores { get; set; }
+    }
+
 
     public class Colaborador
     {
@@ -76,8 +75,8 @@ namespace BlazorServer.Data
         }
 
         [Key]
-        [Column(TypeName = "uniqueidentifier")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Column(TypeName = "uniqueidentifier")]
         public Guid Id { get; set; }
 
         public int CodPonto { get; set; }
@@ -89,7 +88,7 @@ namespace BlazorServer.Data
         public string CpfComMascara { get => string.Format(@"{0:000\.###\.###-##}", Cpf); }
 
         public Cargo Cargo { get; set; }
-        public Guid CargoId { get; set; }
+
 
         public DateTime? Contratacao { get; set; }
 
@@ -136,7 +135,7 @@ namespace BlazorServer.Data
         }
 
         public Colaborador Colaborador { get; set; }
-        public Guid ColaboradorId { get; set; }
+        //public Guid ColaboradorId { get; set; }
         public DayOfWeek DiaSemana { get => Data.DayOfWeek; }
 
         public string DiaSemanaPtBr { get => Cultura.DateTimeFormat.GetDayName(DiaSemana); }

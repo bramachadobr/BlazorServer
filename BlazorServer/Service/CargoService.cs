@@ -16,6 +16,7 @@ namespace BlazorServer.Service
         public CargoService(AppDbContext context)
         {
             _context = context;
+            Cargos = GetAllRecordsList();
         }
 
         public bool AddRecord(Cargo record)
@@ -33,6 +34,11 @@ namespace BlazorServer.Service
         }
 
         public async Task<List<Cargo>> GetAllRecords()
+        {
+            return _context.Cargo.ToList();
+        }
+
+        public List<Cargo> GetAllRecordsList()
         {
             return _context.Cargo.ToList();
         }

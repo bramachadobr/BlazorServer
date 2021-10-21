@@ -9,9 +9,9 @@
 @using System.ComponentModel.DataAnnotations
 
 @*@inject  MudBlazor.DialogService DialogService*@
-@inherits OwningComponentBase<Service.ColaboradorService>
+@*@inherits OwningComponentBase<Service.ColaboradorService>*@
 @implements IDisposable
-@*@inherits OwningComponentBase*@
+@inherits OwningComponentBase
 @inject IDialogService DialogService
 
 
@@ -74,8 +74,8 @@
     protected override async void OnInitialized()
     {
         base.OnInitialized();
-        //_colaboradorService = (ColaboradorService)ScopedServices.GetService(typeof(ColaboradorService));
-        //_cargoService = (CargoService)ScopedServices.GetService(typeof(CargoService));
+        _colaboradorService = (ColaboradorService)ScopedServices.GetService(typeof(ColaboradorService));
+        _cargoService = (CargoService)ScopedServices.GetService(typeof(CargoService));
 
         await LoadData(ultimoFiltro);
     }
@@ -98,7 +98,7 @@
         ultimoFiltro = args;
         isLoading = true;
 
-        var query =  Service.GetAllColaboradoresList().AsQueryable();
+        var query =  _colaboradorService.GetAllColaboradoresList().AsQueryable();
 
         if (args != null)
         {
@@ -158,7 +158,7 @@
         {
              //Position = DialogPosition.TopCenter, FullWidth = true
              //FullScreen = true, CloseButton = true, DisableBackdropClick = true, CloseButton = true
-             MaxWidth = MaxWidth.Medium,
+             MaxWidth = MaxWidth.Large,
              NoHeader = true
         };
 

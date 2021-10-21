@@ -75,7 +75,6 @@
             if (cargo.NomeCargo != "")
             {
                 Service.AddRecord(cargo);
-                //_cargoService.AddRecord(cargo);
                 Task.Run(()=> ShowInlineDialog());
                 CargoObj = new Data.Cargo();
                 grid.ResetGrid();

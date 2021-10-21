@@ -32,7 +32,8 @@
     //[Parameter]
     //public Service.CargoService _cargoService { get; set; }
 
-    RadzenDataGrid<Data.Cargo> grid;
+    [Parameter] 
+    public RadzenDataGrid<Data.Cargo> grid { get; set; }
 
     protected override async void OnInitialized()
     {
@@ -46,8 +47,8 @@
     public async void ResetGrid()
     {
         _cargos = await Service.GetAllRecords();
+        grid.Reload();
         grid.Reset(true);
         await grid.FirstPage(true);
     }
-
 }

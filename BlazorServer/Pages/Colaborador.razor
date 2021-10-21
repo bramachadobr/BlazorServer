@@ -55,8 +55,9 @@
                             <RadzenLabel Text="Cargo" />
                         </div>
                         <div class="col-md-8">
-                            <RadzenDropDown TValue="Data.Cargo" SelectedItem="@cargos"  Name="Cargo" Data=@cargos Change=@(args=>OnChange(args, "DropDown")) TextProperty="NomeCargo" ValueProperty="Cargo" AllowClear="true" Placeholder="Selecione um cargo"  style="width: 100%;" />
-                                <RadzenDropDown TValue="Data.Cargo" SelectedItem="@cargos" @bind-Value="colaborador.Cargo" Name="Cargo2" TextProperty="NomeCargo" ValueProperty="CargoId" AllowClear="true" Placeholder="Selecione um cargo"  style="width: 100%;" />
+                            <RadzenDropDown @bind-Value="colaborador.Cargo" TValue="Data.Cargo" SelectedItem="@cargos"  Name="Cargo" Data=@cargos Change=@(args=>OnChange(args, "DropDown")) 
+                                TextProperty="NomeCargo" ValueProperty="Cargo" AllowClear="true" Placeholder="Selecione um cargo"  style="width: 100%;" />
+                                @*<RadzenDropDown TValue="Data.Cargo" SelectedItem="@cargos" @bind-Value="colaborador.Cargo" Name="Cargo2" TextProperty="NomeCargo" ValueProperty="CargoId" AllowClear="true" Placeholder="Selecione um cargo"  style="width: 100%;" />*@
                         </div>
                     </div>
                     <div class="row">
@@ -202,29 +203,20 @@
     protected override async void OnInitialized()
     {
         base.OnInitialized();
+        _colaboradorService = (ColaboradorService)ScopedServices.GetService(typeof(ColaboradorService));
+        _cargoService = (CargoService)ScopedServices.GetService(typeof(CargoService));
+        
         editCodigo = true;
 
-        if (_colaboradorService ==null)
+        cargos = await _cargoService.GetAllRecords();
+
+        if (ColaboradorID != Guid.Empty)
         {
-            _colaboradorService = (ColaboradorService)ScopedServices.GetService(typeof(ColaboradorService));
-            _cargoService = (CargoService)ScopedServices.GetService(typeof(CargoService));
-            cargos = await _cargoService.GetAllRecords();
-        }
-        if (colaborador != null)
-        {
-            ColaboradorID = colaborador.Id;
+            colaborador = await _colaboradorService.GetColaboradorById(ColaboradorID);
         }
         else
         {
             colaborador = new Data.Colaborador();
-        }
-        if (ColaboradorID != Guid.Empty && colaborador ==null)
-        {
-            colaborador = await _colaboradorService.GetColaboradorById(ColaboradorID);
-            if (colaborador == null)
-            {
-                colaborador = new Data.Colaborador();
-            }
         }
 
     }
