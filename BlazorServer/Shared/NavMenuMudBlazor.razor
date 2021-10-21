@@ -1,15 +1,25 @@
-﻿<MudNavMenu>
-    <MudNavLink Href="/dashboard">Dashboard</MudNavLink>
-    <MudNavLink Href="/servers">Servers</MudNavLink>
-    <MudNavGroup Title="Settings" Expanded="true">
-        <MudNavLink Href="">Pontos</MudNavLink>
-        <MudNavLink Href="users">Users</MudNavLink>
-        <MudNavLink Href="security">Security</MudNavLink>
-        <MudNavLink Href="counter">counter</MudNavLink>
-        <MudNavLink Href="fetchdata">fetchdata</MudNavLink>
-        <MudNavLink Href="colaboradores">Colaboradores</MudNavLink>
-        <MudNavLink Href="emailcrud">Email</MudNavLink>
-        <MudNavLink Href="cargo">cargo</MudNavLink>
-    </MudNavGroup>
-    <MudNavLink Href="/about">About</MudNavLink>
-</MudNavMenu>
+﻿
+            <MudNavMenu>
+                <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.Store" Href="/dashboard">Dashboard</MudNavLink>
+                <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.Store" Href="/">Registro de pontos</MudNavLink>
+                <MudNavGroup Match="NavLinkMatch.All" Icon="@Icons.Filled.Store" Title="Cadastros" Expanded="true">
+                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.Store" Href="/colaboradores">Colaboradores</MudNavLink>
+                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.Store" Href="/cargo">Cargo</MudNavLink>
+                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.Store" Href="/emailcrud">Email</MudNavLink>
+                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.Store" Href="/Unidade">Unidades</MudNavLink>
+                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.Store" Href="/gerenciaColaborador">Gerenciar Colaborador</MudNavLink>
+                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.Store" Href="security">Security</MudNavLink>
+                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.Store" Href="counter">counter</MudNavLink> 
+                </MudNavGroup>
+                <MudNavLink Href="/about">About</MudNavLink>
+            </MudNavMenu>
+
+@code
+{
+     bool open = false;
+
+    void ToggleDrawer()
+    {
+        open = !open;
+    } 
+}

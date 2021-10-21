@@ -1,0 +1,223 @@
+﻿@page "/gerenciaColaborador/{ColaboradorID}"
+
+@inherits OwningComponentBase
+@*@inject Data*@
+
+<h3>GerenciaColaborador</h3>
+
+ <RadzenTemplateForm Data="@colaborador" Submit="@((Data.Colaborador args) => { Submit(); })">
+     <div class="row">
+            <div class="col-md-6">
+               <RadzenFieldset Text="Cadastro">
+                   <div class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Código Relogio" />
+                        </div>
+                        <div class="col-md-4">
+                            <RadzenNumeric style="width: 100%;" Name="CodPonto" @bind-Value="colaborador.CodPonto" Disabled="@editCodigo" />
+                        </div>
+                        <div class="col-md-4">
+                            <RadzenButton Text="" ButtonStyle="ButtonStyle.Light" Icon="edit" Click="@Submit" />
+                            @*<RadzenButton  Text="alter" Click="@AlteraCodigo" @onclick="AlteraCodigo" /> *@
+                        </div>
+                    </div> 
+
+                    <div class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Nome" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenTextBox style="width: 100%;" Name="Nome" @bind-Value="colaborador.Nome" />
+                        </div>
+                    </div> 
+
+
+                    <div class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="CPF" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenTextBox style="width: 100%;" Name="Cpf" @bind-Value="colaborador.Cpf" />
+                        </div>
+                    </div> 
+                    <div class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Cargo" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenDropDown @bind-Value="colaborador.Cargo" TValue="Data.Cargo" SelectedItem="@cargos"  Name="Cargo" Data=@cargos Change=@(args=>OnChange(args, "DropDown")) 
+                                TextProperty="NomeCargo" ValueProperty="Cargo" AllowClear="true" Placeholder="Selecione um cargo"  style="width: 100%;" />
+                                @*<RadzenDropDown TValue="Data.Cargo" SelectedItem="@cargos" @bind-Value="colaborador.Cargo" Name="Cargo2" TextProperty="NomeCargo" ValueProperty="CargoId" AllowClear="true" Placeholder="Selecione um cargo"  style="width: 100%;" />*@
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Admissão" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenDatePicker style="width: 100%;" Name="Contratacao" @bind-Value="colaborador.Contratacao" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Salário" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenNumeric style="width: 100%;" Name="Salario" @bind-Value="colaborador.Salario"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Hora Aula" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenNumeric style="width: 100%;" Name="HoraAula" @bind-Value="colaborador.HoraAula"/>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Demissão" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenDatePicker style="width: 100%;" Name="Demissao" @bind-Value="colaborador.Demissao" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Ativo?" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenCheckBox @bind-Value=@colaborador.Ativo  Name="Ativo" TValue="bool" />
+                        </div>
+                    </div>
+                    
+                </RadzenFieldset>
+              </div>
+              <div class="col-md-6">
+                <RadzenFieldset Text="Informação de Contato">
+                    <div class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Email" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenTextBox style="width: 100%;" Name="Email" @bind-Value="colaborador.Email" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Telefone" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenTextBox style="width: 100%;" Name="Telefone"  @bind-Value="colaborador.Telefone"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Endereço" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenTextBox style="width: 100%;" Name="Endereco" @bind-Value="colaborador.Endereco" />
+                        </div>
+                    </div>
+
+                    <div class=row>
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Numero" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenNumeric Placeholder="123" style="width: 100%;" Name="Numero" @bind-Value="colaborador.Numero" />
+                        </div>
+                    </div>
+                    <div class=row>
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Bairro" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenTextBox style="width: 100%;" Name="Bairro" @bind-Value="colaborador.Bairro"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Cidade" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenTextBox style="width: 100%;" Name="Cidade" @bind-Value="colaborador.Cidade"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Estado" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenTextBox style="width: 100%;" Name="UF" @bind-Value="colaborador.Estado" />
+                        </div>
+                    </div>
+                </RadzenFieldset>
+            </div>
+        </div>
+    </RadzenTemplateForm>
+
+
+    <div class="row">
+           <RadzenDataGrid IsLoading="@isLoading" Count="@count" TItem="Data.Colaborador" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                 FilterMode="FilterMode.Advanced" AllowSorting="true" AllowFiltering="true" Data="@_colaboradores">
+                   <Columns>
+                        @*<RadzenDataGridColumn TItem="Colaborador" Property="Id" Filterable="false" Title="ID" Frozen="true" Width="50px" TextAlign="TextAlign.Center" />*@
+                        <RadzenDataGridColumn TItem="Data.Colaborador" Property="CodPonto" Title="Cod." Frozen="true" Width="40px" />
+                        <RadzenDataGridColumn TItem="Data.Colaborador" Property="Nome" Title="Nome Completo" Width="200px"/>
+                        <RadzenDataGridColumn TItem="Data.Colaborador" Property="Cpf" Title="CPF" Width="100px" />
+                        <RadzenDataGridColumn TItem="Data.Colaborador" Property="Cargo.NomeCargo" Title="Cargo" Width="110px" />
+                        <RadzenDataGridColumn TItem="Data.Colaborador" Property="Contratacao" Title="Data adminissão" FormatString="{0:dd/MM/yyyy}" Width="80px" />
+                        <RadzenDataGridColumn TItem="Data.Colaborador" Property="Demissao" Title="Data demissão" FormatString="{0:dd/MM/yyyy}" Width="80px" />
+                        <RadzenDataGridColumn TItem="Data.Colaborador" Property="Salario" Title="Salario" Width="80px" />
+                        <RadzenDataGridColumn TItem="Data.Colaborador" Property="HoraAula" Title="Hora Aula" Width="80px" />
+                   </Columns>
+           </RadzenDataGrid>
+    </div>
+
+
+
+@code {
+
+    [Parameter]
+    public Guid ColaboradorID { get; set; }
+
+    Data.Colaborador colaborador{ get; set; }
+
+    List<Data.Cargo> cargos { get; set; }
+
+    Service.ColaboradorService _colaboradorService;
+    Service.CargoService _cargoService;
+    IEnumerable<Data.Colaborador> _colaboradores;
+
+    bool editCodigo;
+    int count;
+    bool isLoading;
+
+    protected override void OnInitialized()
+    {
+        _colaboradorService = (ColaboradorService)ScopedServices.GetService(typeof(ColaboradorService));
+        _cargoService = (CargoService)ScopedServices.GetService(typeof(CargoService));
+        cargos = _cargoService.GetAllRecords().Result;
+
+        if (ColaboradorID!= Guid.Empty)
+        {
+            colaborador = _colaboradorService.GetColaboradorById(ColaboradorID).Result;
+        }
+    }
+
+    void Submit()
+    { }
+
+    void OnChange(object value, string name)
+    {
+        if(name=="DropDown")
+        {
+            Data.Cargo c = (Data.Cargo)value;
+            colaborador.Cargo = c; // cargos.FirstOrDefault(i => i.Id == c.Id);;
+        }
+    }
+}

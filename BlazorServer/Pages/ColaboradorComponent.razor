@@ -8,6 +8,8 @@
 @using System.Linq.Dynamic.Core
 @using System.ComponentModel.DataAnnotations
 
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
 @*@inject  MudBlazor.DialogService DialogService*@
 @*@inherits OwningComponentBase<Service.ColaboradorService>*@
 @implements IDisposable
@@ -32,6 +34,12 @@
                 <RadzenDataGridColumn TItem="Data.Colaborador" Property="Demissao" Title="Data demissão" FormatString="{0:dd/MM/yyyy}" Width="80px" />
                 <RadzenDataGridColumn TItem="Data.Colaborador" Property="Salario" Title="Salario" Width="80px" />
                 <RadzenDataGridColumn TItem="Data.Colaborador" Property="HoraAula" Title="Hora Aula" Width="80px" />
+                <RadzenDataGridColumn TItem="Data.Colaborador" Title="Alteração" Width="120px">
+                    <Template>
+                        <MudIconButton Icon="@Icons.Filled.Edit" Size="Size.Small" OnClick="@(()=> OpenColaborador(context.Id))"></MudIconButton>
+                        <MudIconButton Icon="@Icons.Filled.ManageAccounts" Size="Size.Small" OnClick="@(()=>OpenColaboradorManager(context.Id))" ></MudIconButton>
+                    </Template>
+                </RadzenDataGridColumn>
            </Columns>
            </RadzenDataGrid>
     </div>
@@ -126,16 +134,34 @@
     {   
     }
 
+    async void  OpenColaborador(Guid id)
+    {
+        MudBlazor.DialogOptions DialogOptions = new MudBlazor.DialogOptions()
+        {
+             //Position = DialogPosition.TopCenter, FullWidth = true
+             //FullScreen = true, CloseButton = true, DisableBackdropClick = true, CloseButton = true
+             MaxWidth = MaxWidth.Large,
+             NoHeader = true
+        };
+
+        var dialog = DialogService.Show<Colaborador>("Cadastro do Colaborador", new MudBlazor.DialogParameters () 
+            { ["ColaboradorID"]=id }, DialogOptions);
+        var result = await dialog.Result;
+
+        if (!result.Cancelled)
+        {
+            ResetGrid();
+        }
+    }
+
+    async void OpenColaboradorManager(Guid id)
+    {
+        NavigationManager.NavigateTo($"gerenciaColaborador/{id}");
+    }
+
+
     RadzenButton buttonFecharDialog;
 
-    //public async Task OpenColaborador(DataGridRowMouseEventArgs<Data.Colaborador> item)
-    //{
-    //    colaboradorId = item.Data.Id;
-    //    await DialogService.OpenAsync<Colaborador>($"Data.Colaborador {colaboradorId}",
-    //               new Dictionary<string, object>() { { "ColaboradorID", colaboradorId }, { "ButtonFecha", buttonFecharDialog} },
-    //        new DialogOptions() { Width = "800px", Height = "600px", Style = "Resizable: true ;  Draggable : true ", ShowClose = true, ShowTitle = true, 
-    //        });
-    //}
 
     public async void OpenColaborador(DataGridRowMouseEventArgs<Data.Colaborador> item)
     {
@@ -167,22 +193,6 @@
         //});
 
     }
-
-    //public async void OpenColaborador(DataGridRowMouseEventArgs<Data.Colaborador> item)
-    //{
-
-    //    var dialog = DialogService.Show<Colaborador>("", new DialogParameters(){["ColaboradorID"]=colaboradorId});
-    //    var result = await dialog.Result;
-
-    //    //InvokeAsync(async () =>
-    //    //{
-    //    //    colaboradorId = item.Data.Id;
-    //    //    await DialogService.OpenAsync<Colaborador>($"Data.Colaborador {colaboradorId}",
-    //    //           new Dictionary<string, object>() { { "ColaboradorID", colaboradorId }, { "ButtonFecha", buttonFecharDialog} },
-    //    //    new DialogOptions() { Width = "800px", Height = "600px", Style = "Resizable: true ;  Draggable : true ", ShowClose = true, ShowTitle = true, 
-    //    //    });
-    //    //});
-    //}
 
     public void CloseDialog()
     {
