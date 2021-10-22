@@ -42,6 +42,7 @@ namespace BlazorServer
             services.AddScoped<RegistroRelogioService>();
             services.AddScoped<RegistroPontoService>();
             services.AddScoped<CargoService>();
+            services.AddScoped<UnidadeService>();
             services.AddScoped<HttpClient>();
             services.AddMudServices();
             //services.AddMudServices();

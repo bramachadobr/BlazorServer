@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 
 namespace BlazorServer.Service
@@ -14,8 +15,12 @@ namespace BlazorServer.Service
         public RegistroPontoService(AppDbContext _context)
         {
             this._context = _context;
-            //colaboradores = 
+            RegistroPontos = _context.RegistroPontos;
+            Colaboradores = _context.Colaboradors;
         }
+
+        public IEnumerable<RegistroPonto> RegistroPontos { get; set; }
+        public IEnumerable<Colaborador> Colaboradores { get; set; }
 
         private List<RegistroPonto> registroPontos { get; set; }
 
@@ -152,6 +157,14 @@ namespace BlazorServer.Service
         public RegistroPonto GetRecord(Guid id)
         {
             return _context.RegistroPontos.Where(i => i.Id == id).FirstOrDefault();
+        }
+
+        public async Task<List<RegistroPonto>> GetRegistroPontoByColaborador(Colaborador colab)
+        {
+
+            return _context.RegistroPontos.Where<RegistroPonto>(i => i.Colaborador.Id.Equals(colab.Id)).ToList();
+
+            //return await _context.RegistroPontos.Where(i => i.Colaborador.Id.Equals(colab.Id)).ToListAsync();
         }
     }
 }

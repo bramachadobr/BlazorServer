@@ -1,27 +1,29 @@
 ﻿using BlazorServer.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 
 namespace BlazorServer.Service
 {
     public class UnidadeService : IServiceUnidade
     {
+        private readonly AppDbContext _context;
 
 
-
-        public UnidadeService()
+        public UnidadeService(AppDbContext appDbContext) 
         {
-            Unidades = new List<Unidade>();
+            _context = appDbContext;
         }
-
-        public List<Unidade> Unidades;
 
         public bool AddRecord(Unidade record)
         {
             if (record.Id.Equals(Guid.Empty))
             {
-                Unidades.Add(record);
+                _context.Unidade.Add(record);
+                _context.SaveChanges();
                 return true;
             }
             else
@@ -33,36 +35,53 @@ namespace BlazorServer.Service
 
         public bool DeleteRecor(Unidade record)
         {
-            throw new NotImplementedException();
+            _context.Unidade.Remove(record);
+            _context.SaveChanges();
+            return true;
         }
 
-        public Task<List<Unidade>> GetUnidades()
+        public async Task<List<Unidade>> GetUnidades()
         {
-            throw new NotImplementedException();
+            return _context.Unidade.ToList();
         }
 
-        public Task<List<Unidade>> GetUnidadesById(Guid id)
+        public List<Unidade> GetUnidadesList()
         {
-            throw new NotImplementedException();
+            return _context.Unidade.ToList();
         }
 
-        public Task UpdateRecord(Unidade record)
+        public Task<Unidade> GetUnidadesById(Guid id)
         {
-            throw new NotImplementedException();
+            return _context.Unidade.FirstOrDefaultAsync(i => i.Id == id);
         }
 
-        public void LoadUnidades()
+        public bool UpdateRecord(Unidade record)
         {
-
-            Unidades = new List<Unidade> {
-                new Unidade(){ Nome="Parauapebas", Bairro="Bairro da Paz", Numero=152, Cidade="Parauapebas", CNPJ="123123123/1234-12", Endereco="Rua Sol Poente", RazaoSocial="EDIVALDO MACHADO BARBALHO"},
-                new Unidade{ Nome="Eldorado dos Carajas", Bairro="Centro", Numero=152, Cidade="Eldorado dos Carajás", CNPJ="123123123/1234-12", Endereco="Rua Sol Poente", RazaoSocial="EDIVALDO MACHADO BARBALHO"},
-                new Unidade{ Nome="Canaa dos CArajas", Bairro="Centro", Numero=152, Cidade="Canaa dos Carajas", CNPJ="123123123/1234-12", Endereco="Rua Sol Poente", RazaoSocial="EDIVALDO MACHADO BARBALHO"}
-            };
+            Unidade uni = _context.Unidade.FirstOrDefault(i => i.Id == record.Id);
+            if (uni != null)
+            {
+                uni.Nome = record.Nome;
+                uni.RazaoSocial = record.RazaoSocial;
+                uni.CNPJ = record.CNPJ;
+                uni.Endereco = record.Endereco;
+                uni.Cidade = record.Cidade;
+                uni.Numero = record.Numero;
+                uni.Bairro = record.Bairro;
+                _context.Unidade.Update(uni);
+                _context.SaveChanges();
+                return true;
+            }
+            else
+            {
+                AddRecord(record);
+                return true;
+            }
         }
 
-
-
+        Unidade IServiceUnidade.GetUnidadesById(Guid id)
+        {
+            return _context.Unidade.FirstOrDefault(i => i.Id == id);
+        }
     }
 }
 

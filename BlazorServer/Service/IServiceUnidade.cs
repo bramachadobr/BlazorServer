@@ -13,11 +13,11 @@ namespace BlazorServer.Service
 
         public bool DeleteRecor(Unidade record);
 
-        public Task UpdateRecord(Unidade record);
+        public bool UpdateRecord(Unidade record);
 
         public Task<List<Unidade>> GetUnidades();
 
-        public Task<List<Unidade>> GetUnidadesById(Guid id);
+        public Unidade GetUnidadesById(Guid id);
 
 
     }

@@ -3,9 +3,10 @@
 @inherits OwningComponentBase
 @*@inject Data*@
 
-<h3>GerenciaColaborador</h3>
-
- <RadzenTemplateForm Data="@colaborador" Submit="@((Data.Colaborador args) => { Submit(); })">
+<div class="container">
+    <br />
+    <div>
+        <RadzenTemplateForm Data="@colaborador" Submit="@((Data.Colaborador args) => { Submit(); })">
      <div class="row">
             <div class="col-md-6">
                <RadzenFieldset Text="Cadastro">
@@ -159,38 +160,49 @@
             </div>
         </div>
     </RadzenTemplateForm>
-
+    </div>
+ 
 
     <div class="row">
-           <RadzenDataGrid IsLoading="@isLoading" Count="@count" TItem="Data.Colaborador" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
-                 FilterMode="FilterMode.Advanced" AllowSorting="true" AllowFiltering="true" Data="@_colaboradores">
-                   <Columns>
-                        @*<RadzenDataGridColumn TItem="Colaborador" Property="Id" Filterable="false" Title="ID" Frozen="true" Width="50px" TextAlign="TextAlign.Center" />*@
-                        <RadzenDataGridColumn TItem="Data.Colaborador" Property="CodPonto" Title="Cod." Frozen="true" Width="40px" />
-                        <RadzenDataGridColumn TItem="Data.Colaborador" Property="Nome" Title="Nome Completo" Width="200px"/>
-                        <RadzenDataGridColumn TItem="Data.Colaborador" Property="Cpf" Title="CPF" Width="100px" />
-                        <RadzenDataGridColumn TItem="Data.Colaborador" Property="Cargo.NomeCargo" Title="Cargo" Width="110px" />
-                        <RadzenDataGridColumn TItem="Data.Colaborador" Property="Contratacao" Title="Data adminissão" FormatString="{0:dd/MM/yyyy}" Width="80px" />
-                        <RadzenDataGridColumn TItem="Data.Colaborador" Property="Demissao" Title="Data demissão" FormatString="{0:dd/MM/yyyy}" Width="80px" />
-                        <RadzenDataGridColumn TItem="Data.Colaborador" Property="Salario" Title="Salario" Width="80px" />
-                        <RadzenDataGridColumn TItem="Data.Colaborador" Property="HoraAula" Title="Hora Aula" Width="80px" />
-                   </Columns>
-           </RadzenDataGrid>
+                    <RadzenDataGrid  IsLoading=@isLoading Count=@count Data="@listPontos" TItem="Data.RegistroPonto" FilterMode="FilterMode.Advanced" 
+                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowSorting="true" AllowFiltering="true" AllowPaging="true" PageSize="30" AllowColumnResize="true" Style="border-radius: 6px;">
+                        <Columns>
+                            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="Colaborador.CodPonto" Title="Cod" Frozen="true" Width="35px"/>
+                            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="Colaborador.Nome" Title="Nome Completo" Width="220px"/>
+                            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="DiaSemanaPtBr" Title="Dia semana" Width="80px"/>
+                            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="Data" Title="Data" Width="60px" FormatString="{0:dd/MM/yyyy}"/>
+                            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="AM_ENT" Title="AM_ENT" FormatString="{0:HH:mm}"   Width="50px"/>
+                            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="AM_SAI" Title="AM_SAI" FormatString="{0:HH:mm}"   Width="50px"/>
+                            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="PM_ENT" Title="PM_ENT" FormatString="{0:HH:mm}"   Width="50px"/>
+                            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="PM_SAI" Title="PM_SAI" FormatString="{0:HH:mm}"   Width="50px"/>
+                            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="NOI_ENT" Title="NOI_ENT" FormatString="{0:HH:mm}"  Width="50px"/>
+                            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="NOI_SAI" Title="NOI_SAI" FormatString="{0:HH:mm}"  Width="50px"/>
+                            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="TotalHorasDia" Title="Total Horas Dia"  Width="50px"/> 
+                        </Columns>
+                    </RadzenDataGrid>
     </div>
+</div>
+
 
 
 
 @code {
 
     [Parameter]
-    public Guid ColaboradorID { get; set; }
+    public string ColaboradorID { get; set; }
+
+    private Guid guidColaboradorId;
 
     Data.Colaborador colaborador{ get; set; }
 
     List<Data.Cargo> cargos { get; set; }
 
+    IEnumerable<Data.RegistroPonto> listPontos { get; set; }
+
     Service.ColaboradorService _colaboradorService;
     Service.CargoService _cargoService;
+    Service.RegistroPontoService _registroPontoService;
+
     IEnumerable<Data.Colaborador> _colaboradores;
 
     bool editCodigo;
@@ -199,14 +211,19 @@
 
     protected override void OnInitialized()
     {
+        isLoading = true;
+        guidColaboradorId = Guid.Parse(ColaboradorID);
         _colaboradorService = (ColaboradorService)ScopedServices.GetService(typeof(ColaboradorService));
         _cargoService = (CargoService)ScopedServices.GetService(typeof(CargoService));
+        _registroPontoService = (RegistroPontoService)ScopedServices.GetService(typeof(RegistroPontoService));
         cargos = _cargoService.GetAllRecords().Result;
 
-        if (ColaboradorID!= Guid.Empty)
+        if (guidColaboradorId!= Guid.Empty)
         {
-            colaborador = _colaboradorService.GetColaboradorById(ColaboradorID).Result;
+            colaborador = _colaboradorService.GetColaboradorById(guidColaboradorId).Result;
+            listPontos = _registroPontoService.GetRegistroPontoByColaborador(colaborador).Result;
         }
+        isLoading = false;
     }
 
     void Submit()

@@ -15,10 +15,10 @@ namespace BlazorServer.Service
         public ColaboradorService(AppDbContext context)
         {
             _context = context;
-            Colaboradores = GetAllColaboradoresList();
+            Colaboradores = _context.Colaboradors;
         }
 
-        public List<Colaborador> Colaboradores { get; set; }
+        public IEnumerable<Colaborador> Colaboradores { get; set; }
 
         public bool DeleteRecord(Colaborador record)
         {
@@ -34,8 +34,8 @@ namespace BlazorServer.Service
 
         public List<Colaborador> GetAllColaboradoresList()
         {
-            this.Colaboradores = _context.Colaboradors.ToList();
-            return this.Colaboradores;
+            return  _context.Colaboradors.ToList();
+
         }
 
         public async Task<Colaborador> GetColaboradorById(Guid id)
@@ -82,6 +82,7 @@ namespace BlazorServer.Service
                 record.Unidade = newRecord.Unidade;
                 record.Cpf = newRecord.Cpf;
                 record.Email = newRecord.Email;
+                record.Unidade = newRecord.Unidade;
 
                 _context.Colaboradors.Update(record);
                 _context.SaveChanges();

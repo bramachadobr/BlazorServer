@@ -1,4 +1,4 @@
-﻿@page "/"
+﻿@page "/registroPonto"
 @using System
 @using BlazorServer.Data
 @using System.Globalization
@@ -301,16 +301,6 @@
         TotalHorasTrabalhadas(time);
     }
 
-    public override bool Equals(object obj)
-    {
-        return obj is Index index &&
-               RegoligoSelecionado == index.RegoligoSelecionado;
-    }
-
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(RegoligoSelecionado);
-    }
 
     async Task ProcessaPontos()
     {

@@ -1,0 +1,111 @@
+﻿@page "/"
+
+@inherits OwningComponentBase
+@using System.Linq
+@using Microsoft.EntityFrameworkCore
+
+@inject IJSRuntime JSRuntime
+
+<div class="container">
+    <br />
+    <div class="row">
+        <div class="col-sm">
+            <MudCard>
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6">Top's 5 Colaboradores </MudText>
+                    </CardHeaderContent>
+                    <CardHeaderActions>
+                        <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" />
+                    </CardHeaderActions>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudText>This day everything happend.</MudText>
+                    <MudText Typo="Typo.body2">The quick, brown fox jumps over a lazy dog.</MudText>
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton Variant="Variant.Text" Color="Color.Primary">Read More</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </div>
+        <div class="col-sm">
+            <MudCard>
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6">The Story Book</MudText>
+                    </CardHeaderContent>
+                    <CardHeaderActions>
+                        <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" />
+                    </CardHeaderActions>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudText>This day everything happend.</MudText>
+                    <MudText Typo="Typo.body2">The quick, brown fox jumps over a lazy dog.</MudText>
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton Variant="Variant.Text" Color="Color.Primary">Read More</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </div>
+        <div class="col-sm">
+            <MudCard>
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6">The Story Book</MudText>
+                    </CardHeaderContent>
+                    <CardHeaderActions>
+                        <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" />
+                    </CardHeaderActions>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudText>This day everything happend.</MudText>
+                    <MudText Typo="Typo.body2">The quick, brown fox jumps over a lazy dog.</MudText>
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton Variant="Variant.Text" Color="Color.Primary">Read More</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </div>
+    </div>
+    <div class="row"></div>
+    <div class="row"></div>
+</div>
+
+@code 
+{
+    Dictionary<int, Data.Colaborador> colaboradoresTop5;
+
+    Service.ColaboradorService _serviceColaborador;
+    Service.RegistroPontoService _serviceRegistroPonto;
+
+    protected override void OnInitialized()
+    {
+        _serviceColaborador = (ColaboradorService)ScopedServices.GetService(typeof(ColaboradorService));
+        _serviceRegistroPonto = (RegistroPontoService)ScopedServices.GetService(typeof(RegistroPontoService));
+
+
+        getTop();
+    }
+
+    void getTop()
+    {
+        var query = from c in _serviceRegistroPonto.Colaboradores
+            join p in _serviceRegistroPonto.RegistroPontos
+            on c.Id equals p.Colaborador.Id
+            group p by c.Nome into nome
+            select new
+            {
+                Nome = nome.Key,
+                SomaHoras = nome.Sum(x => x.TotalHorasDia.Ticks),
+            };
+
+        foreach (var item in query)
+        {
+            JSRuntime.InvokeVoidAsync("console.log", "item", item);
+        }
+
+        
+    }
+
+
+}

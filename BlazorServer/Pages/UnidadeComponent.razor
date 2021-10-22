@@ -9,15 +9,13 @@
 @using System.Linq.Dynamic.Core
 @inject MudBlazor.DialogService DialogService
 @implements IDisposable
+@inherits OwningComponentBase<UnidadeService>
 
-<h3>Unidades Polos</h3>
 
-<div>
+<div class="container">
+    <br />
     <div class="row">
-        <RadzenButton Text="Reset" Click="ResetGrid" Style="margin-bottom:20px"></RadzenButton>
-    </div>
-    <div class="row">
-        <RadzenDataGrid @ref="grid" IsLoading="@isLoading" Count="@count" Data="@_Unidades" TItem="Data.Unidade" LoadData="@LoadData" RowDoubleClick="@(args=> OpenUnidades(args))"
+        <RadzenDataGrid IsLoading="@isLoading" Count="@count" Data="@_Unidades" TItem="Data.Unidade" LoadData="@LoadData" RowDoubleClick="@(args=> OpenUnidades(args))"
                         FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterMode="FilterMode.Advanced" AllowSorting="true" AllowFiltering="true">
             <Columns>
                 @*<RadzenDataGridColumn TItem="Colaborador" Property="Id" Filterable="false" Title="ID" Frozen="true" Width="50px" TextAlign="TextAlign.Center" />*@
@@ -34,8 +32,6 @@
 </div>
 
 
-
-
 @code {
 
     RadzenDataGrid<Data.Unidade> grid;
@@ -46,23 +42,19 @@
 
     int count;
 
-    public Service.UnidadeService _unidadesService = new UnidadeService();
-
     public Data.Unidade UnidadeObj;
 
     protected override void OnInitialized()
     {
-        base.OnInitialized();
-        _unidadesService = new UnidadeService();
-
-        _unidadesService.LoadUnidades();
+        _Unidades = Service.GetUnidadesList();
+        LoadData(null);
     }
 
     async Task LoadData(LoadDataArgs args)
     {
         isLoading = true;
 
-        var query = _unidadesService.Unidades.AsQueryable();
+        var query = Service.GetUnidadesList().AsQueryable();
 
         _Unidades = query;
 
@@ -101,7 +93,7 @@
     {
         grid.Reset(true);
         await grid.FirstPage(true);
-        _Unidades = _unidadesService.Unidades.AsQueryable();
+        _Unidades = Service.GetUnidadesList().AsQueryable();
     }
 
 
