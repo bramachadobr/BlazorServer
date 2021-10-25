@@ -118,13 +118,41 @@
                    {
                        Nome = re.Select(a=>a.Colaborador.Nome).FirstOrDefault(),
                        Total = re.Sum(a=>a.ValorHora)
-                    };  
+                    };
+
+        var quer3 = from ponto in _serviceRegistroPonto.RegistroPontos.ToList()
+                    join colab in _serviceColaborador.Colaboradores.ToList() on ponto.Colaborador equals colab
+                    orderby colab.Nome
+                    group ponto by colab.Nome into re
+                    select re;
+
+        Dictionary<string, TimeSpan> Lista = new Dictionary<string, TimeSpan>();
 
 
-        foreach (var item in quer)
+        foreach (var item in quer3)
         {
-            JSRuntime.InvokeVoidAsync("console.log", "item", item);
+            string nome = "";
+            long tempo=0;
+            JSRuntime.InvokeVoidAsync("console.log", "TE", item.Key);
+            nome = item.Key;
+            foreach (var h in item)
+            {
+                JSRuntime.InvokeVoidAsync("console.log", "TotalHorasDia", h.TotalHorasDia);
+                tempo += h.TotalHorasDia.Ticks;
+            }
+            Lista.Add(nome, new TimeSpan(tempo));
         }
+
+        Lista.OrderByDescending(a => a.Value);
+
+        foreach (var item in Lista)
+        {
+            JSRuntime.InvokeVoidAsync("console.log", "TE", item);
+        }
+
+        
+
+
 
         DateTime data1 = Convert.ToDateTime("01/08/2021");
         DateTime data2 = Convert.ToDateTime("30/08/2021");
