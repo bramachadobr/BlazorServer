@@ -135,7 +135,6 @@ namespace BlazorServer.Data
         }
 
         public Colaborador Colaborador { get; set; }
-        //public Guid ColaboradorId { get; set; }
         public DayOfWeek DiaSemana { get => Data.DayOfWeek; }
 
         public string DiaSemanaPtBr { get => Cultura.DateTimeFormat.GetDayName(DiaSemana); }
@@ -147,7 +146,9 @@ namespace BlazorServer.Data
         public DateTime NOI_ENT { get; set; }
         public DateTime NOI_SAI { get; set; }
 
-        public TimeSpan TotalHorasDia { get => TimeSpan.FromTicks((AM_SAI.TimeOfDay.Ticks - AM_ENT.TimeOfDay.Ticks) + (PM_SAI.TimeOfDay.Ticks - PM_ENT.TimeOfDay.Ticks) + (NOI_SAI.TimeOfDay.Ticks - NOI_ENT.TimeOfDay.Ticks)); }
+        public TimeSpan TotalHorasDia { get => TimeSpan.FromTicks((AM_SAI.TimeOfDay.Ticks - AM_ENT.TimeOfDay.Ticks)
+                                                            + (PM_SAI.TimeOfDay.Ticks - PM_ENT.TimeOfDay.Ticks) 
+                                                            + (NOI_SAI.TimeOfDay.Ticks - NOI_ENT.TimeOfDay.Ticks)); }
         [Column(TypeName = "decimal(18,2)")]
         public decimal ValorHora { get; set; }
         [Column(TypeName = "decimal(18,2)")]

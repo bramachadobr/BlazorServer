@@ -89,20 +89,114 @@
 
     void getTop()
     {
-        var query = from c in _serviceRegistroPonto.Colaboradores
-            join p in _serviceRegistroPonto.RegistroPontos
-            on c.Id equals p.Colaborador.Id
-            group p by c.Nome into nome
-            select new
-            {
-                Nome = nome.Key,
-                SomaHoras = nome.Sum(x => x.TotalHorasDia.Ticks),
-            };
+        //var x = _serviceRegistroPonto.RegistroPontos.Join(_serviceColaborador.Colaboradores, r=>r.Colaborador, c=>c.Id, (x,y) => x= )
+        //            .GroupBy(a => a.Colaborador)
+        //            .OrderByDescending(a => a.Sum(a => a.AM_ENT.Ticks)).Select(x=> new { total=x.Sum(a=>a.ValorHora) });
 
-        foreach (var item in query)
+        //foreach (var item in x)
+        //{
+        //    JSRuntime.InvokeVoidAsync("console.log", "1", item.total);
+        //}
+
+        var quer = from ponto in _serviceRegistroPonto.RegistroPontos.ToList()
+                   join colab in _serviceColaborador.Colaboradores.ToList() on ponto.Colaborador equals colab
+                   orderby colab.Nome
+                   group ponto by colab.Nome into re
+                   select new
+                   {
+                       Nome = re.Key,
+                       Total = re.Sum(a=>a.ValorHora)
+                    };
+
+                    
+              
+         quer = from ponto in _serviceRegistroPonto.RegistroPontos.ToList()
+                   join colab in _serviceColaborador.Colaboradores.ToList() on ponto.Colaborador equals colab
+                   orderby colab.Nome
+                   group ponto by colab.Nome into re
+                   select new
+                   {
+                       Nome = re.Select(a=>a.Colaborador.Nome).FirstOrDefault(),
+                       Total = re.Sum(a=>a.ValorHora)
+                    };  
+
+
+        foreach (var item in quer)
         {
             JSRuntime.InvokeVoidAsync("console.log", "item", item);
         }
+
+        DateTime data1 = Convert.ToDateTime("01/08/2021");
+        DateTime data2 = Convert.ToDateTime("30/08/2021");
+
+        var colaborador1 = _serviceColaborador.Colaboradores.Where(a => a.Nome.Contains("Alan")).FirstOrDefault();
+
+        var select = _serviceRegistroPonto.RegistroPontos.Where(r => r.Colaborador == colaborador1).ToList();
+
+        select = select.Where(a => a.Data >= data1 && a.Data <= data2).ToList();
+
+        int count = select.Count();
+
+        var somaHoras = select.Sum(r=>r.TotalHorasDia.Ticks);
+
+
+
+        
+        JSRuntime.InvokeVoidAsync("console.log", "Valor", new TimeSpan(somaHoras));
+
+        //var query = from colab in _serviceColaborador.Colaboradores
+        //           select new
+        //           {
+        //               Nome = colab.Nome,
+        //               Total = (from h in _serviceRegistroPonto.RegistroPontos.ToList() select h.AM_ENT.Ticks).Sum()
+        //           };
+        //foreach (var item in query)
+        //{
+        //    JSRuntime.InvokeVoidAsync("console.log", "item", item);
+        //}
+        //var query = from colab in _serviceColaborador.Colaboradores
+        //select new
+        //{
+        //    Nome = colab.Nome,
+        //    Total = (_serviceRegistroPonto.RegistroPontos.Where(a=>a.Colaborador == colab).Sum(a => a.ValorHora))
+        //};
+
+        var query = from colab in _serviceColaborador.Colaboradores.ToList()
+        select new
+        {
+            Nome = colab.Nome,
+            Total = _serviceRegistroPonto.RegistroPontos.Where(r => r.Colaborador == colab).Sum(a=>a.ValorHora)
+        };
+
+        var query2 = query.OrderByDescending(a => a.Total).Take(5);
+
+        foreach (var item in query2)
+        {
+            JSRuntime.InvokeVoidAsync("console.log", "item", item);
+        }
+
+
+
+        //where ponto.Data>=DateTime.Parse("01/01/2021") && ponto.Data<=DateTime.Parse("30/01/2021")
+        //select ponto;
+        //var qq = _serviceRegistroPonto.RegistroPontos.Where(p => p.Data >= DateTime.Parse("01/01/2021") && p.Data <= DateTime.Parse("30/01/2021"))
+        //                                            .GroupBy(c => c.Colaborador);
+        //foreach (var item in qq)
+        //{
+        //    JSRuntime.InvokeVoidAsync("console.log", "item", item);
+        //}                        
+        //var query = from r in _serviceRegistroPonto.RegistroPontos 
+        //            from c in _serviceColaborador.Colaboradores 
+        //            group r by r.Colaborador into ponto 
+        //            select new
+        //            {
+        //                Id = ponto.Key,
+        //                TotalHoras = new TimeSpan( ponto.Sum(a=>a.TotalHorasDia.Ticks))
+        //            };
+        //foreach (var item in query)
+        //{
+        //    JSRuntime.InvokeVoidAsync("console.log", "item", item);
+        //}
 
         
     }

@@ -18,7 +18,7 @@ namespace BlazorServer.Service
             Colaboradores = _context.Colaboradors;
         }
 
-        public IEnumerable<Colaborador> Colaboradores { get; set; }
+        public IQueryable<Colaborador> Colaboradores { get; set; }
 
         public bool DeleteRecord(Colaborador record)
         {

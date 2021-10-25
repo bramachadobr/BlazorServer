@@ -19,7 +19,7 @@ namespace BlazorServer.Service
             Colaboradores = _context.Colaboradors;
         }
 
-        public IEnumerable<RegistroPonto> RegistroPontos { get; set; }
+        public IQueryable<RegistroPonto> RegistroPontos { get; set; }
         public IEnumerable<Colaborador> Colaboradores { get; set; }
 
         private List<RegistroPonto> registroPontos { get; set; }
