@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+
 namespace BlazorServer.Service
 {
     public interface IRegistroPontoService

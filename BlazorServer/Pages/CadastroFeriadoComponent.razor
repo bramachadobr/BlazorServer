@@ -2,11 +2,55 @@
 
 @using MudBlazor
 
-<MudDatePicker PickerVariant="PickerVariant.Static" Date="@(DateTime.Today.AddDays(1))" />
-<MudHidden Breakpoint="@Breakpoint.Xs">
-    <MudDatePicker PickerVariant="PickerVariant.Static" Orientation="MudBlazor.Orientation.Landscape" Date="@(DateTime.Today.AddDays(1))" />
-</MudHidden>
+<div class="container">
+    <div class="row">
+            <div class="col-md-4">
+                <MudDatePicker PickerVariant="PickerVariant.Static" Date="@(DateTime.Today.AddDays(1))" />
+            </div>
+            <div class="col-md-8">
+                <MudDatePicker Label="Date Format" @bind-Value="@data1" HelperText="Data do feriado" DateFormat="dd/MM/yyyy" />
+            </div>
+    </div>
+        </br>
+    <div class="row">
+        <MudTable Items="@Elements">
+            <ColGroup>
+                <col style="width: 60px;" />
+                <col />
+                <col style="width: 60%;" />
+                <col style="width: 60px;" />
+                <col />
+            </ColGroup>
+            <HeaderContent>
+                <MudTh>Nr</MudTh>
+                <MudTh>Sign</MudTh>
+                <MudTh>Name</MudTh>
+                <MudTh>Position</MudTh>
+                <MudTh Style="text-align:center">Molar mass</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Nr">@context.Number</MudTd>
+                <MudTd DataLabel="Sign">@context.Sign</MudTd>
+                <MudTd DataLabel="Name">@context.Name</MudTd>
+                <MudTd DataLabel="Position">@context.Position</MudTd>
+                <MudTd DataLabel="Molar mass" Style="text-align:right">@context.Molar</MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager />
+            </PagerContent>
+        </MudTable>
+    </div>
+</div>
 
-@code {
+
+@code 
+{
+    Feriado feriado;
+    DateTime? data1 = DateTime.Today;
+
+    protected override void OnInitialized()
+    {
+        feriado = new Feriado();
+    }
 
 }
