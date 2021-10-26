@@ -3,8 +3,10 @@
 @inherits OwningComponentBase
 @using System.Linq
 @using Microsoft.EntityFrameworkCore
+@using System.Configuration
 
 @inject IJSRuntime JSRuntime
+
 
 <div class="container">
     <br />
@@ -15,17 +17,29 @@
                     <CardHeaderContent>
                         <MudText Typo="Typo.h6">Top's 5 Colaboradores </MudText>
                     </CardHeaderContent>
-                    <CardHeaderActions>
+@*                    <CardHeaderActions>
                         <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" />
-                    </CardHeaderActions>
+                    </CardHeaderActions>*@
                 </MudCardHeader>
                 <MudCardContent>
-                    <MudText>This day everything happend.</MudText>
-                    <MudText Typo="Typo.body2">The quick, brown fox jumps over a lazy dog.</MudText>
+                    <MudTable Items="@ListaTop5Colaboradores" Hover="true" Breakpoint="Breakpoint.Sm" Loading="@_loading" LoadingProgressColor="Color.Info">
+                        <HeaderContent>
+                            <MudTh>Nº</MudTh>
+                            <MudTh>Nome</MudTh>
+                            <MudTh>Total</MudTh>
+                        </HeaderContent>
+                        <RowTemplate>
+                            <MudTd DataLabel="Nº">@context.Posicao</MudTd>
+                            <MudTd DataLabel="Nomr">@context.Nome</MudTd>
+                            <MudTd DataLabel="TotalHoras">@context.TotalHorasFormatada</MudTd>
+                        </RowTemplate>
+                    </MudTable>
+@*                    <MudText>This day everything happend.</MudText>
+                    <MudText Typo="Typo.body2">The quick, brown fox jumps over a lazy dog.</MudText>*@
                 </MudCardContent>
-                <MudCardActions>
+@*                <MudCardActions>
                     <MudButton Variant="Variant.Text" Color="Color.Primary">Read More</MudButton>
-                </MudCardActions>
+                </MudCardActions>*@
             </MudCard>
         </div>
         <div class="col-sm">
@@ -73,6 +87,8 @@
 
 @code 
 {
+    bool _loading;
+    List<TopsDashBoard> ListaTop5Colaboradores;
     Dictionary<int, Data.Colaborador> colaboradoresTop5;
 
     Service.ColaboradorService _serviceColaborador;
@@ -82,13 +98,12 @@
     {
         _serviceColaborador = (ColaboradorService)ScopedServices.GetService(typeof(ColaboradorService));
         _serviceRegistroPonto = (RegistroPontoService)ScopedServices.GetService(typeof(RegistroPontoService));
-
-
-        getTop();
+        LoadDados();
     }
 
-    void getTop()
+    void LoadDados()
     {
+        _loading = true;
         //var x = _serviceRegistroPonto.RegistroPontos.Join(_serviceColaborador.Colaboradores, r=>r.Colaborador, c=>c.Id, (x,y) => x= )
         //            .GroupBy(a => a.Colaborador)
         //            .OrderByDescending(a => a.Sum(a => a.AM_ENT.Ticks)).Select(x=> new { total=x.Sum(a=>a.ValorHora) });
@@ -98,27 +113,26 @@
         //    JSRuntime.InvokeVoidAsync("console.log", "1", item.total);
         //}
 
-        var quer = from ponto in _serviceRegistroPonto.RegistroPontos.ToList()
-                   join colab in _serviceColaborador.Colaboradores.ToList() on ponto.Colaborador equals colab
-                   orderby colab.Nome
-                   group ponto by colab.Nome into re
-                   select new
-                   {
-                       Nome = re.Key,
-                       Total = re.Sum(a=>a.ValorHora)
-                    };
-
+        //var quer = from ponto in _serviceRegistroPonto.RegistroPontos.ToList()
+        //           join colab in _serviceColaborador.Colaboradores.ToList() on ponto.Colaborador equals colab
+        //           orderby colab.Nome
+        //           group ponto by colab.Nome into re
+        //           select new
+        //           {
+        //               Nome = re.Key,
+        //               Total = re.Sum(a=>a.ValorHora)
+        //            };
                     
               
-         quer = from ponto in _serviceRegistroPonto.RegistroPontos.ToList()
-                   join colab in _serviceColaborador.Colaboradores.ToList() on ponto.Colaborador equals colab
-                   orderby colab.Nome
-                   group ponto by colab.Nome into re
-                   select new
-                   {
-                       Nome = re.Select(a=>a.Colaborador.Nome).FirstOrDefault(),
-                       Total = re.Sum(a=>a.ValorHora)
-                    };
+        // quer = from ponto in _serviceRegistroPonto.RegistroPontos.ToList()
+        //           join colab in _serviceColaborador.Colaboradores.ToList() on ponto.Colaborador equals colab
+        //           orderby colab.Nome
+        //           group ponto by colab.Nome into re
+        //           select new
+        //           {
+        //               Nome = re.Select(a=>a.Colaborador.Nome).FirstOrDefault(),
+        //               Total = re.Sum(a=>a.ValorHora)
+        //            };
 
         var quer3 = from ponto in _serviceRegistroPonto.RegistroPontos.ToList()
                     join colab in _serviceColaborador.Colaboradores.ToList() on ponto.Colaborador equals colab
@@ -133,26 +147,24 @@
         {
             string nome = "";
             long tempo=0;
-            JSRuntime.InvokeVoidAsync("console.log", "TE", item.Key);
             nome = item.Key;
             foreach (var h in item)
             {
-                JSRuntime.InvokeVoidAsync("console.log", "TotalHorasDia", h.TotalHorasDia);
                 tempo += h.TotalHorasDia.Ticks;
             }
             Lista.Add(nome, new TimeSpan(tempo));
         }
 
-        Lista.OrderByDescending(a => a.Value);
+        var listaOrdenada =  Lista.OrderByDescending(a => a.Value).Take(5);
 
-        foreach (var item in Lista)
+        ListaTop5Colaboradores = new List<TopsDashBoard>();
+
+        int i = 1;
+        foreach (var item in listaOrdenada)
         {
-            JSRuntime.InvokeVoidAsync("console.log", "TE", item);
+            ListaTop5Colaboradores.Add(new TopsDashBoard { Posicao = i, Nome = item.Key, TotalHoras = item.Value });
+            i++;
         }
-
-        
-
-
 
         DateTime data1 = Convert.ToDateTime("01/08/2021");
         DateTime data2 = Convert.ToDateTime("30/08/2021");
@@ -166,9 +178,6 @@
         int count = select.Count();
 
         var somaHoras = select.Sum(r=>r.TotalHorasDia.Ticks);
-
-
-
         
         JSRuntime.InvokeVoidAsync("console.log", "Valor", new TimeSpan(somaHoras));
 
@@ -203,8 +212,6 @@
             JSRuntime.InvokeVoidAsync("console.log", "item", item);
         }
 
-
-
         //where ponto.Data>=DateTime.Parse("01/01/2021") && ponto.Data<=DateTime.Parse("30/01/2021")
         //select ponto;
         //var qq = _serviceRegistroPonto.RegistroPontos.Where(p => p.Data >= DateTime.Parse("01/01/2021") && p.Data <= DateTime.Parse("30/01/2021"))
@@ -226,8 +233,6 @@
         //    JSRuntime.InvokeVoidAsync("console.log", "item", item);
         //}
 
-        
+        _loading = false;
     }
-
-
 }

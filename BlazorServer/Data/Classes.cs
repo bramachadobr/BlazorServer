@@ -99,6 +99,8 @@ namespace BlazorServer.Data
         [Column(TypeName = "decimal(18,2)")]
         public decimal HoraAula { get; set; }
 
+        public TimeSpan CargaHorariaSemanal { get; set; }
+
         public string Email { get; set; }
 
         public string Telefone { get; set; }
@@ -117,7 +119,6 @@ namespace BlazorServer.Data
         public List<RegistroPonto> Registros { get; set; }
 
         public Unidade Unidade { get; set; }
-
     }
 
     public class RegistroPonto
@@ -231,7 +232,7 @@ namespace BlazorServer.Data
         [Column(TypeName = "uniqueidentifier")]
         public Guid Id { get; set; }
         public DateTime? DataFeriado { get; set; }
-        public string NomeFeriado { get; set; }
+        public string Descricao { get; set; }
     }
 
 
@@ -256,4 +257,34 @@ namespace BlazorServer.Data
         public List<Colaborador> Colaboradores { get; set; }
     }
 
+    public class TopsDashBoard
+    {
+        public int Posicao { get; set; }
+        private string _nome;
+        public string Nome { get => _nome.Length > 12? _nome.Substring(0, 12) : _nome; set => _nome = value; }
+
+        private TimeSpan _totalHoras;
+        public TimeSpan TotalHoras { get => _totalHoras; set => _totalHoras=value; }
+        public string TotalHorasFormatada { get => _totalHoras.TotalHorasTrabalhadas();  }
+        
+    }
+
+    public class ConfigureDashBoard
+    {
+        public int Quant { get; set; }
+    }
+
+    public static class MetodosStaticos
+    {
+         public static string TotalHorasTrabalhadas(this TimeSpan totalHorasPeriodo)
+        {
+            TimeSpan times = new TimeSpan(0, 0, 0, 0);
+            times = totalHorasPeriodo;
+
+             string TotalHorasPeriodo = string.Format("{0}:{1}:{2}", times.Days > 0 ? ((times.Days * 24) + times.Hours) : times.Hours,
+                                        times.Minutes < 10 ? ("0" + times.Minutes) : times.Minutes.ToString(),
+                                        times.Seconds < 10 ? ("0" + times.Seconds) : times.Seconds.ToString());
+            return TotalHorasPeriodo;
+        }
+    }
 }

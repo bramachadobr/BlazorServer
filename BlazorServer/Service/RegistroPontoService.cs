@@ -3,7 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
+using System.Linq.Dynamic;
+using System.Data;
+using System.Data.Sql;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace BlazorServer.Service
 {
@@ -151,7 +156,7 @@ namespace BlazorServer.Service
 
         public List<RegistroPonto> GetAllRegistroPontoList()
         {
-            return _context.RegistroPontos.ToList();
+            return _context.RegistroPontos.Include(a => a.Colaborador).ToList();
         }
 
         public RegistroPonto GetRecord(Guid id)
