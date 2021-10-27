@@ -4,8 +4,12 @@
 @inherits OwningComponentBase<ServiceFeriado>
 
 <div class="container">
+    
     <div class="row">
             <div class="col-md-4">
+                <div>
+                    <input type="month" id="month" />
+                </div>
                 <MudDatePicker PickerVariant="PickerVariant.Static" Date="@(DateTime.Today.AddDays(1))" />
             </div>
             <div class="col-md-8">
@@ -53,8 +57,6 @@
 {
     Feriado feriado = new Feriado();
     DateTime? data1 = DateTime.Today;
-
-    
 
     List<Feriado> _listaFeriado;
 

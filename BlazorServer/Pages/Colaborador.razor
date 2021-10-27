@@ -175,6 +175,16 @@
                             <RadzenTextBox style="width: 100%;" Name="UF" @bind-Value="colaborador.Estado" />
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Carga Horária Semanal" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenDatePicker TValue="DateTime" @bind-Value="colaborador.CargaHorariaSemanal" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"/>
+                            <MudTimePicker Label="24 hours (editable)" @bind-Time="Tempo" Editable="true"  />
+                            <input type="time" id="time" />
+                        </div>
+                    </div>
                 </RadzenFieldset>
             </div>
         </div>
@@ -196,6 +206,7 @@
 
 
 @code {
+    TimeSpan? Tempo = new TimeSpan(44,00,00);
 
     [CascadingParameter] public MudDialogInstance MudDialog { get; set; }
     [Parameter] public RadzenButton ButtonFecha { get; set; }

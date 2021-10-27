@@ -99,7 +99,7 @@ namespace BlazorServer.Data
         [Column(TypeName = "decimal(18,2)")]
         public decimal HoraAula { get; set; }
 
-        public TimeSpan CargaHorariaSemanal { get; set; }
+        public DateTime CargaHorariaSemanal { get; set; }
 
         public string Email { get; set; }
 
@@ -137,7 +137,6 @@ namespace BlazorServer.Data
 
         public Colaborador Colaborador { get; set; }
         public DayOfWeek DiaSemana { get => Data.DayOfWeek; }
-
         public string DiaSemanaPtBr { get => Cultura.DateTimeFormat.GetDayName(DiaSemana); }
         public DateTime Data { get; set; }
         public DateTime AM_ENT { get; set; }
