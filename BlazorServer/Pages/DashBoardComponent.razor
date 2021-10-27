@@ -120,8 +120,13 @@
         //           select new
         //           {
         //               Nome = re.Key,
-        //               Total = re.Sum(a=>a.ValorHora)
+        //               Total = new TimeSpan(re.Sum(a=>a.AM_ENT.Ticks))
         //            };
+        
+        //foreach (var item in quer)
+        //{
+        //    JSRuntime.InvokeVoidAsync("console.log", "1", item.Total);
+        //}
                     
               
         // quer = from ponto in _serviceRegistroPonto.RegistroPontos.ToList()

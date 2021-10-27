@@ -67,12 +67,20 @@ namespace BlazorServer.Service
             {
                 Feriado fUpdate = _context.Feriado.Where(a => a.Id == f.Id).FirstOrDefault();
 
-                fUpdate.Descricao = f.Descricao;
-                fUpdate.DataFeriado = f.DataFeriado;
+                if (fUpdate == null)
+                {
+                    InsereFeriado(f);
+                    return true;
+                }
+                else
+                {
+                    fUpdate.Descricao = f.Descricao;
+                    fUpdate.DataFeriado = f.DataFeriado;
 
-                _context.Feriado.Update(fUpdate);
-                _context.SaveChanges();
-                return true;
+                    _context.Feriado.Update(fUpdate);
+                    _context.SaveChanges();
+                    return true;
+                }
             }
             else
                 return false;

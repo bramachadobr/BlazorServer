@@ -37,6 +37,7 @@ namespace BlazorServer
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
+            services.AddScoped<ServiceFeriado>();
             services.AddScoped<ColaboradorService>();
             services.AddScoped<EMailService>();
             services.AddScoped<RegistroRelogioService>();

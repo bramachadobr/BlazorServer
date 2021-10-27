@@ -27,6 +27,17 @@ namespace BlazorServer.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.Entity<Feriado>().HasData(
+                new Feriado { Descricao="Natal", DataFeriado=DateTime.Parse("31/12/2021")},
+                new Feriado { Descricao = "Feriado00", DataFeriado = DateTime.Parse("05/10/2021") },
+                new Feriado { Descricao = "Feriado01", DataFeriado = DateTime.Parse("28/10/2021") },
+                new Feriado { Descricao = "Feriado02", DataFeriado = DateTime.Parse("27/10/2021") },
+                new Feriado { Descricao = "Feriado03", DataFeriado = DateTime.Parse("20/10/2021") },
+                new Feriado { Descricao = "Feriado04", DataFeriado = DateTime.Parse("15/10/2021") },
+                new Feriado { Descricao = "Feriado05", DataFeriado = DateTime.Parse("10/10/2021") }
+                );
+
             modelBuilder.Entity<Unidade>().HasData(
                 new Unidade() { Nome = "Parauapebas", Bairro = "Bairro da Paz", Numero = 152, Cidade = "Parauapebas", CNPJ = "123123123/1234-12", Endereco = "Rua Sol Poente", RazaoSocial = "EDIVALDO MACHADO BARBALHO" },
                 new Unidade { Nome = "Eldorado dos Carajas", Bairro = "Centro", Numero = 152, Cidade = "Eldorado dos Carajás", CNPJ = "123123123/1234-12", Endereco = "Rua Sol Poente", RazaoSocial = "EDIVALDO MACHADO BARBALHO" },

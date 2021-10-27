@@ -106,6 +106,8 @@ Formatar a impressão da tela
 
 
 Implementar login e senha de usuarios
+Cadastro de unidades
+cadastro de feriados
 Implementar o dashboar com os funcionario que mais tem carga horaria no mes, os top 5 que mais trabalharam e os que tem horas passando
 Pegar as carga horaria do mes e dar como dia de folga em um sabado apenas
 Implementar o dropdown da unidade

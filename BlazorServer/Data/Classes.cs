@@ -123,7 +123,7 @@ namespace BlazorServer.Data
 
     public class RegistroPonto
     {
-        CultureInfo Cultura = new CultureInfo("pt-BR");
+        readonly CultureInfo Cultura = new CultureInfo("pt-BR");
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

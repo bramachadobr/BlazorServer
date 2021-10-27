@@ -1,6 +1,7 @@
 ﻿@page "/feriadoCadstro"
 
 @using MudBlazor
+@inherits OwningComponentBase<ServiceFeriado>
 
 <div class="container">
     <div class="row">
@@ -8,49 +9,80 @@
                 <MudDatePicker PickerVariant="PickerVariant.Static" Date="@(DateTime.Today.AddDays(1))" />
             </div>
             <div class="col-md-8">
-                <MudDatePicker Label="Date Format" @bind-Value="@data1" HelperText="Data do feriado" DateFormat="dd/MM/yyyy" />
+                <MudGrid>
+                    <MudItem  xs="8" sm="8" md="8">
+                        <MudDatePicker Label="Date Format" @bind-Date="@data1" HelperText="Data do feriado" DateFormat="dd/MM/yyyy" />
+                        <MudTextField @bind-Value="feriado.Descricao" Label="Descrição" ReadOnly="false" Variant="Variant.Outlined"></MudTextField>
+                    </MudItem>
+                </MudGrid>
+                <MudGrid>
+                    <MudItem  xs="8" sm="8" md="8">
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary">Novo</MudButton>
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary">Salvar</MudButton>
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary">Excluir</MudButton>
+                    </MudItem>
+                </MudGrid>
+
+                    <div class="row">
+                        <MudTable Items="@_listaFeriado" OnRowClick="@SelecionaFeriado" T="Feriado" Hover="true">
+                           @*<ColGroup>
+                                <col style="width: 60px;" />
+                                <col />
+                                <col style="width: 60%;" />
+                                <col style="width: 60px;" />
+                                <col />
+                            </ColGroup>*@
+                            <HeaderContent>
+                                <MudTh>Data</MudTh>
+                                <MudTh>Descrição</MudTh> @*Style="text-align:center"*@
+                            </HeaderContent>
+                            <RowTemplate>
+                                <MudTd DataLabel="Data">@context.DataFeriado.ToString("dd/MM/yyyy")</MudTd>
+                                <MudTd DataLabel="Descricao">@context.Descricao</MudTd> @*Style="text-align:right"*@
+                            </RowTemplate>
+                            <PagerContent>
+                                <MudTablePager />
+                            </PagerContent>
+                        </MudTable>
+                    </div>
             </div>
-    </div>
-        </br>
-    <div class="row">
-        <MudTable Items="@Elements">
-            <ColGroup>
-                <col style="width: 60px;" />
-                <col />
-                <col style="width: 60%;" />
-                <col style="width: 60px;" />
-                <col />
-            </ColGroup>
-            <HeaderContent>
-                <MudTh>Nr</MudTh>
-                <MudTh>Sign</MudTh>
-                <MudTh>Name</MudTh>
-                <MudTh>Position</MudTh>
-                <MudTh Style="text-align:center">Molar mass</MudTh>
-            </HeaderContent>
-            <RowTemplate>
-                <MudTd DataLabel="Nr">@context.Number</MudTd>
-                <MudTd DataLabel="Sign">@context.Sign</MudTd>
-                <MudTd DataLabel="Name">@context.Name</MudTd>
-                <MudTd DataLabel="Position">@context.Position</MudTd>
-                <MudTd DataLabel="Molar mass" Style="text-align:right">@context.Molar</MudTd>
-            </RowTemplate>
-            <PagerContent>
-                <MudTablePager />
-            </PagerContent>
-        </MudTable>
     </div>
 </div>
 
-
 @code 
 {
-    Feriado feriado;
+    Feriado feriado = new Feriado();
     DateTime? data1 = DateTime.Today;
+
+    
+
+    List<Feriado> _listaFeriado;
 
     protected override void OnInitialized()
     {
+        _listaFeriado = Service.GetFeriadoDoMes(DateTime.Now);
+    }
+
+    void SelecionaFeriado(TableRowClickEventArgs<Feriado> tableRowClickEventArgs)
+    {
+        feriado = tableRowClickEventArgs.Item;
+        data1 = feriado.DataFeriado;
+    }
+
+    void NovoItem()
+    {
         feriado = new Feriado();
     }
+
+    void ExcluirItem()
+    {
+        Service.ExcluiFeriado(feriado);
+    }
+
+    void SalvarItem()
+    {
+        Service.UpdateFeriado(feriado);
+    }
+
 
 }
