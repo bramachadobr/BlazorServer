@@ -11,6 +11,28 @@
 <div class="container">
     <br />
     <div class="row">
+        <input type="month" id="month" @value="Data" @onchange="@LoadCargaHoraria"/>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <MudCard>
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6">The Story Book</MudText>
+                    </CardHeaderContent>
+                    <CardHeaderActions>
+                        <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" />
+                    </CardHeaderActions>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudText>This day everything happend.</MudText>
+                    <MudText Typo="Typo.body2">The quick, brown fox jumps over a lazy dog.</MudText>
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton Variant="Variant.Text" Color="Color.Primary">Read More</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </div>
         <div class="col-sm">
             <MudCard>
                 <MudCardHeader>
@@ -42,25 +64,7 @@
                 </MudCardActions>*@
             </MudCard>
         </div>
-        <div class="col-sm">
-            <MudCard>
-                <MudCardHeader>
-                    <CardHeaderContent>
-                        <MudText Typo="Typo.h6">The Story Book</MudText>
-                    </CardHeaderContent>
-                    <CardHeaderActions>
-                        <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" />
-                    </CardHeaderActions>
-                </MudCardHeader>
-                <MudCardContent>
-                    <MudText>This day everything happend.</MudText>
-                    <MudText Typo="Typo.body2">The quick, brown fox jumps over a lazy dog.</MudText>
-                </MudCardContent>
-                <MudCardActions>
-                    <MudButton Variant="Variant.Text" Color="Color.Primary">Read More</MudButton>
-                </MudCardActions>
-            </MudCard>
-        </div>
+
         <div class="col-sm">
             <MudCard>
                 <MudCardHeader>
@@ -85,20 +89,40 @@
     <div class="row"></div>
 </div>
 
+<input type="button" title="Teste"/>
+
+<p>@tempo.ToString()</p>
+
 @code 
 {
+    public DateTime Data { get; set; }
+
+    double tempo;
+
     bool _loading;
     List<TopsDashBoard> ListaTop5Colaboradores;
     Dictionary<int, Data.Colaborador> colaboradoresTop5;
 
     Service.ColaboradorService _serviceColaborador;
     Service.RegistroPontoService _serviceRegistroPonto;
+    Service.ServiceFeriado _serviceFeriado;
 
     protected override void OnInitialized()
     {
         _serviceColaborador = (ColaboradorService)ScopedServices.GetService(typeof(ColaboradorService));
         _serviceRegistroPonto = (RegistroPontoService)ScopedServices.GetService(typeof(RegistroPontoService));
+        _serviceFeriado = (ServiceFeriado)ScopedServices.GetService(typeof(ServiceFeriado));
         LoadDados();
+        //data = DateTime.Now.AddDays(-30);
+        Data = DateTime.Today;
+    }
+
+    void LoadCargaHoraria(ChangeEventArgs args)
+    {
+        if (args.Value.ToString().Length < 6)
+            return;
+        DateTime dd = new DateTime(Convert.ToInt32(args.Value.ToString().Substring(0, 4)), Convert.ToInt32(args.Value.ToString().Substring(5, 2)), 1);
+        tempo = _serviceFeriado.CargaHorariaDoMes(dd);
     }
 
     void LoadDados()

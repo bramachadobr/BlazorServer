@@ -20,6 +20,53 @@ namespace BlazorServer.Service
             _context = context;
         }
 
+        /// <summary>
+        /// Ratorna a carga horaria do mês menos os feriados cadastrados, apenas os dias úteis
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns>Data do mês que se quer</returns>
+        public double CargaHorariaDoMes(DateTime data)
+        {
+            double cargaHoraria = 0;
+            double cargaFeriado = 0;
+            int diasDoMes = DateTime.DaysInMonth(data.Year, data.Month);
+            List<Feriado> ListaFeriados = _context.Feriado.Where(a => a.DataFeriado.Month.Equals(data.Month) && a.DataFeriado.Year.Equals(data.Year)).ToList();
+
+            foreach (var item in ListaFeriados)
+            {
+                if (item.DataFeriado.DayOfWeek == DayOfWeek.Saturday)
+                {
+                    cargaFeriado = cargaFeriado + 4;
+                }
+                else
+                {
+                    cargaFeriado = cargaFeriado + 8;
+                }
+            }
+
+            int ano = data.Year;
+            int mes = data.Month;
+
+            for (int i = 1; i <= diasDoMes; i++)
+            {
+                DateTime _data = new DateTime(ano, mes, i);
+                if (_data.DayOfWeek != DayOfWeek.Sunday)
+                {
+                    if (_data.DayOfWeek == DayOfWeek.Saturday)
+                    {
+                        cargaHoraria += 4;
+                    }
+                    else
+                    {
+                        cargaHoraria += 8;
+                    }
+                }
+            }
+
+            return cargaHoraria - cargaFeriado;
+
+        }
+
         public bool ExcluiFeriado(Feriado f)
         {
             bool result = false;

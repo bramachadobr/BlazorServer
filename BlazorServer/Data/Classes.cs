@@ -98,8 +98,7 @@ namespace BlazorServer.Data
         public decimal Salario { get; set; }
         [Column(TypeName = "decimal(18,2)")]
         public decimal HoraAula { get; set; }
-
-        public DateTime CargaHorariaSemanal { get; set; }
+        public double CargaHorariaSemanal { get; set; }
 
         public string Email { get; set; }
 

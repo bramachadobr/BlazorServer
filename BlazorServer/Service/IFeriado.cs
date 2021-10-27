@@ -19,7 +19,7 @@ namespace BlazorServer.Service
 
         Feriado GetFeriadoBuyId(Guid id);
 
-
+        double CargaHorariaDoMes(DateTime data);
 
     }
 }

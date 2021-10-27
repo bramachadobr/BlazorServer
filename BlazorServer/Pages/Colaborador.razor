@@ -182,7 +182,7 @@
                         <div class="col-md-8">
 @*                            <RadzenDatePicker TValue="DateTime" @bind-Value="colaborador.CargaHorariaSemanal" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"/>
                             <MudTimePicker Label="24 hours (editable)" @bind-Time="Tempo" Editable="true"  />*@
-                            <RadzenNumeric TValue="double" Format="0.0000" @bind-Value=@dblValue Placeholder="CH Semanal" /> @*Change="@(args => OnChange(args, "Formatted numeric"))*@
+                            <RadzenNumeric TValue="double" Format="00.00" @bind-Value=@colaborador.CargaHorariaSemanal Placeholder="CH Semanal" /> @*Change="@(args => OnChange(args, "Formatted numeric"))*@
                         </div>
                     </div>
                 </RadzenFieldset>

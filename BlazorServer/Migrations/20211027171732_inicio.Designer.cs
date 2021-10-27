@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorServer.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20211026235339_inicio")]
+    [Migration("20211027171732_inicio")]
     partial class inicio
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -57,27 +57,27 @@ namespace BlazorServer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("efdccdef-301a-4845-ad95-de232edfdd36"),
+                            Id = new Guid("d4193e17-89f9-4bd6-92ef-1d4de933a9a0"),
                             NomeCargo = "Tutor"
                         },
                         new
                         {
-                            Id = new Guid("5f13f069-ab1d-4b90-b2bf-aca5536dd363"),
+                            Id = new Guid("c2225bce-cf17-4851-81aa-a3e255098f79"),
                             NomeCargo = "Secretaria"
                         },
                         new
                         {
-                            Id = new Guid("5ebb39c8-acaa-4349-a50b-5906ea70be30"),
+                            Id = new Guid("8558f444-4bdb-44ca-b9b9-d068c6c35c6f"),
                             NomeCargo = "Comercial"
                         },
                         new
                         {
-                            Id = new Guid("feab1760-c2b6-475d-a22f-3d0945391859"),
+                            Id = new Guid("992c8d78-7c4d-44ab-9d4c-bbad9c214dcb"),
                             NomeCargo = "Coordenador"
                         },
                         new
                         {
-                            Id = new Guid("2e9e6842-87e4-4862-a4cd-aa0fa69fec9c"),
+                            Id = new Guid("dff3d0ae-0866-4c55-9dcb-80a556a26451"),
                             NomeCargo = "Professor"
                         });
                 });
@@ -94,8 +94,8 @@ namespace BlazorServer.Migrations
                     b.Property<string>("Bairro")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<TimeSpan>("CargaHorariaSemanal")
-                        .HasColumnType("time");
+                    b.Property<double>("CargaHorariaSemanal")
+                        .HasColumnType("float");
 
                     b.Property<Guid?>("CargoId")
                         .HasColumnType("uniqueidentifier");
@@ -153,11 +153,11 @@ namespace BlazorServer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("8f8d81a0-5099-461d-9ffa-9bc6eecf64c4"),
+                            Id = new Guid("33bae683-7c4d-4ff5-8037-64ad5935c08d"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 39,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 55, DateTimeKind.Local).AddTicks(9344),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(1574),
                             HoraAula = 52.00m,
                             Nome = "ALEXSANDRA KETHY DE FRANÇA",
                             Numero = 0,
@@ -165,11 +165,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("a6ab7186-8d9f-4b8b-b2ec-57d8f3562e82"),
+                            Id = new Guid("6dd95163-0e09-4c73-a12f-5d28a9a5219a"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 22,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(3782),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7597),
                             HoraAula = 52.00m,
                             Nome = "ALVARO RICK P. VIEIRA",
                             Numero = 0,
@@ -177,11 +177,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("a52110c5-16f6-4a88-ad3f-5a2832e0e734"),
+                            Id = new Guid("c9c76583-013a-40ca-9f59-c405846e5768"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 50,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(3804),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7637),
                             HoraAula = 52.00m,
                             Nome = "AMADEU JUNIOR FERREIRA DE LIMA",
                             Numero = 0,
@@ -189,11 +189,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("33eb7aa0-06ea-4aa3-be9d-6b49dd4d31f2"),
+                            Id = new Guid("12a3c659-1a7d-450f-b970-40b23b63144f"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 46,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(3811),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7645),
                             HoraAula = 52.00m,
                             Nome = "ANA ALICE DA MOTA",
                             Numero = 0,
@@ -201,11 +201,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ef9e267c-d6ab-4802-a4a5-54098f77ce2e"),
+                            Id = new Guid("81a04e23-4f8d-432f-81fd-4b77abe2f180"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 35,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(3818),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7663),
                             HoraAula = 52.00m,
                             Nome = "ANDERSON CRISTIANO SALES SILVA",
                             Numero = 0,
@@ -213,11 +213,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("038c8fd5-5098-49ae-a5e0-b814d46da328"),
+                            Id = new Guid("52f23e7b-44ad-44bc-97ef-5220e92895ab"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 5,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(3824),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7670),
                             HoraAula = 52.00m,
                             Nome = "ANDRÉ DA CONCEIÇÃO SILVA",
                             Numero = 0,
@@ -225,11 +225,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("3dc32514-aa1c-4f8e-a1c5-46bdc5285113"),
+                            Id = new Guid("9e04b114-4f7b-4949-bed3-f95203d347fb"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 37,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(3829),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7677),
                             HoraAula = 52.00m,
                             Nome = "ANDREA REGINA J. B. RODRIGUES",
                             Numero = 0,
@@ -237,11 +237,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("2a5d2f52-31d2-4088-9bbe-05f467e26b13"),
+                            Id = new Guid("bf1d10d6-29bd-4ff7-849f-6a3911b6ac5c"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 42,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(3836),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7684),
                             HoraAula = 52.00m,
                             Nome = "ANTONIA IVANA COSTA SOUSA",
                             Numero = 0,
@@ -249,11 +249,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("3dbf523f-806d-4d93-b85e-50e66e8ae919"),
+                            Id = new Guid("9ce66072-8794-40f4-9613-b8ff186aa299"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 26,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(3842),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7691),
                             HoraAula = 52.00m,
                             Nome = "CACIELY VALERIO GOMES",
                             Numero = 0,
@@ -261,11 +261,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("aea5fe45-7606-4a92-8ab6-2ee7c2e73981"),
+                            Id = new Guid("d3d59321-5ad0-49d8-a136-2adf83687e1d"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 25,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(3850),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7697),
                             HoraAula = 52.00m,
                             Nome = "CLEUDILENE DA SILVA",
                             Numero = 0,
@@ -273,11 +273,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b9009e78-e464-4e60-870e-e24c5f295fc9"),
+                            Id = new Guid("bcc6fa2a-a0e5-4263-b6c1-9eee5644f84f"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 44,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(3856),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7706),
                             HoraAula = 52.00m,
                             Nome = "CRISTIANE SOARES COSTA",
                             Numero = 0,
@@ -285,11 +285,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("4281e223-e6d8-45ba-98f8-f6f2bf8707fe"),
+                            Id = new Guid("2adfcdb6-96f6-4188-9968-4119c53a27a5"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 40,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(3861),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7713),
                             HoraAula = 52.00m,
                             Nome = "DANIEL DE ARAUJO MOTA",
                             Numero = 0,
@@ -297,11 +297,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("104ac7b5-d9f9-4a2f-af3c-b3e8cff67a2d"),
+                            Id = new Guid("37c8b4b5-1b8d-4e83-8eff-50ad0a1897a1"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 41,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(3867),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7723),
                             HoraAula = 52.00m,
                             Nome = "DAYARA BORGES LUCENA",
                             Numero = 0,
@@ -309,11 +309,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("7e2f7fb3-be55-46a3-95f9-228b1dfb0586"),
+                            Id = new Guid("3a80731c-5202-4075-b581-955fb534773d"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 36,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(3871),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7730),
                             HoraAula = 52.00m,
                             Nome = "DENILZA  ALVES PINTO DUARTE",
                             Numero = 0,
@@ -321,11 +321,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("61d6e83e-f674-476a-a963-9d8171a0b9cb"),
+                            Id = new Guid("7f5752ff-2007-40a0-8966-7ae395e707da"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 28,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(3876),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7736),
                             HoraAula = 52.00m,
                             Nome = "DEREK DILERVANDO DE O. PANTOJA",
                             Numero = 0,
@@ -333,11 +333,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("65bb836b-f765-40ea-b006-fe51589e82a2"),
+                            Id = new Guid("6b81c13b-068a-4a53-aaae-6677ed316ad3"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 19,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(3880),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7741),
                             HoraAula = 52.00m,
                             Nome = "DHONAYARA DA SILVA DE CAMPOS AMORIM",
                             Numero = 0,
@@ -345,11 +345,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f4c89203-710f-4a86-95a4-64147ff5a20b"),
+                            Id = new Guid("ad075a8e-70bc-4286-bbb3-1c7cc7938d4d"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 2,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(3885),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7746),
                             HoraAula = 52.00m,
                             Nome = "EDI",
                             Numero = 0,
@@ -357,11 +357,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("7f450100-acd9-4be1-aff9-d87179503376"),
+                            Id = new Guid("21a17e6b-76a8-4aaf-846b-2c65adcdc8ea"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 45,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(3892),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7751),
                             HoraAula = 52.00m,
                             Nome = "ELAINE DE JESUS REZENDE",
                             Numero = 0,
@@ -369,11 +369,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("1eb104fe-f566-4e25-adef-1ddf7f110c65"),
+                            Id = new Guid("bb0bc194-859d-4519-8eb7-3b068df523c9"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 48,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(3897),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7758),
                             HoraAula = 52.00m,
                             Nome = "ERCILIO DE CASTRO  BARBOZA",
                             Numero = 0,
@@ -381,11 +381,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("7658d0d2-9f67-440d-b8b0-90c926aaf1b0"),
+                            Id = new Guid("53e07664-fe93-4b9b-965f-9c8fad2af839"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 29,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(3901),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7765),
                             HoraAula = 52.00m,
                             Nome = "FERNANDO CABRAL DA FONSECA",
                             Numero = 0,
@@ -393,11 +393,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("669cc44f-e353-453b-88ae-4dffca0a2b17"),
+                            Id = new Guid("dc11fe99-2e18-44e0-b257-732f6817f6d9"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 24,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(3906),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7778),
                             HoraAula = 52.00m,
                             Nome = "FRANCINOLIA R A L C",
                             Numero = 0,
@@ -405,11 +405,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("bcfd4531-8eb7-482b-bd6b-f42136f5a1e2"),
+                            Id = new Guid("be89a286-3dda-44cf-b070-3b2cdacd7746"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 9,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(3911),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7786),
                             HoraAula = 52.00m,
                             Nome = "GLICIANE ESTEPHANE JACOME DE SOUSA",
                             Numero = 0,
@@ -417,11 +417,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("2dab2b54-ae0d-4738-9cba-87bf464a803e"),
+                            Id = new Guid("13739e3b-7c74-478c-a49a-a705851763f9"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 31,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(3917),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7793),
                             HoraAula = 52.00m,
                             Nome = "HUDLER LEITE DA SILVA",
                             Numero = 0,
@@ -429,11 +429,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("7cc8ad95-48b4-4c29-9a7c-77afac638234"),
+                            Id = new Guid("89b9725f-46e3-46ce-a10c-4b2863db5002"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 33,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(3923),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7799),
                             HoraAula = 52.00m,
                             Nome = "IRISMAR SILVA CIRINO",
                             Numero = 0,
@@ -441,11 +441,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f200fe50-ad2b-49ea-9f09-feefa5f36dbc"),
+                            Id = new Guid("47b40643-af97-460e-bcf5-0c2fca3d8af5"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 34,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(3928),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7804),
                             HoraAula = 52.00m,
                             Nome = "JAKELLYNE ALVES BRANDÃO",
                             Numero = 0,
@@ -453,11 +453,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("cfc3eed8-7a4d-4e98-9f74-a10feb621f72"),
+                            Id = new Guid("d1ec4fba-0cbe-45d1-b5cc-c0f7a72d7ad7"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 10,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(3935),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7810),
                             HoraAula = 52.00m,
                             Nome = "JHYEIVSON WALLINTER SILVA",
                             Numero = 0,
@@ -465,11 +465,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e0c0ed0a-04b0-499a-b64e-122074cac906"),
+                            Id = new Guid("25ee5bd9-cbe7-4dde-a830-de5057f8f675"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 43,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(3939),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7877),
                             HoraAula = 52.00m,
                             Nome = "JORDANIA DE MACEDO MENDONÇA",
                             Numero = 0,
@@ -477,11 +477,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("8900157f-9f7f-40a8-99f5-e335a9a9af50"),
+                            Id = new Guid("d4b84509-e7b1-40be-867a-dea635cf4990"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 11,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(3943),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7884),
                             HoraAula = 52.00m,
                             Nome = "JORGE CLESIO SILVA E SILVA",
                             Numero = 0,
@@ -489,11 +489,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("fc5e1de5-c50b-46c8-8bf3-533658ce49fd"),
+                            Id = new Guid("81884748-5084-4040-9a97-501fdbeb4488"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 12,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(3947),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7892),
                             HoraAula = 52.00m,
                             Nome = "JORGE FERNANDO CASTRO SILVA",
                             Numero = 0,
@@ -501,11 +501,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("cc0925af-20b0-4aca-b2e3-2cf1f37a26d2"),
+                            Id = new Guid("0d59fa6a-ed7c-44f2-8cea-2d257e695dee"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 51,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(3993),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7898),
                             HoraAula = 52.00m,
                             Nome = "JUCIENE IONARIA DE S. GABRIEL",
                             Numero = 0,
@@ -513,11 +513,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f6ba59db-4d64-4592-8003-5b47e7261d8a"),
+                            Id = new Guid("97c7f780-18c1-4116-ba06-e3702a868a47"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 55,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(3999),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7902),
                             HoraAula = 52.00m,
                             Nome = "LEILSON RODRIGUES DA SILVA",
                             Numero = 0,
@@ -525,11 +525,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("654234f0-de0b-4e65-b3d5-d0877ba94e2e"),
+                            Id = new Guid("5d968c24-c4dc-4a54-bde6-5f62b6b7bb87"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 13,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4004),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7907),
                             HoraAula = 52.00m,
                             Nome = "LORENA MATOS SILVA PRADO",
                             Numero = 0,
@@ -537,11 +537,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("c098b32b-bb61-463c-88bb-1eb66aea6a8a"),
+                            Id = new Guid("69335573-d6fa-46f0-aeac-a8bed267dd47"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 30,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4010),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7914),
                             HoraAula = 52.00m,
                             Nome = "LUANA MARTINS ROCHA",
                             Numero = 0,
@@ -549,11 +549,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("3db508c6-f3af-4d4e-9fc4-b9b360288ce5"),
+                            Id = new Guid("49be3214-463b-4995-9e7f-05fc6f5aefa5"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 53,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4017),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7919),
                             HoraAula = 52.00m,
                             Nome = "MARIANA LEAL OLIVEIRA",
                             Numero = 0,
@@ -561,11 +561,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("7c48629d-7bef-4de0-8ac6-81c413a6e8ab"),
+                            Id = new Guid("2bf7558c-e155-4e99-bb05-f7e76ddbd2e3"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 14,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4022),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7925),
                             HoraAula = 52.00m,
                             Nome = "MAYARA DE OLIVEIRA PEREIRA",
                             Numero = 0,
@@ -573,11 +573,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("9374d2f0-9298-43c2-a7c0-20d486df7e13"),
+                            Id = new Guid("fe859e7b-f98a-48a2-8b53-fa5b6335c8fb"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 27,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4027),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7930),
                             HoraAula = 52.00m,
                             Nome = "MONICA HELLE DE LIMA ROSA SILVA",
                             Numero = 0,
@@ -585,11 +585,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("5a83534d-6346-4e3c-abac-8e6476b0c956"),
+                            Id = new Guid("2fee4293-7dc1-4ac6-8a9e-a019d1c5bef8"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 3,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4032),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7939),
                             HoraAula = 52.00m,
                             Nome = "NATANAEL SOUA BARROS",
                             Numero = 0,
@@ -597,11 +597,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("78a6c282-fcb3-4d43-adb7-12bf23911cde"),
+                            Id = new Guid("ae426d2f-117d-4708-95d3-6315252f83a8"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 54,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4037),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7945),
                             HoraAula = 52.00m,
                             Nome = "NATHALIA DA SILVA MARQUES",
                             Numero = 0,
@@ -609,11 +609,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("58c8191d-59b5-4054-8721-208abaccd9c5"),
+                            Id = new Guid("91521ce3-989c-42b6-af78-36d02d445eb0"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 38,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4043),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7950),
                             HoraAula = 52.00m,
                             Nome = "NILCELIA DE LIMA ROCHA",
                             Numero = 0,
@@ -621,11 +621,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("151325d3-dac0-495d-8189-616c26186390"),
+                            Id = new Guid("93ea57a8-bd69-47b8-975a-b06bf2954422"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 23,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4047),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7956),
                             HoraAula = 52.00m,
                             Nome = "RAIANE OCAES OLIVEIRA DE SOUZA",
                             Numero = 0,
@@ -633,11 +633,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("53efc96c-c3f4-4fe4-b71a-78f328d64190"),
+                            Id = new Guid("a75b888c-75a6-4e1f-9a15-8c17e7583390"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 20,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4053),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7961),
                             HoraAula = 52.00m,
                             Nome = "RAILENE CONCEIÇÃO DE CARVALHO",
                             Numero = 0,
@@ -645,11 +645,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("3ec08e0e-6ca6-42a4-8007-b1eb10906eca"),
+                            Id = new Guid("aa0bac48-353b-4385-abdb-a78fc9e28b2e"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 15,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4060),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7967),
                             HoraAula = 52.00m,
                             Nome = "RAQUEL BRITO DOS SANTOS",
                             Numero = 0,
@@ -657,11 +657,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e3161142-addd-43c1-a34a-1af53152910b"),
+                            Id = new Guid("c1197a40-ec8c-4abd-89f5-c176ae30a788"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 32,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4064),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7973),
                             HoraAula = 52.00m,
                             Nome = "ROSILENE CONCEIÇÃO DE CARVALHO",
                             Numero = 0,
@@ -669,11 +669,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("fe5b4b88-0042-4726-9399-ee1ac3644182"),
+                            Id = new Guid("c7cac34e-e6a6-42d7-9f8d-a7ea90fdfd98"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 16,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4069),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7980),
                             HoraAula = 52.00m,
                             Nome = "SAMARA DE OLIVEIRA MOREIRA CABRAL",
                             Numero = 0,
@@ -681,11 +681,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("39c5c5fc-64d9-4db5-a202-ce4cbbf4e795"),
+                            Id = new Guid("e10b4efe-bfbf-454f-936d-fdefa291947e"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 47,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4074),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7989),
                             HoraAula = 52.00m,
                             Nome = "SILVIO VIANA DA SILVA",
                             Numero = 0,
@@ -693,11 +693,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("fbba8b88-5ee7-40c0-84d9-a5e3a0ccf03c"),
+                            Id = new Guid("7261d745-903e-4d5f-8f1a-da78d1526b56"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 4,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4082),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7994),
                             HoraAula = 52.00m,
                             Nome = "SIRLEI VANDA ANDRADE",
                             Numero = 0,
@@ -705,11 +705,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("212d9e9a-a4b2-4c33-b1df-d3c230d66067"),
+                            Id = new Guid("7f1c230c-e795-46fa-9a3f-237c4b2645bf"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 56,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4087),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(7999),
                             HoraAula = 52.00m,
                             Nome = "SUANY ISAIAS DA SILVA",
                             Numero = 0,
@@ -717,11 +717,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("627f9588-9b53-4c4a-96c3-b4386d2d73aa"),
+                            Id = new Guid("e1712b86-072a-47d9-86e4-7fadf5bfc4c4"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 17,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4092),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8006),
                             HoraAula = 52.00m,
                             Nome = "TOMAZ B. NERY S. CAMPOS",
                             Numero = 0,
@@ -729,11 +729,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("6c188205-e65e-4165-b855-d8d50813488d"),
+                            Id = new Guid("4dd85052-c3e8-4ec4-b67a-e370d7f65897"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 49,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4096),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8012),
                             HoraAula = 52.00m,
                             Nome = "VANESSA MOURA DE ALMEIDA",
                             Numero = 0,
@@ -741,11 +741,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("3caaa7e7-f3f1-4ec0-9421-51f2a8ec94d4"),
+                            Id = new Guid("5c2d01d7-538d-453f-9a9c-c7651741a8ed"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 18,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4103),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8018),
                             HoraAula = 52.00m,
                             Nome = "WALDEMIR DE SOUZA REIS",
                             Numero = 0,
@@ -753,11 +753,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("daf6a0ec-bc30-4f56-98b3-324762cea9eb"),
+                            Id = new Guid("9003c034-af38-4ad7-8a7c-bbae427adb18"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 21,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4107),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8024),
                             HoraAula = 52.00m,
                             Nome = "WALISON RICARDO GOES DA PASCOA",
                             Numero = 0,
@@ -765,11 +765,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("768c1995-7020-4dc8-be7d-1f3dba2f50e9"),
+                            Id = new Guid("dcb027ee-e328-479c-a659-52ae8f59f03a"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 52,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4111),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8029),
                             HoraAula = 52.00m,
                             Nome = "WARLY BEZERRA DA SILVA",
                             Numero = 0,
@@ -777,11 +777,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("77bb1a0e-2fb6-4c57-ae76-8a2166f7d0ba"),
+                            Id = new Guid("4d2e0042-7963-46be-9cbf-a0dac44dd1c6"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 57,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4116),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8037),
                             HoraAula = 52.00m,
                             Nome = "RENATA CAMILY SIRQUEIRA PALHETA",
                             Numero = 0,
@@ -789,11 +789,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("34c19c43-6c08-4455-aa23-b1f2e90bf033"),
+                            Id = new Guid("e4052b0e-3bef-450a-a8b1-fc74f2e8ced3"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 58,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4120),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8043),
                             HoraAula = 52.00m,
                             Nome = "YURI DO CARMO MOREIRA",
                             Numero = 0,
@@ -801,11 +801,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("439806ca-99f3-40c7-b8f5-076e5f98cfea"),
+                            Id = new Guid("b5a0eb19-7f54-4fcb-8228-f916e6b24872"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 59,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4125),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8048),
                             HoraAula = 52.00m,
                             Nome = "VALDEMAR JUSTO",
                             Numero = 0,
@@ -813,11 +813,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("c177dd99-54cf-4082-a911-db0f357119e5"),
+                            Id = new Guid("b1904d9e-c1b3-4445-b21f-0a3a2ed9be5b"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 60,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4130),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8054),
                             HoraAula = 52.00m,
                             Nome = "EDSON DA SILVA",
                             Numero = 0,
@@ -825,11 +825,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("208129ed-dfdb-4170-aefc-20981b4a0779"),
+                            Id = new Guid("364d9fce-467c-4666-bd0b-615fc1398df3"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 61,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4134),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8060),
                             HoraAula = 52.00m,
                             Nome = "BRUNO MORAES",
                             Numero = 0,
@@ -837,11 +837,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("cabbee06-6972-484e-9ef2-e7505e11ce86"),
+                            Id = new Guid("cb9511e2-50c6-4822-a3b2-1439fe618375"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 6,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4141),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8064),
                             HoraAula = 52.00m,
                             Nome = "CIBELLE DA SILVA CARVALHO",
                             Numero = 0,
@@ -849,11 +849,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("c0275114-3c18-4334-96f3-40a0e2514cb9"),
+                            Id = new Guid("56a7fa72-d7d0-4722-95f9-879e2af10e92"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 62,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4146),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8073),
                             HoraAula = 52.00m,
                             Nome = "THALYTA RODRIGUES BARBOSA GIL		 ",
                             Numero = 0,
@@ -861,11 +861,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("4e6f3158-5b4a-4a2e-9167-cd20729307c2"),
+                            Id = new Guid("87eb69a1-b017-4e8e-99b0-cf5db9df9ab9"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 64,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4151),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8077),
                             HoraAula = 52.00m,
                             Nome = "DHELEN SILVA ALMEIDA",
                             Numero = 0,
@@ -873,11 +873,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("9263400d-f286-4df7-bd8a-ceabb76c5e71"),
+                            Id = new Guid("9c14f839-ab5b-4adf-af3a-73919598df82"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 63,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4156),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8084),
                             HoraAula = 52.00m,
                             Nome = "DEUZIMAR LIMA DOS SANTOS",
                             Numero = 0,
@@ -885,11 +885,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ae1ff437-d802-476e-9762-e66379fb63be"),
+                            Id = new Guid("b5fc2c9a-319c-4230-bd78-3f2203b92d98"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 7,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4161),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8089),
                             HoraAula = 52.00m,
                             Nome = "DAYARA NOLETO ALVES",
                             Numero = 0,
@@ -897,11 +897,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b6bd5c68-0e54-4895-ba39-469ca0bb82b7"),
+                            Id = new Guid("1da89a64-5c91-40c4-aee0-bcd0fffbe116"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 65,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4166),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8093),
                             HoraAula = 52.00m,
                             Nome = "LORENE SILVA",
                             Numero = 0,
@@ -909,11 +909,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ebb9ddea-8c11-4c07-8303-24562429789c"),
+                            Id = new Guid("7e4e8b78-f015-4105-9dbc-b8a5a1f70953"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 66,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4170),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8098),
                             HoraAula = 52.00m,
                             Nome = "JOSE ROBERTO",
                             Numero = 0,
@@ -921,11 +921,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("dce140c6-23b4-4658-a128-83762b10d844"),
+                            Id = new Guid("35d66e6a-444b-43c5-b7ad-efa7affccf1c"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 67,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4175),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8103),
                             HoraAula = 52.00m,
                             Nome = "GABRIEL DE ARAUJO VEIGA",
                             Numero = 0,
@@ -933,11 +933,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("0b5d75fc-07cc-4d7d-814e-c1cdfc0519df"),
+                            Id = new Guid("9105b649-2afe-4922-a145-14fc4769c181"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 68,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4183),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8190),
                             HoraAula = 52.00m,
                             Nome = "MIREIA SOZA BARROS",
                             Numero = 0,
@@ -945,11 +945,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("a7c5a903-0e7b-4623-a13e-5a273f525d43"),
+                            Id = new Guid("2fdc1ab4-8a83-4236-86fe-44e34cfd255e"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 69,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4187),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8199),
                             HoraAula = 52.00m,
                             Nome = "MARINA LINS DE SOUZA AMADO",
                             Numero = 0,
@@ -957,11 +957,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f3d5fb96-fb97-4911-9884-11d21d0deee2"),
+                            Id = new Guid("e652e8e2-77ed-4807-8c7f-81250fa151e5"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 70,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4191),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8204),
                             HoraAula = 52.00m,
                             Nome = "ALVESLENE LEMS C DAMACENO",
                             Numero = 0,
@@ -969,11 +969,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("6cc674c2-5c75-42a7-ab07-126885915268"),
+                            Id = new Guid("88a7b9da-945b-468d-bf2c-bf6d6542bbe7"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 71,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4227),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8212),
                             HoraAula = 52.00m,
                             Nome = "APINAGES PIRES CARDOSO",
                             Numero = 0,
@@ -981,11 +981,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("00f35d14-dc68-445c-b4ca-1cb726e50391"),
+                            Id = new Guid("8015ecc9-6248-4ae2-854f-819c4171927a"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 72,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4232),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8218),
                             HoraAula = 52.00m,
                             Nome = "LUCAS MEDEIROS",
                             Numero = 0,
@@ -993,11 +993,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("23db0f1d-65cd-4d13-b114-974ed9dea656"),
+                            Id = new Guid("c4da338c-8800-4392-b894-41d0e88e0c73"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 73,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4237),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8223),
                             HoraAula = 52.00m,
                             Nome = "ELIANE MORAES",
                             Numero = 0,
@@ -1005,11 +1005,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("dfa8596d-1935-47da-9629-de4ae25b66d4"),
+                            Id = new Guid("0e5437d8-bcbf-442c-a11d-99a842964c87"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 74,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4242),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8228),
                             HoraAula = 52.00m,
                             Nome = "DANIELLE LIMA SANTOS",
                             Numero = 0,
@@ -1017,11 +1017,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("cbf94d12-54f4-4206-8bf1-7a733c10a23c"),
+                            Id = new Guid("348afa95-a7b5-41f5-b316-c6da5b407e05"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 75,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4247),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8233),
                             HoraAula = 52.00m,
                             Nome = "TASSIO VINICIUS",
                             Numero = 0,
@@ -1029,11 +1029,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("745048b4-0c9d-4c2b-a835-1fef7bf5c4ae"),
+                            Id = new Guid("574e9a31-92bf-421e-8033-1ca0d1740c28"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 78,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4255),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8237),
                             HoraAula = 52.00m,
                             Nome = "DANIELA LIMA",
                             Numero = 0,
@@ -1041,11 +1041,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("866bf490-06f5-4366-83e3-85336ebe83c7"),
+                            Id = new Guid("39e6f2b7-a450-4f6a-819e-a662bc007416"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 79,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4260),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8242),
                             HoraAula = 52.00m,
                             Nome = "ALAN GOMES",
                             Numero = 0,
@@ -1053,11 +1053,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f360caf1-5a18-4f5d-9f3b-96289604e3f9"),
+                            Id = new Guid("d3b9b7ec-f108-41c5-aad5-c44f4739b575"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 80,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4265),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8246),
                             HoraAula = 52.00m,
                             Nome = "KASSIO FERNANDO",
                             Numero = 0,
@@ -1065,11 +1065,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b82de0fc-de05-4a2d-b955-da2be6c7c948"),
+                            Id = new Guid("b1e35257-cc43-423c-b2be-c8a551eb74cf"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 81,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4269),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8253),
                             HoraAula = 52.00m,
                             Nome = "MARYANNE STEPHANE ROCHA G",
                             Numero = 0,
@@ -1077,11 +1077,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("db2cdf9d-1ea5-4349-a48f-63bb3255eaba"),
+                            Id = new Guid("763cdd54-51de-471b-899b-ece14ee7e82c"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 76,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4274),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8258),
                             HoraAula = 52.00m,
                             Nome = "FERNANDO ATROCH",
                             Numero = 0,
@@ -1089,11 +1089,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("6a3f8f67-60f2-44a1-898b-d726e0e11d8a"),
+                            Id = new Guid("86512a60-986d-4990-bb1e-444894a42397"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 82,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4280),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8263),
                             HoraAula = 52.00m,
                             Nome = "PEDRO AUGUSTO",
                             Numero = 0,
@@ -1101,11 +1101,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("688d42c6-12fc-4c14-ab82-c68627d43d0e"),
+                            Id = new Guid("d486c332-c625-4eea-8610-97ab93356982"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 83,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4285),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8267),
                             HoraAula = 52.00m,
                             Nome = "ELAINE JULIANA",
                             Numero = 0,
@@ -1113,11 +1113,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("520c0ca7-21cf-424e-92b1-c58e6f7a2e33"),
+                            Id = new Guid("8080e974-2833-4672-96e3-da8b4bbce3ce"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 84,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4289),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8272),
                             HoraAula = 52.00m,
                             Nome = "JOSELINO DANTAS",
                             Numero = 0,
@@ -1125,11 +1125,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b79dc3b8-2191-4c57-b87b-255a54ef9916"),
+                            Id = new Guid("026a8e5e-8ecf-441e-aac1-fe4615a6ce6e"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 85,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4296),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8277),
                             HoraAula = 52.00m,
                             Nome = "BRNDAO REINALDO",
                             Numero = 0,
@@ -1137,11 +1137,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("6fcc67d5-e4aa-4e32-b772-0fb3a3e4fa34"),
+                            Id = new Guid("7b5022bb-285d-4a1a-878f-9e8e9a0f7549"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 86,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4300),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8281),
                             HoraAula = 52.00m,
                             Nome = "MOISES HAMSSES",
                             Numero = 0,
@@ -1149,11 +1149,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ad83869e-8da8-4756-b4a0-8b2183815f0a"),
+                            Id = new Guid("a62c5fc9-6b24-451e-b900-087ea6756c4f"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 87,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4304),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8286),
                             HoraAula = 52.00m,
                             Nome = "DIANA MARROCOS",
                             Numero = 0,
@@ -1161,11 +1161,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("4ad31bd8-1b75-42c9-862d-43bf0a4baa75"),
+                            Id = new Guid("99ce9beb-83f2-4c12-9dd1-9aba28d9f100"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 88,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4309),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8294),
                             HoraAula = 52.00m,
                             Nome = "JOAO VICTOR",
                             Numero = 0,
@@ -1173,11 +1173,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("816918f1-088d-41cd-9235-7a0f321d0c50"),
+                            Id = new Guid("7b15fc4b-02ce-4a7f-80cf-4bf4b9a5d528"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 89,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4313),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8300),
                             HoraAula = 52.00m,
                             Nome = "EDNA MOIA",
                             Numero = 0,
@@ -1185,11 +1185,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("cfa2bdcf-a0db-405b-bf75-91481dd5edd0"),
+                            Id = new Guid("11b65c05-4c48-4f6a-82b0-891b34deb3ff"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 91,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4319),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8306),
                             HoraAula = 52.00m,
                             Nome = "MARCIA BARRETO",
                             Numero = 0,
@@ -1197,11 +1197,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("4f7a5e99-1947-453c-afd1-510001dfc62e"),
+                            Id = new Guid("b8ed7c90-b4e3-4aeb-802b-f18dde96d42f"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 94,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4324),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8312),
                             HoraAula = 52.00m,
                             Nome = "JESSICA MELO",
                             Numero = 0,
@@ -1209,11 +1209,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("1b11be70-7364-4811-a188-b0e51b5fb0cb"),
+                            Id = new Guid("f5915757-7432-464e-9baa-88bdd448ddaf"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 93,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4330),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8317),
                             HoraAula = 52.00m,
                             Nome = "TARCIA ALEXANDRE",
                             Numero = 0,
@@ -1221,11 +1221,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("236e52c2-bab5-4f0a-861c-3ca2a8085fb2"),
+                            Id = new Guid("9979541b-e9d6-4b3a-9ad6-5eb78a5b9868"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 90,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4338),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8322),
                             HoraAula = 52.00m,
                             Nome = "WELLIDA AVIZ",
                             Numero = 0,
@@ -1233,11 +1233,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("fe4fb762-7a99-4249-8304-59dcaaf7ad27"),
+                            Id = new Guid("fba6d2fb-1b66-47f2-81fb-f9e6748bb28e"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 95,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4342),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8327),
                             HoraAula = 52.00m,
                             Nome = "FERNANDO AMOURY",
                             Numero = 0,
@@ -1245,11 +1245,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("da1d826a-b874-4635-9027-38f49c696bde"),
+                            Id = new Guid("f243fb22-7074-4b27-9353-08241f1cf51b"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 77,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4347),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8332),
                             HoraAula = 52.00m,
                             Nome = "ALLAN WERBERTT",
                             Numero = 0,
@@ -1257,11 +1257,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("6670d057-2f9c-41f2-8442-09999eabdd38"),
+                            Id = new Guid("967a024d-98b1-4a26-9add-13af311bd1e9"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 96,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4351),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8338),
                             HoraAula = 52.00m,
                             Nome = "THAISE MORGANA",
                             Numero = 0,
@@ -1269,11 +1269,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("d7144ffb-7feb-45a7-ae0f-f39b2a884391"),
+                            Id = new Guid("c126bda6-1b69-4815-9d32-32099186940c"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 97,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4356),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8343),
                             HoraAula = 52.00m,
                             Nome = "CRISLANE SANTOS",
                             Numero = 0,
@@ -1281,11 +1281,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ccf2f0df-8cc2-4984-b58d-e1e6149a514b"),
+                            Id = new Guid("7f623f3f-b5ed-4814-b21e-ab5f10854b30"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 98,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4360),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8348),
                             HoraAula = 52.00m,
                             Nome = "YARA OLIVEIRA",
                             Numero = 0,
@@ -1293,11 +1293,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("c9417b5c-3eaa-4593-ab06-b776cdee88ee"),
+                            Id = new Guid("62f27f43-5321-4496-80cb-d8fb5db3fd07"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 99,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4366),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8352),
                             HoraAula = 52.00m,
                             Nome = "LUCIANO LIMA",
                             Numero = 0,
@@ -1305,11 +1305,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("baa065e4-9bb9-4487-a913-b8009b12b01e"),
+                            Id = new Guid("1c75ce93-a837-42b1-85c5-efb662bb90a0"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 100,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4370),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8356),
                             HoraAula = 52.00m,
                             Nome = "FRANCYANNE CASTRO",
                             Numero = 0,
@@ -1317,11 +1317,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("12982756-f77b-4832-a932-24d3491c47a6"),
+                            Id = new Guid("389302a2-18da-46c6-a4ef-654009e6af42"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 101,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4377),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8361),
                             HoraAula = 52.00m,
                             Nome = "KESIA MARTINS",
                             Numero = 0,
@@ -1329,11 +1329,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f2ba5b8f-585e-4e3a-8e05-9a1039bea9b8"),
+                            Id = new Guid("3f524168-3460-46b9-9fb2-21556553f017"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 102,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4381),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8366),
                             HoraAula = 52.00m,
                             Nome = "MAIZA NONATO",
                             Numero = 0,
@@ -1341,11 +1341,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f5ea25cd-e96f-4a30-bc81-91672bbef497"),
+                            Id = new Guid("97b2d4cf-3169-49bf-bc4c-fa799a5c9a88"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 103,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4385),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8371),
                             HoraAula = 52.00m,
                             Nome = "ANDERSON MACIEL",
                             Numero = 0,
@@ -1353,11 +1353,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("38166c99-29e9-4432-91d9-3cbf0ce8ff06"),
+                            Id = new Guid("7c454249-0e21-44fa-b65d-c99b0fcdf095"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 104,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4390),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8379),
                             HoraAula = 52.00m,
                             Nome = "RODRIGO CESAR",
                             Numero = 0,
@@ -1365,11 +1365,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e5b69cf3-6b2c-4328-9238-7381669d0d57"),
+                            Id = new Guid("1e1cbdd5-ab84-44c0-91b1-c9674bf8ce4e"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 105,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4394),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8384),
                             HoraAula = 52.00m,
                             Nome = "JOSE DE ARIMATEIA",
                             Numero = 0,
@@ -1377,11 +1377,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("abf1feaa-fac4-44f5-939c-0cc701cc203e"),
+                            Id = new Guid("6e10f977-4c44-4b02-b1fc-0a87cc26d99f"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 106,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4399),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8389),
                             HoraAula = 52.00m,
                             Nome = "HENRIQUE NOLETO",
                             Numero = 0,
@@ -1389,11 +1389,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b1fa0c23-e623-4fba-8a4e-e46d7270fc0d"),
+                            Id = new Guid("69e0f3f4-d066-4386-bfd8-d6d332169102"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 107,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4403),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8394),
                             HoraAula = 52.00m,
                             Nome = "ISABELA MARTINS",
                             Numero = 0,
@@ -1401,11 +1401,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("d0eaf827-80f6-4261-9880-9fe73bfae6f4"),
+                            Id = new Guid("519d0a15-70d8-47b8-a7f8-c7cd03cbee10"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 108,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4408),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8398),
                             HoraAula = 52.00m,
                             Nome = "IOLENE VIANA",
                             Numero = 0,
@@ -1413,11 +1413,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("bc3a1cc0-2380-44ed-b66c-8ee961e2ea85"),
+                            Id = new Guid("d1b263da-9c3f-409a-b05b-9fa6ced0eafd"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 109,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4415),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8439),
                             HoraAula = 52.00m,
                             Nome = "WESLLEY SOARES",
                             Numero = 0,
@@ -1425,11 +1425,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b6b6283f-9dda-400f-bd6c-d534ffc44e32"),
+                            Id = new Guid("473adcfb-4f83-4487-b197-78b2a1fdc0ec"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 110,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4419),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8444),
                             HoraAula = 52.00m,
                             Nome = "DIVINO SANTOS",
                             Numero = 0,
@@ -1437,11 +1437,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("5528592f-6a30-4f50-a82a-dab9f99b033d"),
+                            Id = new Guid("dacc5f27-6348-424e-a65c-4f7099d1799f"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 111,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4454),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8449),
                             HoraAula = 52.00m,
                             Nome = "ALINE LOPES",
                             Numero = 0,
@@ -1449,11 +1449,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("149de4cd-0d09-41ad-b777-c4642f8296a5"),
+                            Id = new Guid("ed823c9a-aa8b-4f48-a9bb-03e4f6265d4c"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 112,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4458),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8456),
                             HoraAula = 52.00m,
                             Nome = "JOSIEL MACIEL",
                             Numero = 0,
@@ -1461,11 +1461,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("d03d257c-90d7-45bf-be7a-f5e8e429f676"),
+                            Id = new Guid("c93b2993-ddde-49db-80e6-127be0f1e773"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 113,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4463),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8461),
                             HoraAula = 52.00m,
                             Nome = "TATIANA RODRIGUES",
                             Numero = 0,
@@ -1473,11 +1473,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("00249ec7-f107-46a3-a9aa-fc437d7f440c"),
+                            Id = new Guid("2e9e7d97-f99d-4e53-a664-300ba579fde2"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 114,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4467),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8465),
                             HoraAula = 52.00m,
                             Nome = "IVANA TUTORIA",
                             Numero = 0,
@@ -1485,11 +1485,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("3b0d0314-dac3-4b8e-b655-ff9d692a10f2"),
+                            Id = new Guid("5e5b3ae5-aa76-4f3d-bb46-cc0e89223c01"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 115,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4472),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8471),
                             HoraAula = 52.00m,
                             Nome = "CARLOS EDUARDO",
                             Numero = 0,
@@ -1497,11 +1497,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("d11fe3d7-20fd-49a6-b4e1-bdaad55f26fe"),
+                            Id = new Guid("41226fe3-fb23-4075-ae36-da8d8c132d5a"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 116,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4476),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8475),
                             HoraAula = 52.00m,
                             Nome = "CASSIO",
                             Numero = 0,
@@ -1509,11 +1509,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e0f95ab1-4e8c-4786-8143-fc6259b99e3d"),
+                            Id = new Guid("9b9a13a7-1bed-4dc6-9882-6eff56e9beb3"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 117,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4483),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8479),
                             HoraAula = 52.00m,
                             Nome = "ELLEN CLEIDE",
                             Numero = 0,
@@ -1521,11 +1521,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f6c71463-fd03-4c0f-8625-0806b030c7df"),
+                            Id = new Guid("91caa01f-ccca-4aaf-885a-e5d1cce40ac1"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 118,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4487),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8484),
                             HoraAula = 52.00m,
                             Nome = "MARIA MARLI",
                             Numero = 0,
@@ -1533,11 +1533,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("cfd6b176-087e-4819-b1cd-1d51d6ff3558"),
+                            Id = new Guid("01012a8f-ce7f-468b-8ddb-3048c64851ce"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 119,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4492),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8488),
                             HoraAula = 52.00m,
                             Nome = "MIRIA FERREIRA",
                             Numero = 0,
@@ -1545,11 +1545,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("daa6671b-ef1e-4faa-9375-ab9fb4a5439e"),
+                            Id = new Guid("ebe5a8d5-5c1c-44af-a43d-3378f2660a2e"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 120,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4496),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8496),
                             HoraAula = 52.00m,
                             Nome = "VICTOR DE PAULA",
                             Numero = 0,
@@ -1557,11 +1557,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("df166039-bcc3-4451-a8c0-0704da12ea9c"),
+                            Id = new Guid("37b27f2a-214a-4cc7-a0f7-07a4a6ffe83e"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 121,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4500),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8501),
                             HoraAula = 52.00m,
                             Nome = "ANA TEREZA",
                             Numero = 0,
@@ -1569,11 +1569,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("9811aece-5ad0-4cb8-9023-7b255e51033c"),
+                            Id = new Guid("7e3a1c20-f089-4e08-a0e9-7706b14401e0"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 122,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4504),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8506),
                             HoraAula = 52.00m,
                             Nome = "HEYGON TED",
                             Numero = 0,
@@ -1581,11 +1581,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("71c37034-8add-4b03-8ef5-bda5fe513686"),
+                            Id = new Guid("abfb87e6-36cc-4275-984d-aa75294431ca"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 123,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4509),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8510),
                             HoraAula = 52.00m,
                             Nome = "RILDO AMARAL",
                             Numero = 0,
@@ -1593,11 +1593,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("62d2ff6d-e24b-45b9-a9b7-a43560b6bfde"),
+                            Id = new Guid("b67d85ad-7b68-4697-a2b6-32dc18326078"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 124,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4513),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8515),
                             HoraAula = 52.00m,
                             Nome = "GERLYNNE PESSOA DE CARVALHO SILVA",
                             Numero = 0,
@@ -1605,11 +1605,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b82fb884-d8f0-443c-afe9-c3f92ef2c29b"),
+                            Id = new Guid("8819fb36-38e0-43f2-89d3-a44658d996e7"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 125,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4520),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8519),
                             HoraAula = 52.00m,
                             Nome = "MATHEUS HENRIQUE",
                             Numero = 0,
@@ -1617,11 +1617,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("a3ad9141-42f8-4427-9cd4-91a4281f35bc"),
+                            Id = new Guid("ea0d456e-2084-41b1-b881-b3637c909855"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 126,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4524),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8524),
                             HoraAula = 52.00m,
                             Nome = "THAMYRES SALOMAO",
                             Numero = 0,
@@ -1629,11 +1629,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("466ea388-9e4d-4240-85fb-ac13018d4d3e"),
+                            Id = new Guid("1aaa686b-331f-44f2-9d7a-765f1487b49e"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 127,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4528),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8528),
                             HoraAula = 52.00m,
                             Nome = "SAMILLY GURGEL",
                             Numero = 0,
@@ -1641,11 +1641,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("7571ebb2-9b16-4344-9586-b24a459d497b"),
+                            Id = new Guid("ca657cf4-ac92-4d79-9bb4-ec902f9749c6"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 128,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4533),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8534),
                             HoraAula = 52.00m,
                             Nome = "HILLARY SANTOS",
                             Numero = 0,
@@ -1653,11 +1653,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("644e97f5-268c-4f04-95dc-b9a1f6173824"),
+                            Id = new Guid("25e74293-e597-4999-a388-987dede0b60e"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 129,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4537),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8539),
                             HoraAula = 52.00m,
                             Nome = "PALMEIRA JR",
                             Numero = 0,
@@ -1665,11 +1665,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("069d7e36-00ac-489c-bebf-4fbac1271d54"),
+                            Id = new Guid("90fa81d1-0329-499c-bd69-75184701a8a7"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 130,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4541),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8544),
                             HoraAula = 52.00m,
                             Nome = "RONIEL MARQUES",
                             Numero = 0,
@@ -1677,11 +1677,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("4f93d39f-7b94-4ac0-8314-472707365b76"),
+                            Id = new Guid("1616bf47-259e-48ca-93bd-edc0ab23e68a"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 131,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4545),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8548),
                             HoraAula = 52.00m,
                             Nome = "ALINE PEREIRA",
                             Numero = 0,
@@ -1689,11 +1689,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("4b81a838-e4bf-4eb3-a69b-fe328538efcb"),
+                            Id = new Guid("5afaff9f-e9e4-4555-947c-cafbd57e8627"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 132,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4549),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8552),
                             HoraAula = 52.00m,
                             Nome = "RAYANE MARTINS",
                             Numero = 0,
@@ -1701,11 +1701,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("908e4dfe-6a49-445c-935a-9473896329da"),
+                            Id = new Guid("776bf637-aeb1-4e00-8f2f-171e2d7d7cca"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 133,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4556),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8556),
                             HoraAula = 52.00m,
                             Nome = "LIDIA SOUSA BARROS",
                             Numero = 0,
@@ -1713,11 +1713,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("d567a727-21d8-441b-8108-3e9ce6118534"),
+                            Id = new Guid("dbd89227-bdc5-452a-bedc-8453cc4c6ab1"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 134,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4561),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8561),
                             HoraAula = 52.00m,
                             Nome = "ELZA MARIA",
                             Numero = 0,
@@ -1725,11 +1725,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("3d78f9fb-30c4-429a-8bef-18c170289e2e"),
+                            Id = new Guid("334da8c4-f56d-4493-afb6-e5ffc6ff98ae"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 135,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4566),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8565),
                             HoraAula = 52.00m,
                             Nome = "SELMA OLIVEIRA",
                             Numero = 0,
@@ -1737,11 +1737,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("0aa66eb5-f665-4eb6-a1b8-72f1747d215b"),
+                            Id = new Guid("7fce9c88-395b-4385-8c2c-a04e250b34ed"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 136,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4570),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8572),
                             HoraAula = 52.00m,
                             Nome = "CAMILA LETICIA P",
                             Numero = 0,
@@ -1749,11 +1749,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("1f4a1b36-c2b3-4c39-9afd-2823533b61f3"),
+                            Id = new Guid("f9e0a1ef-1a0e-4b08-b201-bc6a08441231"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 137,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4575),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8577),
                             HoraAula = 52.00m,
                             Nome = "THIAGO MESQUITA",
                             Numero = 0,
@@ -1761,11 +1761,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("087b341c-3b56-4291-8b90-0e07a81bed26"),
+                            Id = new Guid("db084b5a-5464-4933-abed-18fc7fcd8dc9"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 138,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4579),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8582),
                             HoraAula = 52.00m,
                             Nome = "IRLAINE SOUSA",
                             Numero = 0,
@@ -1773,11 +1773,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f02ae0f7-afcf-46b0-9355-05715bfa5f77"),
+                            Id = new Guid("6647caef-7804-4d19-8e93-1a17bd0a9317"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 139,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4585),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8586),
                             HoraAula = 52.00m,
                             Nome = "CARLOS ALBERTO",
                             Numero = 0,
@@ -1785,11 +1785,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("928a34bd-4aeb-4324-8008-a0e2c396c93b"),
+                            Id = new Guid("4a809fc2-e165-467d-b761-3b7377af35be"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 140,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4590),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8590),
                             HoraAula = 52.00m,
                             Nome = "ERIVELTON DOS SANTOS",
                             Numero = 0,
@@ -1797,11 +1797,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e41a4e16-435c-4167-9fbc-5511b6cbcc71"),
+                            Id = new Guid("2633557c-f5c6-4468-aa41-a50229880fe0"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 141,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4597),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8594),
                             HoraAula = 52.00m,
                             Nome = "ERICK LEAO FERRAZ",
                             Numero = 0,
@@ -1809,11 +1809,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b8d68aa0-24ed-4e9e-9b9a-34f59b6a5504"),
+                            Id = new Guid("6d540c70-7f6a-4507-b685-534fece0c608"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 142,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4602),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8599),
                             HoraAula = 52.00m,
                             Nome = "LARISSA CARDOSO",
                             Numero = 0,
@@ -1821,11 +1821,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("58bfee3a-70c0-4ec0-af17-a51a192c5128"),
+                            Id = new Guid("a8cf1280-8a85-4ad8-b6c4-6073e1c7eda8"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 143,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4607),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8604),
                             HoraAula = 52.00m,
                             Nome = "SERGIO DE JESUS",
                             Numero = 0,
@@ -1833,11 +1833,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("239c0065-0564-4e6b-b3ba-440be36cd66b"),
+                            Id = new Guid("4be069c0-49dc-4c50-b539-99f0600c75b9"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 144,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4611),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8610),
                             HoraAula = 52.00m,
                             Nome = "FLAVIANA DE OLIVEIRA",
                             Numero = 0,
@@ -1845,11 +1845,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("d015bacd-2f70-4474-a4ad-90b9efc98e73"),
+                            Id = new Guid("179473ab-a8fc-4c46-9b87-87ddf1819cc9"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 145,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4615),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8615),
                             HoraAula = 52.00m,
                             Nome = "AMANDA GOULART",
                             Numero = 0,
@@ -1857,11 +1857,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("cd865569-d058-4f61-82d4-85f2b05e2e29"),
+                            Id = new Guid("f3841320-9f03-4ecf-88c2-11039ac71429"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 146,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4619),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8620),
                             HoraAula = 52.00m,
                             Nome = "ADAO DE PAULA",
                             Numero = 0,
@@ -1869,11 +1869,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("9a1aab5d-0844-4b1b-9c76-7d9dbe4ea7d1"),
+                            Id = new Guid("79c2c9ec-f4e6-4f33-8f1f-8723faa98b0a"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 147,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4623),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8624),
                             HoraAula = 52.00m,
                             Nome = "SIMONE SILVA",
                             Numero = 0,
@@ -1881,11 +1881,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("c98c5318-bd3e-45f3-949a-8240045aecb7"),
+                            Id = new Guid("e4541d66-8f10-4030-99b0-75f4039100f6"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 148,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4627),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8664),
                             HoraAula = 52.00m,
                             Nome = "LUCIMARA FONSECA",
                             Numero = 0,
@@ -1893,11 +1893,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("2e1414f0-5e66-4262-a55b-790d7816e721"),
+                            Id = new Guid("2b9d3bcb-2371-449b-8819-9aadc5fcc55b"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 149,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4634),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8670),
                             HoraAula = 52.00m,
                             Nome = "CARMEM NATANNA",
                             Numero = 0,
@@ -1905,11 +1905,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("c80eb7e9-fda2-42d5-8039-d006093e3c0a"),
+                            Id = new Guid("3fbb5350-bbb8-469e-8363-c487d5be7a5e"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 150,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4638),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8675),
                             HoraAula = 52.00m,
                             Nome = "RAIRONE LIMA",
                             Numero = 0,
@@ -1917,11 +1917,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("7cd549f9-029d-4102-91d8-c5caebec0229"),
+                            Id = new Guid("c14c517b-c4b7-42f8-b76d-6b9effea4e36"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 151,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4672),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8679),
                             HoraAula = 52.00m,
                             Nome = "RODRIGO DRELIN",
                             Numero = 0,
@@ -1929,11 +1929,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e17c3f58-bd21-4603-b986-8c0425f59c6b"),
+                            Id = new Guid("2054fc9c-c621-4795-9cca-574ceb2a4ef1"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 152,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4677),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8686),
                             HoraAula = 52.00m,
                             Nome = "KALIMY DE SOUSA",
                             Numero = 0,
@@ -1941,11 +1941,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("cf3a288f-1c38-45ec-b891-dcb6d914df4f"),
+                            Id = new Guid("46e5601f-9b04-43b5-883c-976849f840dd"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 153,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4681),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8691),
                             HoraAula = 52.00m,
                             Nome = "CYMARA FRANCO",
                             Numero = 0,
@@ -1953,11 +1953,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("293454e4-527e-4228-a4e7-1a8b91e3a5f9"),
+                            Id = new Guid("bd831940-ed2e-4db9-9b7a-17afe8f69607"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 154,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4685),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8696),
                             HoraAula = 52.00m,
                             Nome = "SCARLETT MILHOMEM",
                             Numero = 0,
@@ -1965,11 +1965,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b8faabf1-3bbc-4181-930d-2ebd72fdd18e"),
+                            Id = new Guid("e0b73490-3dea-4f2b-9823-fced257cd0e3"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 155,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4689),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8700),
                             HoraAula = 52.00m,
                             Nome = "KIANE SANTANA",
                             Numero = 0,
@@ -1977,11 +1977,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e2a55901-d5f1-4e45-a0c5-c8a783a36d47"),
+                            Id = new Guid("3dc34744-ffe1-47be-b29e-2957495b139c"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 156,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4693),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8704),
                             HoraAula = 52.00m,
                             Nome = "EDUARDO MENDES",
                             Numero = 0,
@@ -1989,11 +1989,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("20168ad0-2612-47e0-8ae0-11f14cad503e"),
+                            Id = new Guid("8fffcf57-2d99-4366-a997-6605be9ab9c2"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 157,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4700),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8709),
                             HoraAula = 52.00m,
                             Nome = "JUCILENE SILVA",
                             Numero = 0,
@@ -2001,11 +2001,11 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("d941101e-69c6-49a9-b6ce-46bfb6922e6b"),
+                            Id = new Guid("4c44530a-d114-42e4-8d80-ba39d68e1324"),
                             Ativo = false,
-                            CargaHorariaSemanal = new TimeSpan(0, 0, 0, 0, 0),
+                            CargaHorariaSemanal = 0.0,
                             CodPonto = 158,
-                            Contratacao = new DateTime(2021, 10, 26, 20, 53, 39, 56, DateTimeKind.Local).AddTicks(4704),
+                            Contratacao = new DateTime(2021, 10, 27, 14, 17, 31, 507, DateTimeKind.Local).AddTicks(8713),
                             HoraAula = 52.00m,
                             Nome = "ALMIR DALMOLIN",
                             Numero = 0,
@@ -2032,7 +2032,7 @@ namespace BlazorServer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("165567dd-4321-4bf5-b34b-02df776b54c7"),
+                            Id = new Guid("9f0e9b0b-c7dd-453c-9aa1-6cc76ede18e3"),
                             EnderecoEmail = "edivaldomachado@gmailcom",
                             Nome = "Edivaldo"
                         });
@@ -2057,43 +2057,43 @@ namespace BlazorServer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b23a5498-b3a1-4312-96c1-c5b7c8614082"),
+                            Id = new Guid("60b810a3-30f5-4aee-9296-2fc0aed18777"),
                             DataFeriado = new DateTime(2021, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Descricao = "Natal"
                         },
                         new
                         {
-                            Id = new Guid("3d8397af-93f8-4aea-88d8-de3e8ae9d31d"),
+                            Id = new Guid("304ebf26-2b55-457d-9412-70e7a700dda4"),
                             DataFeriado = new DateTime(2021, 10, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Descricao = "Feriado00"
                         },
                         new
                         {
-                            Id = new Guid("bb8e3964-3e1b-45b4-b4b0-81b1eafd32cc"),
+                            Id = new Guid("984d8680-49b3-4142-b09b-e3c3df25bb7c"),
                             DataFeriado = new DateTime(2021, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Descricao = "Feriado01"
                         },
                         new
                         {
-                            Id = new Guid("565121a4-5270-4b02-a16f-17f45e7f952f"),
+                            Id = new Guid("a658cacd-c9db-4801-a307-e7c93605c3e2"),
                             DataFeriado = new DateTime(2021, 10, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Descricao = "Feriado02"
                         },
                         new
                         {
-                            Id = new Guid("6d4ce065-eedd-4ebf-860c-4af9d3dd8932"),
+                            Id = new Guid("0470b36a-8f90-4196-accd-f4f64e5e1631"),
                             DataFeriado = new DateTime(2021, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Descricao = "Feriado03"
                         },
                         new
                         {
-                            Id = new Guid("d536f28d-2041-49c7-9651-7626cc1403b6"),
+                            Id = new Guid("2b497c97-6d4f-4a2c-9b10-00afbc8685fe"),
                             DataFeriado = new DateTime(2021, 10, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Descricao = "Feriado04"
                         },
                         new
                         {
-                            Id = new Guid("deade74c-74cf-4801-990f-0d2f65f19a3c"),
+                            Id = new Guid("4f89d54a-460b-463d-8636-18f1536e7781"),
                             DataFeriado = new DateTime(2021, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Descricao = "Feriado05"
                         });
@@ -2176,7 +2176,7 @@ namespace BlazorServer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("613c41c5-f70d-482f-b447-d0e7cae9438a"),
+                            Id = new Guid("70f28054-9755-4e0d-9fd6-d974175044b1"),
                             Bairro = "Bairro da Paz",
                             CNPJ = "123123123/1234-12",
                             Cidade = "Parauapebas",
@@ -2187,7 +2187,7 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("44945691-91e7-46cc-8272-b011a63c7d1a"),
+                            Id = new Guid("321badd9-5c39-42f9-838e-0b6bacd3a0fb"),
                             Bairro = "Centro",
                             CNPJ = "123123123/1234-12",
                             Cidade = "Eldorado dos Carajás",
@@ -2198,7 +2198,7 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("651ee52a-154e-498e-b930-07a055ab50ab"),
+                            Id = new Guid("b5a4189e-fd98-4d12-88b9-271397280744"),
                             Bairro = "Centro",
                             CNPJ = "123123123/1234-12",
                             Cidade = "Canaa dos Carajas",
