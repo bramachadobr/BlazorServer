@@ -1,9 +1,17 @@
 ﻿@page "/"
 
+
 @inherits OwningComponentBase
 @using System.Linq
 @using Microsoft.EntityFrameworkCore
 @using System.Configuration
+@using System.Timers
+@using BlazorServer.Service
+@using BlazorServer.Data
+@using System.IO
+@using System.Net.Http.Headers
+@using System.Linq.Dynamic.Core
+@using System.ComponentModel.DataAnnotations
 
 @inject IJSRuntime JSRuntime
 
@@ -44,14 +52,14 @@
                     </CardHeaderActions>*@
                 </MudCardHeader>
                 <MudCardContent>
-                    <MudTable Items="@ListaTop5Colaboradores" Hover="true" Breakpoint="Breakpoint.Sm" Loading="@_loading" LoadingProgressColor="Color.Info">
+                    <MudTable Items="@ListaTop5Colaboradores" Hover="true" Breakpoint="Breakpoint.Sm"  Loading="@_loading" LoadingProgressColor="Color.Info">
                         <HeaderContent>
                             <MudTh>Nº</MudTh>
                             <MudTh>Nome</MudTh>
                             <MudTh>Total</MudTh>
                         </HeaderContent>
                         <RowTemplate>
-                            <MudTd DataLabel="Nº">@context.Posicao</MudTd>
+                            <MudTd DataLabel="Nº">@context.Posicao </MudTd>
                             <MudTd DataLabel="Nomr">@context.Nome</MudTd>
                             <MudTd DataLabel="TotalHoras">@context.TotalHorasFormatada</MudTd>
                         </RowTemplate>
