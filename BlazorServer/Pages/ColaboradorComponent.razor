@@ -21,7 +21,7 @@
         <RadzenButton Text="Reset" Click="ResetGrid" Style="margin-bottom:20px"></RadzenButton>
     </div>
     <div class="row">
-           <RadzenDataGrid @ref="grid" IsLoading="@isLoading" Count="@count" TItem="Data.Colaborador"  RowDoubleClick="@(args=> OpenColaborador(args))"  
+           <RadzenDataGrid @ref="grid" IsLoading="@isLoading" Count="@count" TItem="Data.Colaborador"  RowDoubleClick="@(args=> OpenColaborador(args))"  AllowPaging="true"
                 FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterMode="FilterMode.Advanced" AllowSorting="true" AllowFiltering="true" Data="@_Colaboradores">
            <Columns>
                 @*<RadzenDataGridColumn TItem="Colaborador" Property="Id" Filterable="false" Title="ID" Frozen="true" Width="50px" TextAlign="TextAlign.Center" />*@

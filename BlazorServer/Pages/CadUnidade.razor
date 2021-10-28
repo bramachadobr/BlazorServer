@@ -1,0 +1,66 @@
+﻿@page "/CadUnidade/{IdUnidade}"
+
+@inherits OwningComponentBase<UnidadeService>
+
+    <div class="content">
+        <div>
+            <div class="row">
+                <div class="col-sm">
+                    <MudTextField @bind-Value="Unidade.Nome" Variant="Variant.Outlined" Label="Nome"></MudTextField>
+                </div>
+                <div class="col-sm">
+                    <MudTextField @bind-Value="Unidade.RazaoSocial" Variant="Variant.Outlined" Label="Razão"></MudTextField>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <MudTextField @bind-Value="Unidade.CNPJ" Variant="Variant.Outlined" Label="CNPJ" Format="#00.000.000/000-00"></MudTextField>
+                 </div>
+                <div class="col-sm">
+                    <MudTextField @bind-Value="Unidade.Endereco" Variant="Variant.Outlined" Label="Endereço"></MudTextField>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <MudTextField @bind-Value="Unidade.Bairro" Variant="Variant.Outlined"></MudTextField>
+                </div>
+                <div class="col-sm">
+                    <MudTextField @bind-Value="Unidade.Cidade" Variant="Variant.Outlined"></MudTextField>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+@code 
+{
+    [Parameter]
+    public Guid IdUnidade { get; set; }
+
+    public Unidade Unidade { get; set; }
+
+    protected override async void OnInitialized()
+    {
+        if (IdUnidade != Guid.Empty)
+        {
+            Unidade = await Service.GetUnidadesById(IdUnidade);
+        }
+        else
+        {
+            Unidade = new Unidade();   
+        }
+    }
+
+    void SaveRecord()
+    {
+        if (Service.UpdateRecord(Unidade))
+        {
+            //Message de Update salvo
+        }
+    }
+
+    void Delete()
+    {
+        Service.DeleteRecor(Unidade);
+    }
+}
