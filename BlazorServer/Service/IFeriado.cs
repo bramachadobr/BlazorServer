@@ -19,7 +19,9 @@ namespace BlazorServer.Service
 
         Feriado GetFeriadoBuyId(Guid id);
 
-        double CargaHorariaDoMes(DateTime data);
+        double CargaHorariaDoMes(DateTime data, ref double feriado);
+
+        void RetornaDatasInicioFim(DateTime data, ref DateTime inicio, ref DateTime fim);
 
     }
 }

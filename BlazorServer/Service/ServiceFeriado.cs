@@ -25,7 +25,7 @@ namespace BlazorServer.Service
         /// </summary>
         /// <param name="data"></param>
         /// <returns>Data do mês que se quer</returns>
-        public double CargaHorariaDoMes(DateTime data)
+        public double CargaHorariaDoMes(DateTime data, ref double feriados)
         {
             double cargaHoraria = 0;
             double cargaFeriado = 0;
@@ -43,6 +43,8 @@ namespace BlazorServer.Service
                     cargaFeriado = cargaFeriado + 8;
                 }
             }
+
+            feriados = cargaFeriado;
 
             int ano = data.Year;
             int mes = data.Month;
@@ -106,6 +108,15 @@ namespace BlazorServer.Service
             else
                 return false;
             
+        }
+
+        public void RetornaDatasInicioFim(DateTime data, ref DateTime inicio, ref DateTime fim)
+        {
+            int diasDoMes = DateTime.DaysInMonth(data.Year, data.Month);
+            DateTime d1 = new DateTime(data.Year, data.Month, 1);
+            inicio = d1;
+            DateTime d2 = new DateTime(data.Year, data.Month, diasDoMes);
+            fim = d2;
         }
 
         public bool UpdateFeriado(Feriado f)

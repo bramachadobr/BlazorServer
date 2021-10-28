@@ -1,6 +1,5 @@
 ﻿@page "/"
 
-
 @inherits OwningComponentBase
 @using System.Linq
 @using Microsoft.EntityFrameworkCore
@@ -15,26 +14,27 @@
 
 @inject IJSRuntime JSRuntime
 
-
 <div class="container">
     <br />
     <div class="row">
-        <input type="month" id="month" @value="Data" @onchange="@LoadCargaHoraria"/>
     </div>
     <div class="row">
         <div class="col-sm">
             <MudCard>
                 <MudCardHeader>
                     <CardHeaderContent>
-                        <MudText Typo="Typo.h6">The Story Book</MudText>
+                        <MudText Typo="Typo.h6">Carga horária total do mês</MudText>
+                        <input type="month" id="month" @onchange="@LoadCargaHoraria"/>
                     </CardHeaderContent>
                     <CardHeaderActions>
                         <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" />
                     </CardHeaderActions>
                 </MudCardHeader>
                 <MudCardContent>
-                    <MudText>This day everything happend.</MudText>
-                    <MudText Typo="Typo.body2">The quick, brown fox jumps over a lazy dog.</MudText>
+                    <MudText>Calcúlo do mês</MudText>
+                    <MudText>Carga normal sem feriados: @tempoNormal.ToString()</MudText>
+                    <MudText>Carga dos feriados: @totalFeriado.ToString()</MudText>
+                    <MudText Typo="Typo.h6">Total da CH do mês: @Convert.ToString(tempoNormal - totalFeriado)</MudText>
                 </MudCardContent>
                 <MudCardActions>
                     <MudButton Variant="Variant.Text" Color="Color.Primary">Read More</MudButton>
@@ -60,8 +60,8 @@
                         </HeaderContent>
                         <RowTemplate>
                             <MudTd DataLabel="Nº">@context.Posicao </MudTd>
-                            <MudTd DataLabel="Nomr">@context.Nome</MudTd>
-                            <MudTd DataLabel="TotalHoras">@context.TotalHorasFormatada</MudTd>
+                            <MudTd DataLabel="Nome">@context.Nome</MudTd>
+                            <MudTd DataLabel="Total Horas">@context.TotalHorasFormatada</MudTd>
                         </RowTemplate>
                     </MudTable>
 @*                    <MudText>This day everything happend.</MudText>
@@ -97,15 +97,13 @@
     <div class="row"></div>
 </div>
 
-<input type="button" title="Teste"/>
-
-<p>@tempo.ToString()</p>
 
 @code 
 {
     public DateTime Data { get; set; }
 
-    double tempo;
+    double tempoNormal;
+    double totalFeriado;
 
     bool _loading;
     List<TopsDashBoard> ListaTop5Colaboradores;
@@ -130,55 +128,28 @@
         if (args.Value.ToString().Length < 6)
             return;
         DateTime dd = new DateTime(Convert.ToInt32(args.Value.ToString().Substring(0, 4)), Convert.ToInt32(args.Value.ToString().Substring(5, 2)), 1);
-        tempo = _serviceFeriado.CargaHorariaDoMes(dd);
+        Data = dd;
+        tempoNormal = _serviceFeriado.CargaHorariaDoMes(dd, ref totalFeriado);
+        LoadDados();
     }
 
     void LoadDados()
     {
         _loading = true;
-        //var x = _serviceRegistroPonto.RegistroPontos.Join(_serviceColaborador.Colaboradores, r=>r.Colaborador, c=>c.Id, (x,y) => x= )
-        //            .GroupBy(a => a.Colaborador)
-        //            .OrderByDescending(a => a.Sum(a => a.AM_ENT.Ticks)).Select(x=> new { total=x.Sum(a=>a.ValorHora) });
 
-        //foreach (var item in x)
-        //{
-        //    JSRuntime.InvokeVoidAsync("console.log", "1", item.total);
-        //}
+        DateTime data1 = new DateTime();
+        DateTime data2 = new DateTime();
 
-        //var quer = from ponto in _serviceRegistroPonto.RegistroPontos.ToList()
-        //           join colab in _serviceColaborador.Colaboradores.ToList() on ponto.Colaborador equals colab
-        //           orderby colab.Nome
-        //           group ponto by colab.Nome into re
-        //           select new
-        //           {
-        //               Nome = re.Key,
-        //               Total = new TimeSpan(re.Sum(a=>a.AM_ENT.Ticks))
-        //            };
-        
-        //foreach (var item in quer)
-        //{
-        //    JSRuntime.InvokeVoidAsync("console.log", "1", item.Total);
-        //}
-                    
-              
-        // quer = from ponto in _serviceRegistroPonto.RegistroPontos.ToList()
-        //           join colab in _serviceColaborador.Colaboradores.ToList() on ponto.Colaborador equals colab
-        //           orderby colab.Nome
-        //           group ponto by colab.Nome into re
-        //           select new
-        //           {
-        //               Nome = re.Select(a=>a.Colaborador.Nome).FirstOrDefault(),
-        //               Total = re.Sum(a=>a.ValorHora)
-        //            };
+        _serviceFeriado.RetornaDatasInicioFim(Data, ref data1, ref data2);
 
         var quer3 = from ponto in _serviceRegistroPonto.RegistroPontos.ToList()
                     join colab in _serviceColaborador.Colaboradores.ToList() on ponto.Colaborador equals colab
+                    where ponto.Data>= data1 && ponto.Data <=data2 
                     orderby colab.Nome
                     group ponto by colab.Nome into re
                     select re;
 
         Dictionary<string, TimeSpan> Lista = new Dictionary<string, TimeSpan>();
-
 
         foreach (var item in quer3)
         {
@@ -203,8 +174,8 @@
             i++;
         }
 
-        DateTime data1 = Convert.ToDateTime("01/08/2021");
-        DateTime data2 = Convert.ToDateTime("30/08/2021");
+
+        //----------------------------------------------FIM-------------------------------------------------------------
 
         var colaborador1 = _serviceColaborador.Colaboradores.Where(a => a.Nome.Contains("Alan")).FirstOrDefault();
 
@@ -215,7 +186,7 @@
         int count = select.Count();
 
         var somaHoras = select.Sum(r=>r.TotalHorasDia.Ticks);
-        
+
         JSRuntime.InvokeVoidAsync("console.log", "Valor", new TimeSpan(somaHoras));
 
         //var query = from colab in _serviceColaborador.Colaboradores
@@ -235,11 +206,16 @@
         //    Total = (_serviceRegistroPonto.RegistroPontos.Where(a=>a.Colaborador == colab).Sum(a => a.ValorHora))
         //};
 
+        DateTime d1 = new DateTime();
+        DateTime d2 = new DateTime();
+
+        _serviceFeriado.RetornaDatasInicioFim(Data, ref d1, ref d2);
+
         var query = from colab in _serviceColaborador.Colaboradores.ToList()
         select new
         {
             Nome = colab.Nome,
-            Total = _serviceRegistroPonto.RegistroPontos.Where(r => r.Colaborador == colab).Sum(a=>a.ValorHora)
+            Total = _serviceRegistroPonto.RegistroPontos.Where(r => r.Colaborador == colab).Where(a => a.Data >= d1 && a.Data <= data2).Sum(a=>a.ValorHora)
         };
 
         var query2 = query.OrderByDescending(a => a.Total).Take(5);
