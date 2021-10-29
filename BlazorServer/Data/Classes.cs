@@ -267,6 +267,16 @@ namespace BlazorServer.Data
         
     }
 
+    public class BancoDeHorasColaborador
+    {
+        public Guid Id { get; set; }
+        public Colaborador Colaborador { get; set; }
+        public DateTime Mes { get; set; }
+        public TimeSpan CargaHorariaMensaldoColabaorador { get; set; }
+        public TimeSpan CargaHorariaTrabalhada { get; set; }
+        public TimeSpan DiferencadoMes { get => CargaHorariaTrabalhada - CargaHorariaMensaldoColabaorador; }
+    }
+
     public class ConfigureDashBoard
     {
         public int Quant { get; set; }
@@ -283,6 +293,36 @@ namespace BlazorServer.Data
                                         times.Minutes < 10 ? ("0" + times.Minutes) : times.Minutes.ToString(),
                                         times.Seconds < 10 ? ("0" + times.Seconds) : times.Seconds.ToString());
             return TotalHorasPeriodo;
+        }
+
+        public static double TotalHorasDoColaboradorMes(this Colaborador colab, DateTime data)
+        {
+            double chColaboradorDia = colab.CargaHorariaSemanal / 6;
+
+            int ano = data.Year;
+            int mes = data.Month;
+            int diasDoMes = DateTime.DaysInMonth(ano,mes);
+            double cargaHoraria = 0;
+            double diasUteis = 0;
+
+            for (int i = 1; i <= diasDoMes; i++)
+            {
+                DateTime _data = new DateTime(ano, mes, i);
+                if (_data.DayOfWeek != DayOfWeek.Sunday)
+                {
+                    if (_data.DayOfWeek == DayOfWeek.Saturday)
+                    {
+                        cargaHoraria = cargaHoraria + chColaboradorDia;
+                        diasUteis += 0.5;
+                    }
+                    else
+                    {
+                        cargaHoraria = cargaHoraria + chColaboradorDia;
+                        diasUteis += 1;
+                    }
+                }
+            }
+            return cargaHoraria;
         }
     }
 }

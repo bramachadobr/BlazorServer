@@ -29,8 +29,12 @@ namespace BlazorServer.Service
         {
             double cargaHoraria = 0;
             double cargaFeriado = 0;
+            double cargaColaborador = 0;
             int diasDoMes = DateTime.DaysInMonth(data.Year, data.Month);
             List<Feriado> ListaFeriados = _context.Feriado.Where(a => a.DataFeriado.Month.Equals(data.Month) && a.DataFeriado.Year.Equals(data.Year)).ToList();
+            double valor = _context.Colaboradors.Where(a => a.Nome.Contains("Natanael")).FirstOrDefault().CargaHorariaSemanal;
+            cargaColaborador = valor / 6;
+            
 
             foreach (var item in ListaFeriados)
             {
@@ -48,6 +52,7 @@ namespace BlazorServer.Service
 
             int ano = data.Year;
             int mes = data.Month;
+            int diasUteis = 0;
 
             for (int i = 1; i <= diasDoMes; i++)
             {
@@ -57,14 +62,21 @@ namespace BlazorServer.Service
                     if (_data.DayOfWeek == DayOfWeek.Saturday)
                     {
                         cargaHoraria += 4;
+                        diasUteis++;
                     }
                     else
                     {
                         cargaHoraria += 8;
+                        diasUteis++;
                     }
                 }
             }
 
+            Colaborador c = _context.Colaboradors.Where(a => a.Nome.Contains("Natanael")).FirstOrDefault();
+            double valor1= c.TotalHorasDoColaboradorMes(data);
+
+            double cargaColaboradorMes = cargaColaborador * diasUteis;
+            cargaColaborador = Math.Round(cargaColaboradorMes, 0);
             return cargaHoraria - cargaFeriado;
 
         }

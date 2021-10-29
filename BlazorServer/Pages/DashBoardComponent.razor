@@ -177,6 +177,8 @@
 
         //----------------------------------------------FIM-------------------------------------------------------------
 
+
+
         var colaborador1 = _serviceColaborador.Colaboradores.Where(a => a.Nome.Contains("Alan")).FirstOrDefault();
 
         var select = _serviceRegistroPonto.RegistroPontos.Where(r => r.Colaborador == colaborador1).ToList();
