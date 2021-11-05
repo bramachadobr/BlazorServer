@@ -17,7 +17,7 @@
     <br />
     <MudFab Color="Color.Primary" Icon="@Icons.Material.Filled.Add" aria-label="Adicionar" OnClick="@NovoCargo" />
     <p></p>
-        <RadzenFieldset Text="Cargos cadastrados">
+        <RadzenFieldset Text="Cadastro de cargos">
         <RadzenDataGrid @ref="grid" Data="@_cargos" TItem="@Data.Cargo"  AllowFiltering="true" FilterMode="FilterMode.Advanced" AllowSorting="true" >
             <Columns>
                 <RadzenDataGridColumn TItem="Data.Cargo" Property="NomeCargo" Title="Cargo" Width="900px"></RadzenDataGridColumn>
@@ -82,24 +82,13 @@
             Service.ExluirRecord(id);
         }
         StateHasChanged();
-        await ResetGrid();
+        ResetGrid();
     }
 
-    async Task ResetGrid()
-    {    
-        _cargos = null;
-
-        await InvokeAsync(() =>
-        {
-            grid.Reload();
-            grid.Dispose();
-            _cargos = Service.GetAllRecordsAsEnumerable().ToList();
-            grid.Reload();
-            grid.FirstPage(true);
-            grid.Reset(true);
-            
-        });
-        await LoadData(null);
+    async void ResetGrid()
+    {
+        grid.Reset(true);
+        await grid.Reload();
     }
 
     async Task LoadData(LoadDataArgs args)

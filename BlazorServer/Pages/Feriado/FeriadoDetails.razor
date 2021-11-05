@@ -1,0 +1,57 @@
+﻿
+@inject MudDialogProvider MudDialog
+@inherits OwningComponentBase<Service.ServiceFeriado>
+
+
+    <div class="container">
+        <div class="row">
+            <RadzenFieldset Text="Cadastro de feriado">
+                <MudGrid>
+                    <MudItem  xs="8" sm="8" md="8">
+                        <MudDatePicker Label="Data" @bind-Date="@_feriado.DataFeriado" HelperText="Data do feriado" DateFormat="dd/MM/yyyy" />
+                        <MudTextField @bind-Value="_feriado.Descricao" Label="Descrição" ReadOnly="false" Variant="Variant.Outlined"></MudTextField>
+                    </MudItem>
+                </MudGrid>
+                <MudGrid>
+                    <MudItem  xs="8" sm="8" md="8">
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@Salvar">Salvar</MudButton>
+                    </MudItem>
+                </MudGrid>
+            </RadzenFieldset>
+        </div>
+    </div>
+
+
+
+
+
+@code 
+{
+
+    [Parameter] 
+    public Guid FeridoId { get; set; }
+
+    [CascadingParameter]
+    public MudDialogInstance MudDialog { get; set; }
+
+    Feriado _feriado;
+
+    protected override void OnInitialized()
+    {
+        if (FeridoId == Guid.Empty)
+        {
+            _feriado = new Feriado();
+        }
+        else
+        {
+            _feriado = Service.GetFeriadoBuyId(FeridoId);
+        }
+    }
+
+    void Salvar()
+    {
+        
+    }
+
+
+}

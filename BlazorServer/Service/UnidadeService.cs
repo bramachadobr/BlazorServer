@@ -42,12 +42,12 @@ namespace BlazorServer.Service
 
         public async Task<List<Unidade>> GetUnidades()
         {
-            return _context.Unidade.ToList();
+            return _context.Unidade.OrderBy(a=>a.Nome).ToList();
         }
 
         public List<Unidade> GetUnidadesList()
         {
-            return _context.Unidade.ToList();
+            return _context.Unidade.OrderBy(a => a.Nome).ToList();
         }
 
         public Task<Unidade> GetUnidadesById(Guid id)

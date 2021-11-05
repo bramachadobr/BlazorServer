@@ -13,28 +13,29 @@
 
 
 <div class="container">
+    <br />
     <MudFab Color="Color.Primary" Icon="@Icons.Material.Filled.Add" aria-label="Adicionar" OnClick="@NovaUnidade" />
     <br />
+    <br />
     <div class="row">
+        <RadzenFieldset Text="Cadastro de Unidades">
         <RadzenDataGrid IsLoading="@isLoading" Count="@count" Data="@_Unidades" TItem="Data.Unidade" LoadData="@LoadData" RowDoubleClick="@(args=> OpenUnidades(args))"
                         FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterMode="FilterMode.Advanced" AllowSorting="true" AllowFiltering="true" @ref="grid">
             <Columns>
                 @*<RadzenDataGridColumn TItem="Colaborador" Property="Id" Filterable="false" Title="ID" Frozen="true" Width="50px" TextAlign="TextAlign.Center" />*@
-                <RadzenDataGridColumn TItem="Data.Unidade" Property="Nome" Title="Nome." Frozen="false" Width="200px" />
-                <RadzenDataGridColumn TItem="Data.Unidade" Property="RazaoSocial" Title="Razao" Width="200px" />
-                <RadzenDataGridColumn TItem="Data.Unidade" Property="CNPJ" Title="CNPJ" Width="80px" />
-                <RadzenDataGridColumn TItem="Data.Unidade" Property="Endereco" Title="Endereço" Width="100px" />
-                <RadzenDataGridColumn TItem="Data.Unidade" Property="Numero" Title="Numero" Width="15px" />
-                <RadzenDataGridColumn TItem="Data.Unidade" Property="Bairro" Title="Bairro" Width="80px" />
-                <RadzenDataGridColumn TItem="Data.Unidade" Property="Cidade" Title="Cidade" Width="80px" />
+                <RadzenDataGridColumn TItem="Data.Unidade" Property="Nome" Title="Nome." Frozen="false" Width="220px" />
+                <RadzenDataGridColumn TItem="Data.Unidade" Property="RazaoSocial" Title="Razao" Width="220px" />
+                <RadzenDataGridColumn TItem="Data.Unidade" Property="CNPJ" Title="CNPJ" Width="120px" />
+                <RadzenDataGridColumn TItem="Data.Unidade" Property="Cidade" Title="Cidade" Width="120px" />
                 <RadzenDataGridColumn TItem="Data.Unidade" Property="Cidade" Title="Alterecao" Width="80px">
                     <Template>
-                         <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(()=>Editar(context.Id))"></MudIconButton>
+                        <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(()=>Editar(context.Id))"></MudIconButton>
                         <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(()=>Apagar(context))"></MudIconButton>
                     </Template>
                 </RadzenDataGridColumn>
             </Columns>
         </RadzenDataGrid>
+        </RadzenFieldset>
     </div>
 </div>
 

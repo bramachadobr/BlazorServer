@@ -52,17 +52,17 @@ namespace BlazorServer.Service
 
         public async Task<List<Cargo>> GetAllRecords()
         {
-            return _context.Cargo.AsQueryable().ToList();
+            return _context.Cargo.OrderBy(a=>a.NomeCargo).AsQueryable().ToList();
         }
 
         public List<Cargo> GetAllRecordsList()
         {
-            return _context.Cargo.AsQueryable().ToList();
+            return _context.Cargo.OrderBy(a => a.NomeCargo).AsQueryable().ToList();
         }
 
         public IEnumerable<Cargo> GetAllRecordsAsEnumerable()
         {
-            return _context.Cargo.AsEnumerable();
+            return _context.Cargo.OrderBy(a => a.NomeCargo).AsEnumerable();
         }
 
         public async Task<Data.Cargo> GetRecordId(System.Guid id)

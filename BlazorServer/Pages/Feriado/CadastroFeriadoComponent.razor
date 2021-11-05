@@ -13,29 +13,10 @@
                 <MudDatePicker PickerVariant="PickerVariant.Static" Date="@(DateTime.Today.AddDays(1))" />
             </div>
             <div class="col-md-8">
-                <MudGrid>
-                    <MudItem  xs="8" sm="8" md="8">
-                        <MudDatePicker Label="Date Format" @bind-Date="@data1" HelperText="Data do feriado" DateFormat="dd/MM/yyyy" />
-                        <MudTextField @bind-Value="feriado.Descricao" Label="Descrição" ReadOnly="false" Variant="Variant.Outlined"></MudTextField>
-                    </MudItem>
-                </MudGrid>
-                <MudGrid>
-                    <MudItem  xs="8" sm="8" md="8">
-                        <MudButton Variant="Variant.Filled" Color="Color.Primary">Novo</MudButton>
-                        <MudButton Variant="Variant.Filled" Color="Color.Primary">Salvar</MudButton>
-                        <MudButton Variant="Variant.Filled" Color="Color.Primary">Excluir</MudButton>
-                    </MudItem>
-                </MudGrid>
+
 
                     <div class="row">
                         <MudTable Items="@_listaFeriado" OnRowClick="@SelecionaFeriado" T="Feriado" Hover="true">
-                           @*<ColGroup>
-                                <col style="width: 60px;" />
-                                <col />
-                                <col style="width: 60%;" />
-                                <col style="width: 60px;" />
-                                <col />
-                            </ColGroup>*@
                             <HeaderContent>
                                 <MudTh>Data</MudTh>
                                 <MudTh>Descrição</MudTh> @*Style="text-align:center"*@

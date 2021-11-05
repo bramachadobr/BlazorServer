@@ -26,7 +26,6 @@ namespace BlazorServer
             services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
-                //options.EnableSensitiveDataLogging(true);
             });
 
             services.AddScoped<MudBlazor.DialogService>();
@@ -46,7 +45,6 @@ namespace BlazorServer
             services.AddScoped<UnidadeService>();
             services.AddScoped<HttpClient>();
             services.AddMudServices();
-            //services.AddMudServices();
 
             var supportedCultures = new[]
             {

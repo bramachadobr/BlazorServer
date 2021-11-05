@@ -104,6 +104,11 @@ namespace BlazorServer.Service
                 return null;
         }
 
+        public List<Feriado> GetFeriadoAll()
+        {
+            return _context.Feriado.OrderByDescending(a=>a.DataFeriado).AsEnumerable().ToList();
+        }
+
         public bool InsereFeriado(Feriado f)
         {
             if (f != null)

@@ -17,12 +17,15 @@
 
 
 <div class="container">
+    <br />
+        <MudFab Color="Color.Primary" Icon="@Icons.Material.Filled.Add" aria-label="Adicionar" OnClick="@NovoColaborador" />
+    <br />
+    <br />
     <div class="row">
-        <RadzenButton Text="Reset" Click="ResetGrid" Style="margin-bottom:20px"></RadzenButton>
-    </div>
-    <div class="row">
+    <RadzenFieldset Text="Cadastro de colaboradores">
            <RadzenDataGrid @ref="grid" IsLoading="@isLoading" Count="@count" TItem="Data.Colaborador"  RowDoubleClick="@(args=> OpenColaborador(args))"  AllowPaging="true"
-                FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterMode="FilterMode.Advanced" AllowSorting="true" AllowFiltering="true" Data="@_Colaboradores">
+                FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterMode="FilterMode.Advanced" AllowSorting="true" AllowFiltering="true" PageSize="25" 
+                Data="@_Colaboradores"  AllowColumnResize="true" Style="border-radius: 6px;">
            <Columns>
                 @*<RadzenDataGridColumn TItem="Colaborador" Property="Id" Filterable="false" Title="ID" Frozen="true" Width="50px" TextAlign="TextAlign.Center" />*@
                 <RadzenDataGridColumn TItem="Data.Colaborador" Property="CodPonto" Title="Cod." Frozen="true" Width="40px" />
@@ -35,12 +38,13 @@
                 <RadzenDataGridColumn TItem="Data.Colaborador" Property="HoraAula" Title="Hora Aula" Width="80px" />
                 <RadzenDataGridColumn TItem="Data.Colaborador" Title="Alteração" Width="120px">
                     <Template>
-                        <MudIconButton Icon="@Icons.Filled.Edit" Size="Size.Small" OnClick="@(()=> OpenColaborador(context.Id))"></MudIconButton>
-                        <MudIconButton Icon="@Icons.Filled.ManageAccounts" Size="Size.Small" OnClick="@(()=>OpenColaboradorManager(context.Id))" ></MudIconButton>
+                        <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(()=> OpenColaborador(context.Id))"></MudIconButton>
+                        <MudIconButton Icon="@Icons.Material.Filled.ManageAccounts" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(()=>OpenColaboradorManager(context.Id))" ></MudIconButton>
                     </Template>
                 </RadzenDataGridColumn>
            </Columns>
            </RadzenDataGrid>
+    </RadzenFieldset>
     </div>
 </div>
 
@@ -133,6 +137,12 @@
     {   
     }
 
+    void NovoColaborador()
+    {
+        OpenColaborador(Guid.Empty);
+    }
+
+
     async void  OpenColaborador(Guid id)
     {
         MudBlazor.DialogOptions DialogOptions = new MudBlazor.DialogOptions()
@@ -143,10 +153,9 @@
              NoHeader = true
         };
 
-        var dialog = DialogService.Show<Colaborador>("Cadastro do Colaborador", new MudBlazor.DialogParameters () 
+        var dialog = DialogService.Show<Colaborador>("Cadastro do Colaborador", new MudBlazor.DialogParameters ()
             { ["ColaboradorID"]=id }, DialogOptions);
         var result = await dialog.Result;
-
         if (!result.Cancelled)
         {
             ResetGrid();
@@ -185,12 +194,6 @@
             ResetGrid();
         }
 
-        //InvokeAsync(async () =>
-        //{
-        //    var dialog = DialogService.Show<Colaborador>();
-        //    var result = dialog.Result;
-        //});
-
     }
 
     public void CloseDialog()
@@ -198,20 +201,9 @@
         
     }
 
-    //public async Task OpenColaborador(Guid id)
-    //{
-    //    colaboradorId = id;
-    //    await DialogService.OpenAsync<Colaborador>($"Data.Colaborador {colaboradorId}",
-    //           new Dictionary<string, object>() { { "ColaboradorID", colaboradorId } },
-    //           new DialogOptions() { Width = "800px", Height = "550px", Style="Resizable: true " }); ;  /*Draggable : true */
-    //}
-
-
-
     public void Dispose()
     {
-        //DialogService.OnOpen -= Open;
-        //DialogService.OnClose -= Close;
+
     }
 
 

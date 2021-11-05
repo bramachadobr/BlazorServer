@@ -53,7 +53,7 @@ namespace BlazorServer.Service
 
         public async Task<List<Colaborador>> GetColaboradorsByCargo(string cargoUrl)
         {
-            return await _context.Colaboradors.Where<Colaborador>(b => b.Cargo.NomeCargo == cargoUrl).ToListAsync();
+            return await _context.Colaboradors.Where<Colaborador>(b => b.Cargo.NomeCargo == cargoUrl).OrderBy(a=>a.Nome).ToListAsync();
         }
 
         public bool InsertRecord(Colaborador record)
@@ -90,7 +90,7 @@ namespace BlazorServer.Service
             }
             else
             {
-                return InsertRecord(record);
+                return InsertRecord(newRecord);
             }
         }
     }

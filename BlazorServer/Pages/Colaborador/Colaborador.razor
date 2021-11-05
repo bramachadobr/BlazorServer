@@ -75,7 +75,7 @@
                             <RadzenLabel Text="Admissão" />
                         </div>
                         <div class="col-md-8">
-                            <RadzenDatePicker style="width: 100%;" Name="Contratacao" @bind-Value="colaborador.Contratacao" />
+                            <RadzenDatePicker style="width: 100%;" Name="Contratacao" @bind-Value="colaborador.Contratacao" DateFormat="dd/MM/yyyy" />
                         </div>
                     </div>
 
@@ -84,7 +84,7 @@
                             <RadzenLabel Text="Salário" />
                         </div>
                         <div class="col-md-8">
-                            <RadzenNumeric style="width: 100%;" Name="Salario" @bind-Value="colaborador.Salario"/>
+                            <RadzenNumeric style="width: 100%;" Name="Salario" @bind-Value="colaborador.Salario" Format="R$ ####.00"/>
                         </div>
                     </div>
                     <div class="row">
@@ -92,7 +92,7 @@
                             <RadzenLabel Text="Hora Aula" />
                         </div>
                         <div class="col-md-8">
-                            <RadzenNumeric style="width: 100%;" Name="HoraAula" @bind-Value="colaborador.HoraAula"/>
+                            <RadzenNumeric style="width: 100%;" Name="HoraAula" @bind-Value="colaborador.HoraAula" Format="R$ ####.00"/>
                         </div>
                     </div>
 
@@ -101,7 +101,7 @@
                             <RadzenLabel Text="Demissão" />
                         </div>
                         <div class="col-md-8">
-                            <RadzenDatePicker style="width: 100%;" Name="Demissao" @bind-Value="colaborador.Demissao" />
+                            <RadzenDatePicker style="width: 100%;" Name="Demissao" @bind-Value="colaborador.Demissao" DateFormat="dd/MM/yyyy" />
                         </div>
                     </div>
 
@@ -230,7 +230,7 @@
         _colaboradorService = (ColaboradorService)ScopedServices.GetService(typeof(ColaboradorService));
         _cargoService = (CargoService)ScopedServices.GetService(typeof(CargoService));
         _unidadeService = (UnidadeService)ScopedServices.GetService(typeof(UnidadeService));
-        
+
         editCodigo = true;
 
         cargos = await _cargoService.GetAllRecords();
@@ -260,13 +260,12 @@
             Data.Unidade uni = (Data.Unidade)value;
             colaborador.Unidade = unidades.FirstOrDefault(i => i.Id == uni.Id);
         }
-        
+
     }
 
     async void AlteraCodigo()
     {
-        //var ok = await DialogServiceRad.Confirm("Deseja realmente Alterar o código?", "Alterar", new ConfirmOptions() { OkButtonText = "Sim", CancelButtonText = "Não" });
-        //editCodigo = !Convert.ToBoolean(ok);
+        editCodigo = !editCodigo;
     }
 
 

@@ -1,0 +1,62 @@
+﻿@page "/Feriado/feriado"
+
+@inject MudBlazor.IDialogService MudDialog
+@inherits OwningComponentBase<Service.ServiceFeriado>
+
+<div class="container">
+    <br />
+    <MudFab Color="Color.Primary" Icon="@Icons.Material.Filled.Add" aria-label="Adicionar" OnClick="@Novo" />
+    <p></p>
+    <RadzenFieldset Text="Cadastro feriado">
+        <RadzenGrid Data="@feriados" TItem="Feriado" AllowFiltering="true" AllowSorting="true" AllowPaging="true" PageSize="10" 
+            FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterMode="FilterMode.Advanced">
+            <Columns>
+                <RadzenDataGridColumn TItem="Feriado" Property="DataFeriado" Title="Data"/>
+                <RadzenDataGridColumn TItem="Feriado" Property="Descricao" Title="Descrição"/>
+                <RadzenDataGridColumn TItem="Feriado" Property="Descricao" Title="Altereção">
+                    <Template>
+                        <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(()=>Editar(context.Id))"></MudIconButton>
+                        <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(()=>Apagar(context))"></MudIconButton>
+                    </Template>
+                </RadzenDataGridColumn>
+            </Columns>
+
+        </RadzenGrid>
+    </RadzenFieldset>
+</div>
+
+@code 
+{
+    IEnumerable<Feriado> feriados;
+
+    protected override void OnInitialized()
+    {
+        feriados = Service.GetFeriadoAll();
+    }
+
+    async void Novo()
+    {
+        MudBlazor.DialogOptions opt = new MudBlazor.DialogOptions()
+        {
+            CloseButton=true,
+            NoHeader=false,
+            MaxWidth = MaxWidth.Medium
+        };
+
+        var dialog = MudDialog.Show<FeriadoDetails>("", new DialogParameters() { [""] = Guid.Empty }, opt);
+        var result = await dialog.Result;
+    }
+
+    void Editar( Guid id)
+    {
+    }
+
+    async void Apagar(Feriado f)
+    {
+        bool? result = await MudDialog.ShowMessageBox("Atenção", "Deseja Excluir o registro atual?", yesText: "Sim", cancelText: "Não");
+        if (result == true)
+        {
+            Service.ExcluiFeriado(f);
+        }
+    }
+}

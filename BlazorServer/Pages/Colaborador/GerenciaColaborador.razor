@@ -3,6 +3,7 @@
 @inherits OwningComponentBase
 @*@inject Data*@
 
+
 <div class="container">
     <br />
     <div>
@@ -15,7 +16,7 @@
                             <RadzenLabel Text="Código Relogio" />
                         </div>
                         <div class="col-md-4">
-                            <RadzenNumeric style="width: 100%;" Name="CodPonto" @bind-Value="colaborador.CodPonto" Disabled="@editCodigo" />
+                            <RadzenNumeric style="width: 100%;" Name="CodPonto" @bind-Value="colaborador.CodPonto" Disabled="true" />
                         </div>
                         <div class="col-md-4">
                             <RadzenButton Text="" ButtonStyle="ButtonStyle.Light" Icon="edit" Click="@Submit" />
@@ -28,7 +29,7 @@
                             <RadzenLabel Text="Nome" />
                         </div>
                         <div class="col-md-8">
-                            <RadzenTextBox style="width: 100%;" Name="Nome" @bind-Value="colaborador.Nome" />
+                            <RadzenTextBox style="width: 100%;" Name="Nome" @bind-Value="colaborador.Nome" Disabled="true" />
                         </div>
                     </div> 
 
@@ -38,7 +39,7 @@
                             <RadzenLabel Text="CPF" />
                         </div>
                         <div class="col-md-8">
-                            <RadzenTextBox style="width: 100%;" Name="Cpf" @bind-Value="colaborador.Cpf" />
+                            <RadzenTextBox style="width: 100%;" Name="Cpf" @bind-Value="colaborador.Cpf" Disabled="true" />
                         </div>
                     </div> 
                     <div class="row">
@@ -47,7 +48,7 @@
                         </div>
                         <div class="col-md-8">
                             <RadzenDropDown @bind-Value="colaborador.Cargo" TValue="Data.Cargo" SelectedItem="@cargos"  Name="Cargo" Data=@cargos Change=@(args=>OnChange(args, "DropDown")) 
-                                TextProperty="NomeCargo" ValueProperty="Cargo" AllowClear="true" Placeholder="Selecione um cargo"  style="width: 100%;" />
+                                TextProperty="NomeCargo" ValueProperty="Cargo" AllowClear="true" Placeholder="Selecione um cargo"  style="width: 100%;" Disabled="true" />
                                 @*<RadzenDropDown TValue="Data.Cargo" SelectedItem="@cargos" @bind-Value="colaborador.Cargo" Name="Cargo2" TextProperty="NomeCargo" ValueProperty="CargoId" AllowClear="true" Placeholder="Selecione um cargo"  style="width: 100%;" />*@
                         </div>
                     </div>
@@ -56,7 +57,7 @@
                             <RadzenLabel Text="Admissão" />
                         </div>
                         <div class="col-md-8">
-                            <RadzenDatePicker style="width: 100%;" Name="Contratacao" @bind-Value="colaborador.Contratacao" />
+                            <RadzenDatePicker style="width: 100%;" Name="Contratacao" @bind-Value="colaborador.Contratacao" Disabled="true" />
                         </div>
                     </div>
 
@@ -65,7 +66,7 @@
                             <RadzenLabel Text="Salário" />
                         </div>
                         <div class="col-md-8">
-                            <RadzenNumeric style="width: 100%;" Name="Salario" @bind-Value="colaborador.Salario"/>
+                            <RadzenNumeric style="width: 100%;" Name="Salario" @bind-Value="colaborador.Salario" Disabled="true"/>
                         </div>
                     </div>
                     <div class="row">
@@ -73,7 +74,7 @@
                             <RadzenLabel Text="Hora Aula" />
                         </div>
                         <div class="col-md-8">
-                            <RadzenNumeric style="width: 100%;" Name="HoraAula" @bind-Value="colaborador.HoraAula"/>
+                            <RadzenNumeric style="width: 100%;" Name="HoraAula" @bind-Value="colaborador.HoraAula" Disabled="true"/>
                         </div>
                     </div>
 
@@ -82,7 +83,7 @@
                             <RadzenLabel Text="Demissão" />
                         </div>
                         <div class="col-md-8">
-                            <RadzenDatePicker style="width: 100%;" Name="Demissao" @bind-Value="colaborador.Demissao" />
+                            <RadzenDatePicker style="width: 100%;" Name="Demissao" @bind-Value="colaborador.Demissao" Disabled="true"/>
                         </div>
                     </div>
 
@@ -91,7 +92,7 @@
                             <RadzenLabel Text="Ativo?" />
                         </div>
                         <div class="col-md-8">
-                            <RadzenCheckBox @bind-Value=@colaborador.Ativo  Name="Ativo" TValue="bool" />
+                            <RadzenCheckBox @bind-Value=@colaborador.Ativo  Name="Ativo" TValue="bool" Disabled="true" />
                         </div>
                     </div>
                     
@@ -104,7 +105,7 @@
                             <RadzenLabel Text="Email" />
                         </div>
                         <div class="col-md-8">
-                            <RadzenTextBox style="width: 100%;" Name="Email" @bind-Value="colaborador.Email" />
+                            <RadzenTextBox style="width: 100%;" Name="Email" @bind-Value="colaborador.Email" Disabled="true" />
                         </div>
                     </div>
                     <div class="row">
@@ -112,7 +113,7 @@
                             <RadzenLabel Text="Telefone" />
                         </div>
                         <div class="col-md-8">
-                            <RadzenTextBox style="width: 100%;" Name="Telefone"  @bind-Value="colaborador.Telefone"/>
+                            <RadzenTextBox style="width: 100%;" Name="Telefone"  @bind-Value="colaborador.Telefone" Disabled="true"/>
                         </div>
                     </div>
                     <div class="row">
@@ -120,7 +121,7 @@
                             <RadzenLabel Text="Endereço" />
                         </div>
                         <div class="col-md-8">
-                            <RadzenTextBox style="width: 100%;" Name="Endereco" @bind-Value="colaborador.Endereco" />
+                            <RadzenTextBox style="width: 100%;" Name="Endereco" @bind-Value="colaborador.Endereco" Disabled="true"/>
                         </div>
                     </div>
 
@@ -129,7 +130,7 @@
                             <RadzenLabel Text="Numero" />
                         </div>
                         <div class="col-md-8">
-                            <RadzenNumeric Placeholder="123" style="width: 100%;" Name="Numero" @bind-Value="colaborador.Numero" />
+                            <RadzenNumeric Placeholder="123" style="width: 100%;" Name="Numero" @bind-Value="colaborador.Numero" Disabled="true" />
                         </div>
                     </div>
                     <div class=row>
@@ -137,7 +138,7 @@
                             <RadzenLabel Text="Bairro" />
                         </div>
                         <div class="col-md-8">
-                            <RadzenTextBox style="width: 100%;" Name="Bairro" @bind-Value="colaborador.Bairro"/>
+                            <RadzenTextBox style="width: 100%;" Name="Bairro" @bind-Value="colaborador.Bairro" Disabled="true"/>
                         </div>
                     </div>
                     <div class="row">
@@ -145,7 +146,7 @@
                             <RadzenLabel Text="Cidade" />
                         </div>
                         <div class="col-md-8">
-                            <RadzenTextBox style="width: 100%;" Name="Cidade" @bind-Value="colaborador.Cidade"/>
+                            <RadzenTextBox style="width: 100%;" Name="Cidade" @bind-Value="colaborador.Cidade" Disabled="true"/>
                         </div>
                     </div>
                     <div class="row">
@@ -153,7 +154,7 @@
                             <RadzenLabel Text="Estado" />
                         </div>
                         <div class="col-md-8">
-                            <RadzenTextBox style="width: 100%;" Name="UF" @bind-Value="colaborador.Estado" />
+                            <RadzenTextBox style="width: 100%;" Name="UF" @bind-Value="colaborador.Estado" Disabled="true"/>
                         </div>
                     </div>
                 </RadzenFieldset>
@@ -166,24 +167,19 @@
                     <RadzenDataGrid  IsLoading=@isLoading Count=@count Data="@listPontos" TItem="Data.RegistroPonto" FilterMode="FilterMode.Advanced" 
                         FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowSorting="true" AllowFiltering="true" AllowPaging="true" PageSize="30" AllowColumnResize="true" Style="border-radius: 6px;">
                         <Columns>
-                            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="Colaborador.CodPonto" Title="Cod" Frozen="true" Width="35px"/>
-                            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="Colaborador.Nome" Title="Nome Completo" Width="220px"/>
-                            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="DiaSemanaPtBr" Title="Dia semana" Width="80px"/>
-                            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="Data" Title="Data" Width="60px" FormatString="{0:dd/MM/yyyy}"/>
+                            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="DiaSemanaPtBr" Title="Dia semana" Width="90px"/>
+                            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="Data" Title="Data" Width="80px" FormatString="{0:dd/MM/yyyy}"/>
                             <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="AM_ENT" Title="AM_ENT" FormatString="{0:HH:mm}"   Width="50px"/>
                             <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="AM_SAI" Title="AM_SAI" FormatString="{0:HH:mm}"   Width="50px"/>
                             <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="PM_ENT" Title="PM_ENT" FormatString="{0:HH:mm}"   Width="50px"/>
                             <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="PM_SAI" Title="PM_SAI" FormatString="{0:HH:mm}"   Width="50px"/>
                             <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="NOI_ENT" Title="NOI_ENT" FormatString="{0:HH:mm}"  Width="50px"/>
                             <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="NOI_SAI" Title="NOI_SAI" FormatString="{0:HH:mm}"  Width="50px"/>
-                            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="TotalHorasDia" Title="Total Horas Dia"  Width="50px"/> 
+                            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="TotalHorasDia" Title="Total Horas Dia"  Width="60px"/> 
                         </Columns>
                     </RadzenDataGrid>
     </div>
 </div>
-
-
-
 
 @code {
 
@@ -202,7 +198,7 @@
     Service.CargoService _cargoService;
     Service.RegistroPontoService _registroPontoService;
 
-    IEnumerable<Data.Colaborador> _colaboradores;
+    //IEnumerable<Data.Colaborador> _colaboradores;
 
     bool editCodigo;
     int count;
