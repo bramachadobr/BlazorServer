@@ -145,9 +145,12 @@ namespace BlazorServer.Data
         public DateTime NOI_ENT { get; set; }
         public DateTime NOI_SAI { get; set; }
 
-        public TimeSpan TotalHorasDia { get => TimeSpan.FromTicks((AM_SAI.TimeOfDay.Ticks - AM_ENT.TimeOfDay.Ticks)
-                                                            + (PM_SAI.TimeOfDay.Ticks - PM_ENT.TimeOfDay.Ticks) 
-                                                            + (NOI_SAI.TimeOfDay.Ticks - NOI_ENT.TimeOfDay.Ticks)); }
+        public TimeSpan TotalHorasDia
+        {
+            get => TimeSpan.FromTicks((AM_SAI.TimeOfDay.Ticks - AM_ENT.TimeOfDay.Ticks)
+                                + (PM_SAI.TimeOfDay.Ticks - PM_ENT.TimeOfDay.Ticks)
+                                + (NOI_SAI.TimeOfDay.Ticks - NOI_ENT.TimeOfDay.Ticks));
+        }
         [Column(TypeName = "decimal(18,2)")]
         public decimal ValorHora { get; set; }
         [Column(TypeName = "decimal(18,2)")]
@@ -259,12 +262,12 @@ namespace BlazorServer.Data
     {
         public int Posicao { get; set; }
         private string _nome;
-        public string Nome { get => _nome.Length > 12? _nome.Substring(0, 12) : _nome; set => _nome = value; }
+        public string Nome { get => _nome.Length > 12 ? _nome.Substring(0, 12) : _nome; set => _nome = value; }
 
         private TimeSpan _totalHoras;
-        public TimeSpan TotalHoras { get => _totalHoras; set => _totalHoras=value; }
-        public string TotalHorasFormatada { get => _totalHoras.TotalHorasTrabalhadas();  }
-        
+        public TimeSpan TotalHoras { get => _totalHoras; set => _totalHoras = value; }
+        public string TotalHorasFormatada { get => _totalHoras.TotalHorasTrabalhadas(); }
+
     }
 
     public class BancoDeHorasColaborador
@@ -284,14 +287,14 @@ namespace BlazorServer.Data
 
     public static class MetodosStaticos
     {
-         public static string TotalHorasTrabalhadas(this TimeSpan totalHorasPeriodo)
+        public static string TotalHorasTrabalhadas(this TimeSpan totalHorasPeriodo)
         {
             TimeSpan times = new TimeSpan(0, 0, 0, 0);
             times = totalHorasPeriodo;
 
-             string TotalHorasPeriodo = string.Format("{0}:{1}:{2}", times.Days > 0 ? ((times.Days * 24) + times.Hours) : times.Hours,
-                                        times.Minutes < 10 ? ("0" + times.Minutes) : times.Minutes.ToString(),
-                                        times.Seconds < 10 ? ("0" + times.Seconds) : times.Seconds.ToString());
+            string TotalHorasPeriodo = string.Format("{0}:{1}:{2}", times.Days > 0 ? ((times.Days * 24) + times.Hours) : times.Hours,
+                                       times.Minutes < 10 ? ("0" + times.Minutes) : times.Minutes.ToString(),
+                                       times.Seconds < 10 ? ("0" + times.Seconds) : times.Seconds.ToString());
             return TotalHorasPeriodo;
         }
 
@@ -301,7 +304,7 @@ namespace BlazorServer.Data
 
             int ano = data.Year;
             int mes = data.Month;
-            int diasDoMes = DateTime.DaysInMonth(ano,mes);
+            int diasDoMes = DateTime.DaysInMonth(ano, mes);
             double cargaHoraria = 0;
             double diasUteis = 0;
 

@@ -1,6 +1,13 @@
 ﻿@page "/Cargo/cargolist"
 
 @using System.Timers
+@using BlazorServer.Service
+@using BlazorServer.Data
+@using System.IO
+@using System.Net.Http.Headers
+@using System.Linq.Dynamic.Core
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.EntityFrameworkCore
 @inject Radzen.DialogService DialogService
 @inherits OwningComponentBase<Service.CargoService>
 
@@ -11,7 +18,7 @@
     <MudFab Color="Color.Primary" Icon="@Icons.Material.Filled.Add" aria-label="Adicionar" OnClick="@NovoCargo" />
     <p></p>
         <RadzenFieldset Text="Cargos cadastrados">
-        <RadzenDataGrid Data="@_cargos" @ref="grid" TItem="@Data.Cargo"  AllowFiltering="true" FilterMode="FilterMode.Advanced" AllowSorting="true">
+        <RadzenDataGrid @ref="grid" Data="@_cargos" TItem="@Data.Cargo"  AllowFiltering="true" FilterMode="FilterMode.Advanced" AllowSorting="true" >
             <Columns>
                 <RadzenDataGridColumn TItem="Data.Cargo" Property="NomeCargo" Title="Cargo" Width="900px"></RadzenDataGridColumn>
                 <RadzenDataGridColumn TItem="Data.Cargo" Property="NomeCargo" Title="Alteracao">
@@ -33,9 +40,9 @@
 
     [Parameter] public Data.Cargo CargoObj { get; set; }
 
-    [Parameter] public RadzenDataGrid<Data.Cargo> grid { get; set; }
+    RadzenDataGrid<Data.Cargo> grid;
 
-    public IEnumerable<Data.Cargo> _cargos { get; set; }
+    IEnumerable<Data.Cargo> _cargos;
 
     protected override async void OnInitialized()
     {
@@ -61,7 +68,7 @@
             CloseButton = true
         };
 
-        var dialog = DialogServiceMud.Show<BlazorServer.Pages.Unidade.UnidadeDetails>("Cadastro de Cargo", new DialogParameters() { ["IdCargo"] = id }, opt);
+        var dialog = DialogServiceMud.Show<BlazorServer.Pages.Cargo.CargoComponent>("Cadastro de Cargo", new DialogParameters() { ["IdCargo"] = id }, opt);
         var result = await dialog.Result;
         StateHasChanged();
         ResetGrid();
@@ -75,15 +82,33 @@
             Service.ExluirRecord(id);
         }
         StateHasChanged();
-        ResetGrid();
+        await ResetGrid();
     }
 
-    public async void ResetGrid()
-    {
-        _cargos = Service.GetAllRecordsAsEnumerable();
-        grid.Reload();
-        grid.Reset(true);
-        await grid.FirstPage(true);
+    async Task ResetGrid()
+    {    
+        _cargos = null;
+
+        await InvokeAsync(() =>
+        {
+            grid.Reload();
+            grid.Dispose();
+            _cargos = Service.GetAllRecordsAsEnumerable().ToList();
+            grid.Reload();
+            grid.FirstPage(true);
+            grid.Reset(true);
+            
+        });
+        await LoadData(null);
     }
+
+    async Task LoadData(LoadDataArgs args)
+    {
+        var result = Service.GetAllRecordsAsEnumerable();
+        _cargos = result.AsODataEnumerable();
+    }
+
+    
+
 
 }

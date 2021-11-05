@@ -30,7 +30,7 @@ namespace BlazorServer.Service
                 return true;
             }
             else
-            { 
+            {
                 AddRecord(record);
                 return true;
             }
@@ -52,7 +52,7 @@ namespace BlazorServer.Service
 
         public async Task<List<Cargo>> GetAllRecords()
         {
-            return  _context.Cargo.AsQueryable().ToList();
+            return _context.Cargo.AsQueryable().ToList();
         }
 
         public List<Cargo> GetAllRecordsList()

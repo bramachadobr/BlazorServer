@@ -1,13 +1,8 @@
-﻿using System;
+﻿using BlazorServer.Data;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Microsoft.Data.Sql;
-using Microsoft.Data;
-using System.Collections.Generic;
-using BlazorServer.Data;
-using System.Threading.Tasks;
-using Microsoft.Data.SqlClient;
-using System.Threading;
 
 namespace BlazorServer.Service
 {
@@ -34,7 +29,7 @@ namespace BlazorServer.Service
             List<Feriado> ListaFeriados = _context.Feriado.Where(a => a.DataFeriado.Month.Equals(data.Month) && a.DataFeriado.Year.Equals(data.Year)).ToList();
             double valor = _context.Colaboradors.Where(a => a.Nome.Contains("Natanael")).FirstOrDefault().CargaHorariaSemanal;
             cargaColaborador = valor / 6;
-            
+
 
             foreach (var item in ListaFeriados)
             {
@@ -73,7 +68,7 @@ namespace BlazorServer.Service
             }
 
             Colaborador c = _context.Colaboradors.Where(a => a.Nome.Contains("Natanael")).FirstOrDefault();
-            double valor1= c.TotalHorasDoColaboradorMes(data);
+            double valor1 = c.TotalHorasDoColaboradorMes(data);
 
             double cargaColaboradorMes = cargaColaborador * diasUteis;
             cargaColaborador = Math.Round(cargaColaboradorMes, 0);
@@ -111,7 +106,7 @@ namespace BlazorServer.Service
 
         public bool InsereFeriado(Feriado f)
         {
-            if (f!=null)
+            if (f != null)
             {
                 _context.Feriado.Add(f);
                 _context.SaveChanges();
@@ -119,7 +114,7 @@ namespace BlazorServer.Service
             }
             else
                 return false;
-            
+
         }
 
         public void RetornaDatasInicioFim(DateTime data, ref DateTime inicio, ref DateTime fim)

@@ -13,7 +13,7 @@ namespace BlazorServer.Service
         private readonly AppDbContext _context;
 
 
-        public UnidadeService(AppDbContext appDbContext) 
+        public UnidadeService(AppDbContext appDbContext)
         {
             _context = appDbContext;
         }

@@ -1,4 +1,4 @@
-﻿    using BlazorServer.Data;
+﻿using BlazorServer.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -34,7 +34,7 @@ namespace BlazorServer.Service
 
         public List<Colaborador> GetAllColaboradoresList()
         {
-            return  _context.Colaboradors.ToList();
+            return _context.Colaboradors.ToList();
 
         }
 

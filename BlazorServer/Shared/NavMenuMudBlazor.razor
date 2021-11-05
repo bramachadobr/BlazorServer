@@ -1,27 +1,28 @@
 ﻿
             <MudNavMenu>
-                <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.Store" Href="/">Dashboard</MudNavLink>
-                <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.Store" Href="/Ponto/registro">Registro de pontos</MudNavLink>
-                <MudNavGroup Match="NavLinkMatch.All" Icon="@Icons.Filled.Store" Title="Cadastros" Expanded="true">
-                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.Store" Href="/Colaborador/colaborador">Gerenciar Colaborador</MudNavLink>
-                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.Store" Href="/colaboradores">Colaboradores</MudNavLink>
-                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.Store" Href="/Cargo/cargolist">Cargo</MudNavLink>
-                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.Store" Href="/Unidade">Unidades</MudNavLink>
-                    
-                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.Store" Href="/Feriado">Feriador</MudNavLink>
-                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.Store" Href="security">Security</MudNavLink>
-                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.Store" Href="counter">counter</MudNavLink> 
-
-                </MudNavGroup>
+                <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.Store" Href="/">Dashboard</MudNavLink>               
+                    <MudNavGroup Match="NavLinkMatch.All" Icon="@Icons.Filled.Note" Title="Controle de Ponto" Expanded="true" >
+                        <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.Store" Href="/Ponto/registro">Registro de pontos</MudNavLink>
+                    </MudNavGroup>
+                    <MudNavGroup Match="NavLinkMatch.All" Icon="@Icons.Filled.Store" Title="Cadastros" Expanded="true">
+                        <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.Store" Href="/Colaborador/colaborador">Gerenciar Colaborador</MudNavLink>
+                        <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.Store" Href="/Cargo/cargolist">Cargo</MudNavLink>
+                        <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.Store" Href="/Unidade">Unidades</MudNavLink>
+                        <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.Store" Href="/Feriado">Feriador</MudNavLink>
+                    </MudNavGroup>
+                    <MudNavGroup Match="NavLinkMatch.All" Icon="@Icons.Filled.Security" Title="Seguranca" Expanded="true">
+                        <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.Security" Href="security">Security</MudNavLink>
+                        <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.Store" Href="counter">counter</MudNavLink> 
+                    </MudNavGroup>
                 <MudNavLink Href="/about">About</MudNavLink>
             </MudNavMenu>
 
 @code
 {
-     bool open = false;
 
+    bool open = false;
     void ToggleDrawer()
     {
         open = !open;
-    } 
+    }
 }

@@ -133,6 +133,7 @@
     async void ResetGrid()
     {
         grid.Reset(true);
+        grid.Reload();
         await grid.FirstPage(true);
         _Unidades = Service.GetUnidadesList().AsQueryable();
     }
