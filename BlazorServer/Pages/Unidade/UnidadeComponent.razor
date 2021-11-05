@@ -1,4 +1,4 @@
-﻿@page "/unidades"
+﻿@page "/Unidade"
 
 @using System.Timers
 @using BlazorServer.Service
@@ -13,10 +13,11 @@
 
 
 <div class="container">
+    <MudFab Color="Color.Primary" Icon="@Icons.Material.Filled.Add" aria-label="Adicionar" OnClick="@NovaUnidade" />
     <br />
     <div class="row">
         <RadzenDataGrid IsLoading="@isLoading" Count="@count" Data="@_Unidades" TItem="Data.Unidade" LoadData="@LoadData" RowDoubleClick="@(args=> OpenUnidades(args))"
-                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterMode="FilterMode.Advanced" AllowSorting="true" AllowFiltering="true">
+                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterMode="FilterMode.Advanced" AllowSorting="true" AllowFiltering="true" @ref="grid">
             <Columns>
                 @*<RadzenDataGridColumn TItem="Colaborador" Property="Id" Filterable="false" Title="ID" Frozen="true" Width="50px" TextAlign="TextAlign.Center" />*@
                 <RadzenDataGridColumn TItem="Data.Unidade" Property="Nome" Title="Nome." Frozen="false" Width="200px" />
@@ -26,6 +27,12 @@
                 <RadzenDataGridColumn TItem="Data.Unidade" Property="Numero" Title="Numero" Width="15px" />
                 <RadzenDataGridColumn TItem="Data.Unidade" Property="Bairro" Title="Bairro" Width="80px" />
                 <RadzenDataGridColumn TItem="Data.Unidade" Property="Cidade" Title="Cidade" Width="80px" />
+                <RadzenDataGridColumn TItem="Data.Unidade" Property="Cidade" Title="Alterecao" Width="80px">
+                    <Template>
+                         <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(()=>Editar(context.Id))"></MudIconButton>
+                        <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(()=>Apagar(context))"></MudIconButton>
+                    </Template>
+                </RadzenDataGridColumn>
             </Columns>
         </RadzenDataGrid>
     </div>
@@ -33,6 +40,8 @@
 
 
 @code {
+
+    [Inject] private MudBlazor.IDialogService DialogServiceMud { get; set; }
 
     RadzenDataGrid<Data.Unidade> grid;
 
@@ -48,6 +57,38 @@
     {
         _Unidades = Service.GetUnidadesList();
         LoadData(null);
+    }
+
+    void NovaUnidade()
+    {
+        Editar(Guid.Empty);
+        ResetGrid();
+    }
+
+    async void Apagar(Unidade unidade)
+    {
+        bool? result = await DialogServiceMud.ShowMessageBox("Atencao!", "Deseja apagar o registro ?", yesText: "Sim", cancelText: "Nao");
+        if (result == true)
+        {
+            Service.DeleteRecor(unidade);
+        }
+        ResetGrid();
+    }
+
+    async void Editar(Guid id)
+    {
+        MudBlazor.DialogOptions opt = new MudBlazor.DialogOptions()
+        {
+            //MaxWidth = MaxWidth.False,
+            //NoHeader = false,
+            CloseButton = true
+        };
+
+        var dialog = DialogServiceMud.Show<UnidadeDetails>("Cadastro de Cargo", new DialogParameters() { ["UnidadeId"] = id }, opt);
+        var result = await dialog.Result;
+        StateHasChanged();
+        ResetGrid();
+
     }
 
     async Task LoadData(LoadDataArgs args)
@@ -94,11 +135,6 @@
         grid.Reset(true);
         await grid.FirstPage(true);
         _Unidades = Service.GetUnidadesList().AsQueryable();
-    }
-
-
-    public void Dispose()
-    {
     }
 
 }

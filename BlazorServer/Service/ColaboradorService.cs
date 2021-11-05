@@ -1,4 +1,4 @@
-﻿using BlazorServer.Data;
+﻿    using BlazorServer.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

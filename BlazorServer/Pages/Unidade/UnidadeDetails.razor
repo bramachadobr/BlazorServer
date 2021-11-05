@@ -1,0 +1,60 @@
+﻿@inherits OwningComponentBase<Service.UnidadeService>
+
+            <div>
+                <MudCard>
+                    <MudCardContent>
+                        <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors" Model="@_unidade">
+                            <MudTextField T="string" @bind-Value="_unidade.Nome" Label="Nome" Required="true" RequiredError="Nome obirgatorio!"/>
+                            <MudTextField T="string" @bind-Value="_unidade.RazaoSocial" Label="Razao social" Required="true" RequiredError="Razao social obrigatorio!"/>
+                            <MudTextField T="string" @bind-Value="_unidade.CNPJ" Label="CNPJ" Required="true" RequiredError="CNPJ Obrigatorio!"/>
+                            <MudTextField T="string" @bind-Value="_unidade.Cidade" Label="Cidade" Required="true" RequiredError="User name is required!"/>
+                            <MudTextField T="string" @bind-Value="_unidade.Endereco" Label="Endereco" Required="true" RequiredError="User name is required!"/>
+                            <MudTextField T="string" @bind-Value="_unidade.Bairro" Label="Bairro" Required="true" RequiredError="User name is required!"/>
+                            <MudTextField T="int" @bind-Value="_unidade.Numero" Label="Numero" Required="true" RequiredError="User name is required!"/>
+                            <MudTextField T="string" @bind-Value="_unidade.Cidade" Label="Cidade" Required="true" RequiredError="User name is required!"/>
+                        </MudForm>
+                    </MudCardContent>
+                    <MudCardActions>
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@Salvar">Salvar</MudButton>
+                    </MudCardActions>
+                </MudCard>
+        </div>
+
+
+@code 
+{
+    MudForm form;
+    bool success;
+    string[] errors = { };
+
+    [Parameter]
+    public Guid UnidadeId { get; set; }
+
+    [CascadingParameter]
+    public MudDialogInstance MudDialog { get; set; }
+
+
+    public Unidade _unidade { get; set; }
+
+
+    protected override async void OnInitialized()
+    {
+        if (UnidadeId != Guid.Empty)
+        {
+            _unidade = Service.GetUnidadesById1(UnidadeId);
+        }
+        else
+        {
+            _unidade = new Unidade();
+        }
+    }
+
+    void Salvar()
+    {
+        Service.UpdateRecord(_unidade);
+        MudDialog.Close();
+    }
+
+
+
+}
