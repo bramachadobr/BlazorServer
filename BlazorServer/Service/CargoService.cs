@@ -19,6 +19,23 @@ namespace BlazorServer.Service
             Cargos = GetAllRecordsList();
         }
 
+        public bool UpdateCargo(Cargo record)
+        {
+            Cargo upCargo = _context.Cargo.Where(a => a.Id == record.Id).FirstOrDefault();
+            if (upCargo != null)
+            {
+                upCargo.NomeCargo = record.NomeCargo;
+                _context.Cargo.Update(upCargo);
+                _context.SaveChanges();
+                return true;
+            }
+            else
+            {
+                AddRecord(record);
+                return true;
+            }
+        }
+
         public bool AddRecord(Cargo record)
         {
             this._context.Cargo.Add(record);
@@ -35,15 +52,20 @@ namespace BlazorServer.Service
 
         public async Task<List<Cargo>> GetAllRecords()
         {
-            return _context.Cargo.ToList();
+            return _context.Cargo.AsQueryable().ToList();
         }
 
         public List<Cargo> GetAllRecordsList()
         {
-            return _context.Cargo.ToList();
+            return _context.Cargo.AsQueryable().ToList();
         }
 
-        public async Task<Data.Cargo> GetRecords(System.Guid id)
+        public IEnumerable<Cargo> GetAllRecordsAsEnumerable()
+        {
+            return _context.Cargo.AsEnumerable();
+        }
+
+        public async Task<Data.Cargo> GetRecordId(System.Guid id)
         {
             return _context.Cargo.FirstOrDefault(i => i.Id == id);
         }

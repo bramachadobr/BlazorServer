@@ -34,7 +34,7 @@ namespace BlazorServer.Service
 
         public List<Colaborador> GetAllColaboradoresList()
         {
-            return  _context.Colaboradors.ToList();
+            return _context.Colaboradors.ToList();
 
         }
 

@@ -13,14 +13,14 @@ namespace BlazorServer.Service
         private readonly AppDbContext _context;
 
 
-        public UnidadeService(AppDbContext appDbContext) 
+        public UnidadeService(AppDbContext appDbContext)
         {
             _context = appDbContext;
         }
 
         public bool AddRecord(Unidade record)
         {
-            if (record.Id.Equals(Guid.Empty))
+            if (record.Id != Guid.Empty)
             {
                 _context.Unidade.Add(record);
                 _context.SaveChanges();
@@ -52,7 +52,12 @@ namespace BlazorServer.Service
 
         public Task<Unidade> GetUnidadesById(Guid id)
         {
-            return _context.Unidade.FirstOrDefaultAsync(i => i.Id == id);
+            return _context.Unidade.Where(i => i.Id == id).FirstOrDefaultAsync();
+        }
+
+        public Unidade GetUnidadesById1(Guid id)
+        {
+            return _context.Unidade.Where(i => i.Id == id).FirstOrDefault();
         }
 
         public bool UpdateRecord(Unidade record)

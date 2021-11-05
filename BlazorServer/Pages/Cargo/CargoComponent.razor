@@ -1,4 +1,4 @@
-﻿@page "/cargo"
+﻿@page "/Cargo/cargo"
 
 @using System.Timers
 @using BlazorServer.Data
@@ -6,9 +6,6 @@
 @implements IDisposable
 
 @inherits OwningComponentBase<Service.CargoService>
-
-<h3>Cargo Component</h3>
-
 
 <div class="container">
     <RadzenTemplateForm Data="CargoObj"  TItem="@Data.Cargo" Submit="@((Data.Cargo args)=> {Submit(args);})">
@@ -22,47 +19,47 @@
                 <RadzenTextBox @bind-Value="CargoObj.NomeCargo"></RadzenTextBox>
             </div>
                 <div class="col-md-5">
-                    <RadzenButton ButtonType="Radzen.ButtonType.Submit" Text="Adiconar Cargo"></RadzenButton>
+                    <RadzenButton ButtonType="Radzen.ButtonType.Submit" Text="Salvar"></RadzenButton>
                 </div>
             </div>
             </RadzenFieldset>
 
     </RadzenTemplateForm>
 
-
-        <div class="row">
-            <CargoComponentList @ref="grid" ></CargoComponentList>
-        </div>
-
 </div>
 
 
 
 
-@code {
+
+@code 
+{
+
     CargoComponentList grid;
 
     [Parameter]
     public Data.Cargo CargoObj { get; set; }
 
-    //public Service.CargoService _cargoService;
+    [Parameter] public Guid IdCargo { get; set; }
+
+    [CascadingParameter] public MudDialogInstance MudDialog { get; set; }
 
     public AppDbContext _context;
 
 
-    protected override void OnInitialized()
+    protected override async void OnInitialized()
     {
         base.OnInitialized();
-        //_cargoService = new Service.CargoService(_context);
 
-        //grid._cargoService = this._cargoService;
 
-        if (CargoObj is null)
+        if (IdCargo != Guid.Empty)
+        {
+            CargoObj = await Service.GetRecordId(IdCargo);
+        }
+        else
         {
             CargoObj = new Data.Cargo();
         }
-        //DialogService.OnOpen += Open;
-        //DialogService.OnClose += Close;
 
     }
 
@@ -74,10 +71,9 @@
         {
             if (cargo.NomeCargo != "")
             {
-                Service.AddRecord(cargo);
-                Task.Run(()=> ShowInlineDialog());
-                CargoObj = new Data.Cargo();
-                grid.ResetGrid();
+                Service.UpdateCargo(cargo);
+                MudDialog.Close();
+                //Task.Run(()=> ShowInlineDialog());
             }
         }
     }
@@ -93,13 +89,6 @@
                 </div>
             </div>
         </div>);
-    }
-
-    public void Dispose()
-    {
-        // The DialogService is a singleton so it is advisable to unsubscribe.
-        //DialogService.OnOpen -= Open;
-        //DialogService.OnClose -= Close;
     }
 
 }

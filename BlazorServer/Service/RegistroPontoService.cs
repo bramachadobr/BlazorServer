@@ -1,14 +1,11 @@
 ﻿using BlazorServer.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Linq.Dynamic.Core;
-using System.Linq.Dynamic;
-using System.Data;
-using System.Data.Sql;
-using System.Data.SqlClient;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace BlazorServer.Service
 {

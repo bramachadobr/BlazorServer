@@ -1,0 +1,114 @@
+﻿@page "/Cargo/cargolist"
+
+@using System.Timers
+@using BlazorServer.Service
+@using BlazorServer.Data
+@using System.IO
+@using System.Net.Http.Headers
+@using System.Linq.Dynamic.Core
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.EntityFrameworkCore
+@inject Radzen.DialogService DialogService
+@inherits OwningComponentBase<Service.CargoService>
+
+
+
+<div class="container">
+    <br />
+    <MudFab Color="Color.Primary" Icon="@Icons.Material.Filled.Add" aria-label="Adicionar" OnClick="@NovoCargo" />
+    <p></p>
+        <RadzenFieldset Text="Cargos cadastrados">
+        <RadzenDataGrid @ref="grid" Data="@_cargos" TItem="@Data.Cargo"  AllowFiltering="true" FilterMode="FilterMode.Advanced" AllowSorting="true" >
+            <Columns>
+                <RadzenDataGridColumn TItem="Data.Cargo" Property="NomeCargo" Title="Cargo" Width="900px"></RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Data.Cargo" Property="NomeCargo" Title="Alteracao">
+                    <Template>
+                        <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(()=>Editar(context.Id))"></MudIconButton>
+                        <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(()=>Apagar(context))"></MudIconButton>
+                    </Template>
+                </RadzenDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>        
+    </RadzenFieldset>
+</div>
+
+
+
+@code {
+
+    [Inject] private MudBlazor.IDialogService DialogServiceMud { get; set; }
+
+    [Parameter] public Data.Cargo CargoObj { get; set; }
+
+    RadzenDataGrid<Data.Cargo> grid;
+
+    IEnumerable<Data.Cargo> _cargos;
+
+    protected override async void OnInitialized()
+    {
+        base.OnInitialized();
+        if (_cargos is null)
+        {
+            _cargos = await Service.GetAllRecords();
+        }
+    }
+
+    async void NovoCargo()
+    {
+        Editar(Guid.Empty);
+        ResetGrid();
+    }
+
+    async void Editar(Guid id)
+    {
+        MudBlazor.DialogOptions opt = new MudBlazor.DialogOptions()
+        {
+            //MaxWidth = MaxWidth.False,
+            //NoHeader = false,
+            CloseButton = true
+        };
+
+        var dialog = DialogServiceMud.Show<BlazorServer.Pages.Cargo.CargoComponent>("Cadastro de Cargo", new DialogParameters() { ["IdCargo"] = id }, opt);
+        var result = await dialog.Result;
+        StateHasChanged();
+        ResetGrid();
+    }
+
+    async void Apagar(Cargo id)
+    {
+        bool? result = await DialogServiceMud.ShowMessageBox("Atencao", "Deseja realmente apagar esse registro?", yesText: "Sim", cancelText: "Nao");
+        if (result == true)
+        {
+            Service.ExluirRecord(id);
+        }
+        StateHasChanged();
+        await ResetGrid();
+    }
+
+    async Task ResetGrid()
+    {    
+        _cargos = null;
+
+        await InvokeAsync(() =>
+        {
+            grid.Reload();
+            grid.Dispose();
+            _cargos = Service.GetAllRecordsAsEnumerable().ToList();
+            grid.Reload();
+            grid.FirstPage(true);
+            grid.Reset(true);
+            
+        });
+        await LoadData(null);
+    }
+
+    async Task LoadData(LoadDataArgs args)
+    {
+        var result = Service.GetAllRecordsAsEnumerable();
+        _cargos = result.AsODataEnumerable();
+    }
+
+    
+
+
+}

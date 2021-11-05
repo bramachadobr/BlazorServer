@@ -1,5 +1,7 @@
 ﻿@page "/"
 
+@*@attribute [Authorize]*@
+
 @inherits OwningComponentBase
 @using System.Linq
 @using Microsoft.EntityFrameworkCore
@@ -176,6 +178,8 @@
 
 
         //----------------------------------------------FIM-------------------------------------------------------------
+
+
 
         var colaborador1 = _serviceColaborador.Colaboradores.Where(a => a.Nome.Contains("Alan")).FirstOrDefault();
 
