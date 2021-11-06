@@ -28,15 +28,13 @@
                 Data="@_Colaboradores"  AllowColumnResize="true" Style="border-radius: 6px;">
            <Columns>
                 @*<RadzenDataGridColumn TItem="Colaborador" Property="Id" Filterable="false" Title="ID" Frozen="true" Width="50px" TextAlign="TextAlign.Center" />*@
-                <RadzenDataGridColumn TItem="Data.Colaborador" Property="CodPonto" Title="Cod." Frozen="true" Width="40px" />
+                <RadzenDataGridColumn TItem="Data.Colaborador" Property="CodPonto" Title="Cod." Frozen="true" Width="50px" />
                 <RadzenDataGridColumn TItem="Data.Colaborador" Property="Nome" Title="Nome Completo" Width="200px"/>
                 <RadzenDataGridColumn TItem="Data.Colaborador" Property="Cpf" Title="CPF" Width="100px" />
                 <RadzenDataGridColumn TItem="Data.Colaborador" Property="Cargo.NomeCargo" Title="Cargo" Width="110px" />
-                <RadzenDataGridColumn TItem="Data.Colaborador" Property="Contratacao" Title="Data adminissão" FormatString="{0:dd/MM/yyyy}" Width="80px" />
-                <RadzenDataGridColumn TItem="Data.Colaborador" Property="Demissao" Title="Data demissão" FormatString="{0:dd/MM/yyyy}" Width="80px" />
-                <RadzenDataGridColumn TItem="Data.Colaborador" Property="Salario" Title="Salario" Width="80px" />
-                <RadzenDataGridColumn TItem="Data.Colaborador" Property="HoraAula" Title="Hora Aula" Width="80px" />
-                <RadzenDataGridColumn TItem="Data.Colaborador" Title="Alteração" Width="120px">
+                <RadzenDataGridColumn TItem="Data.Colaborador" Property="Contratacao" Title="Admissão" FormatString="{0:dd/MM/yyyy}" Width="90px" />
+                <RadzenDataGridColumn TItem="Data.Colaborador" Property="Demissao" Title="Demissão" FormatString="{0:dd/MM/yyyy}" Width="90px" />
+                <RadzenDataGridColumn TItem="Data.Colaborador" Title="Alteração" Width="80px">
                     <Template>
                         <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(()=> OpenColaborador(context.Id))"></MudIconButton>
                         <MudIconButton Icon="@Icons.Material.Filled.ManageAccounts" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(()=>OpenColaboradorManager(context.Id))" ></MudIconButton>

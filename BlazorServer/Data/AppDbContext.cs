@@ -29,13 +29,10 @@ namespace BlazorServer.Data
         {
 
             modelBuilder.Entity<Feriado>().HasData(
-                new Feriado { Descricao = "Natal", DataFeriado = DateTime.Parse("31/12/2021") },
-                new Feriado { Descricao = "Feriado00", DataFeriado = DateTime.Parse("05/10/2021") },
-                new Feriado { Descricao = "Feriado01", DataFeriado = DateTime.Parse("28/10/2021") },
-                new Feriado { Descricao = "Feriado02", DataFeriado = DateTime.Parse("27/10/2021") },
-                new Feriado { Descricao = "Feriado03", DataFeriado = DateTime.Parse("20/10/2021") },
-                new Feriado { Descricao = "Feriado04", DataFeriado = DateTime.Parse("15/10/2021") },
-                new Feriado { Descricao = "Feriado05", DataFeriado = DateTime.Parse("10/10/2021") }
+                new Feriado { Descricao = "Ano Novo", DataFeriado = DateTime.Parse("31/12/2021") },
+                new Feriado { Descricao = "Natal", DataFeriado = DateTime.Parse("25/12/2021") },
+                new Feriado { Descricao = "Proclamacao da republica", DataFeriado = DateTime.Parse("15/11/2021") },
+                new Feriado { Descricao = "Finados", DataFeriado = DateTime.Parse("02/11/2021") }
                 );
 
             modelBuilder.Entity<Unidade>().HasData(

@@ -26,21 +26,17 @@
                 <MudCardHeader>
                     <CardHeaderContent>
                         <MudText Typo="Typo.h6">Carga horária total do mês</MudText>
-                        <input type="month" id="month" @onchange="@LoadCargaHoraria"/>
+                        <input class="form-control" type="month" id="month" @onchange="@LoadCargaHoraria" value=@valor />
                     </CardHeaderContent>
                     <CardHeaderActions>
                         <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" />
                     </CardHeaderActions>
                 </MudCardHeader>
                 <MudCardContent>
-                    <MudText>Calcúlo do mês</MudText>
-                    <MudText>Carga normal sem feriados: @tempoNormal.ToString()</MudText>
-                    <MudText>Carga dos feriados: @totalFeriado.ToString()</MudText>
+                    <MudText>@string.Format($"CH normal do mês:  {tempoNormal.ToString()}") </MudText>
+                    <MudText>@string.Format($"CH dos feriados:   {totalFeriado.ToString()}")</MudText>
                     <MudText Typo="Typo.h6">Total da CH do mês: @Convert.ToString(tempoNormal - totalFeriado)</MudText>
                 </MudCardContent>
-                <MudCardActions>
-                    <MudButton Variant="Variant.Text" Color="Color.Primary">Read More</MudButton>
-                </MudCardActions>
             </MudCard>
         </div>
         <div class="col-sm">
@@ -104,6 +100,8 @@
 {
     public DateTime Data { get; set; }
 
+    public string valor { get=>string.Format($"{DateTime.Now.Year.ToString()}-{DateTime.Now.Month.ToString()}");}
+
     double tempoNormal;
     double totalFeriado;
 
@@ -123,6 +121,7 @@
         LoadDados();
         //data = DateTime.Now.AddDays(-30);
         Data = DateTime.Today;
+        LoadCargaHoraria(new ChangeEventArgs() { Value = valor });
     }
 
     void LoadCargaHoraria(ChangeEventArgs args)
@@ -153,8 +152,12 @@
 
         Dictionary<string, TimeSpan> Lista = new Dictionary<string, TimeSpan>();
 
+        List<ColabTopMes> listColabTopMes = new List<ColabTopMes>();
+
         foreach (var item in quer3)
         {
+            ColabTopMes c = new ColabTopMes();
+            c.Nome = item.Key;
             string nome = "";
             long tempo=0;
             nome = item.Key;
@@ -162,6 +165,9 @@
             {
                 tempo += h.TotalHorasDia.Ticks;
             }
+            c.Tempo = new TimeSpan(tempo);
+            double x = ((Colaborador)item).CargaHorariaSemanal;
+            listColabTopMes.Add(c);
             Lista.Add(nome, new TimeSpan(tempo));
         }
 
@@ -175,9 +181,41 @@
             ListaTop5Colaboradores.Add(new TopsDashBoard { Posicao = i, Nome = item.Key, TotalHoras = item.Value });
             i++;
         }
+        _loading = false;
+    }
+
+    public class ColabTopMes
+    {
+        public string Nome { get; set; }
+        public TimeSpan Tempo { get; set; }
+        public TimeSpan ChMes { get; set; }
+    }
+}
 
 
-        //----------------------------------------------FIM-------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*
+ //----------------------------------------------FIM-------------------------------------------------------------
 
 
 
@@ -249,7 +287,4 @@
         //{
         //    JSRuntime.InvokeVoidAsync("console.log", "item", item);
         //}
-
-        _loading = false;
-    }
-}
+*@

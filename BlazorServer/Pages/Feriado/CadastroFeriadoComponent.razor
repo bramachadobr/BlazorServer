@@ -4,7 +4,6 @@
 @inherits OwningComponentBase<ServiceFeriado>
 
 <div class="container">
-    
     <div class="row">
             <div class="col-md-4">
                 <div>
@@ -13,8 +12,6 @@
                 <MudDatePicker PickerVariant="PickerVariant.Static" Date="@(DateTime.Today.AddDays(1))" />
             </div>
             <div class="col-md-8">
-
-
                     <div class="row">
                         <MudTable Items="@_listaFeriado" OnRowClick="@SelecionaFeriado" T="Feriado" Hover="true">
                             <HeaderContent>
@@ -22,7 +19,7 @@
                                 <MudTh>Descrição</MudTh> @*Style="text-align:center"*@
                             </HeaderContent>
                             <RowTemplate>
-                                <MudTd DataLabel="Data">@context.DataFeriado.ToString("dd/MM/yyyy")</MudTd>
+                                <MudTd DataLabel="Data">@context.DataFeriado.Value.ToString("dd/MM/yyyy")</MudTd>
                                 <MudTd DataLabel="Descricao">@context.Descricao</MudTd> @*Style="text-align:right"*@
                             </RowTemplate>
                             <PagerContent>
@@ -34,7 +31,9 @@
     </div>
 </div>
 
-@code 
+
+
+@code
 {
     Feriado feriado = new Feriado();
     DateTime? data1 = DateTime.Today;

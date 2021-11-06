@@ -232,7 +232,8 @@ namespace BlazorServer.Data
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column(TypeName = "uniqueidentifier")]
         public Guid Id { get; set; }
-        public DateTime DataFeriado { get; set; }
+        public DateTime? DataFeriado { get; set; }
+        //public DateTime Data { get=>Convert.ToDateTime(DataFeriado.Value); }
         public string Descricao { get; set; }
     }
 

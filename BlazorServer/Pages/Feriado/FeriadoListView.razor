@@ -8,12 +8,12 @@
     <MudFab Color="Color.Primary" Icon="@Icons.Material.Filled.Add" aria-label="Adicionar" OnClick="@Novo" />
     <p></p>
     <RadzenFieldset Text="Cadastro feriado">
-        <RadzenGrid Data="@feriados" TItem="Feriado" AllowFiltering="true" AllowSorting="true" AllowPaging="true" PageSize="10" 
+        <RadzenDataGrid @ref="grid" Data="@feriados" TItem="@Data.Feriado" AllowFiltering="true" AllowSorting="true" AllowPaging="true" PageSize="10" 
             FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterMode="FilterMode.Advanced">
             <Columns>
-                <RadzenDataGridColumn TItem="Feriado" Property="DataFeriado" Title="Data"/>
-                <RadzenDataGridColumn TItem="Feriado" Property="Descricao" Title="Descrição"/>
-                <RadzenDataGridColumn TItem="Feriado" Property="Descricao" Title="Altereção">
+                <RadzenDataGridColumn TItem="Data.Feriado" Property="DataFeriado" FormatString="{0:dd/MM/yyyy}" Title="Data" Width="80px"/>
+                <RadzenDataGridColumn TItem="Data.Feriado" Property="Descricao" Title="Descrição" Width="200px"/>
+                <RadzenDataGridColumn TItem="Data.Feriado" Title="Altereção" Width="80px">
                     <Template>
                         <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(()=>Editar(context.Id))"></MudIconButton>
                         <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(()=>Apagar(context))"></MudIconButton>
@@ -21,20 +21,30 @@
                 </RadzenDataGridColumn>
             </Columns>
 
-        </RadzenGrid>
+        </RadzenDataGrid>
     </RadzenFieldset>
 </div>
 
 @code 
 {
-    IEnumerable<Feriado> feriados;
+    RadzenDataGrid<Data.Feriado> grid;
+    List<Feriado> feriados;
 
-    protected override void OnInitialized()
+    protected override async void OnInitialized()
     {
-        feriados = Service.GetFeriadoAll();
+        base.OnInitialized();
+        if (feriados is null)
+        {
+            feriados = await Service.GetFeriadoAll();
+        }
     }
 
-    async void Novo()
+    void Novo()
+    {
+        Editar(Guid.Empty);
+    }
+
+   async void Editar(Guid id)
     {
         MudBlazor.DialogOptions opt = new MudBlazor.DialogOptions()
         {
@@ -43,12 +53,8 @@
             MaxWidth = MaxWidth.Medium
         };
 
-        var dialog = MudDialog.Show<FeriadoDetails>("", new DialogParameters() { [""] = Guid.Empty }, opt);
+        var dialog = MudDialog.Show<FeriadoDetails>("", new DialogParameters() { ["FeridoId"] = id });
         var result = await dialog.Result;
-    }
-
-    void Editar( Guid id)
-    {
     }
 
     async void Apagar(Feriado f)

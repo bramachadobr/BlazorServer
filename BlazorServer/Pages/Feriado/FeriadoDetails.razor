@@ -1,32 +1,28 @@
 ﻿
-@inject MudDialogProvider MudDialog
+@*@inject MudDialogProvider MudDialog*@
 @inherits OwningComponentBase<Service.ServiceFeriado>
 
-
-    <div class="container">
-        <div class="row">
-            <RadzenFieldset Text="Cadastro de feriado">
-                <MudGrid>
-                    <MudItem  xs="8" sm="8" md="8">
-                        <MudDatePicker Label="Data" @bind-Date="@_feriado.DataFeriado" HelperText="Data do feriado" DateFormat="dd/MM/yyyy" />
-                        <MudTextField @bind-Value="_feriado.Descricao" Label="Descrição" ReadOnly="false" Variant="Variant.Outlined"></MudTextField>
-                    </MudItem>
-                </MudGrid>
-                <MudGrid>
-                    <MudItem  xs="8" sm="8" md="8">
-                        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@Salvar">Salvar</MudButton>
-                    </MudItem>
-                </MudGrid>
-            </RadzenFieldset>
-        </div>
-    </div>
-
-
+<div>
+<MudCard>
+    <MudCardContent>
+        <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors" Model="@_feriado">
+            <MudTextField T="string" @bind-Value="_feriado.Descricao" Label="Descricao" Required="true" RequiredError="Descricao obirgatorio!"/>
+            <MudDatePicker @bind-Date="_feriado.DataFeriado" Label="DataFeriado" DateFormat="dd/MM/yyyy" Required="true" RequiredError="Data obrigatorio!"/>
+        </MudForm>
+    </MudCardContent>
+    <MudCardActions>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@Salvar">Salvar</MudButton>
+    </MudCardActions>
+</MudCard>
+</div>
 
 
 
 @code 
 {
+    MudForm form;
+    bool success;
+    string[] errors = { };
 
     [Parameter] 
     public Guid FeridoId { get; set; }
@@ -34,7 +30,7 @@
     [CascadingParameter]
     public MudDialogInstance MudDialog { get; set; }
 
-    Feriado _feriado;
+    Feriado _feriado = new Feriado();
 
     protected override void OnInitialized()
     {
@@ -50,8 +46,9 @@
 
     void Salvar()
     {
-        
+        if (Service.UpdateFeriado(this._feriado))
+        {
+            MudDialog.Close();
+        }
     }
-
-
 }

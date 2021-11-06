@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace BlazorServer.Service
 {
@@ -26,14 +28,14 @@ namespace BlazorServer.Service
             double cargaFeriado = 0;
             double cargaColaborador = 0;
             int diasDoMes = DateTime.DaysInMonth(data.Year, data.Month);
-            List<Feriado> ListaFeriados = _context.Feriado.Where(a => a.DataFeriado.Month.Equals(data.Month) && a.DataFeriado.Year.Equals(data.Year)).ToList();
+            List<Feriado> ListaFeriados = _context.Feriado.Where(a => a.DataFeriado.Value.Month.Equals(data.Month) && a.DataFeriado.Value.Year.Equals(data.Year)).ToList();
             double valor = _context.Colaboradors.Where(a => a.Nome.Contains("Natanael")).FirstOrDefault().CargaHorariaSemanal;
             cargaColaborador = valor / 6;
 
 
             foreach (var item in ListaFeriados)
             {
-                if (item.DataFeriado.DayOfWeek == DayOfWeek.Saturday)
+                if (item.DataFeriado.Value.DayOfWeek == DayOfWeek.Saturday)
                 {
                     cargaFeriado = cargaFeriado + 4;
                 }
@@ -98,15 +100,20 @@ namespace BlazorServer.Service
         {
             if (data != DateTime.MinValue)
             {
-                return _context.Feriado.Where(a => a.DataFeriado.Month.Equals(data.Month) && a.DataFeriado.Year.Equals(data.Year)).OrderBy(a => a.DataFeriado).ToList();
+                return _context.Feriado.Where(a => a.DataFeriado.Value.Month.Equals(data.Month) && a.DataFeriado.Value.Year.Equals(data.Year)).OrderBy(a => a.DataFeriado).ToList();
             }
             else
                 return null;
         }
 
-        public List<Feriado> GetFeriadoAll()
+        public async Task<List<Feriado>> GetFeriadoAll()
         {
-            return _context.Feriado.OrderByDescending(a=>a.DataFeriado).AsEnumerable().ToList();
+            return _context.Feriado.OrderByDescending(a => a.DataFeriado).AsQueryable().ToList();
+        }
+
+        public IEnumerable<Feriado> GetFeriadoAllEnumerable()
+        {
+            return _context.Feriado.AsEnumerable();
         }
 
         public bool InsereFeriado(Feriado f)
