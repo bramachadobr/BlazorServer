@@ -1,0 +1,64 @@
+﻿
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inherits OwningComponentBase<Service.CargoService>
+
+            <MudCard>
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6">Filtrar por cargo</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudSelect T="string" @bind-Value="valorSelecionado" Label="Cargo" Variant="Variant.Outlined" Strict="true" Format="F2" AnchorOrigin="Origin.BottomCenter" >
+                        @foreach(var item in _cargos)
+                        {
+                            <MudSelectItem Value=item.NomeCargo>@item.NomeCargo</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="@Salvar">Salvar</MudButton>
+                </MudCardActions>
+            </MudCard>
+@code 
+{
+
+    [Parameter] public string iValor { get; set; } 
+
+    List<Cargo> _cargos;
+    string valorSelecionado;
+
+    [CascadingParameter] public MudDialogInstance MudDialog { get; set; }
+
+    protected override async void OnInitialized()
+    {
+        _cargos = await Service.GetAllRecords();
+        _cargos.Add(new Cargo() { Id = Guid.Empty, NomeCargo = "Todos" });
+        await GetLocalSession();
+    }
+
+    async void Salvar()
+    {
+        await SetConfigCargo();
+        MudDialog.Close();
+    }
+
+    async Task SetConfigCargo()
+    {
+        await localStorage.SetItemAsync($"cargoSelecionada{iValor}", valorSelecionado);
+        await GetLocalSession();
+    }
+
+    async Task GetLocalSession()
+    {
+        valorSelecionado =  await localStorage.GetItemAsync<string>($"cargoSelecionada{iValor}");
+    }
+
+    async Task Logout()
+    {
+        await localStorage.RemoveItemAsync($"cargoSelecionada{iValor}");
+        await GetLocalSession();
+    }
+
+
+}

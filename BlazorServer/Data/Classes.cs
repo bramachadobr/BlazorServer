@@ -268,7 +268,13 @@ namespace BlazorServer.Data
         private TimeSpan _totalHoras;
         public TimeSpan TotalHoras { get => _totalHoras; set => _totalHoras = value; }
         public string TotalHorasFormatada { get => _totalHoras.TotalHorasTrabalhadas(); }
+        public double ChSemanal { get; set; }
 
+        private TimeSpan _chColabMes;
+        public TimeSpan ChColabMes { get=> _chColabMes; set=> _chColabMes = value; }
+        public string ChColabMesFormatada { get => _chColabMes.TotalHorasTrabalhadas(); }
+
+        public string SaldoHorasTrabalhadas { get => (_totalHoras.Subtract(_chColabMes).TotalHorasTrabalhadas()); }
     }
 
     public class BancoDeHorasColaborador

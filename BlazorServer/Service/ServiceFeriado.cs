@@ -16,22 +16,15 @@ namespace BlazorServer.Service
         {
             _context = context;
         }
-
         /// <summary>
-        /// Ratorna a carga horaria do mês menos os feriados cadastrados, apenas os dias úteis
+        /// Retorna a carga horaria do mes total dos feriados
         /// </summary>
-        /// <param name="data"></param>
-        /// <returns>Data do mês que se quer</returns>
-        public double CargaHorariaDoMes(DateTime data, ref double feriados)
+        /// <param name="data">1º data do mes </param>
+        /// <returns>retorna a quantidade de horas</returns>
+        public double TotalChFeriadoMes(DateTime data)
         {
-            double cargaHoraria = 0;
             double cargaFeriado = 0;
-            double cargaColaborador = 0;
-            int diasDoMes = DateTime.DaysInMonth(data.Year, data.Month);
             List<Feriado> ListaFeriados = _context.Feriado.Where(a => a.DataFeriado.Value.Month.Equals(data.Month) && a.DataFeriado.Value.Year.Equals(data.Year)).ToList();
-            double valor = _context.Colaboradors.Where(a => a.Nome.Contains("Natanael")).FirstOrDefault().CargaHorariaSemanal;
-            cargaColaborador = valor / 6;
-
 
             foreach (var item in ListaFeriados)
             {
@@ -45,7 +38,21 @@ namespace BlazorServer.Service
                 }
             }
 
-            feriados = cargaFeriado;
+            return cargaFeriado;
+        }
+
+        public double CargaHorariaMesColaborador(DateTime data, Guid idColaborador)
+        {
+            double cargaHoraria = 0;
+            double cargaFeriado = 0;
+            double cargaColaborador = 0;
+            int diasDoMes = DateTime.DaysInMonth(data.Year, data.Month);
+
+            double chColaborador = _context.Colaboradors.Where(a=>a.Id.Equals(idColaborador)).FirstOrDefault().CargaHorariaSemanal;
+            cargaColaborador = chColaborador / 6;
+
+
+            double feriados = TotalChFeriadoMes(data);
 
             int ano = data.Year;
             int mes = data.Month;
@@ -69,8 +76,50 @@ namespace BlazorServer.Service
                 }
             }
 
-            Colaborador c = _context.Colaboradors.Where(a => a.Nome.Contains("Natanael")).FirstOrDefault();
-            double valor1 = c.TotalHorasDoColaboradorMes(data);
+            double cargaColaboradorMes = cargaColaborador * diasUteis;
+            cargaColaborador = Math.Round(cargaColaboradorMes, 0);
+            return cargaHoraria - cargaFeriado;
+        }
+
+        /// <summary>
+        /// Ratorna a carga horaria do mês menos os feriados cadastrados, apenas os dias úteis
+        /// Utiliza 44 horas semanais para todos
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns>Data do mês que se quer</returns>
+        public double CargaHorariaDoMes(DateTime data, ref double feriados)
+        {
+            double cargaHoraria = 0;
+            double cargaFeriado = 0;
+            double cargaColaborador = 0;
+            int diasDoMes = DateTime.DaysInMonth(data.Year, data.Month);
+            double valor = 44;
+            cargaColaborador = valor / 6;
+
+
+            feriados = TotalChFeriadoMes(data);
+
+            int ano = data.Year;
+            int mes = data.Month;
+            int diasUteis = 0;
+
+            for (int i = 1; i <= diasDoMes; i++)
+            {
+                DateTime _data = new DateTime(ano, mes, i);
+                if (_data.DayOfWeek != DayOfWeek.Sunday)
+                {
+                    if (_data.DayOfWeek == DayOfWeek.Saturday)
+                    {
+                        cargaHoraria += 4;
+                        diasUteis++;
+                    }
+                    else
+                    {
+                        cargaHoraria += 8;
+                        diasUteis++;
+                    }
+                }
+            }
 
             double cargaColaboradorMes = cargaColaborador * diasUteis;
             cargaColaborador = Math.Round(cargaColaboradorMes, 0);

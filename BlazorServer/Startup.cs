@@ -9,6 +9,8 @@ using Microsoft.Extensions.Hosting;
 using MudBlazor.Services;
 using Radzen;
 using System.Net.Http;
+using Blazored.LocalStorage;
+
 
 namespace BlazorServer
 {
@@ -26,7 +28,7 @@ namespace BlazorServer
             services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
-            });
+            }); 
 
             services.AddScoped<MudBlazor.DialogService>();
             services.AddScoped<Radzen.DialogService>();
@@ -45,6 +47,7 @@ namespace BlazorServer
             services.AddScoped<UnidadeService>();
             services.AddScoped<HttpClient>();
             services.AddMudServices();
+            services.AddBlazoredLocalStorage();
 
             var supportedCultures = new[]
             {

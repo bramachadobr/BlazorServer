@@ -1,7 +1,6 @@
 ﻿@page "/"
 
 @*@attribute [Authorize]*@
-
 @inherits OwningComponentBase
 @using System.Linq
 @using Microsoft.EntityFrameworkCore
@@ -14,14 +13,14 @@
 @using System.Linq.Dynamic.Core
 @using System.ComponentModel.DataAnnotations
 
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+
 @inject IJSRuntime JSRuntime
 
 <div class="container">
     <br />
-    <div class="row">
-    </div>
-    <div class="row">
-        <div class="col-sm">
+    <MudGrid Justify="Justify.FlexStart">
+        <MudItem xs="4">
             <MudCard>
                 <MudCardHeader>
                     <CardHeaderContent>
@@ -38,28 +37,34 @@
                     <MudText Typo="Typo.h6">Total da CH do mês: @Convert.ToString(tempoNormal - totalFeriado)</MudText>
                 </MudCardContent>
             </MudCard>
-        </div>
-        <div class="col-sm">
-            <MudCard>
+        </MudItem>
+        <MudItem xs="8">
+             <MudCard>
                 <MudCardHeader>
                     <CardHeaderContent>
                         <MudText Typo="Typo.h6">Top's 5 Colaboradores </MudText>
                     </CardHeaderContent>
-@*                    <CardHeaderActions>
-                        <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" />
-                    </CardHeaderActions>*@
+                    <CardHeaderActions>
+                        <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" OnClick="@(()=>OpenDialogCargo("Top"))" />
+                    </CardHeaderActions>
                 </MudCardHeader>
                 <MudCardContent>
                     <MudTable Items="@ListaTop5Colaboradores" Hover="true" Breakpoint="Breakpoint.Sm"  Loading="@_loading" LoadingProgressColor="Color.Info">
-                        <HeaderContent>
+                        <HeaderContent >
                             <MudTh>Nº</MudTh>
                             <MudTh>Nome</MudTh>
+                            <MudTh>CH/Semanal</MudTh>
                             <MudTh>Total</MudTh>
+                            <MudTh>CH/Mes</MudTh>
+                            <MudTh>Saldo</MudTh>
                         </HeaderContent>
                         <RowTemplate>
-                            <MudTd DataLabel="Nº">@context.Posicao </MudTd>
+                            <MudTd DataLabel="Nº" HideSmall="true">@context.Posicao </MudTd>
                             <MudTd DataLabel="Nome">@context.Nome</MudTd>
+                            <MudTd DataLabel="CH/Semanal">@context.ChSemanal</MudTd>
                             <MudTd DataLabel="Total Horas">@context.TotalHorasFormatada</MudTd>
+                            <MudTd DataLabel="CH/Mes">@context.ChColabMesFormatada</MudTd>
+                            <MudTd DataLabel="Saldo">@context.SaldoHorasTrabalhadas</MudTd>
                         </RowTemplate>
                     </MudTable>
 @*                    <MudText>This day everything happend.</MudText>
@@ -69,35 +74,51 @@
                     <MudButton Variant="Variant.Text" Color="Color.Primary">Read More</MudButton>
                 </MudCardActions>*@
             </MudCard>
-        </div>
-
-        <div class="col-sm">
-            <MudCard>
+        </MudItem>
+    <MudItem xs="8">
+             <MudCard>
                 <MudCardHeader>
                     <CardHeaderContent>
-                        <MudText Typo="Typo.h6">The Story Book</MudText>
+                        <MudText Typo="Typo.h6">Low's 5 Colaboradores </MudText>
                     </CardHeaderContent>
                     <CardHeaderActions>
-                        <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" />
+                        <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" OnClick="@(()=>OpenDialogCargo("Low"))" />
                     </CardHeaderActions>
                 </MudCardHeader>
                 <MudCardContent>
-                    <MudText>This day everything happend.</MudText>
-                    <MudText Typo="Typo.body2">The quick, brown fox jumps over a lazy dog.</MudText>
+                    <MudTable Items="@ListaLows5Colaboradores" Hover="true" Breakpoint="Breakpoint.Sm"  Loading="@_loading" LoadingProgressColor="Color.Info">
+                        <HeaderContent >
+                            <MudTh>Nº</MudTh>
+                            <MudTh>Nome</MudTh>
+                            <MudTh>CH/Semanal</MudTh>
+                            <MudTh>Total</MudTh>
+                            <MudTh>CH/Mes</MudTh>
+                            <MudTh>Saldo</MudTh>
+                        </HeaderContent>
+                        <RowTemplate>
+                            <MudTd DataLabel="Nº" HideSmall="true">@context.Posicao </MudTd>
+                            <MudTd DataLabel="Nome">@context.Nome</MudTd>
+                            <MudTd DataLabel="CH/Semanal">@context.ChSemanal</MudTd>
+                            <MudTd DataLabel="Total Horas">@context.TotalHorasFormatada</MudTd>
+                            <MudTd DataLabel="CH/Mes">@context.ChColabMesFormatada</MudTd>
+                            <MudTd DataLabel="Saldo">@context.SaldoHorasTrabalhadas</MudTd>
+                        </RowTemplate>
+                    </MudTable>
+@*                    <MudText>This day everything happend.</MudText>
+                    <MudText Typo="Typo.body2">The quick, brown fox jumps over a lazy dog.</MudText>*@
                 </MudCardContent>
-                <MudCardActions>
+@*                <MudCardActions>
                     <MudButton Variant="Variant.Text" Color="Color.Primary">Read More</MudButton>
-                </MudCardActions>
+                </MudCardActions>*@
             </MudCard>
-        </div>
-    </div>
-    <div class="row"></div>
-    <div class="row"></div>
+        </MudItem>
+    </MudGrid>
 </div>
 
 
 @code 
 {
+    [Inject] private MudBlazor.IDialogService DialogServiceMud { get; set; }
     public DateTime Data { get; set; }
 
     public string valor { get=>string.Format($"{DateTime.Now.Year.ToString()}-{DateTime.Now.Month.ToString()}");}
@@ -107,24 +128,38 @@
 
     bool _loading;
     List<TopsDashBoard> ListaTop5Colaboradores;
+
+    List<TopsDashBoard> ListaLows5Colaboradores;
     //Dictionary<int, Data.Colaborador> colaboradoresTop5;
 
     Service.ColaboradorService _serviceColaborador;
     Service.RegistroPontoService _serviceRegistroPonto;
+    Service.CargoService _serviceCargo;
     Service.ServiceFeriado _serviceFeriado;
 
-    protected override void OnInitialized()
+    private string cargoSelecionadaTop;
+    private string cargoSelecionadaLow;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+
+        cargoSelecionadaTop = await localStorage.GetItemAsync<string>("cargoSelecionadaTop");
+        cargoSelecionadaLow = await localStorage.GetItemAsync<string>("cargoSelecionadaLow");
+
+    }
+
+    protected override async void OnInitialized()
     {
         _serviceColaborador = (ColaboradorService)ScopedServices.GetService(typeof(ColaboradorService));
         _serviceRegistroPonto = (RegistroPontoService)ScopedServices.GetService(typeof(RegistroPontoService));
         _serviceFeriado = (ServiceFeriado)ScopedServices.GetService(typeof(ServiceFeriado));
+        _serviceCargo = (CargoService)ScopedServices.GetService(typeof(CargoService));
         LoadDados();
-        //data = DateTime.Now.AddDays(-30);
         Data = DateTime.Today;
         LoadCargaHoraria(new ChangeEventArgs() { Value = valor });
     }
 
-    void LoadCargaHoraria(ChangeEventArgs args)
+    async void LoadCargaHoraria(ChangeEventArgs args)
     {
         if (args.Value.ToString().Length < 6)
             return;
@@ -134,7 +169,7 @@
         LoadDados();
     }
 
-    void LoadDados()
+    async void LoadDados()
     {
         _loading = true;
 
@@ -143,52 +178,110 @@
 
         _serviceFeriado.RetornaDatasInicioFim(Data, ref data1, ref data2);
 
+        //string valor =  localStorage.GetItemAsync<string>("cargoSelecionadaTop").ToString();
+        //Guid idCargo = Guid.Empty;
+        //if (valor !="")
+        //{
+        //    idCargo = new Guid(valor.ToString());
+        //}
+
+        //if (idCargo == Guid.Empty)
+        //    return;
+
         var quer3 = from ponto in _serviceRegistroPonto.RegistroPontos.ToList()
-                    join colab in _serviceColaborador.Colaboradores.ToList() on ponto.Colaborador equals colab
-                    where ponto.Data>= data1 && ponto.Data <=data2 
+                    join colab in _serviceColaborador.Colaboradores.Include(a=>a.Cargo).ToList() on ponto.Colaborador equals colab
+                    where ponto.Data>= data1 && ponto.Data <=data2
                     orderby colab.Nome
-                    group ponto by colab.Nome into re
-                    select re;
+                    group ponto by colab.Nome into no
+                    select no;
 
         Dictionary<string, TimeSpan> Lista = new Dictionary<string, TimeSpan>();
 
-        List<ColabTopMes> listColabTopMes = new List<ColabTopMes>();
+        List<ColabTopMes> ListaColab = new List<ColabTopMes>();
 
         foreach (var item in quer3)
         {
-            ColabTopMes c = new ColabTopMes();
-            c.Nome = item.Key;
             string nome = "";
             long tempo=0;
+
+            ColabTopMes c = new ColabTopMes();
+            c.data = Data;
+            c.Colaborador =  _serviceColaborador.Colaboradores.Include(a=>a.Cargo).Where(a => a.Nome.Contains(item.Key)).ToList().FirstOrDefault();
+            c.Cargo = _serviceCargo.Cargos.Where(a => a.Equals(c.Colaborador.Cargo)).FirstOrDefault();
             nome = item.Key;
+
             foreach (var h in item)
             {
                 tempo += h.TotalHorasDia.Ticks;
             }
             c.Tempo = new TimeSpan(tempo);
-            double x = ((Colaborador)item).CargaHorariaSemanal;
-            listColabTopMes.Add(c);
-            Lista.Add(nome, new TimeSpan(tempo));
+            c.ChSemanal = c.Colaborador.CargaHorariaSemanal;
+            double ThorasMes = _serviceFeriado.CargaHorariaMesColaborador(data1, c.Colaborador.Id);
+
+            TimeSpan t = new TimeSpan(0, Convert.ToInt32(ThorasMes),0,0,0);
+
+            c.ChMes = t;
+            ListaColab.Add(c);
         }
 
-        var listaOrdenada =  Lista.OrderByDescending(a => a.Value).Take(5);
+        //-----------List dos Top5
+
+        var listaTops5 = ListaColab.OrderByDescending(a => a.Tempo).Take(5);
+
+
+        //if (cargoSelecionadaTop !="" && cargoSelecionadaTop!="Todos" && cargoSelecionadaTop!=null)
+        //{
+        //    listaTops5 = ListaColab.Where(a=>a.Cargo.NomeCargo ==cargoSelecionadaTop).OrderByDescending(a => a.Tempo).Take(5);
+        //}
+
 
         ListaTop5Colaboradores = new List<TopsDashBoard>();
-
         int i = 1;
-        foreach (var item in listaOrdenada)
+        foreach (var item in listaTops5)
         {
-            ListaTop5Colaboradores.Add(new TopsDashBoard { Posicao = i, Nome = item.Key, TotalHoras = item.Value });
+            ListaTop5Colaboradores.Add(new TopsDashBoard { Posicao = i, Nome = item.Colaborador.Nome, TotalHoras = item.Tempo, ChSemanal = item.ChSemanal, ChColabMes = item.ChMes });
             i++;
         }
+
+        //-----------Lista dos Low 5
+
+        var listaLows5 = ListaColab.OrderBy(a => a.Tempo).Take(5);
+
+
+        //if (cargoSelecionadaLow !="" && cargoSelecionadaLow!="Todos" && cargoSelecionadaLow!=null)
+        //{
+        //    listaLows5 = ListaColab.Where(a=>a.Cargo.NomeCargo==cargoSelecionadaLow).OrderBy(a => a.Tempo).Take(5);
+        //}
+
+        ListaLows5Colaboradores = new List<TopsDashBoard>();
+        i = 0;
+        foreach (var item in listaLows5)
+        {
+            ListaLows5Colaboradores.Add(new TopsDashBoard { Posicao = i, Nome = item.Colaborador.Nome, TotalHoras = item.Tempo, ChSemanal = item.ChSemanal, ChColabMes = item.ChMes });
+            i++;
+        }
+
         _loading = false;
     }
 
+    async Task OpenDialogCargo(string valor)
+    {
+        var dialog = DialogServiceMud.Show<CargoConfig>("", new DialogParameters() { ["iValor"]=valor});
+        var result = await dialog.Result;
+        LoadDados();
+        StateHasChanged();
+    }
+
+
+
     public class ColabTopMes
     {
-        public string Nome { get; set; }
+        public Colaborador Colaborador { get; set; }
+        public Cargo Cargo { get; set; }
         public TimeSpan Tempo { get; set; }
+        public double ChSemanal { get; set; }
         public TimeSpan ChMes { get; set; }
+        public DateTime data { get; set; }
     }
 }
 
