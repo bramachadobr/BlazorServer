@@ -52,7 +52,7 @@ namespace BlazorServer.Service
 
         public async Task<List<Cargo>> GetAllRecords()
         {
-            return _context.Cargo.OrderBy(a=>a.NomeCargo).AsQueryable().ToList();
+            return _context.Cargo.OrderBy(a => a.NomeCargo).AsQueryable().ToList();
         }
 
         public List<Cargo> GetAllRecordsList()

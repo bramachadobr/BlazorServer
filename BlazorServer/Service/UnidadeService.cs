@@ -42,7 +42,7 @@ namespace BlazorServer.Service
 
         public async Task<List<Unidade>> GetUnidades()
         {
-            return _context.Unidade.OrderBy(a=>a.Nome).ToList();
+            return _context.Unidade.OrderBy(a => a.Nome).ToList();
         }
 
         public List<Unidade> GetUnidadesList()

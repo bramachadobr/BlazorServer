@@ -1,3 +1,4 @@
+using Blazored.LocalStorage;
 using BlazorServer.Data;
 using BlazorServer.Service;
 using Microsoft.AspNetCore.Builder;
@@ -9,7 +10,6 @@ using Microsoft.Extensions.Hosting;
 using MudBlazor.Services;
 using Radzen;
 using System.Net.Http;
-using Blazored.LocalStorage;
 
 
 namespace BlazorServer
@@ -28,7 +28,7 @@ namespace BlazorServer
             services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
-            }); 
+            });
 
             services.AddScoped<MudBlazor.DialogService>();
             services.AddScoped<Radzen.DialogService>();
@@ -38,6 +38,7 @@ namespace BlazorServer
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
+            services.AddSingleton<AppData>();
             services.AddScoped<ServiceFeriado>();
             services.AddScoped<ColaboradorService>();
             services.AddScoped<EMailService>();

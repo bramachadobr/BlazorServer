@@ -1,0 +1,25 @@
+﻿@page "/Ponto/BancoHoras"  
+
+@inject Service.AppData AppData
+
+<BancoHoras></BancoHoras>
+
+<BancoHorasListView ></BancoHorasListView>
+
+@code 
+{
+    BancoHoras dropDown;
+    BancoHorasListView grid;
+
+
+    protected override void OnInitialized()
+    {
+        AppData.OnChange += MyEventHandler;
+    }
+
+    private void MyEventHandler()
+    {
+        Console.WriteLine("AppData foi alterado.");
+    }
+
+}

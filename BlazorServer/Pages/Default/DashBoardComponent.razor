@@ -20,25 +20,7 @@
 <div class="container">
     <br />
     <MudGrid Justify="Justify.FlexStart">
-        <MudItem xs="4">
-            <MudCard>
-                <MudCardHeader>
-                    <CardHeaderContent>
-                        <MudText Typo="Typo.h6">Carga horária total do mês</MudText>
-                        <input class="form-control" type="month" id="month" @onchange="@LoadCargaHoraria" value=@valor />
-                    </CardHeaderContent>
-                    <CardHeaderActions>
-                        <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" />
-                    </CardHeaderActions>
-                </MudCardHeader>
-                <MudCardContent>
-                    <MudText>@string.Format($"CH normal do mês:  {tempoNormal.ToString()}") </MudText>
-                    <MudText>@string.Format($"CH dos feriados:   {totalFeriado.ToString()}")</MudText>
-                    <MudText Typo="Typo.h6">Total da CH do mês: @Convert.ToString(tempoNormal - totalFeriado)</MudText>
-                </MudCardContent>
-            </MudCard>
-        </MudItem>
-        <MudItem xs="8">
+       <MudItem xs="6">
              <MudCard>
                 <MudCardHeader>
                     <CardHeaderContent>
@@ -53,18 +35,14 @@
                         <HeaderContent >
                             <MudTh>Nº</MudTh>
                             <MudTh>Nome</MudTh>
-                            <MudTh>CH/Semanal</MudTh>
-                            <MudTh>Total</MudTh>
                             <MudTh>CH/Mes</MudTh>
-                            <MudTh>Saldo</MudTh>
+                            <MudTh>Total</MudTh>
                         </HeaderContent>
                         <RowTemplate>
                             <MudTd DataLabel="Nº" HideSmall="true">@context.Posicao </MudTd>
                             <MudTd DataLabel="Nome">@context.Nome</MudTd>
-                            <MudTd DataLabel="CH/Semanal">@context.ChSemanal</MudTd>
                             <MudTd DataLabel="Total Horas">@context.TotalHorasFormatada</MudTd>
                             <MudTd DataLabel="CH/Mes">@context.ChColabMesFormatada</MudTd>
-                            <MudTd DataLabel="Saldo">@context.SaldoHorasTrabalhadas</MudTd>
                         </RowTemplate>
                     </MudTable>
 @*                    <MudText>This day everything happend.</MudText>
@@ -75,7 +53,7 @@
                 </MudCardActions>*@
             </MudCard>
         </MudItem>
-    <MudItem xs="8">
+    <MudItem xs="6">
              <MudCard>
                 <MudCardHeader>
                     <CardHeaderContent>
@@ -90,18 +68,15 @@
                         <HeaderContent >
                             <MudTh>Nº</MudTh>
                             <MudTh>Nome</MudTh>
-                            <MudTh>CH/Semanal</MudTh>
-                            <MudTh>Total</MudTh>
                             <MudTh>CH/Mes</MudTh>
-                            <MudTh>Saldo</MudTh>
+                            <MudTh>Total</MudTh>
                         </HeaderContent>
                         <RowTemplate>
                             <MudTd DataLabel="Nº" HideSmall="true">@context.Posicao </MudTd>
                             <MudTd DataLabel="Nome">@context.Nome</MudTd>
-                            <MudTd DataLabel="CH/Semanal">@context.ChSemanal</MudTd>
-                            <MudTd DataLabel="Total Horas">@context.TotalHorasFormatada</MudTd>
                             <MudTd DataLabel="CH/Mes">@context.ChColabMesFormatada</MudTd>
-                            <MudTd DataLabel="Saldo">@context.SaldoHorasTrabalhadas</MudTd>
+                            <MudTd DataLabel="Total Horas">@context.TotalHorasFormatada</MudTd>
+                            
                         </RowTemplate>
                     </MudTable>
 @*                    <MudText>This day everything happend.</MudText>
@@ -119,7 +94,8 @@
 @code 
 {
     [Inject] private MudBlazor.IDialogService DialogServiceMud { get; set; }
-    public DateTime Data { get; set; }
+    DateTime DataTop;
+    DateTime DataLow;
 
     public string valor { get=>string.Format($"{DateTime.Now.Year.ToString()}-{DateTime.Now.Month.ToString()}");}
 
@@ -142,10 +118,24 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
+        if (firstRender)
+        {
+            await LoadDados();
+            StateHasChanged();
+        }
+        else
+        {
+            //StateHasChanged();
+        }
+    }
 
-        cargoSelecionadaTop = await localStorage.GetItemAsync<string>("cargoSelecionadaTop");
-        cargoSelecionadaLow = await localStorage.GetItemAsync<string>("cargoSelecionadaLow");
-
+    async Task GetLocalSession()
+    {
+        cargoSelecionadaTop =  await localStorage.GetItemAsync<string>($"cargoSelecionadoTop");
+        cargoSelecionadaLow =  await localStorage.GetItemAsync<string>($"cargoSelecionadoLow");
+        string value = await localStorage.GetItemAsync<string>($"MesSelecionadoTop");
+        DataTop = Convert.ToDateTime(value);
+        DataLow = DataTop;
     }
 
     protected override async void OnInitialized()
@@ -154,29 +144,27 @@
         _serviceRegistroPonto = (RegistroPontoService)ScopedServices.GetService(typeof(RegistroPontoService));
         _serviceFeriado = (ServiceFeriado)ScopedServices.GetService(typeof(ServiceFeriado));
         _serviceCargo = (CargoService)ScopedServices.GetService(typeof(CargoService));
-        LoadDados();
-        Data = DateTime.Today;
-        LoadCargaHoraria(new ChangeEventArgs() { Value = valor });
     }
 
-    async void LoadCargaHoraria(ChangeEventArgs args)
-    {
-        if (args.Value.ToString().Length < 6)
-            return;
-        DateTime dd = new DateTime(Convert.ToInt32(args.Value.ToString().Substring(0, 4)), Convert.ToInt32(args.Value.ToString().Substring(5, 2)), 1);
-        Data = dd;
-        tempoNormal = _serviceFeriado.CargaHorariaDoMes(dd, ref totalFeriado);
-        LoadDados();
-    }
+    //async Task LoadCargaHoraria(ChangeEventArgs args)
+    //{
+    //    if (args.Value.ToString().Length < 6)
+    //        return;
+    //    DateTime dd = new DateTime(Convert.ToInt32(args.Value.ToString().Substring(0, 4)), Convert.ToInt32(args.Value.ToString().Substring(5, 2)), 1);
+    //    DataTop = dd;
+    //    tempoNormal = _serviceFeriado.CargaHorariaDoMes(dd, ref totalFeriado);
+    //    LoadDados();
+    //}
 
-    async void LoadDados()
+    async Task LoadDados()
     {
+        await GetLocalSession();
         _loading = true;
 
         DateTime data1 = new DateTime();
         DateTime data2 = new DateTime();
 
-        _serviceFeriado.RetornaDatasInicioFim(Data, ref data1, ref data2);
+        _serviceFeriado.RetornaDatasInicioFim(DataTop, ref data1, ref data2);
 
         //string valor =  localStorage.GetItemAsync<string>("cargoSelecionadaTop").ToString();
         //Guid idCargo = Guid.Empty;
@@ -189,7 +177,7 @@
         //    return;
 
         var quer3 = from ponto in _serviceRegistroPonto.RegistroPontos.ToList()
-                    join colab in _serviceColaborador.Colaboradores.Include(a=>a.Cargo).ToList() on ponto.Colaborador equals colab
+                    join colab in _serviceColaborador.Colaboradores.ToList() on ponto.Colaborador equals colab
                     where ponto.Data>= data1 && ponto.Data <=data2
                     orderby colab.Nome
                     group ponto by colab.Nome into no
@@ -205,7 +193,7 @@
             long tempo=0;
 
             ColabTopMes c = new ColabTopMes();
-            c.data = Data;
+            c.data = DataTop;
             c.Colaborador =  _serviceColaborador.Colaboradores.Include(a=>a.Cargo).Where(a => a.Nome.Contains(item.Key)).ToList().FirstOrDefault();
             c.Cargo = _serviceCargo.Cargos.Where(a => a.Equals(c.Colaborador.Cargo)).FirstOrDefault();
             nome = item.Key;
@@ -229,10 +217,10 @@
         var listaTops5 = ListaColab.OrderByDescending(a => a.Tempo).Take(5);
 
 
-        //if (cargoSelecionadaTop !="" && cargoSelecionadaTop!="Todos" && cargoSelecionadaTop!=null)
-        //{
-        //    listaTops5 = ListaColab.Where(a=>a.Cargo.NomeCargo ==cargoSelecionadaTop).OrderByDescending(a => a.Tempo).Take(5);
-        //}
+        if (cargoSelecionadaTop !="" && cargoSelecionadaTop!="Todos" && cargoSelecionadaTop!=null)
+        {
+            listaTops5 = ListaColab.Where(a=>a.Cargo.NomeCargo ==cargoSelecionadaTop).OrderByDescending(a => a.Tempo).Take(5);
+        }
 
 
         ListaTop5Colaboradores = new List<TopsDashBoard>();
@@ -248,10 +236,10 @@
         var listaLows5 = ListaColab.OrderBy(a => a.Tempo).Take(5);
 
 
-        //if (cargoSelecionadaLow !="" && cargoSelecionadaLow!="Todos" && cargoSelecionadaLow!=null)
-        //{
-        //    listaLows5 = ListaColab.Where(a=>a.Cargo.NomeCargo==cargoSelecionadaLow).OrderBy(a => a.Tempo).Take(5);
-        //}
+        if (cargoSelecionadaLow !="" && cargoSelecionadaLow!="Todos" && cargoSelecionadaLow!=null)
+        {
+            listaLows5 = ListaColab.Where(a=>a.Cargo.NomeCargo==cargoSelecionadaLow).OrderBy(a => a.Tempo).Take(5);
+        }
 
         ListaLows5Colaboradores = new List<TopsDashBoard>();
         i = 0;
@@ -266,22 +254,9 @@
 
     async Task OpenDialogCargo(string valor)
     {
-        var dialog = DialogServiceMud.Show<CargoConfig>("", new DialogParameters() { ["iValor"]=valor});
+        var dialog = DialogServiceMud.Show<CargoConfig>("", new DialogParameters() { ["TopLow"]=valor});
         var result = await dialog.Result;
-        LoadDados();
-        StateHasChanged();
-    }
-
-
-
-    public class ColabTopMes
-    {
-        public Colaborador Colaborador { get; set; }
-        public Cargo Cargo { get; set; }
-        public TimeSpan Tempo { get; set; }
-        public double ChSemanal { get; set; }
-        public TimeSpan ChMes { get; set; }
-        public DateTime data { get; set; }
+        await LoadDados();
     }
 }
 

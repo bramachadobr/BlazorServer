@@ -1,0 +1,195 @@
+﻿@page "/gridDados"
+
+@inherits OwningComponentBase 
+@inject  Service.AppData AppData
+@using System.Net.Http.Json
+@using BlazorServer.Data
+@inject HttpClient httpClient
+
+
+<MudTable ServerData="@(new Func<TableState, Task<TableData<TopsDashBoard>>>(ServerReload))"
+          Dense="true" Hover="true" @ref="table">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Resultados do periodo</MudText>
+        <MudSpacer />
+        <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Placeholder="Search" Adornment="Adornment.Start"
+                      AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh><MudTableSortLabel SortLabel="numero" T="TopsDashBoard">Nº</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="nome" T="TopsDashBoard">Nome</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="cargo" T="TopsDashBoard">Cargo</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="semanal" T="TopsDashBoard">CH/Semanal</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="total" T="TopsDashBoard">Total</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="mes" T="TopsDashBoard">CH/Mes</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="saldo" T="TopsDashBoard">Saldo</MudTableSortLabel></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+                <MudTd DataLabel="Nº" HideSmall="true">@context.Posicao </MudTd>
+                <MudTd DataLabel="Nome">@context.Nome</MudTd>
+                <MudTd DataLabel="Cargo">@context.NomeCargo</MudTd>
+                <MudTd DataLabel="CH/Semanal">@context.ChSemanal</MudTd>
+                <MudTd DataLabel="Total Horas">@context.TotalHorasFormatada</MudTd>
+                <MudTd DataLabel="CH/Mes">@context.ChColabMesFormatada</MudTd>
+                <MudTd DataLabel="Saldo">@context.SaldoHorasTrabalhadas</MudTd>
+    </RowTemplate>
+    <NoRecordsContent>
+        <MudText>Nenhum registro encontrado</MudText>
+    </NoRecordsContent>
+    <LoadingContent>
+        <MudText>Carregando...</MudText>
+    </LoadingContent>
+    <PagerContent>
+        <MudTablePager />
+    </PagerContent>
+</MudTable>
+
+
+@code 
+{
+
+    bool _loading;
+    private IEnumerable<TopsDashBoard> pagedData;
+    private MudTable<TopsDashBoard> table;
+
+    private int totalItems;
+    private string searchString = null;
+
+    List<TopsDashBoard> ListaColaboradores;
+
+
+    Service.ColaboradorService _serviceColaborador;
+    Service.RegistroPontoService _serviceRegistroPonto;
+    Service.CargoService _serviceCargo;
+    Service.ServiceFeriado _serviceFeriado;
+
+    private string cargoSelecionadaTop;
+    private string cargoSelecionadaLow;
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        table.ReloadServerData();
+    }
+
+    protected override void OnInitialized()
+    {
+        _serviceColaborador = (ColaboradorService)ScopedServices.GetService(typeof(ColaboradorService));
+        _serviceRegistroPonto = (RegistroPontoService)ScopedServices.GetService(typeof(RegistroPontoService));
+        _serviceFeriado = (ServiceFeriado)ScopedServices.GetService(typeof(ServiceFeriado));
+        _serviceCargo = (CargoService)ScopedServices.GetService(typeof(CargoService));
+        AppData.OnChange += StateHasChanged;       
+    }
+
+    private async Task<TableData<TopsDashBoard>> ServerReload(TableState state)
+    {
+        IEnumerable<TopsDashBoard> data = LoadDados(); //await httpClient.GetFromJsonAsync<List<TopsDashBoard>>("webapi/periodictable");
+        await Task.Delay(300);
+        data = data.Where(element =>
+        {
+            if (string.IsNullOrWhiteSpace(searchString))
+                return true;
+            if (element.Nome.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (element.NomeCargo.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if ($"{element.Nome} {element.NomeCargo} {element.ChSemanal}".Contains(searchString))
+                return true;
+            return false;
+        }).ToArray();
+        totalItems = data.Count();
+        switch (state.SortLabel)
+        {
+            case "numero":
+                data = data.OrderByDirection(state.SortDirection, o => o.Posicao);
+                break;
+            case "nome":
+                data = data.OrderByDirection(state.SortDirection, o => o.Nome);
+                break;
+            case "cargo":
+                data = data.OrderByDirection(state.SortDirection, o => o.NomeCargo);
+                break;
+            case "semanal":
+                data = data.OrderByDirection(state.SortDirection, o => o.ChSemanal);
+                break;
+            case "total":
+                data = data.OrderByDirection(state.SortDirection, o => o.TotalHoras);
+                break;
+            case "mes":
+                data = data.OrderByDirection(state.SortDirection, o => o.ChColabMes);
+                break;
+            case "saldo":
+                data = data.OrderByDirection(state.SortDirection, o => o.SaldoHorasTrabalhadas);
+                break;
+        }
+
+        pagedData = data.Skip(state.Page * state.PageSize).Take(state.PageSize).ToArray();
+        return new TableData<TopsDashBoard>() {TotalItems = totalItems, Items = pagedData};
+    }
+
+    public List<TopsDashBoard> LoadDados()
+    {
+        _loading = true;
+
+        DateTime data1 = new DateTime();
+        DateTime data2 = new DateTime();
+
+        _serviceFeriado.RetornaDatasInicioFim(AppData.DataSelecionada, ref data1, ref data2);
+
+        var quer3 = from ponto in _serviceRegistroPonto.RegistroPontos.ToList()
+                    join colab in _serviceColaborador.Colaboradores.ToList() on ponto.Colaborador equals colab
+                    where ponto.Data>= data1 && ponto.Data <=data2
+                    orderby colab.Nome
+                    group ponto by colab.Nome into no
+                    select no;
+
+        Dictionary<string, TimeSpan> Lista = new Dictionary<string, TimeSpan>();
+
+        List<ColabTopMes> ListaColab = new List<ColabTopMes>();
+
+        foreach (var item in quer3)
+        {
+            string nome = "";
+            long tempo=0;
+
+            ColabTopMes c = new ColabTopMes();
+            c.data = AppData.DataSelecionada;
+            c.Colaborador =  _serviceColaborador.Colaboradores.Include(a=>a.Cargo).Where(a => a.Nome.Contains(item.Key)).ToList().FirstOrDefault();
+            c.Cargo = _serviceCargo.Cargos.Where(a => a.Equals(c.Colaborador.Cargo)).FirstOrDefault();
+            nome = item.Key;
+
+            foreach (var h in item)
+            {
+                tempo += h.TotalHorasDia.Ticks;
+            }
+            c.Tempo = new TimeSpan(tempo);
+            c.ChSemanal = c.Colaborador.CargaHorariaSemanal;
+            double ThorasMes = _serviceFeriado.CargaHorariaMesColaborador(data1, c.Colaborador.Id);
+
+            TimeSpan t = new TimeSpan(0, Convert.ToInt32(ThorasMes),0,0,0);
+
+            c.ChMes = t;
+            ListaColab.Add(c);
+        }
+
+        var listaTops5 = ListaColab.OrderByDescending(a => a.Tempo);
+
+        ListaColaboradores = new List<TopsDashBoard>();
+        int i = 1;
+        foreach (var item in listaTops5)
+        {
+            ListaColaboradores.Add(new TopsDashBoard { Posicao = i, Nome = item.Colaborador.Nome, NomeCargo=item.Cargo.NomeCargo, TotalHoras = item.Tempo, ChSemanal = item.ChSemanal, ChColabMes = item.ChMes });
+            i++;
+        }
+        _loading = false;
+
+        return ListaColaboradores;
+
+    }
+
+    private void OnSearch(string text)
+    {
+        searchString = text;
+        table.ReloadServerData();
+    }
+
+}

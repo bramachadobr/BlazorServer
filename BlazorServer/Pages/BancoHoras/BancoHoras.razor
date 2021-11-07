@@ -1,0 +1,60 @@
+﻿
+
+@inherits OwningComponentBase
+@inject  Service.AppData AppData
+
+
+<MudGrid Justify="Justify.FlexStart">
+        <MudItem xs="4">
+            <MudCard>
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6">Carga horária total do mês</MudText>
+                        <input class="form-control" type="month" id="month" @onchange="@LoadCargaHoraria" value=@valor />
+                    </CardHeaderContent>
+                    <CardHeaderActions>
+                        <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" />
+                    </CardHeaderActions>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudText>@string.Format($"CH normal do mês:  {tempoNormal.ToString()}") </MudText>
+                    <MudText>@string.Format($"CH dos feriados:   {totalFeriado.ToString()}")</MudText>
+                    <MudText Typo="Typo.h6">Total da CH do mês: @Convert.ToString(tempoNormal - totalFeriado)</MudText>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+</MudGrid>
+        
+
+@code 
+{
+    [Parameter]
+    public DateTime Data { get; set; }
+
+    public string valor { get=>string.Format($"{DateTime.Now.Year.ToString()}-{DateTime.Now.Month.ToString()}");}
+
+    double tempoNormal;
+    double totalFeriado;
+
+    //Service.ColaboradorService _serviceColaborador;
+    //Service.RegistroPontoService _serviceRegistroPonto;
+    Service.ServiceFeriado _serviceFeriado;
+
+    protected override void OnInitialized()
+    {
+        _serviceFeriado = (ServiceFeriado)ScopedServices.GetService(typeof(ServiceFeriado));
+        //LoadCargaHoraria(new ChangeEventArgs() { Value = valor });
+    }
+
+    async void LoadCargaHoraria(ChangeEventArgs args)
+    {
+        if (args.Value.ToString().Length < 6)
+            return;
+        DateTime dd = new DateTime(Convert.ToInt32(args.Value.ToString().Substring(0, 4)), Convert.ToInt32(args.Value.ToString().Substring(5, 2)), 1);
+        AppData.DataSelecionada = dd;
+        Data = dd;
+        tempoNormal = _serviceFeriado.CargaHorariaDoMes(dd, ref totalFeriado);
+    }
+
+
+}

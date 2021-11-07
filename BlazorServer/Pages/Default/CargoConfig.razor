@@ -6,10 +6,11 @@
                 <MudCardHeader>
                     <CardHeaderContent>
                         <MudText Typo="Typo.h6">Filtrar por cargo</MudText>
+                        <input class="form-control" type="month" id="month" @onchange="@LoadCargaHoraria" value=@valor />
                     </CardHeaderContent>
                 </MudCardHeader>
                 <MudCardContent>
-                    <MudSelect T="string" @bind-Value="valorSelecionado" Label="Cargo" Variant="Variant.Outlined" Strict="true" Format="F2" AnchorOrigin="Origin.BottomCenter" >
+                    <MudSelect T="string" @bind-Value="cargoSelecionado" Label="Cargo" Variant="Variant.Outlined" Strict="true" Format="F2" AnchorOrigin="Origin.BottomCenter" >
                         @foreach(var item in _cargos)
                         {
                             <MudSelectItem Value=item.NomeCargo>@item.NomeCargo</MudSelectItem>
@@ -22,13 +23,27 @@
             </MudCard>
 @code 
 {
+    DateTime Data = DateTime.Now;
 
-    [Parameter] public string iValor { get; set; } 
+    [Parameter] public string TopLow { get; set; } 
+
+    public string cargoSelecionado { get; set; } 
+
+    public string valor { get=>string.Format($"{DateTime.Now.Year.ToString()}-{DateTime.Now.Month.ToString()}");}
 
     List<Cargo> _cargos;
-    string valorSelecionado;
 
     [CascadingParameter] public MudDialogInstance MudDialog { get; set; }
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await GetLocalSession();
+        }
+        StateHasChanged();
+    }
 
     protected override async void OnInitialized()
     {
@@ -45,20 +60,30 @@
 
     async Task SetConfigCargo()
     {
-        await localStorage.SetItemAsync($"cargoSelecionada{iValor}", valorSelecionado);
-        await GetLocalSession();
+        await localStorage.SetItemAsync($"cargoSelecionado{TopLow}", cargoSelecionado);
+        await localStorage.SetItemAsync($"MesSelecionado{TopLow}", Data.ToString());
+        //await GetLocalSession();
     }
 
     async Task GetLocalSession()
     {
-        valorSelecionado =  await localStorage.GetItemAsync<string>($"cargoSelecionada{iValor}");
+        cargoSelecionado =  await localStorage.GetItemAsync<string>($"cargoSelecionado{TopLow}");
+        string value = await localStorage.GetItemAsync<string>($"MesSelecionado{TopLow}");
+        Data = Convert.ToDateTime(value);
     }
 
     async Task Logout()
     {
-        await localStorage.RemoveItemAsync($"cargoSelecionada{iValor}");
+        await localStorage.RemoveItemAsync($"cargoSelecionado{TopLow}");
+        await localStorage.RemoveItemAsync($"MesSelecionado{TopLow}");
         await GetLocalSession();
     }
 
-
+    async void LoadCargaHoraria(ChangeEventArgs args)
+    {
+        if (args.Value.ToString().Length < 6)
+            return;
+        DateTime dd = new DateTime(Convert.ToInt32(args.Value.ToString().Substring(0, 4)), Convert.ToInt32(args.Value.ToString().Substring(5, 2)), 1);
+        Data = dd;
+    }
 }

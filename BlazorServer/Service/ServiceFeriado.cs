@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.ComponentModel;
 using System.Threading.Tasks;
 
 namespace BlazorServer.Service
@@ -48,7 +47,7 @@ namespace BlazorServer.Service
             double cargaColaborador = 0;
             int diasDoMes = DateTime.DaysInMonth(data.Year, data.Month);
 
-            double chColaborador = _context.Colaboradors.Where(a=>a.Id.Equals(idColaborador)).FirstOrDefault().CargaHorariaSemanal;
+            double chColaborador = _context.Colaboradors.Where(a => a.Id.Equals(idColaborador)).FirstOrDefault().CargaHorariaSemanal;
             cargaColaborador = chColaborador / 6;
 
 

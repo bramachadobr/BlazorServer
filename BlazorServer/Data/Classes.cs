@@ -263,7 +263,9 @@ namespace BlazorServer.Data
     {
         public int Posicao { get; set; }
         private string _nome;
-        public string Nome { get => _nome.Length > 12 ? _nome.Substring(0, 12) : _nome; set => _nome = value; }
+        public string Nome { get => _nome.Length > 30 ? _nome.Substring(0, 30) : _nome; set => _nome = value; }
+
+        public string NomeCargo { get; set; }
 
         private TimeSpan _totalHoras;
         public TimeSpan TotalHoras { get => _totalHoras; set => _totalHoras = value; }
@@ -271,7 +273,7 @@ namespace BlazorServer.Data
         public double ChSemanal { get; set; }
 
         private TimeSpan _chColabMes;
-        public TimeSpan ChColabMes { get=> _chColabMes; set=> _chColabMes = value; }
+        public TimeSpan ChColabMes { get => _chColabMes; set => _chColabMes = value; }
         public string ChColabMesFormatada { get => _chColabMes.TotalHorasTrabalhadas(); }
 
         public string SaldoHorasTrabalhadas { get => (_totalHoras.Subtract(_chColabMes).TotalHorasTrabalhadas()); }
@@ -290,6 +292,16 @@ namespace BlazorServer.Data
     public class ConfigureDashBoard
     {
         public int Quant { get; set; }
+    }
+
+    public class ColabTopMes
+    {
+        public Colaborador Colaborador { get; set; }
+        public Cargo Cargo { get; set; }
+        public TimeSpan Tempo { get; set; }
+        public double ChSemanal { get; set; }
+        public TimeSpan ChMes { get; set; }
+        public DateTime data { get; set; }
     }
 
     public static class MetodosStaticos
