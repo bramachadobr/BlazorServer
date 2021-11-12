@@ -22,33 +22,61 @@
     <br />
     <br />
     <div class="row">
-    <RadzenFieldset Text="Cadastro de colaboradores">
-           <RadzenDataGrid @ref="grid" IsLoading="@isLoading" Count="@count" TItem="Data.Colaborador"  RowDoubleClick="@(args=> OpenColaborador(args))"  AllowPaging="true"
-                FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterMode="FilterMode.Advanced" AllowSorting="true" AllowFiltering="true" PageSize="25" 
-                Data="@_Colaboradores"  AllowColumnResize="true" Style="border-radius: 6px;">
-           <Columns>
-                @*<RadzenDataGridColumn TItem="Colaborador" Property="Id" Filterable="false" Title="ID" Frozen="true" Width="50px" TextAlign="TextAlign.Center" />*@
-                <RadzenDataGridColumn TItem="Data.Colaborador" Property="CodPonto" Title="Cod." Frozen="true" Width="50px" />
-                <RadzenDataGridColumn TItem="Data.Colaborador" Property="Nome" Title="Nome Completo" Width="200px"/>
-                <RadzenDataGridColumn TItem="Data.Colaborador" Property="Cpf" Title="CPF" Width="100px" />
-                <RadzenDataGridColumn TItem="Data.Colaborador" Property="Cargo.NomeCargo" Title="Cargo" Width="110px" />
-                <RadzenDataGridColumn TItem="Data.Colaborador" Property="Contratacao" Title="Admissão" FormatString="{0:dd/MM/yyyy}" Width="90px" />
-                <RadzenDataGridColumn TItem="Data.Colaborador" Property="Demissao" Title="Demissão" FormatString="{0:dd/MM/yyyy}" Width="90px" />
-                <RadzenDataGridColumn TItem="Data.Colaborador" Title="Alteração" Width="80px">
-                    <Template>
+            <MudTable ServerData="@(new Func<TableState, Task<TableData<Data.Colaborador>>>(ServerReload))"
+                Dense="true" Hover="true" @ref="table">
+            <ToolBarContent>
+            <MudText Typo="Typo.h6">Resultados do periodo</MudText>
+            <MudSpacer />
+            <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Placeholder="Search" Adornment="Adornment.Start"
+                            AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+            </ToolBarContent>
+            <HeaderContent>
+            <MudTh><MudTableSortLabel SortLabel="cod" T="Data.Colaborador">Cod.</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortLabel="nome" T="Data.Colaborador">Nome</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortLabel="cargo" T="Data.Colaborador">Cargo</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortLabel="cpf" T="Data.Colaborador">CPF</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortLabel="admissao" T="Data.Colaborador">Admissao</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortLabel="demissao" T="Data.Colaborador">Demissao</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortLabel="alteracao" T="Data.Colaborador">Alteracao</MudTableSortLabel></MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                    <MudTd DataLabel="Cod." HideSmall="true">@context.CodPonto </MudTd>
+                    <MudTd DataLabel="Nome">@context.Nome</MudTd>
+                    <MudTd DataLabel="Cargo">@context.Cargo.NomeCargo</MudTd>
+                    <MudTd DataLabel="CH/Semanal">@context.CpfComMascara</MudTd>
+                    <MudTd DataLabel="Total Horas">@context.Contratacao</MudTd>
+                    <MudTd DataLabel="CH/Mes">@context.Demissao</MudTd>
+                    <MudTd DataLabel="Alteracao">
                         <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(()=> OpenColaborador(context.Id))"></MudIconButton>
                         <MudIconButton Icon="@Icons.Material.Filled.ManageAccounts" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(()=>OpenColaboradorManager(context.Id))" ></MudIconButton>
-                    </Template>
-                </RadzenDataGridColumn>
-           </Columns>
-           </RadzenDataGrid>
-    </RadzenFieldset>
+                    </MudTd>
+            </RowTemplate>
+            <NoRecordsContent>
+            <MudText>Nenhum registro encontrado</MudText>
+            </NoRecordsContent>
+            <LoadingContent>
+            <MudText>Carregando...</MudText>
+            </LoadingContent>
+            <PagerContent>
+            <MudTablePager />
+            </PagerContent>
+            </MudTable>
     </div>
 </div>
 
 
+
+
+
+
 @code 
 {
+    bool _loading;
+    private IEnumerable<Data.Colaborador> pagedData;
+    private MudTable<Data.Colaborador> table;
+
+    private int totalItems;
+    private string searchString = null;
 
     RadzenDataGrid<Data.Colaborador> grid;
 
@@ -74,6 +102,11 @@
         await LoadData(ultimoFiltro);
     }
 
+    protected override void OnAfterRender(bool firstRender)
+    {
+        //table.ReloadServerData();
+    }
+
     async void ResetGrid()
     {
         grid.Reset(true);
@@ -83,6 +116,50 @@
 
     async Task EditarItem()
     {
+    }
+
+    
+    private void OnSearch(string text)
+    {
+        searchString = text;
+        table.ReloadServerData();
+    }
+
+    private async Task<TableData<Data.Colaborador>> ServerReload(TableState state)
+    {
+        IEnumerable<Data.Colaborador> data = await _colaboradorService.GetAllColaboradores();
+        await Task.Delay(300);
+        data = data.Where(element =>
+        {
+            if (string.IsNullOrWhiteSpace(searchString))
+                return true;
+            if (element.Nome.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (element.Cargo.NomeCargo.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (element.Cpf.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            return false;
+        }).ToArray();
+        totalItems = data.Count();
+        switch (state.SortLabel)
+        {
+            case "cod":
+                data = data.OrderByDirection(state.SortDirection, o => o.CodPonto);
+                break;
+            case "nome":
+                data = data.OrderByDirection(state.SortDirection, o => o.Nome);
+                break;
+            case "cargo":
+                data = data.OrderByDirection(state.SortDirection, o => o.Cargo.NomeCargo);
+                break;
+            case "cpf":
+                data = data.OrderByDirection(state.SortDirection, o => o.Cpf);
+                break;
+        }
+
+        pagedData = data.Skip(state.Page * state.PageSize).Take(state.PageSize).ToArray();
+        return new TableData<Data.Colaborador>() {TotalItems = totalItems, Items = pagedData};
     }
 
     Radzen.LoadDataArgs ultimoFiltro;

@@ -10,10 +10,12 @@ namespace BlazorServer.Data
 
         public AppDbContext()
         {
+
         }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
+
         }
 
         public DbSet<Cargo> Cargo { get; set; }
@@ -23,7 +25,6 @@ namespace BlazorServer.Data
         public DbSet<RegistroPonto> RegistroPontos { get; set; }
         public DbSet<Feriado> Feriado { get; set; }
         public DbSet<Unidade> Unidade { get; set; }
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -18,29 +18,55 @@
     <br />
     <br />
     <div class="row">
-        <RadzenFieldset Text="Cadastro de Unidades">
-        <RadzenDataGrid IsLoading="@isLoading" Count="@count" Data="@_Unidades" TItem="Data.Unidade" LoadData="@LoadData" RowDoubleClick="@(args=> OpenUnidades(args))"
-                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterMode="FilterMode.Advanced" AllowSorting="true" AllowFiltering="true" @ref="grid">
-            <Columns>
-                @*<RadzenDataGridColumn TItem="Colaborador" Property="Id" Filterable="false" Title="ID" Frozen="true" Width="50px" TextAlign="TextAlign.Center" />*@
-                <RadzenDataGridColumn TItem="Data.Unidade" Property="Nome" Title="Nome." Frozen="false" Width="220px" />
-                <RadzenDataGridColumn TItem="Data.Unidade" Property="RazaoSocial" Title="Razao" Width="220px" />
-                <RadzenDataGridColumn TItem="Data.Unidade" Property="CNPJ" Title="CNPJ" Width="120px" />
-                <RadzenDataGridColumn TItem="Data.Unidade" Property="Cidade" Title="Cidade" Width="120px" />
-                <RadzenDataGridColumn TItem="Data.Unidade" Property="Cidade" Title="Alterecao" Width="80px">
-                    <Template>
-                        <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(()=>Editar(context.Id))"></MudIconButton>
-                        <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(()=>Apagar(context))"></MudIconButton>
-                    </Template>
-                </RadzenDataGridColumn>
-            </Columns>
-        </RadzenDataGrid>
-        </RadzenFieldset>
+         <MudTable ServerData="@(new Func<TableState, Task<TableData<Unidade>>>(ServerReload))"
+                Dense="true" Hover="true" @ref="table">
+            <ToolBarContent>
+            <MudText Typo="Typo.h6">Resultados do periodo</MudText>
+            <MudSpacer />
+            <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Placeholder="Search" Adornment="Adornment.Start"
+                            AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+            </ToolBarContent>
+            <HeaderContent>
+            <MudTh><MudTableSortLabel SortLabel="nome" T="Unidade">Nome</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortLabel="razao" T="Unidade">Razao Social</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortLabel="cnpj" T="Unidade">CNPJ</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortLabel="cidade" T="Unidade">Cidade</MudTableSortLabel></MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                    <MudTd DataLabel="Nome">@context.Nome </MudTd>
+                    <MudTd DataLabel="Razao">@context.RazaoSocial</MudTd>
+                    <MudTd DataLabel="CNPJ">@context.CNPJ</MudTd>
+                    <MudTd DataLabel="Cidade">@context.Cidade</MudTd>
+                    <MudTd DataLabel="Alteracao">
+                        <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(()=> Editar(context.Id))"></MudIconButton>
+                        <MudIconButton Icon="@Icons.Material.Filled.ManageAccounts" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(()=>Editar(context.Id))" ></MudIconButton>
+                    </MudTd>
+            </RowTemplate>
+            <NoRecordsContent>
+            <MudText>Nenhum registro encontrado</MudText>
+            </NoRecordsContent>
+            <LoadingContent>
+            <MudText>Carregando...</MudText>
+            </LoadingContent>
+            <PagerContent>
+            <MudTablePager />
+            </PagerContent>
+            </MudTable>
     </div>
 </div>
 
 
+   
+
+
 @code {
+
+    bool _loading;
+    private IEnumerable<Unidade> pagedData;
+    private MudTable<Unidade> table;
+
+    private int totalItems;
+    private string searchString = null;
 
     [Inject] private MudBlazor.IDialogService DialogServiceMud { get; set; }
 
@@ -56,8 +82,49 @@
 
     protected override void OnInitialized()
     {
-        _Unidades = Service.GetUnidadesList();
-        LoadData(null);
+    }
+
+    private void OnSearch(string text)
+    {
+        searchString = text;
+        table.ReloadServerData();
+    }
+
+    private async Task<TableData<Unidade>> ServerReload(TableState state)
+    {
+        IEnumerable<Unidade> data = await Service.GetUnidades();
+        await Task.Delay(300);
+        data = data.Where(element =>
+        {
+            if (string.IsNullOrWhiteSpace(searchString))
+                return true;
+            if (element.Nome.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (element.RazaoSocial.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if ($"{element.CNPJ} {element.Cidade} ".Contains(searchString))
+                return true;
+            return false;
+        }).ToArray();
+        totalItems = data.Count();
+        switch (state.SortLabel)
+        {
+            case "nome":
+                data = data.OrderByDirection(state.SortDirection, o => o.Nome);
+                break;
+            case "razao":
+                data = data.OrderByDirection(state.SortDirection, o => o.RazaoSocial);
+                break;
+            case "cnpj":
+                data = data.OrderByDirection(state.SortDirection, o => o.CNPJ);
+                break;
+            case "cidade":
+                data = data.OrderByDirection(state.SortDirection, o => o.Cidade);
+                break;
+        }
+
+        pagedData = data.Skip(state.Page * state.PageSize).Take(state.PageSize).ToArray();
+        return new TableData<Unidade>() {TotalItems = totalItems, Items = pagedData};
     }
 
     void NovaUnidade()

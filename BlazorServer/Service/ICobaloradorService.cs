@@ -14,7 +14,7 @@ namespace BlazorServer.Service
 
         bool UpdateRecord(Colaborador record);
 
-        Task<List<Colaborador>> GetAllColaboradores();
+        Task<IEnumerable<Colaborador>> GetAllColaboradores();
 
         Task<List<Colaborador>> GetColaboradorsByCargo(string cargoUrl);
 

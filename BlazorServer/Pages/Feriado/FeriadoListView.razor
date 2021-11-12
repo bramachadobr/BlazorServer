@@ -25,8 +25,47 @@
     </RadzenFieldset>
 </div>
 
+         <MudTable ServerData="@(new Func<TableState, Task<TableData<Feriado>>>(ServerReload))"
+                Dense="true" Hover="true" @ref="table">
+            <ToolBarContent>
+            <MudText Typo="Typo.h6">Resultados do periodo</MudText>
+            <MudSpacer />
+            <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Placeholder="Search" Adornment="Adornment.Start"
+                            AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+            </ToolBarContent>
+            <HeaderContent>
+            <MudTh><MudTableSortLabel SortLabel="descricao" T="Feriado">Descricao</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortLabel="data" T="Feriado">Data</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortLabel="alteracao" T="Feriado">Alteracao</MudTableSortLabel></MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                    <MudTd DataLabel="Descricao">@context.Descricao </MudTd>
+                    <MudTd DataLabel="Data">@string.Format("{0:dd/MM/yyyy}", context.DataFeriado)</MudTd>
+                    <MudTd DataLabel="Alteracao">
+                        <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(()=>Editar(context.Id))"></MudIconButton>
+                        <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(()=>Apagar(context))"></MudIconButton>
+                    </MudTd>
+            </RowTemplate>
+            <NoRecordsContent>
+            <MudText>Nenhum registro encontrado</MudText>
+            </NoRecordsContent>
+            <LoadingContent>
+            <MudText>Carregando...</MudText>
+            </LoadingContent>
+            <PagerContent>
+            <MudTablePager />
+            </PagerContent>
+            </MudTable>
+
 @code 
 {
+
+     bool _loading;
+    private IEnumerable<Feriado> pagedData;
+    private MudTable<Feriado> table;
+
+    private int totalItems;
+    private string searchString = null;
     RadzenDataGrid<Data.Feriado> grid;
     List<Feriado> feriados;
 
@@ -37,6 +76,43 @@
         {
             feriados = await Service.GetFeriadoAll();
         }
+    }
+
+    private void OnSearch(string text)
+    {
+        searchString = text;
+        table.ReloadServerData();
+    }
+
+    private async Task<TableData<Feriado>> ServerReload(TableState state)
+    {
+        IEnumerable<Feriado> data = await Service.GetFeriadoAll();
+        await Task.Delay(300);
+        data = data.Where(element =>
+        {
+            if (string.IsNullOrWhiteSpace(searchString))
+                return true;
+            if (element.Descricao.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (element.DataFeriado.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if ($"{element.Descricao} {element.DataFeriado.ToString()} ".Contains(searchString))
+                return true;
+            return false;
+        }).ToArray();
+        totalItems = data.Count();
+        switch (state.SortLabel)
+        {
+            case "descricao":
+                data = data.OrderByDirection(state.SortDirection, o => o.Descricao);
+                break;
+            case "data":
+                data = data.OrderByDirection(state.SortDirection, o => o.DataFeriado);
+                break;
+        }
+
+        pagedData = data.Skip(state.Page * state.PageSize).Take(state.PageSize).ToArray();
+        return new TableData<Feriado>() {TotalItems = totalItems, Items = pagedData};
     }
 
     void Novo()

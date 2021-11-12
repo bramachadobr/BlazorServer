@@ -17,24 +17,46 @@
     <br />
     <MudFab Color="Color.Primary" Icon="@Icons.Material.Filled.Add" aria-label="Adicionar" OnClick="@NovoCargo" />
     <p></p>
-        <RadzenFieldset Text="Cadastro de cargos">
-        <RadzenDataGrid @ref="grid" Data="@_cargos" TItem="@Data.Cargo"  AllowFiltering="true" FilterMode="FilterMode.Advanced" AllowSorting="true" >
-            <Columns>
-                <RadzenDataGridColumn TItem="Data.Cargo" Property="NomeCargo" Title="Cargo" Width="900px"></RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="Data.Cargo" Property="NomeCargo" Title="Alteracao">
-                    <Template>
-                        <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(()=>Editar(context.Id))"></MudIconButton>
-                        <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(()=>Apagar(context))"></MudIconButton>
-                    </Template>
-                </RadzenDataGridColumn>
-            </Columns>
-        </RadzenDataGrid>        
-    </RadzenFieldset>
+    <MudTable ServerData="@(new Func<TableState, Task<TableData<Cargo>>>(ServerReload))"
+            Dense="true" Hover="true" @ref="table">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Resultados do periodo</MudText>
+        <MudSpacer />
+        <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Placeholder="Search" Adornment="Adornment.Start"
+                        AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh><MudTableSortLabel SortLabel="nome" T="Cargo">Nome</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="alterar" T="Cargo">Alteracao</MudTableSortLabel></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+                <MudTd DataLabel="Nome">@context.NomeCargo</MudTd>
+                <MudTd DataLabel="Alterar">
+                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(()=>Editar(context.Id))"></MudIconButton>
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(()=>Apagar(context))"></MudIconButton>
+                </MudTd>
+    </RowTemplate>
+    <NoRecordsContent>
+        <MudText>Nenhum registro encontrado</MudText>
+    </NoRecordsContent>
+    <LoadingContent>
+        <MudText>Carregando...</MudText>
+    </LoadingContent>
+    <PagerContent>
+        <MudTablePager />
+    </PagerContent>
+    </MudTable>
 </div>
 
 
 
-@code {
+@code 
+{
+    bool _loading;
+    private IEnumerable<Cargo> pagedData;
+    private MudTable<Cargo> table;
+    private int totalItems;
+    private string searchString = null;
 
     [Inject] private MudBlazor.IDialogService DialogServiceMud { get; set; }
 
@@ -43,6 +65,11 @@
     RadzenDataGrid<Data.Cargo> grid;
 
     IEnumerable<Data.Cargo> _cargos;
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        table.ReloadServerData();
+    }
 
     protected override async void OnInitialized()
     {
@@ -53,10 +80,39 @@
         }
     }
 
-    async void NovoCargo()
+    private void OnSearch(string text)
+    {
+        searchString = text;
+        table.ReloadServerData();
+    }
+
+     private async Task<TableData<Cargo>> ServerReload(TableState state)
+    {
+        IEnumerable<Cargo> data =  await Service.GetAllRecords(); //await httpClient.GetFromJsonAsync<List<TopsDashBoard>>("webapi/periodictable");
+        await Task.Delay(300);
+        data = data.Where(element =>
+        {
+            if (string.IsNullOrWhiteSpace(searchString))
+                return true;
+            if (element.NomeCargo.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            return false;
+        }).ToArray();
+        totalItems = data.Count();
+        switch (state.SortLabel)
+        {
+            case "nome":
+                data = data.OrderByDirection(state.SortDirection, o => o.NomeCargo);
+                break;
+        }
+
+        pagedData = data.Skip(state.Page * state.PageSize).Take(state.PageSize).ToArray();
+        return new TableData<Cargo>() {TotalItems = totalItems, Items = pagedData};
+    }
+
+    void NovoCargo()
     {
         Editar(Guid.Empty);
-        ResetGrid();
     }
 
     async void Editar(Guid id)
@@ -71,7 +127,6 @@
         var dialog = DialogServiceMud.Show<BlazorServer.Pages.Cargo.CargoComponent>("Cadastro de Cargo", new DialogParameters() { ["IdCargo"] = id }, opt);
         var result = await dialog.Result;
         StateHasChanged();
-        ResetGrid();
     }
 
     async void Apagar(Cargo id)
@@ -82,16 +137,10 @@
             Service.ExluirRecord(id);
         }
         StateHasChanged();
-        ResetGrid();
     }
 
-    async void ResetGrid()
-    {
-        grid.Reset(true);
-        await grid.Reload();
-    }
 
-    async Task LoadData(LoadDataArgs args)
+    void LoadData(LoadDataArgs args)
     {
         var result = Service.GetAllRecordsAsEnumerable();
         _cargos = result.AsODataEnumerable();

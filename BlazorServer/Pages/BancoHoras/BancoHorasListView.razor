@@ -80,6 +80,12 @@
         AppData.OnChange += StateHasChanged;       
     }
 
+    private void OnSearch(string text)
+    {
+        searchString = text;
+        table.ReloadServerData();
+    }
+
     private async Task<TableData<TopsDashBoard>> ServerReload(TableState state)
     {
         IEnumerable<TopsDashBoard> data = LoadDados(); //await httpClient.GetFromJsonAsync<List<TopsDashBoard>>("webapi/periodictable");
@@ -186,10 +192,6 @@
 
     }
 
-    private void OnSearch(string text)
-    {
-        searchString = text;
-        table.ReloadServerData();
-    }
+
 
 }

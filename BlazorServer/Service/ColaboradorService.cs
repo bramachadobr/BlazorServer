@@ -27,9 +27,9 @@ namespace BlazorServer.Service
             return result > 0;
         }
 
-        public async Task<List<Colaborador>> GetAllColaboradores()
+        public async Task<IEnumerable<Colaborador>> GetAllColaboradores()
         {
-            return await _context.Colaboradors.ToListAsync();
+            return await _context.Colaboradors.Include(c=>c.Cargo).ToListAsync();
         }
 
         public List<Colaborador> GetAllColaboradoresList()
