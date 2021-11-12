@@ -62,6 +62,7 @@ namespace BlazorServer.Data
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column(TypeName = "uniqueidentifier")]
         public Guid Id { get; set; }
+        [Required]
         public string NomeCargo { get; set; }
         public List<Colaborador> Colaboradores { get; set; }
     }
@@ -81,6 +82,7 @@ namespace BlazorServer.Data
         public int CodPonto { get; set; }
         [Required]
         public string Nome { get; set; }
+        [Required]
         public string Cpf { get; set; }
 
         public string CpfComMascara { get => string.Format(@"{0:000\.###\.###-##}", Cpf); }

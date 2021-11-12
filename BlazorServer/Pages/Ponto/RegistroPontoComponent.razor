@@ -47,13 +47,13 @@
                         <div class="col-sm mr-auto"><h5>Total registros: @Count</h5></div>
                     </div>
                     <div class="row" >
-                        <MudItem xs="12">
+                        @*<MudItem xs="12">*@
                             <MudTable ServerData="@(new Func<TableState, Task<TableData<Data.RegistroPonto>>>(ServerReload))"
                                     Dense="true" Hover="true" @ref="table">
                                 <ToolBarContent>
                                     <MudText Typo="Typo.h6">Resultados do periodo</MudText>
                                     <MudSpacer />
-                                    <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Placeholder="Search" Adornment="Adornment.Start"
+                                    <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Placeholder="Procurar" Adornment="Adornment.Start"
                                                     AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
                                 </ToolBarContent>
                                 <ColGroup>
@@ -61,6 +61,7 @@
                                     <col style="width:250px;" />
                                     <col style="width:80px;" />
                                     <col style="width:60px;" />
+                                    <col style="width:50px;" />
                                     <col style="width:50px;" />
                                     <col style="width:50px;" />
                                     <col style="width:50px;" />
@@ -81,6 +82,7 @@
                                 <MudTh><MudTableSortLabel SortLabel="" T="Data.RegistroPonto">NOI_ENT</MudTableSortLabel></MudTh>
                                 <MudTh><MudTableSortLabel SortLabel="" T="Data.RegistroPonto">NOI_SAI</MudTableSortLabel></MudTh>
                                 <MudTh><MudTableSortLabel SortLabel="" T="Data.RegistroPonto">Total de Horas</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="" T="Data.RegistroPonto">Alterar</MudTableSortLabel></MudTh>
                                 </HeaderContent>
                                 <RowTemplate>
                                         <MudTd  DataLabel="Cod." HideSmall="true">@context.Colaborador.CodPonto </MudTd>
@@ -95,7 +97,7 @@
                                         <MudTd DataLabel="NOI_SAI">@string.Format("{0:HH:mm}", context.NOI_SAI)</MudTd>
                                         <MudTd DataLabel="Total Horas Dia">@context.TotalHorasDia</MudTd>
                                         <MudTd DataLabel="Alteracao">
-                                            @*<MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(()=> OpenColaborador(context.Id))"></MudIconButton>*@
+                                            <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(()=> OpenRegistroPonto(context))"></MudIconButton>
                                         </MudTd>
                                 </RowTemplate>
                                 <NoRecordsContent>
@@ -108,7 +110,7 @@
                                 <MudTablePager />
                                 </PagerContent>
                                 </MudTable>
-                                </MudItem>
+                                @*</MudItem>*@
                       
                     </div>
             </div>
@@ -184,6 +186,7 @@
 
 @code
 {
+    [Inject] private IDialogService DialogServiceMud { get; set; }
 
     bool _loading;
     private IEnumerable<Data.RegistroPonto> pagedData;
@@ -456,6 +459,17 @@
     async Task ProcessaPontos()
     {
 
+        foreach (var item in ListRegPonto)
+        {
+            if (item.Colaborador == null)
+            {
+                bool? result = await DialogServiceMud.ShowMessageBox("Cadastro não encontrado", 
+                $"Não foi encontrado o cadastro do colaborador {item.CodColaborador}, identifique e cadastre o colaborador para proseguir. \r\n" + "U{5}P{12}D{2}M{2}A{4}H{2}N{2} - Formato utilizado", yesText: "OK");
+                return;
+            }
+        }
+
+
         if (idSelectd != Guid.Empty)
         {
             Data.Colaborador colab = await cs.GetColaboradorById(idSelectd);
@@ -547,6 +561,28 @@
     public async void OpenRegistroPonto(DataGridRowMouseEventArgs<Data.RegistroPonto> reg)
     {
         RegistroPonto registro = (RegistroPonto)reg.Data;
+
+        if (registro.TotalHorasDia.Ticks > 0)
+        {
+            OpenDialogModal("Atenção", "registros positivos não podem ser editados");
+        }
+        else
+        {
+            var parameters = new MudBlazor.DialogParameters() { ["registroPontoGuid"] = registro.Id };
+            var dialog = MudDialogService.Show<EditaHoraPontoComponent>("Editar Ponto", parameters);
+            var result = await dialog.Result;
+
+            if (!result.Cancelled)
+            {
+                OpenDialogModal("Atualizado", "Registro atualizado!");
+            }
+        }
+    }
+
+    
+    public async void OpenRegistroPonto(RegistroPonto reg)
+    {
+        RegistroPonto registro = reg;
 
         if (registro.TotalHorasDia.Ticks > 0)
         {

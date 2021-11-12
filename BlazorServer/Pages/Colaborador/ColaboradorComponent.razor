@@ -108,12 +108,7 @@
         //table.ReloadServerData();
     }
 
-    async void ResetGrid()
-    {
-        grid.Reset(true);
-        await grid.Reload();
-        await LoadData(ultimoFiltro);   
-    }
+
 
     async Task EditarItem()
     {
@@ -236,7 +231,7 @@
         var result = await dialog.Result;
         if (!result.Cancelled)
         {
-            ResetGrid();
+            
         }
     }
 
@@ -269,7 +264,7 @@
 
         if (!result.Cancelled)
         {
-            ResetGrid();
+            
         }
 
     }
