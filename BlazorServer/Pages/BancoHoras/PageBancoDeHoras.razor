@@ -2,9 +2,27 @@
 
 @inject Service.AppData AppData
 
-<BancoHoras></BancoHoras>
+<div class="container">
+    <div class = "row">
+        <p></p>
+        <BancoHoras />
+    </div>
+    <br />
+        <div class = "row">
+          <MudItem xs="12">
+              <BancoHorasListView />
+          </MudItem>
+    </div>
+</div>
 
-<BancoHorasListView ></BancoHorasListView>
+<MudGrid Justify="Justify.FlexStart">
+      <MudItem>
+          
+      </MudItem>
+
+</MudGrid>
+
+
 
 @code 
 {

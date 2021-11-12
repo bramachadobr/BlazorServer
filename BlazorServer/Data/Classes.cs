@@ -78,15 +78,13 @@ namespace BlazorServer.Data
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column(TypeName = "uniqueidentifier")]
         public Guid Id { get; set; }
-
         public int CodPonto { get; set; }
-
+        [Required]
         public string Nome { get; set; }
-
         public string Cpf { get; set; }
 
         public string CpfComMascara { get => string.Format(@"{0:000\.###\.###-##}", Cpf); }
-
+        
         public Cargo Cargo { get; set; }
 
 
@@ -99,9 +97,7 @@ namespace BlazorServer.Data
         [Column(TypeName = "decimal(18,2)")]
         public decimal HoraAula { get; set; }
         public double CargaHorariaSemanal { get; set; }
-
         public string Email { get; set; }
-
         public string Telefone { get; set; }
 
         public string Endereco { get; set; }
@@ -232,8 +228,10 @@ namespace BlazorServer.Data
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column(TypeName = "uniqueidentifier")]
         public Guid Id { get; set; }
+        [Required]
         public DateTime? DataFeriado { get; set; }
         //public DateTime Data { get=>Convert.ToDateTime(DataFeriado.Value); }
+        [Required]
         public string Descricao { get; set; }
     }
 
@@ -249,8 +247,11 @@ namespace BlazorServer.Data
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column(TypeName = "uniqueidentifier")]
         public Guid Id { get; set; }
+        [Required]
         public string Nome { get; set; }
+        [Required]
         public string RazaoSocial { get; set; }
+        [Required]
         public string CNPJ { get; set; }
         public string Endereco { get; set; }
         public int Numero { get; set; }
@@ -316,6 +317,8 @@ namespace BlazorServer.Data
                                        times.Seconds < 10 ? ("0" + times.Seconds) : times.Seconds.ToString());
             return TotalHorasPeriodo;
         }
+
+        
 
         public static double TotalHorasDoColaboradorMes(this Colaborador colab, DateTime data)
         {

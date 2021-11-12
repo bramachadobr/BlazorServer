@@ -7,24 +7,8 @@
     <br />
     <MudFab Color="Color.Primary" Icon="@Icons.Material.Filled.Add" aria-label="Adicionar" OnClick="@Novo" />
     <p></p>
-    <RadzenFieldset Text="Cadastro feriado">
-        <RadzenDataGrid @ref="grid" Data="@feriados" TItem="@Data.Feriado" AllowFiltering="true" AllowSorting="true" AllowPaging="true" PageSize="10" 
-            FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterMode="FilterMode.Advanced">
-            <Columns>
-                <RadzenDataGridColumn TItem="Data.Feriado" Property="DataFeriado" FormatString="{0:dd/MM/yyyy}" Title="Data" Width="80px"/>
-                <RadzenDataGridColumn TItem="Data.Feriado" Property="Descricao" Title="Descrição" Width="200px"/>
-                <RadzenDataGridColumn TItem="Data.Feriado" Title="Altereção" Width="80px">
-                    <Template>
-                        <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(()=>Editar(context.Id))"></MudIconButton>
-                        <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(()=>Apagar(context))"></MudIconButton>
-                    </Template>
-                </RadzenDataGridColumn>
-            </Columns>
-
-        </RadzenDataGrid>
-    </RadzenFieldset>
-</div>
-
+    <div class="row">
+        <MudItem xs="12">
          <MudTable ServerData="@(new Func<TableState, Task<TableData<Feriado>>>(ServerReload))"
                 Dense="true" Hover="true" @ref="table">
             <ToolBarContent>
@@ -56,6 +40,11 @@
             <MudTablePager />
             </PagerContent>
             </MudTable>
+        </MudItem>
+    </div>
+</div>
+
+        
 
 @code 
 {

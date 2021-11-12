@@ -18,6 +18,102 @@
 @inherits OwningComponentBase
 
 <div class="container">
+    <MudSpacer />
+    <MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" @ref="mudtabs">
+        <MudTabPanel Text="Carregar Arquivo" @ref="panel1">
+            <div Class="row border-dark">
+                <div class="col-auto mr-auto">
+                    <InputFile id="fileInput112" OnChange="ProcessaFile" hidden multiple accept=".txt"/>
+                    <MudButton HtmlTag="label" 
+                               Variant="Variant.Filled" 
+                               Color="Color.Primary" 
+                               StartIcon="@Icons.Filled.CloudUpload" 
+                               for="fileInput112">
+                               Upload do arquivo
+                    </MudButton>
+                </div>
+                <div class="col-auto">
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Filled.Print" OnClick="Print">
+                                    Imprimir
+                        </MudButton>
+                    @*<button class="btn btn-primary" @onclick="Print">Imprimir</button>*@
+                </div>  
+            </div>
+        </MudTabPanel>
+        <MudTabPanel Text="Registros de Pontos" @ref="panel2" >
+                <div id="PrintDiv">
+                    <div class="row">
+                        <div class="col-sm mr-auto"><h5>Total de Horas do periodo: @TotalHorasPeriodo</h5></div>
+                        <div class="col-sm mr-auto"><h5>Total registros: @Count</h5></div>
+                    </div>
+                    <div class="row" >
+                        <MudItem xs="12">
+                            <MudTable ServerData="@(new Func<TableState, Task<TableData<Data.RegistroPonto>>>(ServerReload))"
+                                    Dense="true" Hover="true" @ref="table">
+                                <ToolBarContent>
+                                    <MudText Typo="Typo.h6">Resultados do periodo</MudText>
+                                    <MudSpacer />
+                                    <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Placeholder="Search" Adornment="Adornment.Start"
+                                                    AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                                </ToolBarContent>
+                                <ColGroup>
+                                    <col style="width:35px;" />
+                                    <col style="width:250px;" />
+                                    <col style="width:80px;" />
+                                    <col style="width:60px;" />
+                                    <col style="width:50px;" />
+                                    <col style="width:50px;" />
+                                    <col style="width:50px;" />
+                                    <col style="width:50px;" />
+                                    <col style="width:50px;" />
+                                    <col style="width:50px;" />
+                                    <col style="width:50px;" />
+                                </ColGroup>
+                                <HeaderContent>
+                                <MudTh><MudTableSortLabel SortLabel="cod" T="Data.RegistroPonto">Cod.</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="nome" T="Data.RegistroPonto">Nome completo</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="cargo" T="Data.RegistroPonto">Dia semana</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="cpf" T="Data.RegistroPonto">Data</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="" T="Data.RegistroPonto">AM_ENT</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="" T="Data.RegistroPonto">AM_SAI</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="" T="Data.RegistroPonto">PM_ENT</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="" T="Data.RegistroPonto">PM_SAI</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="" T="Data.RegistroPonto">NOI_ENT</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="" T="Data.RegistroPonto">NOI_SAI</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="" T="Data.RegistroPonto">Total de Horas</MudTableSortLabel></MudTh>
+                                </HeaderContent>
+                                <RowTemplate>
+                                        <MudTd  DataLabel="Cod." HideSmall="true">@context.Colaborador.CodPonto </MudTd>
+                                        <MudTd DataLabel="Nome completo">@context.Colaborador.Nome</MudTd>
+                                        <MudTd DataLabel="Dia semana">@context.DiaSemanaPtBr </MudTd>
+                                        <MudTd DataLabel="Data">@string.Format("{0:dd/MM/yyyy}", context.Data)</MudTd>
+                                        <MudTd DataLabel="AM_ENT">@string.Format("{0:HH:mm}", context.AM_ENT)</MudTd>
+                                        <MudTd DataLabel="AM_SAI">@string.Format("{0:HH:mm}", context.AM_SAI)</MudTd>
+                                        <MudTd DataLabel="PM_ENT">@string.Format("{0:HH:mm}", context.PM_ENT)</MudTd>
+                                        <MudTd DataLabel="PM_SAI">@string.Format("{0:HH:mm}", context.PM_SAI)</MudTd>
+                                        <MudTd DataLabel="NOI_ENT">@string.Format("{0:HH:mm}", context.NOI_ENT)</MudTd>
+                                        <MudTd DataLabel="NOI_SAI">@string.Format("{0:HH:mm}", context.NOI_SAI)</MudTd>
+                                        <MudTd DataLabel="Total Horas Dia">@context.TotalHorasDia</MudTd>
+                                        <MudTd DataLabel="Alteracao">
+                                            @*<MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(()=> OpenColaborador(context.Id))"></MudIconButton>*@
+                                        </MudTd>
+                                </RowTemplate>
+                                <NoRecordsContent>
+                                <MudText>Nenhum registro encontrado</MudText>
+                                </NoRecordsContent>
+                                <LoadingContent>
+                                <MudText>Carregando...</MudText>
+                                </LoadingContent>
+                                <PagerContent>
+                                <MudTablePager />
+                                </PagerContent>
+                                </MudTable>
+                                </MudItem>
+                      
+                    </div>
+            </div>
+        </MudTabPanel>
+    </MudTabs>
     <p></p>
     <div Class="row border-dark">
         <div class="col-auto mr-auto">
@@ -82,8 +178,25 @@
 </MudDialog>
 
 
+
+        
+
+
 @code
 {
+
+    bool _loading;
+    private IEnumerable<Data.RegistroPonto> pagedData;
+    private MudTable<Data.RegistroPonto> table;
+
+    private int totalItems;
+    private string searchString = null;
+
+    MudTabs mudtabs;
+    MudTabPanel panel1;
+    MudTabPanel panel2;
+
+
     public bool isVisible;
 
     string mensagemDialog;
@@ -160,19 +273,56 @@
     }
 
     public static decimal MultiplyPerMinute(TimeSpan a, decimal b)
-	{
-	    return Math.Round(Convert.ToDecimal(a.TotalHours * (double)b), 2, MidpointRounding.AwayFromZero);
-	}
+    {
+        return Math.Round(Convert.ToDecimal(a.TotalHours * (double)b), 2, MidpointRounding.AwayFromZero);
+    }
 
     private void TotalHorasTrabalhadas(TimeSpan totalHorasPeriodo)
-	{
-		TimeSpan times = new TimeSpan(0, 0, 0, 0);
-		times = totalHorasPeriodo;
+    {
+        TimeSpan times = new TimeSpan(0, 0, 0, 0);
+        times = totalHorasPeriodo;
 
-		TotalHorasPeriodo = string.Format("{0}:{1}:{2}", times.Days > 0 ? ((times.Days * 24) + times.Hours) : times.Hours,
-						            times.Minutes < 10 ? ("0" + times.Minutes) : times.Minutes.ToString(),
-						            times.Seconds < 10 ? ("0" + times.Seconds) : times.Seconds.ToString());
-		//txtValorTotal.Text = string.Format("R$ {0:#.##}", valor.ToString());
+        TotalHorasPeriodo = string.Format("{0}:{1}:{2}", times.Days > 0 ? ((times.Days * 24) + times.Hours) : times.Hours,
+                                    times.Minutes < 10 ? ("0" + times.Minutes) : times.Minutes.ToString(),
+                                    times.Seconds < 10 ? ("0" + times.Seconds) : times.Seconds.ToString());
+        //txtValorTotal.Text = string.Format("R$ {0:#.##}", valor.ToString());
+    }
+
+    private void OnSearch(string text)
+    {
+        searchString = text;
+        table.ReloadServerData();
+    }
+
+    private async Task<TableData<Data.RegistroPonto>> ServerReload(TableState state)
+    {
+        IEnumerable<Data.RegistroPonto> data = await rps.GetAllRegistroPonto();
+        await Task.Delay(300);
+        data = data.Where(element =>
+        {
+            if (string.IsNullOrWhiteSpace(searchString))
+                return true;
+            if (element.Colaborador.Nome.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (element.DiaSemanaPtBr.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if ($"{element.Colaborador.Nome} {element.DiaSemanaPtBr} ".Contains(searchString))
+                return true;
+            return false;
+        }).ToArray();
+        totalItems = data.Count();
+        switch (state.SortLabel)
+        {
+            case "nome":
+                data = data.OrderByDirection(state.SortDirection, o => o.Colaborador.Nome);
+                break;
+            case "semana":
+                data = data.OrderByDirection(state.SortDirection, o => o.DiaSemanaPtBr);
+                break;
+        }
+
+        pagedData = data.Skip(state.Page * state.PageSize).Take(state.PageSize).ToArray();
+        return new TableData<Data.RegistroPonto>() {TotalItems = totalItems, Items = pagedData};
     }
 
     async Task LoadData(LoadDataArgs args)
@@ -292,6 +442,7 @@
         }
         await ProcessaPontos();
         ResetGrid();
+        mudtabs.ActivatePanel(1);
     }
 
     void TotalHorasDoPeriodo()

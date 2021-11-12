@@ -18,6 +18,7 @@
     <br />
     <br />
     <div class="row">
+        <MudItem xs="12">
          <MudTable ServerData="@(new Func<TableState, Task<TableData<Unidade>>>(ServerReload))"
                 Dense="true" Hover="true" @ref="table">
             <ToolBarContent>
@@ -52,6 +53,7 @@
             <MudTablePager />
             </PagerContent>
             </MudTable>
+        </MudItem>
     </div>
 </div>
 
