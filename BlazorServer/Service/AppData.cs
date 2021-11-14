@@ -6,11 +6,11 @@ namespace BlazorServer.Service
     {
         private DateTime dataSelecionada;
 
-        public DateTime DataSelecionada 
+        public DateTime DataSelecionada
         {
             get { return dataSelecionada; }
-            set 
-            { 
+            set
+            {
                 dataSelecionada = value;
                 NotifyDataChanged();
             }
@@ -18,7 +18,7 @@ namespace BlazorServer.Service
 
         public event Action OnChange;
 
-        private void NotifyDataChanged()=> OnChange?.Invoke();
+        private void NotifyDataChanged() => OnChange?.Invoke();
 
 
     }

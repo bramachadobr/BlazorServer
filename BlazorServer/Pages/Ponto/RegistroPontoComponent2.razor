@@ -1,4 +1,4 @@
-﻿@page "/Ponto/registro"
+﻿@page "/Ponto/registro2"
 
 @using System
 @using BlazorServer.Data
@@ -9,61 +9,75 @@
 @using MudBlazor.Components
 
 @inject IJSRuntime JSRuntime
-
+@inherits OwningComponentBase
 @inject MudBlazor.DialogService DialogService
 @inject IDialogService MudDialogService
 @inject Radzen.DialogService DialogServiceRad
-@inherits OwningComponentBase
 
-<div class="container">
-    <p></p>
-    <div Class="row border-dark">
-        <div class="col-auto mr-auto">
-                <InputFile id="fileInput112" OnChange="ProcessaFile" hidden multiple accept=".txt"/>
-                <MudButton HtmlTag="label" 
-                           Variant="Variant.Filled" 
-                           Color="Color.Primary" 
-                           StartIcon="@Icons.Filled.CloudUpload" 
-                           for="fileInput112">
-                           Upload do arquivo
-                </MudButton>
-        </div>
-        <div class="col-auto">
-                <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Filled.Print" OnClick="Print">
-                           Imprimir
-                </MudButton>
-            @*<button class="btn btn-primary" @onclick="Print">Imprimir</button>*@
-        </div>
-    </div>
-    <br />
-    <p></p>
+<div class="content">
+    <MudGrid>
+        <MudItem xs="12" sm="12">
+            <MudTable ServerData="@(new Func<TableState, Task<TableData<Data.RegistroPonto>>>(ServerReload))" Dense="true" Hover="true" @ref="table" FixedHeader="true" Loading="true" Elevation="5" CustomHeader="true">
+            <ToolBarContent>
+                <MudGrid>
+                        <MudItem xs="6" sm="6">
+                            <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Placeholder="Procurar" Adornment="Adornment.Start" 
+                                AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium"></MudTextField>
+                        </MudItem>
+                        <MudItem xs="6" sm="6">
+                            <MudDateRangePicker Label="Selecione o periodo de tempo" DateFormat="dd/MM/yyyy" TitleDateFormat="dddd, dd. MMMM" @bind-DateRange="_dateRange" />
+                        </MudItem>
+                </MudGrid>
+            </ToolBarContent>
+            <HeaderContent>
+                    <MudTHeadRow IgnoreCheckbox="true" Class="header-centered">
+                        <MudTh colspan="6">Total de Horas do periodo: @TotalHorasPeriodo</MudTh>
+                        <MudTh colspan="6">Total registros: @Count</MudTh>
+                    </MudTHeadRow>
+                    <MudTh><MudTableSortLabel Style="width: 25px;" SortLabel="cod" T="Data.RegistroPonto">Cod.</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel Style="width: 230px;" SortLabel="nome" T="Data.RegistroPonto">Nome completo</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel Style="width: 100px;" SortLabel="cargo" T="Data.RegistroPonto">Dia semana</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel Style="width: 60px;" SortLabel="cpf" T="Data.RegistroPonto">Data</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel Style="width: 50px;" SortLabel="" T="Data.RegistroPonto">AM_ENT</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel Style="width: 50px;" SortLabel="" T="Data.RegistroPonto">AM_SAI</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel Style="width: 50px;" SortLabel="" T="Data.RegistroPonto">PM_ENT</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel Style="width: 50px;" SortLabel="" T="Data.RegistroPonto">PM_SAI</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel Style="width: 50px;" SortLabel="" T="Data.RegistroPonto">NOI_ENT</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel Style="width: 50px;" SortLabel="" T="Data.RegistroPonto">NOI_SAI</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel Style="width: 50px;" SortLabel="" T="Data.RegistroPonto">Total de Horas</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel Style="width: 60px;" SortLabel="" T="Data.RegistroPonto">Editar</MudTableSortLabel></MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                    <MudTd  DataLabel="Cod." HideSmall="true">@context.Colaborador.CodPonto </MudTd>
+                    <MudTd DataLabel="Nome completo">@context.Colaborador.Nome</MudTd>
+                    <MudTd DataLabel="Dia semana">@context.DiaSemanaPtBr </MudTd>
+                    <MudTd DataLabel="Data">@string.Format("{0:dd/MM/yyyy}", context.Data)</MudTd>
+                    <MudTd DataLabel="AM_ENT">@string.Format("{0:HH:mm}", context.AM_ENT)</MudTd>
+                    <MudTd DataLabel="AM_SAI">@string.Format("{0:HH:mm}", context.AM_SAI)</MudTd>
+                    <MudTd DataLabel="PM_ENT">@string.Format("{0:HH:mm}", context.PM_ENT)</MudTd>
+                    <MudTd DataLabel="PM_SAI">@string.Format("{0:HH:mm}", context.PM_SAI)</MudTd>
+                    <MudTd DataLabel="NOI_ENT">@string.Format("{0:HH:mm}", context.NOI_ENT)</MudTd>
+                    <MudTd DataLabel="NOI_SAI">@string.Format("{0:HH:mm}", context.NOI_SAI)</MudTd>
+                    <MudTd DataLabel="Total horas">@context.TotalHorasDia</MudTd>
+                    <MudTd DataLabel="Editar">
+                        <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(()=> OpenRegistroPonto(context))"></MudIconButton>
+                    </MudTd>
+            </RowTemplate>
+            <NoRecordsContent>
+                <MudText>Nenhum registro encontrado</MudText>
+            </NoRecordsContent>
+            <LoadingContent>
+                <MudText>Carregando...</MudText>
+            </LoadingContent>
+            <PagerContent>
+                <MudTablePager/>
+            </PagerContent>
+            </MudTable>
+        </MudItem>
+    </MudGrid>
+</div> 
 
-    <div id="PrintDiv">
-            <div class="row">
-                <div class="col-sm mr-auto"><h5>Total de Horas do periodo: @TotalHorasPeriodo</h5></div>
-                <div class="col-sm mr-auto"><h5>Total registros: @Count</h5></div>
-            </div>
-            <div class="row" >
-                <RadzenDataGrid @ref=grid IsLoading=@isLoading Count=@Count Data="@filtroPontosProcessados" TItem="Data.RegistroPonto" LoadData="@(args => LoadData(args))"  
-                    RowDoubleClick="@(args=> OpenRegistroPonto(args))" FilterMode="FilterMode.Advanced" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" 
-                    AllowSorting="true" AllowFiltering="true" AllowPaging="true" PageSize="30" AllowColumnResize="true" Style="border-radius: 6px;">
-                    <Columns>
-                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="Colaborador.CodPonto" Title="Cod" Frozen="true" Width="35px"/>
-                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="Colaborador.Nome" Title="Nome Completo" Width="250px"/>
-                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="DiaSemanaPtBr" Title="Dia semana" Width="80px"/>
-                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="Data" Title="Data" Width="60px" FormatString="{0:dd/MM/yyyy}"/>
-                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="AM_ENT" Title="AM_ENT" FormatString="{0:HH:mm}"   Width="50px"/>
-                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="AM_SAI" Title="AM_SAI" FormatString="{0:HH:mm}"   Width="50px"/>
-                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="PM_ENT" Title="PM_ENT" FormatString="{0:HH:mm}"   Width="50px"/>
-                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="PM_SAI" Title="PM_SAI" FormatString="{0:HH:mm}"   Width="50px"/>
-                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="NOI_ENT" Title="NOI_ENT" FormatString="{0:HH:mm}"  Width="50px"/>
-                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="NOI_SAI" Title="NOI_SAI" FormatString="{0:HH:mm}"  Width="50px"/>
-                        <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="TotalHorasDia" Title="Total Horas Dia"  Width="50px"/> 
-                    </Columns>
-                </RadzenDataGrid>
-            </div>
-    </div>
-</div>
+
 
 <MudDialog @bind-IsVisible="@isVisible">
     <TitleContent>
@@ -78,7 +92,6 @@
         <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="FecharDialogModal" Class="px-10">Fechas</MudButton>
     </DialogActions>
 </MudDialog>
-
         
 
 
@@ -105,11 +118,15 @@
 
     public Data.RegistroPonto regPonto = new RegistroPonto();
 
+    MudDateRangePicker _picker;
+    DateRange _dateRange = new DateRange(DateTime.Now.Date, DateTime.Now.AddDays(5).Date);
+
     RadzenDataGrid<Data.RegistroPonto> grid;
 
     bool isLoading;
 
     int Count;
+    string TotalHorasPeriodo;
 
     public bool dialogIsOpen = false;
 
@@ -155,8 +172,6 @@
 
     //string TotalHorasTrabalhadasNoPeriodo;
 
-    public string TotalHorasPeriodo { get; set; }
-
     void OpenDialogModal(string titulo, string msg)
     {
         tituloDialog = titulo;
@@ -173,21 +188,25 @@
         rps = (Service.RegistroPontoService)ScopedServices.GetService(typeof(Service.RegistroPontoService));
     }
 
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (table != null)
+        {
+            table.ReloadServerData();
+        }
+        table.ReloadServerData();
+    }
+
+    //protected override void OnAfterRender(bool firstRender)
+    //{
+    //    table.ReloadServerData();
+    //}
+
     public static decimal MultiplyPerMinute(TimeSpan a, decimal b)
     {
         return Math.Round(Convert.ToDecimal(a.TotalHours * (double)b), 2, MidpointRounding.AwayFromZero);
     }
 
-    private void TotalHorasTrabalhadas(TimeSpan totalHorasPeriodo)
-    {
-        TimeSpan times = new TimeSpan(0, 0, 0, 0);
-        times = totalHorasPeriodo;
-
-        TotalHorasPeriodo = string.Format("{0}:{1}:{2}", times.Days > 0 ? ((times.Days * 24) + times.Hours) : times.Hours,
-                                    times.Minutes < 10 ? ("0" + times.Minutes) : times.Minutes.ToString(),
-                                    times.Seconds < 10 ? ("0" + times.Seconds) : times.Seconds.ToString());
-        //txtValorTotal.Text = string.Format("R$ {0:#.##}", valor.ToString());
-    }
 
     private void OnSearch(string text)
     {
@@ -197,7 +216,7 @@
 
     private async Task<TableData<Data.RegistroPonto>> ServerReload(TableState state)
     {
-        IEnumerable<Data.RegistroPonto> data = await rps.GetAllRegistroPonto();
+        IEnumerable<Data.RegistroPonto> data = rps.GetAllRegistroPontoList().AsQueryable();
         await Task.Delay(300);
         data = data.Where(element =>
         {
@@ -219,11 +238,24 @@
                 break;
             case "semana":
                 data = data.OrderByDirection(state.SortDirection, o => o.DiaSemanaPtBr);
-                break;
+                break; 
         }
-
-        pagedData = data.Skip(state.Page * state.PageSize).Take(state.PageSize).ToArray();
+        pagedData = data.Where(a=>a.Data>=_dateRange.Start && a.Data<=_dateRange.End).Skip(state.Page * state.PageSize).Take(state.PageSize).ToArray();
+        Count = data.Count();
+        long soma = data.Sum(i => i.TotalHorasDia.Ticks);
+        TimeSpan time = TimeSpan.FromTicks(soma);
+        TotalHorasPeriodo = TotalHorasTrabalhadas(time);
         return new TableData<Data.RegistroPonto>() {TotalItems = totalItems, Items = pagedData};
+    }
+
+    private string TotalHorasTrabalhadas(TimeSpan totalHorasPeriodo)
+    {
+        TimeSpan times = new TimeSpan(0, 0, 0, 0);
+        times = totalHorasPeriodo;
+
+        return string.Format("{0}:{1}:{2}", times.Days > 0 ? ((times.Days * 24) + times.Hours) : times.Hours,
+                                    times.Minutes < 10 ? ("0" + times.Minutes) : times.Minutes.ToString(),
+                                    times.Seconds < 10 ? ("0" + times.Seconds) : times.Seconds.ToString());
     }
 
     async Task LoadData(LoadDataArgs args)
@@ -233,6 +265,8 @@
         isLoading = true;
 
         var query = rps.GetAllRegistroPontoList().AsQueryable();
+
+        //filtroPontosProcessados = query.ToList();
 
         if (args != null)
         {
@@ -244,25 +278,18 @@
             {
                 query = query.OrderBy(args.OrderBy);
             }
+            //filtroPontosProcessados = query.Skip(args.Skip.Value).Take(args.Top.Value).ToList();
             filtroPontosProcessados = query.Skip(args.Skip.Value).Take(args.Top.Value).ToList();
-            TotalHorasDoPeriodo();
 
         }
         else
         {
             filtroPontosProcessados = query.ToList();
-            TotalHorasDoPeriodo();
         }
         Count = filtroPontosProcessados.Count();
         isLoading = false;
     }
 
-    async void ResetGrid()
-    {
-        grid.Reset(true);
-        await LoadData(ultimoFiltro);
-        TotalHorasDoPeriodo();
-    }
 
     async Task ProcessaFile(InputFileChangeEventArgs files)
     {
@@ -339,15 +366,7 @@
             }
         }
         await ProcessaPontos();
-        ResetGrid();
         mudtabs.ActivatePanel(1);
-    }
-
-    void TotalHorasDoPeriodo()
-    {
-        long soma = filtroPontosProcessados.Sum<RegistroPonto>(i => i.TotalHorasDia.Ticks);
-        TimeSpan time = TimeSpan.FromTicks(soma);
-        TotalHorasTrabalhadas(time);
     }
 
 
@@ -374,14 +393,17 @@
 
             foreach (var item in filtro)
             {
+                //await JSRuntime.InvokeVoidAsync("console.log", "teste", item);
                 RegistroPonto ponto = new RegistroPonto();
                 ponto.Data = Convert.ToDateTime(item.Key);
                 ponto.Colaborador = colab;
+                //ponto.ColaboradorId = colab.Id;
                 foreach (var i in item)
                 {
                     ponto.AddHora(i.Data);
+                    //await JSRuntime.InvokeVoidAsync("console.log", "teste", i);
                 }
-               if (rps.ValidaPontoExiste(ponto))
+                if (rps.ValidaPontoExiste(ponto))
                 {
                     rps.AddRecord(ponto);
                 }
@@ -398,12 +420,15 @@
 
                 foreach (var colab in colaboradores)
                 {
+                    //await JSRuntime.InvokeVoidAsync("console.log", "todos", item);
                     RegistroPonto ponto = new RegistroPonto();
                     ponto.Data = Convert.ToDateTime(item.Key);
                     ponto.Colaborador = colab.FirstOrDefault().Colaborador;
+                    //ponto.ColaboradorId = colab.FirstOrDefault().Id;
                     foreach (var i in colab)
                     {
                         ponto.AddHora(i.Data);
+                        //await JSRuntime.InvokeVoidAsync("console.log", "teste", i);
                     }
                     if (!rps.ValidaPontoExiste(ponto))
                     {
@@ -468,7 +493,7 @@
         }
     }
 
-    
+
     public async void OpenRegistroPonto(RegistroPonto reg)
     {
         RegistroPonto registro = reg;
@@ -486,6 +511,7 @@
             if (!result.Cancelled)
             {
                 OpenDialogModal("Atualizado", "Registro atualizado!");
+                await table.ReloadServerData();
             }
         }
     }
@@ -506,7 +532,6 @@
     public async void FiltroPontoProcessados()
     {
         filtroPontosProcessados = await rps.GetAllRegistroPontoByIdData(idSelectd, Data1, DataMais1);
-        TotalHorasDoPeriodo();
     }
 
     async Task FilesReady2(string files)

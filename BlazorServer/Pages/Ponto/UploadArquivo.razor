@@ -1,0 +1,287 @@
+﻿@page "/UploadArquivo"
+
+
+@using System
+@using BlazorServer.Data
+@using System.Globalization
+@using System.Timers
+@using System.Linq.Dynamic.Core
+@using MudBlazor
+@using MudBlazor.Components
+@inject NavigationManager NavigationManager
+
+@inject IJSRuntime JSRuntime
+
+@inject MudBlazor.DialogService DialogService
+@inject IDialogService MudDialogService
+@inject Radzen.DialogService DialogServiceRad
+@inherits OwningComponentBase
+
+<div class="container">
+    <MudGrid Style="margin-top: 50px;">
+        <MudItem xs=11>
+            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
+                <InputFile id="fileInput112" OnChange="ProcessaFile" hidden multiple accept=".txt"/>
+                <MudButton HtmlTag="label" 
+                           Variant="Variant.Filled" 
+                           Color="Color.Primary" 
+                           StartIcon="@Icons.Filled.CloudUpload" 
+                           for="fileInput112">
+                           Upload do arquivo
+                </MudButton>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+
+</div>
+
+@code 
+{
+    [Inject] private IDialogService DialogServiceMud { get; set; }
+
+    bool _loading;
+    private IEnumerable<Data.RegistroPonto> pagedData;
+    private MudTable<Data.RegistroPonto> table;
+
+    private int totalItems;
+    private string searchString = null;
+
+    MudTabs mudtabs;
+    MudTabPanel panel1;
+    MudTabPanel panel2;
+
+
+    public bool isVisible;
+
+    string mensagemDialog;
+    string tituloDialog;
+
+    public Data.RegistroPonto regPonto = new RegistroPonto();
+
+    RadzenDataGrid<Data.RegistroPonto> grid;
+
+    bool isLoading;
+
+    int Count;
+
+    public bool dialogIsOpen = false;
+
+    CultureInfo Cultura = new CultureInfo("pt-BR");
+
+    public string Nome { get; set; }
+
+    public DateTime? Data { get; set; }
+
+    public Guid idSelectd { get; set; }
+
+    public DateTime Data1 { get; set; }
+
+    public DateTime Data2 { get; set; }
+
+    public DateTime DataMais1 { get => Data2.AddHours(23); }
+
+    string RegoligoSelecionado = "Nacional";
+
+    List<Arquivo> listArquivo = new List<Arquivo>();
+
+    List<string> listAlert = new List<string>();
+
+    List<Data.RegistroRelogio> ListRegPonto = new List<RegistroRelogio>();
+
+    List<Data.RegistroRelogio> filtro = new List<RegistroRelogio>();
+
+    //List<Data.RegistroPonto> filtroPontosProcessados;
+
+    IEnumerable<Data.RegistroPonto> filtroPontosProcessados;
+
+    Service.ColaboradorService cs;
+
+    Service.RegistroPontoService rps;
+
+    LoadDataArgs ultimoFiltro;
+
+    string[] value1ItemsCombo = new[]
+        {
+        "Nacional",
+        "Chines",
+    };
+
+    bool ProcessamentoOK;
+
+    
+    async Task BusyDialog()
+    {
+        await DialogServiceRad.OpenAsync("", ds =>
+            @<div>
+                <div class="row">
+                    <div class="col-md-12">
+                        Processando arquivo...
+                    </div>
+                </div>
+    </div>
+    , new Radzen.DialogOptions() { ShowTitle = false, Style = "min-height:auto;min-width:auto;width:auto" });
+    }
+
+    protected override void OnInitialized()
+    {
+        cs = (Service.ColaboradorService)ScopedServices.GetService(typeof(Service.ColaboradorService));
+        rps = (Service.RegistroPontoService)ScopedServices.GetService(typeof(Service.RegistroPontoService));
+    }
+
+    async Task ProcessaFile(InputFileChangeEventArgs files)
+    {
+        InvokeAsync(async () =>
+        {
+            await FilesReady(files);
+            DialogServiceRad.Close();
+        });
+        await BusyDialog();
+        if (ProcessamentoOK)
+        {
+            NavigationManager.NavigateTo("/Ponto/registro2");
+        }
+    }
+
+    async Task FilesReady(InputFileChangeEventArgs e)
+    {
+        string extensao = string.Empty;
+
+        var entries = e.GetMultipleFiles();
+        var file = entries.FirstOrDefault();
+        extensao = file.Name.Substring(file.Name.IndexOf("."), file.Name.Length - file.Name.IndexOf("."));
+
+        if (!extensao.Equals(".txt"))
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "Arquivo selecionado não é um arquivo válido!");
+            return;
+        }
+        else
+        {
+            listAlert.Add($"Nome: {file.Name} - Tamanho: {file.Size}");
+        }
+
+        var ms = new MemoryStream();
+
+        await e.File.OpenReadStream().CopyToAsync(ms);
+
+        StreamReader sr = new StreamReader(ms);
+
+        ms.Position = 0;
+
+        List<string> lista = new List<string>();
+
+        string sline = "";
+
+        while (sline != null)
+        {
+            sline = sr.ReadLine();
+            if (sline != "")
+            {
+                lista.Add(sline);
+            }
+        }
+        //U{5}P{12}D{2}M{2}A{4}H{2}N{2}
+
+        foreach (var item in lista)
+        {
+            if (item!=null)
+            {
+                string cod = item.Substring(0, 5);
+                string cpf = item.Substring(5, 12);
+                string dia = item.Substring(17, 2);
+                string mes = item.Substring(19, 2);
+                string ano = item.Substring(21, 4);
+                string hh = item.Substring(25, 2);
+                string mm = item.Substring(27, 2);
+
+                string sData = $"{dia}/{mes}/{ano} {hh}:{mm}";
+
+                RegistroRelogio reg = new RegistroRelogio();
+
+                try
+                {
+                    reg.CodColaborador = Convert.ToInt32(cod);
+                    reg.Colaborador = await cs.GetColaboradorByIdPonto(Convert.ToInt32(cod));
+                    reg.Cpf = cpf;
+                    reg.Data = Convert.ToDateTime(sData, Cultura);
+                    ListRegPonto.Add(reg);
+                }
+                catch
+                {
+
+                    bool? result = await DialogServiceMud.ShowMessageBox("Arquivo com problemas!", 
+                                            "Verifique se o arquivo est'a no formato coreto. \r\n" + "U{5}P{12}D{2}M{2}A{4}H{2}N{2} - Formato utilizado", yesText: "OK");
+                    DialogServiceRad.Close();
+                    return;
+                }
+            }
+        }
+        await ProcessaPontos();
+        ProcessamentoOK = true;
+    }
+
+     async Task ProcessaPontos()
+    {
+
+        foreach (var item in ListRegPonto)
+        {
+            if (item.Colaborador == null)
+            {
+                bool? result = await DialogServiceMud.ShowMessageBox("Cadastro não encontrado", 
+                $"Não foi encontrado o cadastro do colaborador {item.CodColaborador}, identifique e cadastre o colaborador para proseguir. \r\n" + "U{5}P{12}D{2}M{2}A{4}H{2}N{2} - Formato utilizado", yesText: "OK");
+                return;
+            }
+        }
+
+
+        if (idSelectd != Guid.Empty)
+        {
+            Data.Colaborador colab = await cs.GetColaboradorById(idSelectd);
+
+            var filtro = ListRegPonto.Where(x => x.Colaborador.Id.Equals(colab.Id) && x.Data >= Data1 && x.Data <= DataMais1).GroupBy(i => i.Data.ToShortDateString()).ToArray();
+            var filtro3 = ListRegPonto.Where(x => x.Colaborador.Id.Equals(colab.Id) && x.Data >= Data1 && x.Data <= DataMais1).GroupBy(i => i.Data).Select(x => new {Value = x.Count(), Data=(DateTime)x.Key }).ToArray();
+
+            foreach (var item in filtro)
+            {
+                RegistroPonto ponto = new RegistroPonto();
+                ponto.Data = Convert.ToDateTime(item.Key);
+                ponto.Colaborador = colab;
+                foreach (var i in item)
+                {
+                    ponto.AddHora(i.Data);
+                }
+               if (rps.ValidaPontoExiste(ponto))
+                {
+                    rps.AddRecord(ponto);
+                }
+            }
+            rps.ContextSaveCharges();
+        }
+        else
+        {
+            var filtro = ListRegPonto.GroupBy(i=>i.Data.ToShortDateString()).ToList();
+
+            foreach (var item in filtro)
+            {
+                var colaboradores = item.GroupBy(i => i.Colaborador).ToList();
+
+                foreach (var colab in colaboradores)
+                {
+                    RegistroPonto ponto = new RegistroPonto();
+                    ponto.Data = Convert.ToDateTime(item.Key);
+                    ponto.Colaborador = colab.FirstOrDefault().Colaborador;
+                    foreach (var i in colab)
+                    {
+                        ponto.AddHora(i.Data);
+                    }
+                    if (!rps.ValidaPontoExiste(ponto))
+                    {
+                        rps.AddRecord(ponto);
+                    }
+                }
+            }
+            rps.ContextSaveCharges();
+        }
+    }
+
+}

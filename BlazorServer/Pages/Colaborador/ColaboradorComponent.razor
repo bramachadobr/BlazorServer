@@ -71,6 +71,7 @@
 
 
 @code 
+
 {
     bool _loading;
     private IEnumerable<Data.Colaborador> pagedData;
@@ -94,27 +95,19 @@
     ColaboradorService _colaboradorService;
     CargoService _cargoService;
 
-    protected override async void OnInitialized()
+    protected override void OnInitialized()
     {
-        base.OnInitialized();
         _colaboradorService = (ColaboradorService)ScopedServices.GetService(typeof(ColaboradorService));
         _cargoService = (CargoService)ScopedServices.GetService(typeof(CargoService));
-
-        await LoadData(ultimoFiltro);
     }
 
     protected override void OnAfterRender(bool firstRender)
     {
-        //table.ReloadServerData();
+        table.Loading = true;
+        table.ReloadServerData();
+        table.Loading = false;
     }
 
-
-
-    async Task EditarItem()
-    {
-    }
-
-    
     private void OnSearch(string text)
     {
         searchString = text;
@@ -123,7 +116,7 @@
 
     private async Task<TableData<Data.Colaborador>> ServerReload(TableState state)
     {
-        IEnumerable<Data.Colaborador> data = await _colaboradorService.GetAllColaboradores();
+        IEnumerable<Data.Colaborador> data =  _colaboradorService.GetAllColaboradoresList().AsQueryable();
         await Task.Delay(300);
         data = data.Where(element =>
         {
@@ -231,15 +224,14 @@
         var result = await dialog.Result;
         if (!result.Cancelled)
         {
-            
+
         }
     }
 
-    async void OpenColaboradorManager(Guid id)
+    void OpenColaboradorManager(Guid id)
     {
         NavigationManager.NavigateTo($"/gerenciaColaborador/{id.ToString()}");
     }
-
 
     RadzenButton buttonFecharDialog;
 
@@ -254,7 +246,6 @@
              NoHeader = true
         };
 
-
         Data.Colaborador colab = (Data.Colaborador)item.Data;
 
         var dialog = DialogService.Show<Colaborador>("Cadastro do Colaborador", new MudBlazor.DialogParameters () 
@@ -264,7 +255,7 @@
 
         if (!result.Cancelled)
         {
-            
+            await LoadData(null);
         }
 
     }

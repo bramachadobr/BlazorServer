@@ -15,7 +15,7 @@
 <div class="container">
 <MudDialog>
     <DialogContent>
-        <RadzenTemplateForm Data="@colaborador" Submit="@((Data.Colaborador args) => { Submit(); })">
+        <RadzenTemplateForm Data="@colaborador" TItem="Data.Colaborador" Submit="@((Data.Colaborador args) => { Submit(); })">
      <div class="row">
             <div class="col-md-6">
                <RadzenFieldset Text="Cadastro">
@@ -25,6 +25,7 @@
                         </div>
                         <div class="col-md-4">
                             <RadzenNumeric style="width: 100%;" Name="CodPonto" @bind-Value="colaborador.CodPonto" Disabled="@editCodigo" />
+                            <RadzenRequiredValidator Component="CodPonto" Text="Cod Ponto obrigatorio" Popup=@popup Style="position: absolute"/>
                         </div>
                         <div class="col-md-4">
                             <RadzenButton Text="" ButtonStyle="ButtonStyle.Light" Icon="edit" Click="@AlteraCodigo" />
@@ -38,6 +39,7 @@
                         </div>
                         <div class="col-md-8">
                             <RadzenTextBox style="width: 100%;" Name="Nome" @bind-Value="colaborador.Nome" />
+                            <RadzenRequiredValidator Component="Nome" Text="informe o nome" Popup=@popup Style="position: absolute"/>
                         </div>
                     </div> 
 
@@ -48,6 +50,7 @@
                         </div>
                         <div class="col-md-8">
                             <RadzenTextBox style="width: 100%;" Name="Cpf" @bind-Value="colaborador.Cpf" />
+                             <RadzenRequiredValidator Component="Cpf" Text="informe o cpf" Popup=@popup Style="position: absolute"/>
                         </div>
                     </div> 
                     <div class="row">
@@ -57,6 +60,7 @@
                         <div class="col-md-8">
                             <RadzenDropDown @bind-Value="colaborador.Cargo" TValue="Data.Cargo" SelectedItem="@cargos"  Name="Cargo" Data=@cargos Change=@(args=>OnChange(args, "DropDown-Cargo")) 
                                 TextProperty="NomeCargo" ValueProperty="Cargo" AllowClear="true" Placeholder="Selecione um cargo"  style="width: 100%;" />
+                                <RadzenRequiredValidator Component="Cargo" Text="Selecione um cargo" Popup=@popup Style="position: absolute"/>
                                 @*<RadzenDropDown TValue="Data.Cargo" SelectedItem="@cargos" @bind-Value="colaborador.Cargo" Name="Cargo2" TextProperty="NomeCargo" ValueProperty="CargoId" AllowClear="true" Placeholder="Selecione um cargo"  style="width: 100%;" />*@
                         </div>
                     </div>
@@ -124,6 +128,8 @@
                         </div>
                         <div class="col-md-8">
                             <RadzenTextBox style="width: 100%;" Name="Email" @bind-Value="colaborador.Email" />
+                            <RadzenRequiredValidator Component="Email" Text="Informe o e-mail" Popup=@popup Style="position: absolute"/>
+                            Cargo
                         </div>
                     </div>
                     <div class="row">
@@ -132,6 +138,7 @@
                         </div>
                         <div class="col-md-8">
                             <RadzenTextBox style="width: 100%;" Name="Telefone"  @bind-Value="colaborador.Telefone"/>
+                            <RadzenRequiredValidator Component="Telefone" Text="Informe o telefone" Popup=@popup Style="position: absolute"/>
                         </div>
                     </div>
                     <div class="row">
@@ -194,7 +201,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12 d-flex align-items-end justify-content-center" style="margin-top: 16px;">
                 @*<RadzenButton ButtonType="Radzen.ButtonType.Submit" Click="@(args => Submit(args))"  Icon="save" Text="Salvar"  /> *@
-                <MudButton Color="Color.Primary" OnClick="Submit">Salvar</MudButton>
+                <MudButton Color="Color.Primary"  OnClick="Submit">Salvar</MudButton>
                 <MudButton Color="Color.Primary" OnClick="Close">Cancelar</MudButton>
             </div>
         </div>
@@ -206,6 +213,7 @@
 
 
 @code {
+    bool popup;
 
     TimeSpan? Tempo = new TimeSpan(44,00,00);
 
@@ -230,11 +238,8 @@
         _colaboradorService = (ColaboradorService)ScopedServices.GetService(typeof(ColaboradorService));
         _cargoService = (CargoService)ScopedServices.GetService(typeof(CargoService));
         _unidadeService = (UnidadeService)ScopedServices.GetService(typeof(UnidadeService));
-
         editCodigo = true;
-
         cargos = await _cargoService.GetAllRecords();
-
         unidades = await _unidadeService.GetUnidades();
 
         if (ColaboradorID != Guid.Empty)
@@ -268,27 +273,14 @@
         editCodigo = !editCodigo;
     }
 
+    void Validation()
+    {
+
+    }
 
     void Submit()
     {
         _colaboradorService.UpdateRecord(colaborador);
         MudDialog.Close(DialogResult.Ok(colaborador));
-
-        //var parameters = new DialogParameters {[ "server" ] = server};
-        //var parametros = new MudBlazor.DialogParameters();
-        //parametros.Add("ContentText", "Deseja salvar as alterações ?");
-        //parametros.Add("ButtonText", "Sim");
-        //parametros.Add("Color", Color.Success);
-        //var option = new MudBlazor.DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
-        //var result = await DialogService.Show<DialogoSimplesMudBlazor>("Confirmar",parametros, option).Result;
-        //if (!result.Cancelled)
-        //{ 
-        //}
-        //var dialog = await DialogServiceRad.Confirm("Deseja salvar as alterações ?", "Salvar alterações", new ConfirmOptions() { OkButtonText = "Sim", CancelButtonText = "Não",  });
-        //bool isValid = Convert.ToBoolean(dialog);
-        //if (isValid)
-        //{
-        //    _colaboradorService.UpdateRecord(args);
-        //}
     }
 }

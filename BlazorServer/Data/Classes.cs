@@ -82,13 +82,11 @@ namespace BlazorServer.Data
         public int CodPonto { get; set; }
         [Required]
         public string Nome { get; set; }
-        [Required]
         public string Cpf { get; set; }
 
         public string CpfComMascara { get => string.Format(@"{0:000\.###\.###-##}", Cpf); }
-        
-        public Cargo Cargo { get; set; }
 
+        public Cargo Cargo { get; set; }
 
         public DateTime? Contratacao { get; set; }
 
@@ -320,7 +318,7 @@ namespace BlazorServer.Data
             return TotalHorasPeriodo;
         }
 
-        
+
 
         public static double TotalHorasDoColaboradorMes(this Colaborador colab, DateTime data)
         {
