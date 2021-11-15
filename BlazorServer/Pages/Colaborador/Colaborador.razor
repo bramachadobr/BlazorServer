@@ -16,10 +16,23 @@
 <MudDialog>
     <DialogContent>
         <RadzenTemplateForm Data="@colaborador" TItem="Data.Colaborador" Submit="@((Data.Colaborador args) => { Submit(); })">
+            <DataAnnotationsValidator/>
+            <ValidationSummary/>
+            <div class="row">
+                @if (!validacaoForm)
+                {
+                    <div class="alert alert-danger" role="alert">
+                        @foreach (string item in errosValidacao)
+                        {
+                            <a href="#">@item</a>
+                        }
+                    </div>
+                }
+            </div>
      <div class="row">
-            <div class="col-md-6">
+              <div class="col-md-6">
                <RadzenFieldset Text="Cadastro">
-                   <div class="row">
+                   <div class="row" style="margin-bottom: 15px">
                         <div class="col-md-4 align-items-center d-flex">
                             <RadzenLabel Text="Código Relogio" />
                         </div>
@@ -32,49 +45,52 @@
                             @*<RadzenButton  Text="alter" Click="@AlteraCodigo" @onclick="AlteraCodigo" /> *@
                         </div>
                     </div> 
-
-                    <div class="row">
+                    <div class="row" style="margin-bottom: 15px">
                         <div class="col-md-4 align-items-center d-flex">
                             <RadzenLabel Text="Nome" />
                         </div>
                         <div class="col-md-8">
                             <RadzenTextBox style="width: 100%;" Name="Nome" @bind-Value="colaborador.Nome" />
-                            <RadzenRequiredValidator Component="Nome" Text="informe o nome" Popup=@popup Style="position: absolute"/>
+                            <br />
+                            <RadzenRequiredValidator Component="Nome" Text="informe o nome" Popup=@popup Style="position: absolute" Visible=@(string.IsNullOrEmpty(colaborador.Nome))/>
                         </div>
                     </div> 
 
 
-                    <div class="row">
+                    <div class="row" style="margin-bottom: 15px">
                         <div class="col-md-4 align-items-center d-flex">
                             <RadzenLabel Text="CPF" />
                         </div>
                         <div class="col-md-8">
                             <RadzenTextBox style="width: 100%;" Name="Cpf" @bind-Value="colaborador.Cpf" />
+                            <br />
                              <RadzenRequiredValidator Component="Cpf" Text="informe o cpf" Popup=@popup Style="position: absolute"/>
                         </div>
                     </div> 
-                    <div class="row">
+                    <div class="row" style="margin-bottom: 10px">
                         <div class="col-md-4 align-items-center d-flex">
                             <RadzenLabel Text="Cargo" />
                         </div>
                         <div class="col-md-8">
                             <RadzenDropDown @bind-Value="colaborador.Cargo" TValue="Data.Cargo" SelectedItem="@cargos"  Name="Cargo" Data=@cargos Change=@(args=>OnChange(args, "DropDown-Cargo")) 
                                 TextProperty="NomeCargo" ValueProperty="Cargo" AllowClear="true" Placeholder="Selecione um cargo"  style="width: 100%;" />
+                                <br />
                                 <RadzenRequiredValidator Component="Cargo" Text="Selecione um cargo" Popup=@popup Style="position: absolute"/>
                                 @*<RadzenDropDown TValue="Data.Cargo" SelectedItem="@cargos" @bind-Value="colaborador.Cargo" Name="Cargo2" TextProperty="NomeCargo" ValueProperty="CargoId" AllowClear="true" Placeholder="Selecione um cargo"  style="width: 100%;" />*@
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="margin-bottom: 10px">
                         <div class="col-md-4 align-items-center d-flex">
                             <RadzenLabel Text="Unidade" />
                         </div>
                         <div class="col-md-8">
                             <RadzenDropDown @bind-Value="colaborador.Unidade" TValue="Data.Unidade" SelectedItem="@unidades"  Name="Unidade" Data=@unidades Change=@(args=>OnChange(args, "DropDown-Unidade")) 
                                 TextProperty="Nome" ValueProperty="Unidade" AllowClear="true" Placeholder="Selecione a Unidade"  style="width: 100%;" />
+                                <RadzenRequiredValidator Component="Unidade" Text="Selecione uma unidade" Popup=@popup Style="position: absolute"/>
                                 @*<RadzenDropDown TValue="Data.Cargo" SelectedItem="@cargos" @bind-Value="colaborador.Cargo" Name="Cargo2" TextProperty="NomeCargo" ValueProperty="CargoId" AllowClear="true" Placeholder="Selecione um cargo"  style="width: 100%;" />*@
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="margin-bottom: 15px">
                         <div class="col-md-4 align-items-center d-flex">
                             <RadzenLabel Text="Admissão" />
                         </div>
@@ -83,7 +99,7 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" style="margin-bottom: 15px">
                         <div class="col-md-4 align-items-center d-flex">
                             <RadzenLabel Text="Salário" />
                         </div>
@@ -91,7 +107,7 @@
                             <RadzenNumeric style="width: 100%;" Name="Salario" @bind-Value="colaborador.Salario" Format="R$ ####.00"/>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="margin-bottom: 15px">
                         <div class="col-md-4 align-items-center d-flex">
                             <RadzenLabel Text="Hora Aula" />
                         </div>
@@ -100,7 +116,7 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" style="margin-bottom: 15px">
                         <div class="col-md-4 align-items-center d-flex">
                             <RadzenLabel Text="Demissão" />
                         </div>
@@ -122,26 +138,27 @@
               </div>
               <div class="col-md-6">
                 <RadzenFieldset Text="Informação de Contato">
-                    <div class="row">
+                    <div class="row" style="margin-bottom: 15px">
                         <div class="col-md-4 align-items-center d-flex">
                             <RadzenLabel Text="Email" />
                         </div>
                         <div class="col-md-8">
                             <RadzenTextBox style="width: 100%;" Name="Email" @bind-Value="colaborador.Email" />
+                            <br />
                             <RadzenRequiredValidator Component="Email" Text="Informe o e-mail" Popup=@popup Style="position: absolute"/>
-                            Cargo
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="margin-bottom: 15px">
                         <div class="col-md-4 align-items-center d-flex">
                             <RadzenLabel Text="Telefone" />
                         </div>
                         <div class="col-md-8">
                             <RadzenTextBox style="width: 100%;" Name="Telefone"  @bind-Value="colaborador.Telefone"/>
+                            <br />
                             <RadzenRequiredValidator Component="Telefone" Text="Informe o telefone" Popup=@popup Style="position: absolute"/>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="margin-bottom: 15px">
                         <div class="col-md-4 align-items-center d-flex">
                             <RadzenLabel Text="Endereço" />
                         </div>
@@ -150,7 +167,7 @@
                         </div>
                     </div>
 
-                    <div class=row>
+                    <div class="row" style="margin-bottom: 15px">
                         <div class="col-md-4 align-items-center d-flex">
                             <RadzenLabel Text="Numero" />
                         </div>
@@ -158,7 +175,7 @@
                             <RadzenNumeric Placeholder="123" style="width: 100%;" Name="Numero" @bind-Value="colaborador.Numero" />
                         </div>
                     </div>
-                    <div class=row>
+                    <div class="row" style="margin-bottom: 15px">
                         <div class="col-md-4 align-items-center d-flex">
                             <RadzenLabel Text="Bairro" />
                         </div>
@@ -166,7 +183,7 @@
                             <RadzenTextBox style="width: 100%;" Name="Bairro" @bind-Value="colaborador.Bairro"/>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="margin-bottom: 15px">
                         <div class="col-md-4 align-items-center d-flex">
                             <RadzenLabel Text="Cidade" />
                         </div>
@@ -174,7 +191,7 @@
                             <RadzenTextBox style="width: 100%;" Name="Cidade" @bind-Value="colaborador.Cidade"/>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="margin-bottom: 15px">
                         <div class="col-md-4 align-items-center d-flex">
                             <RadzenLabel Text="Estado" />
                         </div>
@@ -200,7 +217,7 @@
     <DialogActions>
         <div class="row justify-content-center">
             <div class="col-md-12 d-flex align-items-end justify-content-center" style="margin-top: 16px;">
-                @*<RadzenButton ButtonType="Radzen.ButtonType.Submit" Click="@(args => Submit(args))"  Icon="save" Text="Salvar"  /> *@
+                <RadzenButton ButtonType="Radzen.ButtonType.Submit" Icon="save" Text="Salvar"  /> 
                 <MudButton Color="Color.Primary"  OnClick="Submit">Salvar</MudButton>
                 <MudButton Color="Color.Primary" OnClick="Close">Cancelar</MudButton>
             </div>
@@ -212,9 +229,12 @@
 
 
 
-@code {
-    bool popup;
+@code 
+{
 
+
+
+    bool popup;
     TimeSpan? Tempo = new TimeSpan(44,00,00);
 
     [CascadingParameter] public MudDialogInstance MudDialog { get; set; }
@@ -233,6 +253,11 @@
 
     void Close() => MudDialog.Close(DialogResult.Cancel());
 
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+    }
+
     protected override async void OnInitialized()
     {
         _colaboradorService = (ColaboradorService)ScopedServices.GetService(typeof(ColaboradorService));
@@ -241,6 +266,7 @@
         editCodigo = true;
         cargos = await _cargoService.GetAllRecords();
         unidades = await _unidadeService.GetUnidades();
+        validacaoForm = true;
 
         if (ColaboradorID != Guid.Empty)
         {
@@ -250,7 +276,6 @@
         {
             colaborador = new Data.Colaborador();
         }
-
     }
 
     void OnChange(object value, string name)
@@ -258,29 +283,74 @@
         if(name=="DropDown-Cargo")
         {
             Data.Cargo c = (Data.Cargo)value;
-            colaborador.Cargo = cargos.FirstOrDefault(i => i.Id == c.Id);
+            if(c!=null)
+                colaborador.Cargo = cargos.FirstOrDefault(i => i.Id == c.Id);
         }
         if(name=="DropDown-Unidade")
         {
             Data.Unidade uni = (Data.Unidade)value;
             colaborador.Unidade = unidades.FirstOrDefault(i => i.Id == uni.Id);
         }
-
     }
 
-    async void AlteraCodigo()
+    void AlteraCodigo()
     {
         editCodigo = !editCodigo;
+        StateHasChanged();
     }
+
+    List<string> errosValidacao;
+    bool validacaoForm;
 
     void Validation()
     {
-
+        errosValidacao = new List<string>();
+        if (string.IsNullOrEmpty(colaborador.Nome))
+        {
+            errosValidacao.Add("Informe o nome do Colaborador");
+            validacaoForm = false;
+        }
+        if (colaborador.Cargo is null)
+        {
+            errosValidacao.Add("Informe o cargo do colaborador");
+            validacaoForm = false;
+        }
+        if (string.IsNullOrEmpty(colaborador.Cpf))
+        {
+            errosValidacao.Add("Informe o CPF do colaborador");
+            validacaoForm = false;
+        }
+        if (colaborador.Unidade is null)
+        {
+            errosValidacao.Add("Informe a Unidade do colaborador");
+            validacaoForm = false;
+        }
+        if (string.IsNullOrEmpty(colaborador.Telefone))
+        {
+            errosValidacao.Add("Informe o telefone do colaborador");
+            validacaoForm = false;
+        }
+        if (string.IsNullOrEmpty(colaborador.Email))
+        {
+            errosValidacao.Add("Informe o email do colaborador");
+            validacaoForm = false;
+        }
+        if (errosValidacao.Count == 0)
+        {
+            validacaoForm = true;
+        }
     }
 
     void Submit()
     {
-        _colaboradorService.UpdateRecord(colaborador);
-        MudDialog.Close(DialogResult.Ok(colaborador));
+        Validation();
+        if (validacaoForm)
+        {
+            if (_colaboradorService.UpdateRecord(colaborador))
+            {
+                MudDialog.Close(DialogResult.Ok(colaborador));
+            }
+        }
+        StateHasChanged();
     }
 }

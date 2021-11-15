@@ -29,7 +29,7 @@ namespace BlazorServer.Service
 
         public async Task<IEnumerable<Colaborador>> GetAllColaboradores()
         {
-            return await _context.Colaboradors.Include(c => c.Cargo).ToListAsync();
+            return await _context.Colaboradors.Include(c => c.Cargo).Include(u => u.Unidade).ToListAsync();
         }
 
         public List<Colaborador> GetAllColaboradoresList()
@@ -42,12 +42,12 @@ namespace BlazorServer.Service
         {
             //return await _context.Colaboradors.Where<Colaborador>(a => a.Id.Equals(id)).FirstOrDefaultAsync();
             //return await _context.Colaboradors.FirstOrDefaultAsync(a => a.Id.Equals(id));
-            return _context.Colaboradors.FirstOrDefault(i => i.Id == id);
+            return _context.Colaboradors.Include(c => c.Cargo).Include(u => u.Unidade).FirstOrDefault(i => i.Id == id);
         }
 
         public IEnumerable<Colaborador> GetColaboradorIEnumerable()
         {
-            return _context.Colaboradors.Include(a=>a.Cargo).OrderBy(i => i.Nome).AsNoTracking().AsQueryable();
+            return _context.Colaboradors.Include(a => a.Cargo).Include(u => u.Unidade).OrderBy(i => i.Nome).AsNoTracking().AsQueryable();
         }
 
         public async Task<Colaborador> GetColaboradorByIdPonto(int id)
@@ -63,15 +63,22 @@ namespace BlazorServer.Service
 
         public bool InsertRecord(Colaborador record)
         {
-            _context.Colaboradors.Add(record);
-            _context.SaveChanges();
-            return true;
+            try
+            {
+                _context.Colaboradors.Add(record);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
         }
 
         public bool UpdateRecord(Colaborador newRecord)
         {
             Colaborador record = _context.Colaboradors.Where(i => i.Id == newRecord.Id).FirstOrDefault();
-
             if (record != null)
             {
                 record.Ativo = newRecord.Ativo;
@@ -88,7 +95,6 @@ namespace BlazorServer.Service
                 record.Cpf = newRecord.Cpf;
                 record.Email = newRecord.Email;
                 record.Unidade = newRecord.Unidade;
-
                 _context.Colaboradors.Update(record);
                 _context.SaveChanges();
                 return true;

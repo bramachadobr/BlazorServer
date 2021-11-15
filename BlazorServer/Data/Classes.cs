@@ -4,8 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
 
-
-
 namespace BlazorServer.Data
 {
 
@@ -80,14 +78,15 @@ namespace BlazorServer.Data
         [Column(TypeName = "uniqueidentifier")]
         public Guid Id { get; set; }
         public int CodPonto { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Informe um nome para o colaborador")]
         public string Nome { get; set; }
+        [Required(ErrorMessage = "Informe o CPF do colaborador")]
         public string Cpf { get; set; }
 
         public string CpfComMascara { get => string.Format(@"{0:000\.###\.###-##}", Cpf); }
-
+        //[Required(ErrorMessage ="Informe o Cargo do colaborador")]
         public Cargo Cargo { get; set; }
-
+        public Unidade Unidade { get; set; }
         public DateTime? Contratacao { get; set; }
 
         public DateTime? Demissao { get; set; }
@@ -97,7 +96,9 @@ namespace BlazorServer.Data
         [Column(TypeName = "decimal(18,2)")]
         public decimal HoraAula { get; set; }
         public double CargaHorariaSemanal { get; set; }
+        //[Required(ErrorMessage ="Informe o e-mail do colaborador")]
         public string Email { get; set; }
+        //[Required(ErrorMessage ="Informe o telefone do colaborador")]
         public string Telefone { get; set; }
 
         public string Endereco { get; set; }
@@ -113,7 +114,7 @@ namespace BlazorServer.Data
 
         public List<RegistroPonto> Registros { get; set; }
 
-        public Unidade Unidade { get; set; }
+
     }
 
     public class RegistroPonto
@@ -249,9 +250,7 @@ namespace BlazorServer.Data
         public Guid Id { get; set; }
         [Required]
         public string Nome { get; set; }
-        [Required]
         public string RazaoSocial { get; set; }
-        [Required]
         public string CNPJ { get; set; }
         public string Endereco { get; set; }
         public int Numero { get; set; }

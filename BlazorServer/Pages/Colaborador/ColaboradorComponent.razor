@@ -36,6 +36,7 @@
                     <MudTh><MudTableSortLabel SortLabel="cod" T="Data.Colaborador">Cod.</MudTableSortLabel></MudTh>
                     <MudTh><MudTableSortLabel SortLabel="nome" T="Data.Colaborador">Nome</MudTableSortLabel></MudTh>
                     <MudTh><MudTableSortLabel SortLabel="cargo" T="Data.Colaborador">Cargo</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel SortLabel="unidade" T="Data.Colaborador">Unidade</MudTableSortLabel></MudTh>
                     <MudTh><MudTableSortLabel SortLabel="cpf" T="Data.Colaborador">CPF</MudTableSortLabel></MudTh>
                     <MudTh><MudTableSortLabel SortLabel="" T="Data.Colaborador">Admissao</MudTableSortLabel></MudTh>
                     <MudTh><MudTableSortLabel SortLabel="" T="Data.Colaborador">Demissao</MudTableSortLabel></MudTh>
@@ -45,6 +46,7 @@
                             <MudTd DataLabel="Cod." HideSmall="true">@context.CodPonto </MudTd>
                             <MudTd DataLabel="Nome">@context.Nome</MudTd>
                             <MudTd DataLabel="Cargo">@context.Cargo.NomeCargo</MudTd>
+                            <MudTd DataLabel="Unidade">@context.Unidade.Nome</MudTd>
                             <MudTd DataLabel="CH/Semanal">@context.CpfComMascara</MudTd>
                             <MudTd DataLabel="Admissao">@string.Format("{0:dd/MM/yyyy}", context.Contratacao)</MudTd>
                             <MudTd DataLabel="Demissao">@string.Format("{0:dd/MM/yyyy}", context.Demissao)</MudTd>
@@ -126,7 +128,9 @@
                 return true;
             if (element.Cpf.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            if ($"{element.Nome} {element.Cargo.NomeCargo} {element.Cpf} ".Contains(searchString))
+            if (element.Unidade.Nome.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if ($"{element.Nome} {element.Cargo.NomeCargo} {element.Cpf} {element.Unidade.Nome} ".Contains(searchString))
                 return true;
             return false;
         }).ToArray();
@@ -141,6 +145,9 @@
                 break;
             case "cargo":
                 data = data.OrderByDirection(state.SortDirection, o => o.Cargo.NomeCargo);
+                break;
+            case "unidade":
+                data = data.OrderByDirection(state.SortDirection, o => o.Unidade.Nome);
                 break;
             case "cpf":
                 data = data.OrderByDirection(state.SortDirection, o => o.Cpf);
@@ -254,7 +261,6 @@
         if (!result.Cancelled)
         {
             StateHasChanged();
-            @*await LoadData(null);*@
         }
 
     }
