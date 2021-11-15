@@ -156,6 +156,11 @@ namespace BlazorServer.Service
             return _context.RegistroPontos.Include(a => a.Colaborador).ToList();
         }
 
+        public IEnumerable<RegistroPonto> GetAllRegistroPontoEnumerable()
+        {
+            return _context.RegistroPontos.Include(a => a.Colaborador).AsNoTracking();
+        }
+
         public RegistroPonto GetRecord(Guid id)
         {
             return _context.RegistroPontos.Where(i => i.Id == id).FirstOrDefault();

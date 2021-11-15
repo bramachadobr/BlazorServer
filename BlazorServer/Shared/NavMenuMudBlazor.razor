@@ -2,10 +2,10 @@
             <MudNavMenu>
                 <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.Home" Href="/">Dashboard</MudNavLink>               
                     <MudNavGroup Match="NavLinkMatch.All" Icon="@Icons.Filled.ChromeReaderMode" Title="Controle de Ponto" Expanded="true" >
-                        <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.ChromeReaderMode" Href="/UploadArquivo">Upload de arquivo</MudNavLink>
-                        <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.ChromeReaderMode" Href="/Ponto/registro">Registro de pontos</MudNavLink>
-                        <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.ChromeReaderMode" Href="/Ponto/registro2">Registro de pontos2</MudNavLink>
-                        <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.ChromeReaderMode" Href="/Ponto/BancoHoras">Banco de Horas</MudNavLink>
+                        <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.UploadFile" Href="/UploadArquivo">Upload de arquivo</MudNavLink>
+                        @*<MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.ChromeReaderMode" Href="/Ponto/registro">Registro de pontos</MudNavLink>*@
+                        <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.ChromeReaderMode" Href="/Ponto/registro2">Registro de pontos</MudNavLink>
+                        <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.Timer" Href="/Ponto/BancoHoras">Banco de Horas</MudNavLink>
                     </MudNavGroup>
                     <MudNavGroup Match="NavLinkMatch.All" Icon="@Icons.Filled.AccountCircle" Title="Cadastros" Expanded="true">
                         <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.AccountCircle" Href="/Colaborador/colaborador">Gerenciar Colaborador</MudNavLink>

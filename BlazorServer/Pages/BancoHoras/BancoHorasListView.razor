@@ -160,7 +160,8 @@
             ColabTopMes c = new ColabTopMes();
             c.data = AppData.DataSelecionada;
             c.Colaborador =  _serviceColaborador.Colaboradores.Include(a=>a.Cargo).Where(a => a.Nome.Contains(item.Key)).ToList().FirstOrDefault();
-            c.Cargo = _serviceCargo.Cargos.Where(a => a.Equals(c.Colaborador.Cargo)).FirstOrDefault();
+            var query = _serviceCargo.GetAllRecordsList();
+            c.Cargo = query.Where(a => a.Equals(c.Colaborador.Cargo)).FirstOrDefault(); // foi alterado
             nome = item.Key;
 
             foreach (var h in item)

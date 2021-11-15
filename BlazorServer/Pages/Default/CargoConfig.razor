@@ -47,7 +47,7 @@
 
     protected override async void OnInitialized()
     {
-        _cargos = await Service.GetAllRecords();
+        _cargos = Service.GetAllRecords().Result ;
         _cargos.Add(new Cargo() { Id = Guid.Empty, NomeCargo = "Todos" });
         await GetLocalSession();
     }

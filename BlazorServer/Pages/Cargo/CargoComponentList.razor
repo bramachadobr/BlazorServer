@@ -9,7 +9,7 @@
 @using System.ComponentModel.DataAnnotations
 @using Microsoft.EntityFrameworkCore
 @inject Radzen.DialogService DialogService
-@inherits OwningComponentBase<Service.CargoService>
+@inherits OwningComponentBase<CargoService>
 
 
 
@@ -64,7 +64,7 @@
 
     RadzenDataGrid<Data.Cargo> grid;
 
-    IEnumerable<Data.Cargo> _cargos;
+    //Service.CargoService ServiceCargo;
 
     protected override void OnAfterRender(bool firstRender)
     {
@@ -73,23 +73,21 @@
 
     protected override async void OnInitialized()
     {
-        base.OnInitialized();
-        if (_cargos is null)
-        {
-            _cargos = await Service.GetAllRecords();
-        }
+
     }
 
     private void OnSearch(string text)
     {
         searchString = text;
         table.ReloadServerData();
+        
     }
 
-     private async Task<TableData<Cargo>> ServerReload(TableState state)
+    private async Task<TableData<Cargo>> ServerReload(TableState state)
     {
-        IEnumerable<Cargo> data =  await Service.GetAllRecords(); //await httpClient.GetFromJsonAsync<List<TopsDashBoard>>("webapi/periodictable");
+        IEnumerable<Cargo> data = Service.GetAllRecordsAsEnumerable(); //await httpClient.GetFromJsonAsync<List<TopsDashBoard>>("webapi/periodictable");
         await Task.Delay(300);
+
         data = data.Where(element =>
         {
             if (string.IsNullOrWhiteSpace(searchString))
@@ -143,7 +141,7 @@
     void LoadData(LoadDataArgs args)
     {
         var result = Service.GetAllRecordsAsEnumerable();
-        _cargos = result.AsODataEnumerable();
+        //_cargos = result.AsODataEnumerable();
     }
 
     

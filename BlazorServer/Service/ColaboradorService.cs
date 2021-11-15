@@ -45,6 +45,11 @@ namespace BlazorServer.Service
             return _context.Colaboradors.FirstOrDefault(i => i.Id == id);
         }
 
+        public IEnumerable<Colaborador> GetColaboradorIEnumerable()
+        {
+            return _context.Colaboradors.Include(a=>a.Cargo).OrderBy(i => i.Nome).AsNoTracking().AsQueryable();
+        }
+
         public async Task<Colaborador> GetColaboradorByIdPonto(int id)
         {
             //return await _context.Colaboradors.Where<Colaborador>(x => x.CodPonto == id).FirstOrDefaultAsync();

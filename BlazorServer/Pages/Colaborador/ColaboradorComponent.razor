@@ -24,7 +24,7 @@
     <div class="row">
         <MudGrid Justify="Justify.FlexStart">
             <MudItem xs="12">
-                <MudTable ServerData="@(new Func<TableState, Task<TableData<Data.Colaborador>>>(ServerReload))"
+               <MudTable ServerData="@(new Func<TableState, Task<TableData<Data.Colaborador>>>(ServerReload))"
                         Dense="true" Hover="true" @ref="table">
                     <ToolBarContent>
                     <MudText Typo="Typo.h6">Resultados do periodo</MudText>
@@ -46,8 +46,8 @@
                             <MudTd DataLabel="Nome">@context.Nome</MudTd>
                             <MudTd DataLabel="Cargo">@context.Cargo.NomeCargo</MudTd>
                             <MudTd DataLabel="CH/Semanal">@context.CpfComMascara</MudTd>
-                            <MudTd DataLabel="Total Horas">@context.Contratacao</MudTd>
-                            <MudTd DataLabel="CH/Mes">@context.Demissao</MudTd>
+                            <MudTd DataLabel="Admissao">@string.Format("{0:dd/MM/yyyy}", context.Contratacao)</MudTd>
+                            <MudTd DataLabel="Demissao">@string.Format("{0:dd/MM/yyyy}", context.Demissao)</MudTd>
                             <MudTd DataLabel="Alteracao">
                                 <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(()=> OpenColaborador(context.Id))"></MudIconButton>
                                 <MudIconButton Icon="@Icons.Material.Filled.ManageAccounts" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(()=>OpenColaboradorManager(context.Id))" ></MudIconButton>
@@ -62,9 +62,9 @@
                     <PagerContent>
                     <MudTablePager />
                     </PagerContent>
-                    </MudTable>
-                    </MudItem>
-                </MudGrid>            
+               </MudTable>
+           </MudItem>
+        </MudGrid>            
     </div>
 </div>
 
@@ -103,9 +103,7 @@
 
     protected override void OnAfterRender(bool firstRender)
     {
-        table.Loading = true;
         table.ReloadServerData();
-        table.Loading = false;
     }
 
     private void OnSearch(string text)
@@ -116,7 +114,7 @@
 
     private async Task<TableData<Data.Colaborador>> ServerReload(TableState state)
     {
-        IEnumerable<Data.Colaborador> data =  _colaboradorService.GetAllColaboradoresList().AsQueryable();
+        IEnumerable<Data.Colaborador> data =  _colaboradorService.GetColaboradorIEnumerable();
         await Task.Delay(300);
         data = data.Where(element =>
         {
@@ -224,7 +222,7 @@
         var result = await dialog.Result;
         if (!result.Cancelled)
         {
-
+            StateHasChanged();
         }
     }
 
@@ -255,7 +253,8 @@
 
         if (!result.Cancelled)
         {
-            await LoadData(null);
+            StateHasChanged();
+            @*await LoadData(null);*@
         }
 
     }

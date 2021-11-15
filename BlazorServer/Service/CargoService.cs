@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace BlazorServer.Service
 {
@@ -11,12 +12,9 @@ namespace BlazorServer.Service
         private readonly AppDbContext _context;
 
 
-        public List<Cargo> Cargos { get; set; }
-
         public CargoService(AppDbContext context)
         {
             _context = context;
-            Cargos = GetAllRecordsList();
         }
 
         public bool UpdateCargo(Cargo record)
@@ -26,7 +24,7 @@ namespace BlazorServer.Service
             {
                 upCargo.NomeCargo = record.NomeCargo;
                 _context.Cargo.Update(upCargo);
-                _context.SaveChanges();
+                _context.SaveChanges(true);
                 return true;
             }
             else
@@ -52,7 +50,7 @@ namespace BlazorServer.Service
 
         public async Task<List<Cargo>> GetAllRecords()
         {
-            return _context.Cargo.OrderBy(a => a.NomeCargo).AsQueryable().ToList();
+            return _context.Cargo.OrderBy(a => a.NomeCargo).ToList();
         }
 
         public List<Cargo> GetAllRecordsList()
@@ -62,7 +60,24 @@ namespace BlazorServer.Service
 
         public IEnumerable<Cargo> GetAllRecordsAsEnumerable()
         {
-            return _context.Cargo.OrderBy(a => a.NomeCargo).AsEnumerable();
+            //https://codethug.com/2016/02/19/Entity-Framework-Cache-Busting/
+
+            return _context.Cargo.OrderBy(a => a.NomeCargo).AsNoTracking();
+            //var cache = _context.ChangeTracker.Entries<Cargo>().FirstOrDefault();
+            //if (cache == null)
+            //{
+            //    return _context.Cargo.OrderBy(a => a.NomeCargo).AsEnumerable();
+            //}
+            //else
+            //{
+            //    cache.Reload();
+            //    return _context.Cargo.OrderBy(a => a.NomeCargo).AsEnumerable();
+            //}
+        }
+
+        public async Task<IEnumerable<Cargo>> GetCargosAsync()
+        {
+            return await _context.Cargo.ToListAsync();
         }
 
         public async Task<Data.Cargo> GetRecordId(System.Guid id)
@@ -70,15 +85,10 @@ namespace BlazorServer.Service
             return _context.Cargo.FirstOrDefault(i => i.Id == id);
         }
 
-        //public void LoadCargos()
-        //{
-        //    Cargos = new List<Cargo> {
-        //        new Cargo(){  NomeCargo ="Tutor"},
-        //        new Cargo(){  NomeCargo ="Secretaria"},
-        //        new Cargo(){  NomeCargo ="Comercial"},
-        //        new Cargo(){  NomeCargo ="Coordenador"},
-        //        new Cargo(){  NomeCargo ="Professor"},
-        //    };
-        //}
+        Task<IEnumerable<Cargo>> ICargoService.GetAllRecordsAsEnumerable()
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
 }

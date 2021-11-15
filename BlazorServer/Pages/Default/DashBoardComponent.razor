@@ -21,7 +21,7 @@
     <br />
     <MudGrid Justify="Justify.FlexStart">
        <MudItem xs="6">
-             <MudCard>
+             <MudCard Elevation="5">
                 <MudCardHeader>
                     <CardHeaderContent>
                         <MudText Typo="Typo.h6">Top's 5 Colaboradores </MudText>
@@ -40,7 +40,7 @@
                         </HeaderContent>
                         <RowTemplate>
                             <MudTd DataLabel="Nº" HideSmall="true">@context.Posicao </MudTd>
-                            <MudTd DataLabel="Nome">@context.Nome</MudTd>
+                            <MudTd DataLabel="Nome">@string.Format("{0}", context.Nome.Length > 12? context.Nome.Substring(0,12): context.Nome)</MudTd>
                             <MudTd DataLabel="Total Horas">@context.TotalHorasFormatada</MudTd>
                             <MudTd DataLabel="CH/Mes">@context.ChColabMesFormatada</MudTd>
                         </RowTemplate>
@@ -54,7 +54,7 @@
             </MudCard>
         </MudItem>
     <MudItem xs="6">
-             <MudCard>
+             <MudCard Elevation="5">
                 <MudCardHeader>
                     <CardHeaderContent>
                         <MudText Typo="Typo.h6">Dow's 5 Colaboradores </MudText>
@@ -73,7 +73,7 @@
                         </HeaderContent>
                         <RowTemplate>
                             <MudTd DataLabel="Nº" HideSmall="true">@context.Posicao </MudTd>
-                            <MudTd DataLabel="Nome">@context.Nome</MudTd>
+                            <MudTd DataLabel="Nome">@string.Format("{0}", context.Nome.Length > 12? context.Nome.Substring(0,12): context.Nome)</MudTd>
                             <MudTd DataLabel="CH/Mes">@context.ChColabMesFormatada</MudTd>
                             <MudTd DataLabel="Total Horas">@context.TotalHorasFormatada</MudTd>
                             
@@ -195,7 +195,7 @@
             ColabTopMes c = new ColabTopMes();
             c.data = DataTop;
             c.Colaborador =  _serviceColaborador.Colaboradores.Include(a=>a.Cargo).Where(a => a.Nome.Contains(item.Key)).ToList().FirstOrDefault();
-            c.Cargo = _serviceCargo.Cargos.Where(a => a.Equals(c.Colaborador.Cargo)).FirstOrDefault();
+            c.Cargo = _serviceCargo.GetAllRecordsList().Where(a => a.Equals(c.Colaborador.Cargo)).FirstOrDefault();
             nome = item.Key;
 
             foreach (var h in item)

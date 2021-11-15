@@ -36,8 +36,8 @@
                     </MudTHeadRow>
                     <MudTh><MudTableSortLabel Style="width: 25px;" SortLabel="cod" T="Data.RegistroPonto">Cod.</MudTableSortLabel></MudTh>
                     <MudTh><MudTableSortLabel Style="width: 230px;" SortLabel="nome" T="Data.RegistroPonto">Nome completo</MudTableSortLabel></MudTh>
-                    <MudTh><MudTableSortLabel Style="width: 100px;" SortLabel="cargo" T="Data.RegistroPonto">Dia semana</MudTableSortLabel></MudTh>
-                    <MudTh><MudTableSortLabel Style="width: 60px;" SortLabel="cpf" T="Data.RegistroPonto">Data</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel Style="width: 100px;" SortLabel="semana" T="Data.RegistroPonto">Dia semana</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel Style="width: 60px;" SortLabel="data" T="Data.RegistroPonto">Data</MudTableSortLabel></MudTh>
                     <MudTh><MudTableSortLabel Style="width: 50px;" SortLabel="" T="Data.RegistroPonto">AM_ENT</MudTableSortLabel></MudTh>
                     <MudTh><MudTableSortLabel Style="width: 50px;" SortLabel="" T="Data.RegistroPonto">AM_SAI</MudTableSortLabel></MudTh>
                     <MudTh><MudTableSortLabel Style="width: 50px;" SortLabel="" T="Data.RegistroPonto">PM_ENT</MudTableSortLabel></MudTh>
@@ -181,7 +181,6 @@
 
     void FecharDialogModal() =>isVisible = false;
 
-
     protected override void OnInitialized()
     {
         cs = (Service.ColaboradorService)ScopedServices.GetService(typeof(Service.ColaboradorService));
@@ -190,10 +189,6 @@
 
     protected override void OnAfterRender(bool firstRender)
     {
-        if (table != null)
-        {
-            table.ReloadServerData();
-        }
         table.ReloadServerData();
     }
 
@@ -216,7 +211,7 @@
 
     private async Task<TableData<Data.RegistroPonto>> ServerReload(TableState state)
     {
-        IEnumerable<Data.RegistroPonto> data = rps.GetAllRegistroPontoList().AsQueryable();
+        IEnumerable<Data.RegistroPonto> data = rps.GetAllRegistroPontoEnumerable().AsQueryable();
         await Task.Delay(300);
         data = data.Where(element =>
         {
@@ -226,18 +221,26 @@
                 return true;
             if (element.DiaSemanaPtBr.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            if ($"{element.Colaborador.Nome} {element.DiaSemanaPtBr} ".Contains(searchString))
+            if (element.Data.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if ($"{element.Colaborador.Nome} {element.DiaSemanaPtBr} {element.Data.ToString()} ".Contains(searchString))
                 return true;
             return false;
         }).ToArray();
         totalItems = data.Count();
         switch (state.SortLabel)
         {
+            case "cod":
+                data = data.OrderByDirection(state.SortDirection, o => o.Colaborador.CodPonto);
+                break;
             case "nome":
                 data = data.OrderByDirection(state.SortDirection, o => o.Colaborador.Nome);
                 break;
             case "semana":
-                data = data.OrderByDirection(state.SortDirection, o => o.DiaSemanaPtBr);
+                data = data.OrderByDirection(state.SortDirection, o => o.DiaSemana);
+                break; 
+            case "data":
+                data = data.OrderByDirection(state.SortDirection, o => o.Data);
                 break; 
         }
         pagedData = data.Where(a=>a.Data>=_dateRange.Start && a.Data<=_dateRange.End).Skip(state.Page * state.PageSize).Take(state.PageSize).ToArray();
@@ -489,6 +492,7 @@
             if (!result.Cancelled)
             {
                 OpenDialogModal("Atualizado", "Registro atualizado!");
+                StateHasChanged();
             }
         }
     }
@@ -511,7 +515,7 @@
             if (!result.Cancelled)
             {
                 OpenDialogModal("Atualizado", "Registro atualizado!");
-                await table.ReloadServerData();
+                StateHasChanged();
             }
         }
     }

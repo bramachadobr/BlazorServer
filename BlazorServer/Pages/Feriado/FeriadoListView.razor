@@ -49,7 +49,7 @@
 @code 
 {
 
-     bool _loading;
+    bool _loading;
     private IEnumerable<Feriado> pagedData;
     private MudTable<Feriado> table;
 
@@ -58,13 +58,14 @@
     RadzenDataGrid<Data.Feriado> grid;
     List<Feriado> feriados;
 
+    protected override void OnAfterRender(bool firstRender)
+    {
+        table.ReloadServerData();
+    }
+
     protected override async void OnInitialized()
     {
         base.OnInitialized();
-        if (feriados is null)
-        {
-            feriados = await Service.GetFeriadoAll();
-        }
     }
 
     private void OnSearch(string text)
@@ -75,7 +76,7 @@
 
     private async Task<TableData<Feriado>> ServerReload(TableState state)
     {
-        IEnumerable<Feriado> data = await Service.GetFeriadoAll();
+        IEnumerable<Feriado> data = Service.GetFeriadoAllEnumerable();
         await Task.Delay(300);
         data = data.Where(element =>
         {
@@ -109,7 +110,7 @@
         Editar(Guid.Empty);
     }
 
-   async void Editar(Guid id)
+    async void Editar(Guid id)
     {
         MudBlazor.DialogOptions opt = new MudBlazor.DialogOptions()
         {
@@ -120,6 +121,10 @@
 
         var dialog = MudDialog.Show<FeriadoDetails>("", new DialogParameters() { ["FeridoId"] = id });
         var result = await dialog.Result;
+        if (!result.Cancelled)
+        {
+            StateHasChanged();
+        }
     }
 
     async void Apagar(Feriado f)
@@ -128,6 +133,7 @@
         if (result == true)
         {
             Service.ExcluiFeriado(f);
+            StateHasChanged();
         }
     }
 }

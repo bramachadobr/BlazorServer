@@ -82,6 +82,11 @@
 
     public Data.Unidade UnidadeObj;
 
+    protected override void OnAfterRender(bool firstRender)
+    {
+        table.ReloadServerData();
+    }
+
     protected override void OnInitialized()
     {
     }
@@ -94,7 +99,7 @@
 
     private async Task<TableData<Unidade>> ServerReload(TableState state)
     {
-        IEnumerable<Unidade> data = await Service.GetUnidades();
+        IEnumerable<Unidade> data = await Service.GetUnidadesEnumerable();
         await Task.Delay(300);
         data = data.Where(element =>
         {
@@ -132,7 +137,6 @@
     void NovaUnidade()
     {
         Editar(Guid.Empty);
-        ResetGrid();
     }
 
     async void Apagar(Unidade unidade)
@@ -142,7 +146,7 @@
         {
             Service.DeleteRecor(unidade);
         }
-        ResetGrid();
+
     }
 
     async void Editar(Guid id)
@@ -157,7 +161,6 @@
         var dialog = DialogServiceMud.Show<UnidadeDetails>("Cadastro de Cargo", new DialogParameters() { ["UnidadeId"] = id }, opt);
         var result = await dialog.Result;
         StateHasChanged();
-        ResetGrid();
 
     }
 
@@ -200,12 +203,5 @@
     {
     }
 
-    async void ResetGrid()
-    {
-        grid.Reset(true);
-        grid.Reload();
-        await grid.FirstPage(true);
-        _Unidades = Service.GetUnidadesList().AsQueryable();
-    }
 
 }
