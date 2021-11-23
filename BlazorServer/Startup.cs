@@ -30,6 +30,7 @@ namespace BlazorServer
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
+            services.AddScoped<DbInitializer>();
             services.AddScoped<MudBlazor.DialogService>();
             services.AddScoped<Radzen.DialogService>();
             services.AddScoped<NotificationService>();
@@ -65,6 +66,14 @@ namespace BlazorServer
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            var scopeFactory = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>();
+            using (var scope = scopeFactory.CreateScope())
+            {
+                var dbInitializer = scope.ServiceProvider.GetService<DbInitializer>();
+                dbInitializer.Initialize();
+                dbInitializer.SeedData();
+            }
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

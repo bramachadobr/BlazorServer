@@ -39,7 +39,7 @@
                     <MudTh><MudTableSortLabel SortLabel="unidade" T="Data.Colaborador">Unidade</MudTableSortLabel></MudTh>
                     <MudTh><MudTableSortLabel SortLabel="cpf" T="Data.Colaborador">CPF</MudTableSortLabel></MudTh>
                     <MudTh><MudTableSortLabel SortLabel="" T="Data.Colaborador">Admissao</MudTableSortLabel></MudTh>
-                    <MudTh><MudTableSortLabel SortLabel="" T="Data.Colaborador">Demissao</MudTableSortLabel></MudTh>
+@*                    <MudTh><MudTableSortLabel SortLabel="" T="Data.Colaborador">Demissao</MudTableSortLabel></MudTh>*@
                     <MudTh><MudTableSortLabel SortLabel="" T="Data.Colaborador">Alteracao</MudTableSortLabel></MudTh>
                     </HeaderContent>
                     <RowTemplate>
@@ -49,10 +49,11 @@
                             <MudTd DataLabel="Unidade">@context.Unidade.Nome</MudTd>
                             <MudTd DataLabel="CH/Semanal">@context.CpfComMascara</MudTd>
                             <MudTd DataLabel="Admissao">@string.Format("{0:dd/MM/yyyy}", context.Contratacao)</MudTd>
-                            <MudTd DataLabel="Demissao">@string.Format("{0:dd/MM/yyyy}", context.Demissao)</MudTd>
+@*                            <MudTd DataLabel="Demissao">@string.Format("{0:dd/MM/yyyy}", context.Demissao)</MudTd>*@
                             <MudTd DataLabel="Alteracao">
                                 <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(()=> OpenColaborador(context.Id))"></MudIconButton>
                                 <MudIconButton Icon="@Icons.Material.Filled.ManageAccounts" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(()=>OpenColaboradorManager(context.Id))" ></MudIconButton>
+                                <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(()=>ApagarRegistro(context.Id))" ></MudIconButton>
                             </MudTd>
                     </RowTemplate>
                     <NoRecordsContent>
@@ -71,9 +72,7 @@
 </div>
 
 
-
-@code 
-
+@code
 {
     bool _loading;
     private IEnumerable<Data.Colaborador> pagedData;
@@ -239,6 +238,18 @@
     }
 
     RadzenButton buttonFecharDialog;
+
+    public async void ApagarRegistro(Guid id)
+    {
+
+        bool? result = await DialogService.ShowMessageBox("???", "Deseja realmente apagar esse colaborador? ", yesText: "Sim", cancelText: "Nao");        
+        if (result == true)
+        {
+            await _colaboradorService.DeleteRecord(id);
+        }
+        StateHasChanged();
+    }
+
 
 
     public async void OpenColaborador(DataGridRowMouseEventArgs<Data.Colaborador> item)

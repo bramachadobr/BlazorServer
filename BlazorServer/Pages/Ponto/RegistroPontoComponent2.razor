@@ -1,6 +1,11 @@
 ﻿@page "/Ponto/registro2"
 
 @using System
+@using System.Collections.Generic;
+@using System.Linq;
+@using Excel = Microsoft.Office.Interop.Excel;
+@using System.Data.OleDb;
+@using System.Data
 @using BlazorServer.Data
 @using System.Globalization
 @using System.Timers
@@ -31,8 +36,9 @@
             </ToolBarContent>
             <HeaderContent>
                     <MudTHeadRow IgnoreCheckbox="true" Class="header-centered">
-                        <MudTh colspan="6">Total de Horas do periodo: @TotalHorasPeriodo</MudTh>
-                        <MudTh colspan="6">Total registros: @Count</MudTh>
+                        <MudTh colspan="4">Total de Horas do periodo: @TotalHorasPeriodo</MudTh>
+                        <MudTh colspan="4">Total registros: @Count</MudTh>
+                        <MudTh colspan="4"><MudButton OnClick="ExportToExcel">Exportar para Excel</MudButton></MudTh>
                     </MudTHeadRow>
                     <MudTh><MudTableSortLabel Style="width: 25px;" SortLabel="cod" T="Data.RegistroPonto">Cod.</MudTableSortLabel></MudTh>
                     <MudTh><MudTableSortLabel Style="width: 230px;" SortLabel="nome" T="Data.RegistroPonto">Nome completo</MudTableSortLabel></MudTh>
@@ -559,6 +565,96 @@
                         Processando arquivo...
                     </div>
                 </div>
-            </div>, new Radzen.DialogOptions() { ShowTitle = false, Style = "min-height:auto;min-width:auto;width:auto" });
+    </div>
+    , new Radzen.DialogOptions() { ShowTitle = false, Style = "min-height:auto; min-width:auto; width:auto" });
     }
+
+    async Task ExportToExcel()
+    {
+        DataSet ds = new DataSet();
+        DataTable tb = NewTable();
+        foreach (var item in pagedData)
+        {
+            DataRow row = tb.NewRow();
+            row["Nome"] = item.Colaborador.Nome;
+            row["DiaSemana"] = item.DiaSemanaPtBr;
+            row["Data"] = item.Data;
+            row["AM_ENT"] = item.AM_ENT;
+            row["AM_SAI"] = item.AM_SAI;
+            row["PM_ENT"] = item.PM_ENT;
+            row["PM_SAI"] = item.PM_SAI;
+            row["NOI_ENT"] = item.NOI_ENT;
+            row["NOI_SAI"] = item.NOI_SAI;
+            row["TotalHorasDia"] = item.TotalHorasDia;
+            tb.Rows.Add(row);
+        }
+        CreateCSVFile(ref tb, "c:\\");
+    }
+
+    private DataTable NewTable()
+    {
+        DataTable tabela = new DataTable();
+        tabela.Columns.AddRange( new DataColumn[]
+        {
+           new DataColumn("Nome", typeof(string)),
+           new DataColumn("DiaSemana", typeof(string)),
+           new DataColumn("Data", typeof(string)),
+           new DataColumn("AM_ENT", typeof(string)),
+           new DataColumn("AM_SAI", typeof(string)),
+           new DataColumn("PM_ENT", typeof(string)),
+           new DataColumn("PM_SAI", typeof(string)),
+           new DataColumn("NOI_ENT", typeof(string)),
+           new DataColumn("NOI_SAI", typeof(string)),
+           new DataColumn("TotalHorasDia", typeof(string))
+        });
+        return tabela;
+    }
+
+    public void CreateCSVFile(ref DataTable dt, string strFilePath)
+    {            
+        try
+        {
+            // Create the CSV file to which grid data will be exported.
+            StreamWriter sw = new StreamWriter(strFilePath, false);
+
+            // First we will write the headers.
+            //DataTable dt = m_dsProducts.Tables[0];
+            int iColCount = dt.Columns.Count;
+            for (int i = 0; i < iColCount; i++)
+            {
+                sw.Write(dt.Columns[i]);
+                if (i < iColCount - 1)
+                {
+                    sw.Write(",");
+                }
+            }
+            sw.Write(sw.NewLine);
+
+            // Now write all the rows.
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                for (int i = 0; i < iColCount; i++)
+                {
+                    if (!Convert.IsDBNull(dr[i]))
+                    {
+                        sw.Write(dr[i].ToString());
+                    }
+                    if (i < iColCount - 1)
+                    {
+                        sw.Write(",");
+                    }
+                }
+
+                sw.Write(sw.NewLine);
+            }
+            sw.Close();
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+
 }

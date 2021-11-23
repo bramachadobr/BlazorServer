@@ -22,10 +22,10 @@
                 @if (!validacaoForm)
                 {
                     <div class="alert alert-danger" role="alert">
-                        @foreach (string item in errosValidacao)
-                        {
-                            <a href="#">@item</a>
-                        }
+                    @foreach (string item in errosValidacao)
+                    {
+                        <a class="alert-link">@item</a><br />
+                    }
                     </div>
                 }
             </div>
@@ -217,7 +217,7 @@
     <DialogActions>
         <div class="row justify-content-center">
             <div class="col-md-12 d-flex align-items-end justify-content-center" style="margin-top: 16px;">
-                <RadzenButton ButtonType="Radzen.ButtonType.Submit" Icon="save" Text="Salvar"  /> 
+                @*<RadzenButton ButtonType="Radzen.ButtonType.Submit" Icon="save" Text="Salvar"  /> *@
                 <MudButton Color="Color.Primary"  OnClick="Submit">Salvar</MudButton>
                 <MudButton Color="Color.Primary" OnClick="Close">Cancelar</MudButton>
             </div>
