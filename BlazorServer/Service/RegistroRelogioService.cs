@@ -66,7 +66,6 @@ namespace BlazorServer.Service
             return reg;
         }
 
-
         public async Task<List<string>> ConvertFileInList(InputFileChangeEventArgs e)
         {
             var files = e.GetMultipleFiles();

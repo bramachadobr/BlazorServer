@@ -11,6 +11,208 @@
 @inherits OwningComponentBase
 
 
+<MudDialog>
+    <DialogContent>
+        <div class="row" style="margin-bottom: 15px">
+            <div class="col-md align-items-center d-flex">
+                <MudNumericField @bind-Value="colaborador.CodPonto"
+                                 For="@(() => colaborador.CodPonto)"
+                                 Immediate="true"
+                                 Label="Codigo do Relogio" />
+            </div>
+            <div class="col-md align-items-center d-flex">
+                <MudTextField @bind-Value="colaborador.Nome"
+                              For="@(() => colaborador.Nome)"
+                              Immediate="true"
+                              Label="Nome" />
+            </div>
+            <div class="col-md align-items-center d-flex">
+                <MudTextField @bind-Value="colaborador.Cpf"
+                              For="@(() => colaborador.Cpf)"
+                              Immediate="true"
+                              Label="CPF" />
+            </div>
+            <div class="col-md align-items-center d-flex">
+@*                <MudTextField @bind-Value="colaborador.Cargo.NomeCargo"
+                              For="@(() => colaborador.Cargo.NomeCargo)"
+                              Immediate="false"
+                              Label="Cargo" />*@
+            </div>
+        </div>
+        <div class="row" style="margin-bottom: 15px">
+            <div class="col-md align-items-center d-flex">
+@*                <MudTextField @bind-Value="colaborador.Unidade.Nome"
+                              For="@(() => colaborador.Unidade.Nome)"
+                              Immediate="true"
+                              Label="Unidade" />*@
+            </div>
+            <div class="col-md align-items-center d-flex">
+            <MudDatePicker @bind-Date="colaborador.Contratacao"
+                           For="@(() => colaborador.Contratacao)"
+                           DateFormat="dd.MM.yyyy"
+                           Editable="true"
+                           Label="Admissão" />
+            </div>
+            <div class="col-md align-items-center d-flex">
+                <MudNumericField @bind-Value="colaborador.Salario"
+                          For="@(() => colaborador.Salario)"
+                          Immediate="false"
+                          Format="N2"
+                          Culture="@_pt"
+                          T="decimal"
+                          Label="Salário" />
+            </div>
+            <div class="col-md align-items-center d-flex">
+                <MudNumericField @bind-Value="colaborador.HoraAula"
+                          For="@(() => colaborador.HoraAula)"
+                          Immediate="false"
+                          Format="N2"
+                          Culture="@_pt"
+                          T="decimal"
+                          Label="Hora Aula" />
+            </div>
+        </div>
+
+        <div class="row" style="margin-bottom: 15px">
+            <div class="col-md align-items-center d-flex">
+                <MudDatePicker For="@(()=>colaborador.Demissao)"
+                               @bind-Date="colaborador.Demissao"
+                               DateFormat="dd.MM.yyyy"
+                               Editable="true"
+                               Label="Demissão" />
+            </div>
+            <div class="col-md align-items-center d-flex">
+                <MudCheckBox @bind-Value="colaborador.Ativo"
+                             For="@(() => colaborador.Ativo)"
+                             Immediate="true"
+                             Label="Ativo?" />
+            </div>
+            <div class="col-md align-items-center d-flex">
+                <MudTextField @bind-Value="colaborador.Email"
+                              For="@(() => colaborador.Email)"
+                              Immediate="true"
+                              Label="Email" />
+            </div>
+            <div class="col-md align-items-center d-flex">
+                <MudTextField @bind-Value="colaborador.Telefone"
+                              For="@(() => colaborador.Telefone)"
+                              Immediate="true"
+                              Label="Telefone" />
+            </div>
+        </div>
+
+        <div class="row" style="margin-bottom: 15px">
+            <div class="col-md align-items-center d-flex">
+                <MudTextField @bind-Value="colaborador.Endereco"
+                              For="@(() => colaborador.Endereco)"
+                              Immediate="true"
+                              Label="Endereço" />
+            </div>
+            <div class="col-md align-items-center d-flex">
+                <MudNumericField @bind-Value="colaborador.Numero"
+                                 For="@(() => colaborador.Numero)"
+                                 Immediate="true"
+                                 Label="Número" />
+            </div>
+            <div class="col-md align-items-center d-flex">
+                <MudTextField @bind-Value="colaborador.Telefone"
+                              For="@(() => colaborador.Telefone)"
+                              Immediate="true"
+                              Label="Bairro" />
+            </div>
+            <div class="col-md align-items-center d-flex">
+                <MudTextField @bind-Value="colaborador.Cidade"
+                              For="@(() => colaborador.Cidade)"
+                              Immediate="true"
+                              Label="Cidade" />
+            </div>
+        </div>
+        <div class="row" style="margin-bottom: 15px">
+            <div class="col-md align-items-center d-flex">
+                <MudTextField @bind-Value="colaborador.Estado"
+                              For="@(() => colaborador.Estado)"
+                              Immediate="true"
+                              Label="Estado" />
+            </div>
+            <div class="col-md align-items-center d-flex">
+                <MudNumericField @bind-Value="colaborador.CargaHorariaSemanal"
+                              For="@(() => colaborador.CargaHorariaSemanal)"
+                              Immediate="true"
+                              Label="Carga Hóraria Semanal" />
+            </div>
+        </div>
+    </DialogContent>
+    <DialogActions>
+        <div class="row justify-content-center">
+            <div class="col-md-12 d-flex align-items-end justify-content-center" style="margin-top: 16px;">
+                <MudButton Color="Color.Primary" OnClick="Submit">Salvar</MudButton>
+                <MudButton Color="Color.Primary" OnClick="Close">Cancelar</MudButton>
+            </div>
+        </div>
+    </DialogActions>
+
+
+</MudDialog>      
+
+      
+
+@*
+<div class="container">
+    <EditForm Model="colaborador" OnValidSubmit="Validation">
+         <DataAnnotationsValidator/>
+            <ValidationSummary/>
+            <div class="row">
+                @if (!validacaoForm)
+                {
+                    <div class="alert alert-danger" role="alert">
+                    @foreach (string item in errosValidacao)
+                    {
+                        <a class="alert-link">@item</a><br />
+                    }
+                    </div>
+                }
+            </div>
+            <MudCard>
+                <MudCardContent>
+                        <div class="row" style="margin-bottom: 15px">
+                            <div class="col-md-4 align-items-center d-flex">
+                                <MudNumericField @bind-Value="colaborador.CodPonto"
+                                         For="@(() => colaborador.CodPonto)"
+                                         Immediate="true"
+                                         Label="Codigo do Relogio" />
+                            </div>
+                            <div class="col-md-4 align-items-center d-flex">
+                                <MudTextField @bind-Value="colaborador.Nome"
+                                      For="@(() => colaborador.Nome)"
+                                      Immediate="true"
+                                      Label="Nome" />
+                            </div>
+                        </div>
+                        
+
+                        
+
+
+
+                   
+
+                   
+
+                  
+
+
+
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="@(async () => await Submit())">Order</MudButton>
+                </MudCardActions>
+            </MudCard>
+    </EditForm>*@
+
+
+
+
+@*
 
 <div class="container">
 <MudDialog>
@@ -42,7 +244,6 @@
                         </div>
                         <div class="col-md-4">
                             <RadzenButton Text="" ButtonStyle="ButtonStyle.Light" Icon="edit" Click="@AlteraCodigo" />
-                            @*<RadzenButton  Text="alter" Click="@AlteraCodigo" @onclick="AlteraCodigo" /> *@
                         </div>
                     </div> 
                     <div class="row" style="margin-bottom: 15px">
@@ -76,7 +277,6 @@
                                 TextProperty="NomeCargo" ValueProperty="Cargo" AllowClear="true" Placeholder="Selecione um cargo"  style="width: 100%;" />
                                 <br />
                                 <RadzenRequiredValidator Component="Cargo" Text="Selecione um cargo" Popup=@popup Style="position: absolute"/>
-                                @*<RadzenDropDown TValue="Data.Cargo" SelectedItem="@cargos" @bind-Value="colaborador.Cargo" Name="Cargo2" TextProperty="NomeCargo" ValueProperty="CargoId" AllowClear="true" Placeholder="Selecione um cargo"  style="width: 100%;" />*@
                         </div>
                     </div>
                     <div class="row" style="margin-bottom: 10px">
@@ -87,7 +287,6 @@
                             <RadzenDropDown @bind-Value="colaborador.Unidade" TValue="Data.Unidade" SelectedItem="@unidades"  Name="Unidade" Data=@unidades Change=@(args=>OnChange(args, "DropDown-Unidade")) 
                                 TextProperty="Nome" ValueProperty="Unidade" AllowClear="true" Placeholder="Selecione a Unidade"  style="width: 100%;" />
                                 <RadzenRequiredValidator Component="Unidade" Text="Selecione uma unidade" Popup=@popup Style="position: absolute"/>
-                                @*<RadzenDropDown TValue="Data.Cargo" SelectedItem="@cargos" @bind-Value="colaborador.Cargo" Name="Cargo2" TextProperty="NomeCargo" ValueProperty="CargoId" AllowClear="true" Placeholder="Selecione um cargo"  style="width: 100%;" />*@
                         </div>
                     </div>
                     <div class="row" style="margin-bottom: 15px">
@@ -204,9 +403,7 @@
                             <RadzenLabel Text="Carga Horária Semanal" />
                         </div>
                         <div class="col-md-8">
-@*                            <RadzenDatePicker TValue="DateTime" @bind-Value="colaborador.CargaHorariaSemanal" ShowTime="true" TimeOnly="true" DateFormat="HH:mm"/>
-                            <MudTimePicker Label="24 hours (editable)" @bind-Time="Tempo" Editable="true"  />*@
-                            <RadzenNumeric TValue="double" Format="00.00" @bind-Value=@colaborador.CargaHorariaSemanal Placeholder="CH Semanal" /> @*Change="@(args => OnChange(args, "Formatted numeric"))*@
+                            <RadzenNumeric TValue="double" Format="00.00" @bind-Value=@colaborador.CargaHorariaSemanal Placeholder="CH Semanal" /> 
                         </div>
                     </div>
                 </RadzenFieldset>
@@ -217,28 +414,26 @@
     <DialogActions>
         <div class="row justify-content-center">
             <div class="col-md-12 d-flex align-items-end justify-content-center" style="margin-top: 16px;">
-                @*<RadzenButton ButtonType="Radzen.ButtonType.Submit" Icon="save" Text="Salvar"  /> *@
                 <MudButton Color="Color.Primary"  OnClick="Submit">Salvar</MudButton>
                 <MudButton Color="Color.Primary" OnClick="Close">Cancelar</MudButton>
             </div>
         </div>
-        
     </DialogActions>
 </MudDialog>
-</div>
+    *@
 
 
 
 @code 
 {
 
-
-
+    MudForm form;
+    public CultureInfo _pt = CultureInfo.GetCultureInfo("pt-BR");
     bool popup;
     TimeSpan? Tempo = new TimeSpan(44,00,00);
 
     [CascadingParameter] public MudDialogInstance MudDialog { get; set; }
-    [Parameter] public RadzenButton ButtonFecha { get; set; }
+    //[Parameter] public RadzenButton ButtonFecha { get; set; }
     [Parameter] public Guid ColaboradorID { get; set; }
     [Parameter] public Data.Colaborador colaborador{ get; set; }
 
@@ -341,7 +536,7 @@
         }
     }
 
-    void Submit()
+    async Task Submit()
     {
         Validation();
         if (validacaoForm)

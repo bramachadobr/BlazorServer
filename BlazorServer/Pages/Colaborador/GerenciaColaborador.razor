@@ -9,20 +9,20 @@
         <br />
     </div>
     <div class="row">
-                    <RadzenDataGrid  IsLoading=@isLoading Count=@count Data="@listPontos" TItem="Data.RegistroPonto" FilterMode="FilterMode.Advanced" 
-                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowSorting="true" AllowFiltering="true" AllowPaging="true" PageSize="30" AllowColumnResize="true" Style="border-radius: 6px;">
-                        <Columns>
-                            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="DiaSemanaPtBr" Title="Dia semana" Width="90px"/>
-                            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="Data" Title="Data" Width="80px" FormatString="{0:dd/MM/yyyy}"/>
-                            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="AM_ENT" Title="AM_ENT" FormatString="{0:HH:mm}"   Width="50px"/>
-                            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="AM_SAI" Title="AM_SAI" FormatString="{0:HH:mm}"   Width="50px"/>
-                            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="PM_ENT" Title="PM_ENT" FormatString="{0:HH:mm}"   Width="50px"/>
-                            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="PM_SAI" Title="PM_SAI" FormatString="{0:HH:mm}"   Width="50px"/>
-                            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="NOI_ENT" Title="NOI_ENT" FormatString="{0:HH:mm}"  Width="50px"/>
-                            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="NOI_SAI" Title="NOI_SAI" FormatString="{0:HH:mm}"  Width="50px"/>
-                            <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="TotalHorasDia" Title="Total Horas Dia"  Width="60px"/> 
-                        </Columns>
-                    </RadzenDataGrid>
+            <RadzenDataGrid  IsLoading=@isLoading Count=@count Data="@listPontos" TItem="Data.RegistroPonto" FilterMode="FilterMode.Advanced" 
+                FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowSorting="true" AllowFiltering="true" AllowPaging="true" PageSize="30" AllowColumnResize="true" Style="border-radius: 6px;">
+                <Columns>
+                    <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="DiaSemanaPtBr" Title="Dia semana" Width="90px"/>
+                    <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="Data" Title="Data" Width="80px" FormatString="{0:dd/MM/yyyy}"/>
+                    <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="AM_ENT" Title="AM_ENT" FormatString="{0:HH:mm}"   Width="50px"/>
+                    <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="AM_SAI" Title="AM_SAI" FormatString="{0:HH:mm}"   Width="50px"/>
+                    <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="PM_ENT" Title="PM_ENT" FormatString="{0:HH:mm}"   Width="50px"/>
+                    <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="PM_SAI" Title="PM_SAI" FormatString="{0:HH:mm}"   Width="50px"/>
+                    <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="NOI_ENT" Title="NOI_ENT" FormatString="{0:HH:mm}"  Width="50px"/>
+                    <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="NOI_SAI" Title="NOI_SAI" FormatString="{0:HH:mm}"  Width="50px"/>
+                    <RadzenDataGridColumn TItem="Data.RegistroPonto" Property="TotalHorasDia" Title="Total Horas Dia"  Width="60px"/> 
+                </Columns>
+            </RadzenDataGrid>
     </div>
 </div>
 

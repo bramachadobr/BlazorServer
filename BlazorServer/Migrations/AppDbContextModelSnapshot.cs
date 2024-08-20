@@ -56,27 +56,27 @@ namespace BlazorServer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("5061ae51-0a73-49bb-a18d-a18d068f7cfb"),
+                            Id = new Guid("38bc88f4-99af-4954-a7f0-2ffd72875d8d"),
                             NomeCargo = "Tutor"
                         },
                         new
                         {
-                            Id = new Guid("3c3f93f4-fabf-4d1d-88ac-4a12919d6f93"),
+                            Id = new Guid("6b67c15f-29da-4058-80f2-95ded2336858"),
                             NomeCargo = "Secretaria"
                         },
                         new
                         {
-                            Id = new Guid("258d07d9-0576-4e73-b699-108d11eb8c21"),
+                            Id = new Guid("03a640d1-50d3-488b-a987-b958303e518f"),
                             NomeCargo = "Comercial"
                         },
                         new
                         {
-                            Id = new Guid("20727d06-e07e-4258-a065-ed9feed9b1bc"),
+                            Id = new Guid("c567e874-ec64-4da7-95bd-8a1632a14290"),
                             NomeCargo = "Coordenador"
                         },
                         new
                         {
-                            Id = new Guid("7ef5cacf-93f9-4c33-8956-6d96393661f8"),
+                            Id = new Guid("4f710d58-ce2d-41af-a465-f2c7cacd24ff"),
                             NomeCargo = "Professor"
                         });
                 });
@@ -106,15 +106,18 @@ namespace BlazorServer.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("Contratacao")
+                        .IsRequired()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Cpf")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("Demissao")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Endereco")
@@ -137,6 +140,7 @@ namespace BlazorServer.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Telefone")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("UnidadeId")
@@ -153,2148 +157,2478 @@ namespace BlazorServer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("861eb0eb-9af9-4ef5-8167-260ef0985d44"),
+                            Id = new Guid("c5c46eeb-8a12-46b9-b94e-5c53eba7c656"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 39,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(852),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 58, DateTimeKind.Local).AddTicks(2030),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "ALEXSANDRA KETHY DE FRANÇA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("4626979a-40d5-4311-8534-1f9e03404aa9"),
+                            Id = new Guid("61d320f2-8832-4da0-b55d-de0e832d46af"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 22,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5199),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1110),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "ALVARO RICK P. VIEIRA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("db992406-3cb5-4892-b31d-9915e092656b"),
+                            Id = new Guid("4962cdb9-ab6c-465a-b1a1-ec333fc32b9d"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 50,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5232),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1125),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "AMADEU JUNIOR FERREIRA DE LIMA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("eaa53c0d-5747-4165-9dc9-be981d5404df"),
+                            Id = new Guid("f651ab39-c2ca-43db-9a9e-7570cf1b5bad"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 46,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5239),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1150),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "ANA ALICE DA MOTA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("5445ee49-9816-4895-bbba-21d2695d1a59"),
+                            Id = new Guid("2c7a9ade-e61d-42b3-bb31-8579f253ddf0"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 35,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5244),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1155),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "ANDERSON CRISTIANO SALES SILVA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("1e17e6d2-2e2c-4e12-8ac3-8f14e3bc192d"),
+                            Id = new Guid("a001e2e9-451b-49f1-a293-57498d6d0195"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 5,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5250),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1159),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "ANDRÉ DA CONCEIÇÃO SILVA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("5daea54b-281c-418f-91e0-ee029cf90e5a"),
+                            Id = new Guid("72302b86-460a-4322-bb1d-f20f9633eeae"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 37,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5255),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1163),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "ANDREA REGINA J. B. RODRIGUES",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("f75d942a-4a19-470d-b94e-35dbae4df6e7"),
+                            Id = new Guid("85a6ce20-9390-4c61-bcc8-17ade00bb9ed"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 42,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5260),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1171),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "ANTONIA IVANA COSTA SOUSA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("23fd94ab-be84-4843-9598-7c54821cebb5"),
+                            Id = new Guid("2accb953-ad62-420e-a6b2-029c3e15e3e1"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 26,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5265),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1174),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "CACIELY VALERIO GOMES",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("b6b02430-8c9c-4e86-a92c-28d58c95f538"),
+                            Id = new Guid("b2bbceff-0582-4dba-87c8-27a7840d06b1"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 25,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5270),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1177),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "CLEUDILENE DA SILVA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("723353ae-d33b-4100-907c-a875ac8e9e16"),
+                            Id = new Guid("f522275a-a631-46a6-9c29-43d884a946c1"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 44,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5278),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1180),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "CRISTIANE SOARES COSTA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("8f5a2142-49aa-4f5c-9aa1-7256ab3f80ea"),
+                            Id = new Guid("7c2e1cd1-46fc-47c4-8322-839c8457f484"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 40,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5283),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1184),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "DANIEL DE ARAUJO MOTA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("182b338a-c893-4935-ae6a-2ea5de902e8d"),
+                            Id = new Guid("ab858e86-6950-4872-ba57-ed7c056e9ae5"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 41,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5290),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1187),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "DAYARA BORGES LUCENA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("27d90030-b6a8-4409-a13e-74945222e0ea"),
+                            Id = new Guid("3022c1d6-ae47-4c4a-b43e-758da31b4f56"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 36,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5295),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1202),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "DENILZA  ALVES PINTO DUARTE",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("5e2d8a66-3ba0-42db-9a48-4682a2926723"),
+                            Id = new Guid("bf84b542-4856-429e-ab75-ba5de8164fb8"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 28,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5300),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1205),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "DEREK DILERVANDO DE O. PANTOJA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("b4e80d40-a572-4984-9b5b-ca8602f60e34"),
+                            Id = new Guid("4748d508-08c1-4eb3-bb1e-d6a1402e6446"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 19,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5305),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1210),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "DHONAYARA DA SILVA DE CAMPOS AMORIM",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("2040f38d-88ed-48bd-82af-551e0221cca9"),
+                            Id = new Guid("1638ceef-9f52-4488-b2a3-ee6386a4561e"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 2,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5310),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1213),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "EDI",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("f2b302ff-f9e3-4430-a12b-85cc2d5b0413"),
+                            Id = new Guid("7d87dad8-4a4f-4b9f-9f90-5806dd798275"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 45,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5315),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1216),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "ELAINE DE JESUS REZENDE",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("edce1d74-04d9-41f3-8cab-bb5b703a3e5f"),
+                            Id = new Guid("8ef347e2-49bc-470c-b097-fafce3d285c3"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 48,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5322),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1219),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "ERCILIO DE CASTRO  BARBOZA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("6b891a4e-4109-4f49-bca6-9fd661206954"),
+                            Id = new Guid("289c30e3-5d7e-4a61-9268-4b3b161c24fe"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 29,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5327),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1222),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "FERNANDO CABRAL DA FONSECA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("e0673fab-3a5c-4fdf-8c95-d183a5ede58d"),
+                            Id = new Guid("140ba84c-7747-419b-9cfb-b17fb83dbecf"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 24,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5332),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1224),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "FRANCINOLIA R A L C",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("eae5dcf3-f1a2-4020-863d-34c603d66d35"),
+                            Id = new Guid("20bdba50-bbbb-4312-a367-8fe81923a49a"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 9,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5336),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1227),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "GLICIANE ESTEPHANE JACOME DE SOUSA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("f4e58723-71b3-4319-a9ec-09f0d586208c"),
+                            Id = new Guid("ba9f16a5-f690-4506-b119-f6c65bf282e5"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 31,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5341),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1241),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "HUDLER LEITE DA SILVA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("3a74a1b1-803f-4b33-830a-a00c9841a5a2"),
+                            Id = new Guid("f40e5625-6531-440a-b4cd-fe6ea10762ac"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 33,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5346),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1245),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "IRISMAR SILVA CIRINO",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("339a928f-8869-4bdd-bf12-c2c035739e5f"),
+                            Id = new Guid("1f72c379-8a11-480c-ae05-013b6a72f71e"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 34,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5351),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1248),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "JAKELLYNE ALVES BRANDÃO",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("3b9705f3-1234-4c26-a0b5-d499421ee814"),
+                            Id = new Guid("02058db9-47bb-45f0-91a3-cd7ae32cee3f"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 10,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5356),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1250),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "JHYEIVSON WALLINTER SILVA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("8c5da62d-3ae7-48da-a270-d3f182580b7d"),
+                            Id = new Guid("1e8bb3ae-97bb-4661-96db-92d9be5504e7"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 43,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5363),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1253),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "JORDANIA DE MACEDO MENDONÇA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("8001ea00-4d0a-41af-a442-51f69e2030f8"),
+                            Id = new Guid("7074507d-4f42-4583-b36c-451ad74c5504"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 11,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5369),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1256),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "JORGE CLESIO SILVA E SILVA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("89459cef-d17b-44d4-a1d1-b8b2f464794e"),
+                            Id = new Guid("e868252b-7e03-45d6-b0f8-c4d282e12a51"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 12,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5374),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1259),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "JORGE FERNANDO CASTRO SILVA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("133893ac-0d3b-4593-a90c-20c5412998b9"),
+                            Id = new Guid("ffb26ca1-718e-45db-9f0a-a6ae08ecb5c1"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 51,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5379),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1262),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "JUCIENE IONARIA DE S. GABRIEL",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("3683d4ef-047c-4b1a-8815-7782c071aa26"),
+                            Id = new Guid("5e743549-7f3b-4422-8f0b-0de9133c6d86"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 55,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5384),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1302),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "LEILSON RODRIGUES DA SILVA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("eec20026-4573-4f6d-8444-85feb3790868"),
+                            Id = new Guid("8386ebe2-5a99-48c7-ac96-42c6e9ceec72"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 13,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5431),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1318),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "LORENA MATOS SILVA PRADO",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("313d83d4-a79e-4351-8d70-0f81ceac96b5"),
+                            Id = new Guid("2ac17bb0-ea93-4c7f-8c27-e066c57f6916"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 30,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5436),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1321),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "LUANA MARTINS ROCHA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("b4439726-cecd-4348-9964-6559fa463d4f"),
+                            Id = new Guid("77a012c9-3eb9-4557-9062-2fe8455d9119"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 53,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5441),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1324),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "MARIANA LEAL OLIVEIRA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("d5fded2d-9d94-4b10-b319-b451e3491596"),
+                            Id = new Guid("22c4f206-24a4-4292-a56b-ec32967e2f48"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 14,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5449),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1327),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "MAYARA DE OLIVEIRA PEREIRA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("023c2634-c450-4166-a34d-0fdd4ae0eaf6"),
+                            Id = new Guid("7b59d119-efcc-4d24-b6a3-f80c1b4cb5cf"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 27,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5454),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1330),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "MONICA HELLE DE LIMA ROSA SILVA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("f58ab34d-0fbe-46f4-8d2e-b24d38545c5d"),
+                            Id = new Guid("1b08ba01-561d-471d-8f0c-fd1ed07fe74d"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 3,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5459),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1333),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "NATANAEL SOUA BARROS",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("971ce6a0-193a-480b-b5ee-591d14660064"),
+                            Id = new Guid("1bb2b549-86e2-45a6-aa10-9a7eca625de8"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 54,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5465),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1336),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "NATHALIA DA SILVA MARQUES",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("1c095fd4-2e4f-409e-940d-c3ea486b00fe"),
+                            Id = new Guid("7490fa1f-b035-4224-a8d5-d31fe55dcdef"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 38,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5470),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1339),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "NILCELIA DE LIMA ROCHA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("7b614e10-6fb9-4361-a2e1-a1cbf80a5750"),
+                            Id = new Guid("ebda66b8-9f21-445d-9691-56c883886ba6"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 23,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5475),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1343),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "RAIANE OCAES OLIVEIRA DE SOUZA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("91e25fbf-38dd-40d5-abbe-9cfb612bca3b"),
+                            Id = new Guid("8037dc0e-94a5-4ab9-9214-7d7ff69b3879"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 20,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5480),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1355),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "RAILENE CONCEIÇÃO DE CARVALHO",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("8e3afb36-513f-4ae3-80cb-7c3038dd6a82"),
+                            Id = new Guid("acc2787c-a8ae-4b06-bbb0-f7311d0de93a"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 15,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5485),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1359),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "RAQUEL BRITO DOS SANTOS",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("420855c3-373d-4c60-bf9f-89a4c1744a53"),
+                            Id = new Guid("c9c46bdc-54f4-4b2b-914b-a5925389bebf"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 32,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5493),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1362),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "ROSILENE CONCEIÇÃO DE CARVALHO",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("605dda51-ec5a-4913-a5c5-7e75e770df6d"),
+                            Id = new Guid("7b0c149c-e7fd-4e08-9bfe-97ad613a57e5"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 16,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5497),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1365),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "SAMARA DE OLIVEIRA MOREIRA CABRAL",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("b0154fcc-d0d0-4087-adf5-54989e9c1de7"),
+                            Id = new Guid("3707e3c5-8526-4532-9766-d7fcba2d830b"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 47,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5502),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1367),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "SILVIO VIANA DA SILVA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("a42ff6c3-4f06-4cce-9ac0-3e2e35dce671"),
+                            Id = new Guid("56781599-81b9-4c30-a774-f1c24065edb4"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 4,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5507),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1370),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "SIRLEI VANDA ANDRADE",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("6e9bc8e5-2a97-41ad-9d27-ecffc0341d83"),
+                            Id = new Guid("1030964f-b1b7-46b3-9761-633189c4c059"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 56,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5511),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1373),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "SUANY ISAIAS DA SILVA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("6d4f93de-cdb3-470f-b889-a912a9db29e5"),
+                            Id = new Guid("d5e76d29-840d-4333-8694-62f4f6cd57a8"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 17,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5515),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1377),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "TOMAZ B. NERY S. CAMPOS",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("730b765d-0c9c-4129-af5b-e9ab4f81e272"),
+                            Id = new Guid("e71a1d08-a2a4-4370-9978-ba1a44f5eed2"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 49,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5520),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1380),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "VANESSA MOURA DE ALMEIDA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("313476ce-922e-4372-a361-1b2e8b55c300"),
+                            Id = new Guid("337cb427-3b5c-4651-81d0-295343007029"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 18,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5524),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1383),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "WALDEMIR DE SOUZA REIS",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("c082da70-aa14-402f-a691-3c3963474262"),
+                            Id = new Guid("5584eba0-3132-46b8-aece-7aa2dff93f8f"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 21,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5531),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1397),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "WALISON RICARDO GOES DA PASCOA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("84181e81-6bbb-4193-b42f-9fb5b56a51b4"),
+                            Id = new Guid("618f495f-78e8-4cf6-8d2f-bd7b14588bdd"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 52,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5535),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1399),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "WARLY BEZERRA DA SILVA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("e4d2cbdf-37c3-45d1-8207-adc6a6d2750a"),
+                            Id = new Guid("f11b80b9-11ec-4c50-824c-b84fbe71a742"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 57,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5540),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1402),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "RENATA CAMILY SIRQUEIRA PALHETA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("20a55ed6-e832-4c2b-9e01-d765863147c7"),
+                            Id = new Guid("4aa51b4d-1443-42ff-88fe-3cf28a62025e"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 58,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5545),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1406),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "YURI DO CARMO MOREIRA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("483e464b-d805-45c0-af5d-61fae7de04f8"),
+                            Id = new Guid("d47f604e-9050-40d8-83ba-fb640bf36118"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 59,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5549),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1409),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "VALDEMAR JUSTO",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("19c9fc85-795f-47ef-94ef-b59165dec3d6"),
+                            Id = new Guid("0f137964-b331-4c09-ba2f-9ed069a000d5"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 60,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5554),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1413),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "EDSON DA SILVA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("35338b1e-a726-44ae-9798-415ed3a2941c"),
+                            Id = new Guid("26ddfae7-984b-4fb2-b31a-a13e4c7d238b"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 61,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5558),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1416),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "BRUNO MORAES",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("f70d2088-ee53-4c5a-ac0d-93b170012a66"),
+                            Id = new Guid("3425c642-916d-4da2-98e7-297bfecdeaae"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 6,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5563),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1419),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "CIBELLE DA SILVA CARVALHO",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("399ccc41-5e6d-4c40-a494-cad5ddeee0a7"),
+                            Id = new Guid("a0621936-b8b4-4a90-a772-cfcd0a8c8b13"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 62,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5570),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1422),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "THALYTA RODRIGUES BARBOSA GIL		 ",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("4a11b864-eed1-4699-bd23-001674cb3bfc"),
+                            Id = new Guid("88873d9b-3586-43cc-9242-27a9155b4a96"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 64,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5575),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1434),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "DHELEN SILVA ALMEIDA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("b4e4ceed-4fc2-463b-96b5-54d1ec9c55ed"),
+                            Id = new Guid("4d022a75-c89c-4b23-9813-270beecfe78b"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 63,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5580),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1437),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "DEUZIMAR LIMA DOS SANTOS",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("94200091-9f41-443f-868c-ab2068d74058"),
+                            Id = new Guid("155bc299-a9de-4a58-a1e9-fc658f82e9cb"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 7,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5584),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1440),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "DAYARA NOLETO ALVES",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("a73a078c-068f-471e-90a6-3a9e604d76d1"),
+                            Id = new Guid("337692e9-5f0f-4106-825e-1321ceccdb26"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 65,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5589),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1443),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "LORENE SILVA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("b8f0608b-e402-44ab-a402-2adcb518f7cb"),
+                            Id = new Guid("f958f993-a802-46de-8732-1fa4ec7efd51"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 66,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5593),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1447),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "JOSE ROBERTO",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("ed2d32a3-7e9e-4018-a2fc-0cf325690c1e"),
+                            Id = new Guid("a9bf27c3-e48f-40c1-8c1d-686c53c57670"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 67,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5597),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1450),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "GABRIEL DE ARAUJO VEIGA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("aebcc22f-537e-4271-9ef5-6306c49a2f77"),
+                            Id = new Guid("d820606c-314a-48f1-924d-e7649321305b"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 68,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5602),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1453),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "MIREIA SOZA BARROS",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("4734fc7e-8e2f-45dc-a652-a5c2796fe47a"),
+                            Id = new Guid("b1b942dd-3eae-411d-a663-4dc48a1dad11"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 69,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5609),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1456),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "MARINA LINS DE SOUZA AMADO",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("b050fe6d-0144-4ef7-94f2-3596b35d5215"),
+                            Id = new Guid("60d5fc70-7811-44ac-89a1-e8ea2ab5e45e"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 70,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5613),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1459),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "ALVESLENE LEMS C DAMACENO",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("46d3c0dd-6a8a-4e7e-aa77-2c730335de97"),
+                            Id = new Guid("ba9a3abc-72b9-4169-a1be-1ad475731c27"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 71,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5618),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1471),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "APINAGES PIRES CARDOSO",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("352360d7-fbdd-49aa-b838-4f9ef3ede709"),
+                            Id = new Guid("ffdaa1d7-04a1-495a-a25e-ccdb424b20fd"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 72,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5622),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1531),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "LUCAS MEDEIROS",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("e63dd5cb-267a-4a8a-aeaa-0b99433610e0"),
+                            Id = new Guid("40dea320-2d2f-4488-9582-fe161b381ce3"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 73,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5657),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1535),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "ELIANE MORAES",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("139e2dd4-4ed0-4d9d-ac83-d281406ef899"),
+                            Id = new Guid("1b77456e-09b7-4c70-9476-92c1f8fdc069"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 74,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5662),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1539),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "DANIELLE LIMA SANTOS",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("063fd6d3-4b5b-4634-91ed-3c6aac3c0b1d"),
+                            Id = new Guid("f271ec58-0f10-485e-b73d-8d7803baa06b"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 75,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5666),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1542),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "TASSIO VINICIUS",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("bc87aaa1-9fb8-4e5d-87fa-9ebd9d2f3108"),
+                            Id = new Guid("84cf3914-3132-47f8-beb4-d349e1f81be0"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 78,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5671),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1545),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "DANIELA LIMA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("f899397a-6613-4537-a77b-7b99ac8ab9f8"),
+                            Id = new Guid("2e67f3e9-f98e-45d7-a99a-729de0ca75fd"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 79,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5678),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1548),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "ALAN GOMES",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("95e6ce5e-7521-4ae9-9103-e6b8bded64f0"),
+                            Id = new Guid("c795a78d-d58d-477b-990b-ea9b8ea352ba"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 80,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5682),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1551),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "KASSIO FERNANDO",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("d77a6afb-d349-43cf-bff0-9c6ed65b3831"),
+                            Id = new Guid("68f7f6fe-900c-4c04-8084-5da33ba18517"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 81,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5687),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1553),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "MARYANNE STEPHANE ROCHA G",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("41430e51-6f39-45f7-8c81-1d35468c1436"),
+                            Id = new Guid("5b9e88e7-406e-4843-9971-93175d31d2e9"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 76,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5691),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1567),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "FERNANDO ATROCH",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("eb95e848-a280-4303-a041-b80084c4e43a"),
+                            Id = new Guid("f270dea5-65c4-4e90-82c8-2d654ee87fe0"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 82,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5697),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1571),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "PEDRO AUGUSTO",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("acddb6dd-f1d7-49c9-a8c8-4031a796864d"),
+                            Id = new Guid("32ab4e10-b536-4dc1-81e5-fb748e596f76"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 83,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5702),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1575),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "ELAINE JULIANA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("66ac8fd3-6c98-4c9b-b472-137cb9b3c329"),
+                            Id = new Guid("e49a2fb8-7f7b-46bd-b919-82d8c278f621"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 84,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5707),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1578),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "JOSELINO DANTAS",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("a76e3f0a-eee5-44ec-85f5-a460c03b22a8"),
+                            Id = new Guid("4170d1f6-421c-49b0-8172-9971945f227f"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 85,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5712),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1581),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "BRNDAO REINALDO",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("578b8a55-0ec8-47ed-99cd-4c8324882d56"),
+                            Id = new Guid("74ed0e6c-3ea5-43cd-b763-468081afbbca"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 86,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5719),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1584),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "MOISES HAMSSES",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("71e3d555-0f4a-4b74-b57c-ad71de653349"),
+                            Id = new Guid("dcf684ed-fb45-4cf9-a498-69db6cfaa7aa"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 87,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5724),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1587),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "DIANA MARROCOS",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("d57a9544-a97c-42ee-aede-f218d840c5ad"),
+                            Id = new Guid("c57d9a80-b553-4002-91ad-408b1af51b65"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 88,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5730),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1589),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "JOAO VICTOR",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("189af262-0b3f-4f60-93a2-e714377c3fd7"),
+                            Id = new Guid("dddbaf82-887f-4416-96ef-ee57d302ff79"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 89,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5735),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1596),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "EDNA MOIA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("c22d9908-9235-4139-aecf-2511a968683c"),
+                            Id = new Guid("4affc864-a981-44f3-979d-5e276d7a1c5c"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 91,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5740),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1621),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "MARCIA BARRETO",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("aa26ccb8-7bdc-494b-b831-16904027b92a"),
+                            Id = new Guid("2fb047f7-1e6d-4a30-ad32-09d2da4b67a6"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 94,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5745),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1626),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "JESSICA MELO",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("a8aaa387-d234-4179-8036-f2c61c2ad9cd"),
+                            Id = new Guid("672e46e7-68ec-4375-b4f0-91962f38279c"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 93,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5750),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1629),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "TARCIA ALEXANDRE",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("9d8f5f31-17bf-425b-892e-63d33af868a0"),
+                            Id = new Guid("833b9ab6-2b2c-4df3-81af-18206382cb42"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 90,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5756),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1632),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "WELLIDA AVIZ",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("ff86a8f8-8770-4c6f-be87-e05e33ed8950"),
+                            Id = new Guid("d0804831-208b-4fe8-aff8-d28f1de4df7a"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 95,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5763),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1635),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "FERNANDO AMOURY",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("e6e9e8cd-bbe2-46b3-8b02-d030ea64443f"),
+                            Id = new Guid("918453ea-c3a6-4e77-a692-857d246ca6b7"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 77,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5768),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1638),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "ALLAN WERBERTT",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("d671e5e6-c169-4367-a4ab-d1be93124255"),
+                            Id = new Guid("9e4cea8c-18d0-4ebc-bbdd-70ac52f7a02d"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 96,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5773),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1643),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "THAISE MORGANA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("54daa783-a5f4-418a-b2ec-94a66427a56e"),
+                            Id = new Guid("3dac134f-a501-4558-af88-69e236ee98c7"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 97,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5778),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1645),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "CRISLANE SANTOS",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("948757e8-55a8-4734-b869-e4f91a3ea712"),
+                            Id = new Guid("01e7bbef-173a-42f6-a782-2a181028eb03"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 98,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5782),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1648),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "YARA OLIVEIRA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("a4a38d5c-8642-49c4-ab47-df384c0bc5a7"),
+                            Id = new Guid("e53e933b-556a-4099-b99d-c1e1b523861c"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 99,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5787),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1652),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "LUCIANO LIMA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("84d62258-cc0b-4078-879a-3a7297639cb4"),
+                            Id = new Guid("7e7bb167-c67f-46a9-8b73-22f00f653918"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 100,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5791),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1674),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "FRANCYANNE CASTRO",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("4fdfb2df-669c-496c-897f-e8945679ceff"),
+                            Id = new Guid("2b1a428c-613a-42c6-8735-a306e9919fe0"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 101,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5796),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1677),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "KESIA MARTINS",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("53e8d79a-dfea-4327-a45d-b313e968b9da"),
+                            Id = new Guid("6292d183-0c89-4199-8d45-26bf7b3fa4cb"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 102,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5802),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1680),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "MAIZA NONATO",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("808477e3-4436-4ff5-89f9-53ccd205072a"),
+                            Id = new Guid("e7803017-c150-4413-8027-0f9d1ac076d4"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 103,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5807),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1683),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "ANDERSON MACIEL",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("ff33b519-9979-4ce8-9142-da07a0181843"),
+                            Id = new Guid("5c9a9b2d-4ff5-4895-88cc-6626e5d72ba4"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 104,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5812),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1686),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "RODRIGO CESAR",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("5c50d0ef-9cb4-4e48-9ee6-64037bc4b36c"),
+                            Id = new Guid("b8d11f2c-3d56-4439-b69e-5d249aaa81f1"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 105,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5817),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1688),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "JOSE DE ARIMATEIA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("e997f58f-8962-4ce7-8e15-a73261fec142"),
+                            Id = new Guid("5c174ff2-337a-45ab-b51c-bf063136035f"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 106,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5822),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1691),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "HENRIQUE NOLETO",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("0bf1e154-b23d-42c5-a72c-accf2802af1d"),
+                            Id = new Guid("e9cf5149-9724-494a-b715-11857b1c1197"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 107,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5826),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1700),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "ISABELA MARTINS",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("eb767200-f06c-47d8-8a27-07c8a899e899"),
+                            Id = new Guid("15401362-ed03-49da-b7bc-b3ee92e70c70"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 108,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5830),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1703),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "IOLENE VIANA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("f8ce9151-a61a-4e26-93d6-7fb9ddd88b99"),
+                            Id = new Guid("9ac9afea-911f-4abe-9196-a3c58133524f"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 109,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5834),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1728),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "WESLLEY SOARES",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("0543cb06-2652-449c-af52-13f7d81ec78e"),
+                            Id = new Guid("f6244fad-d98d-4fe2-b4d7-743d282bc6ba"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 110,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5841),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1731),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "DIVINO SANTOS",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("b060a12b-7e52-455f-889e-0ff637cc1593"),
+                            Id = new Guid("2ad7eeff-a536-439d-8f5e-ee12ba1f979b"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 111,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5845),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1734),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "ALINE LOPES",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("b00c0670-2bea-4429-b151-4d1b007ad3c3"),
+                            Id = new Guid("27cfec7e-07c4-4fc5-b6b3-a660b56f92cb"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 112,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5850),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1784),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "JOSIEL MACIEL",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("2db23e19-ae63-44c1-8416-38a8014185ba"),
+                            Id = new Guid("de0c5ac3-69d0-488e-b035-9c6d0f728302"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 113,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5889),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1787),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "TATIANA RODRIGUES",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("c8355896-e3e3-4691-9467-8b908b407acd"),
+                            Id = new Guid("70fdcae7-75b2-4f4c-bdef-ee1cc494d6c9"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 114,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5894),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1790),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "IVANA TUTORIA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("1c90283a-6861-4ccd-b614-d794274331ea"),
+                            Id = new Guid("8a1c7991-cb13-4bf8-b6be-920109346274"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 115,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5898),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1795),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "CARLOS EDUARDO",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("1707f466-67ca-4dca-be71-7ed36e4001c9"),
+                            Id = new Guid("afffd55a-245b-41f0-8f22-6e50c4789e41"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 116,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5902),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1798),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "CASSIO",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("75ba4e31-300c-4f76-9c99-da720c870f0f"),
+                            Id = new Guid("11e2b1f0-8e9d-4775-862f-fcb5fe7ae3ef"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 117,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5907),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1801),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "ELLEN CLEIDE",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("408bda29-cb03-4171-870e-f0e0fda7589c"),
+                            Id = new Guid("2af194b1-295a-491f-bfa2-ea04b2ed5292"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 118,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5914),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1813),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "MARIA MARLI",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("dbe6eefb-7b69-430b-8634-f753deb78157"),
+                            Id = new Guid("a990296a-9603-4157-918b-ba101f5e949d"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 119,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5918),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1816),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "MIRIA FERREIRA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("6b02f0de-337b-46af-a729-e38bf653deee"),
+                            Id = new Guid("f2c26357-4c78-4eaa-a1a4-73247b563d14"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 120,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5923),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1819),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "VICTOR DE PAULA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("e5c0ea57-1591-4e92-8ec7-896e1e413773"),
+                            Id = new Guid("12629b28-451b-4eb4-8cc2-f83f3233bcc7"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 121,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5928),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1822),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "ANA TEREZA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("bf9a8d3d-ae1b-4922-bbb0-319360b1f3f0"),
+                            Id = new Guid("24e62b5c-a8fc-4c27-a8cb-c179f872467c"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 122,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5932),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1825),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "HEYGON TED",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("2c42a6ff-d163-4e00-975b-d5d4d85d1bf1"),
+                            Id = new Guid("5175e051-e944-4a3b-933d-762c1786aa2d"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 123,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5937),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1829),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "RILDO AMARAL",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("48a9c677-c90c-4c81-812e-42530d3ec1fd"),
+                            Id = new Guid("126475ef-053d-4b26-afa9-94d7f7a780c0"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 124,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5942),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1832),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "GERLYNNE PESSOA DE CARVALHO SILVA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("8774a463-e65e-4917-87ce-a8b45a6c286f"),
+                            Id = new Guid("de2dd5a8-1aea-4af5-a5a6-124c098dcd1b"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 125,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5946),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1835),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "MATHEUS HENRIQUE",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("3bcb8ee4-7c06-49d0-9b03-876073f1bd8c"),
+                            Id = new Guid("5393175b-5445-494c-bae2-e099ca67cacb"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 126,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5953),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1838),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "THAMYRES SALOMAO",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("1fea43dd-1154-442c-9b82-8b520c65893c"),
+                            Id = new Guid("9c049cad-23aa-47b9-af96-4e5f4f627eef"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 127,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5958),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1851),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "SAMILLY GURGEL",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("2c5fcac2-b98f-41a1-90fe-ba2048208c44"),
+                            Id = new Guid("b8532029-02d5-43c7-99e4-c0f2bf6d0431"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 128,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5963),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1854),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "HILLARY SANTOS",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("018ea381-8a16-4fc3-8666-7228dba827e0"),
+                            Id = new Guid("1ba79661-cce4-4f34-b49c-80aa8c857ee7"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 129,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5967),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1857),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "PALMEIRA JR",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("2be4c621-1d05-4148-b94c-d90c9c63e2e8"),
+                            Id = new Guid("9d1e1dbf-7646-4a1f-bec1-fe5508d6be81"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 130,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5972),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1860),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "RONIEL MARQUES",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("212be68a-18c5-4c7e-bae5-fcda46f147dd"),
+                            Id = new Guid("46efb30e-8d2b-4e2b-8a5f-3e6dab76ff99"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 131,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5976),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1864),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "ALINE PEREIRA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("db9cc57a-5a97-410d-93da-3d267bfe0cd0"),
+                            Id = new Guid("02568ba2-6e81-4a31-beb7-8686ad0fcb3a"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 132,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5981),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1867),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "RAYANE MARTINS",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("748d60f8-e290-4aa2-8807-041ccee19c13"),
+                            Id = new Guid("a8bef87e-b83a-4240-9999-67f839e2ad7d"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 133,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5985),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1871),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "LIDIA SOUSA BARROS",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("9451718b-c31c-4da7-a4ba-becaa798519a"),
+                            Id = new Guid("a7225bb8-75af-455e-b2f5-47a31611abbb"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 134,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5992),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1874),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "ELZA MARIA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("128ffc11-00ad-4640-8e98-9b5f96f9e257"),
+                            Id = new Guid("60eb32db-7a50-46df-b990-23c8472a2663"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 135,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(5996),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1876),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "SELMA OLIVEIRA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("ce588f7a-ae2d-45c0-8725-b6e562511cca"),
+                            Id = new Guid("e661448d-87fb-4ee3-a3d3-e5db365632fb"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 136,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(6001),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1879),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "CAMILA LETICIA P",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("6723e91f-de19-4a76-a30f-ac9ce726edc6"),
+                            Id = new Guid("1805443e-c884-4633-96d7-134321006f86"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 137,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(6006),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1894),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "THIAGO MESQUITA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("d4ddd087-efca-477c-8b4f-a49bc20d77f2"),
+                            Id = new Guid("eb283ee8-d7fd-4886-841d-dc9278dbfc9e"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 138,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(6010),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1897),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "IRLAINE SOUSA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("8e6eff4f-f3fc-4c18-a9c8-925cba54d5a8"),
+                            Id = new Guid("64c4da50-37e0-4a56-8adf-00a9c34a2d2d"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 139,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(6014),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1901),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "CARLOS ALBERTO",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("3e041193-9a78-4fbc-8c27-017abe4824a1"),
+                            Id = new Guid("5d82349e-e1aa-4ef3-a547-8598a01a10a4"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 140,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(6019),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1904),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "ERIVELTON DOS SANTOS",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("e6f684ef-5b32-4b6b-bb02-39c6f75be1fd"),
+                            Id = new Guid("e7c19930-9dd0-4ad6-b21a-b68dfdc8e2fa"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 141,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(6024),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1907),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "ERICK LEAO FERRAZ",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("511cf979-f71d-4c2b-a316-99a7461eecc5"),
+                            Id = new Guid("6240a0ca-7205-46d2-aa7f-16adb99c672e"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 142,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(6031),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1909),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "LARISSA CARDOSO",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("5e183886-cea9-43ca-a4cc-77559af4d45b"),
+                            Id = new Guid("c1be4da1-dab5-4875-be97-c4157fe572c3"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 143,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(6036),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1912),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "SERGIO DE JESUS",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("f3850ee6-927f-4735-be72-106256a7e21b"),
+                            Id = new Guid("70a053ee-1f13-4d2b-ad28-2248f2f2a86f"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 144,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(6042),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1915),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "FLAVIANA DE OLIVEIRA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("616a2363-3ae3-4bdc-828d-3ad99f23cd26"),
+                            Id = new Guid("2fed8cf6-541f-4b74-8258-f1d4bf3d252b"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 145,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(6047),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1918),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "AMANDA GOULART",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("aec431ae-2f14-489d-930b-3311e08a608e"),
+                            Id = new Guid("a3486d64-c07c-4c79-b21f-62b41c830a3f"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 146,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(6051),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1929),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "ADAO DE PAULA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("42cef1eb-9025-47d4-a86e-c8176825e42d"),
+                            Id = new Guid("d008b8fd-b368-45a5-bf5c-cad7a993f825"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 147,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(6057),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1934),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "SIMONE SILVA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("3f8bc280-ddd1-467a-9c9a-2de62e8d5599"),
+                            Id = new Guid("d28c8a42-bce8-4e2f-b71b-4162c98ac43d"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 148,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(6062),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1937),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "LUCIMARA FONSECA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("50d5af64-5878-46e7-9242-006a951606fa"),
+                            Id = new Guid("67273f41-d451-4da1-a47f-ada79135b92c"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 149,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(6068),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1940),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "CARMEM NATANNA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("093c9b21-2477-4798-9e87-90950387df6c"),
+                            Id = new Guid("8e2ef234-ac8d-4241-8559-b917ae22390a"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 150,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(6075),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1942),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "RAIRONE LIMA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("ab7c3601-9eff-40a1-9c13-0a8176f52fd0"),
+                            Id = new Guid("a5876e06-04ad-4fe3-9a83-fb1f8607d442"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 151,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(6080),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1977),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "RODRIGO DRELIN",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("440d5158-69fd-45f0-97c9-ba49f7e1770b"),
+                            Id = new Guid("85aa0688-f956-4cde-86f3-0c6e1dfdb7bd"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 152,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(6115),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1981),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "KALIMY DE SOUSA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("8c0e7d57-a5e2-4fc2-b8ef-67a56792ebde"),
+                            Id = new Guid("564289f5-185c-4faa-9a54-c726a2e8acfc"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 153,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(6119),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1984),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "CYMARA FRANCO",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("b9cf6bda-cbcc-4371-88b5-83e000192cf0"),
+                            Id = new Guid("ffe7df15-bb5c-4a4f-b27b-90d98272d296"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 154,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(6124),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(1987),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "SCARLETT MILHOMEM",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("f05d6439-0220-4728-9e1f-27a306845d52"),
+                            Id = new Guid("f80a0139-d357-4f60-9d43-11f97afed070"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 155,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(6129),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(2001),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "KIANE SANTANA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("d94ab737-da27-4ff5-b7b8-05376d93c37b"),
+                            Id = new Guid("2d2020be-6a23-4b22-9e5d-d5a6ec3b005a"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 156,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(6133),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(2004),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "EDUARDO MENDES",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("00e0f333-4563-489c-bb7c-d705e45a3925"),
+                            Id = new Guid("5d2f8bfe-5909-4146-8c1c-1068f4a7c91d"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 157,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(6138),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(2007),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "JUCILENE SILVA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("f8ee0774-94c7-4478-9a05-b5910fe52874"),
+                            Id = new Guid("88f9fc4b-ca1d-4ad6-8759-a156a3f01fb2"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 158,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(6145),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(2010),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "ALMIR DALMOLIN",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("1d68cbbf-4670-4dca-8bf4-5028439a71ac"),
+                            Id = new Guid("09f1eb7a-55ec-4a8c-adce-bc9835a13352"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 159,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(6149),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(2013),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "IRLEN SOUSA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("6ed7ee63-94cf-4b5d-b832-daea6613196f"),
+                            Id = new Guid("5ddd7869-29dc-43c7-88a0-70cc7c46fa10"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 160,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(6154),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(2016),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "PATRICIA ZEN",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("ed646ca6-78c3-4c9f-b3a7-dad3876ef8ed"),
+                            Id = new Guid("f44eaff2-701e-4d96-b624-fb8c3c65cfea"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 161,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(6158),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(2018),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "CAROLAINE MELO MOREIRA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("d8c4f7e9-38c5-4944-9b18-6b0b7bf9b016"),
+                            Id = new Guid("5360aa19-7beb-43af-be15-faf4eaa9c71d"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 162,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(6162),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(2021),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "DANIELLA SIQUEIRA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("02ae14d1-13e4-434a-85c3-b2269b52fe35"),
+                            Id = new Guid("606f057a-fbb3-4710-b080-bf663e695a50"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 163,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(6167),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(2025),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "CLARA PAULA SANTOS",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("6c103fa2-9c07-4da8-a0a3-6412616b2c7a"),
+                            Id = new Guid("f7c951aa-de92-4211-a041-9e78777db1a4"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 164,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(6172),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(2028),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "JEFTE DE SOUSA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("46ba7899-b494-43d5-a97a-c451e7163d39"),
+                            Id = new Guid("87d595e2-b864-4895-beb9-cf8174661c66"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 165,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(6177),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(2031),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "GISELLE SANTOS",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("1af13c4a-8591-4180-b3b7-2546259b9ae1"),
+                            Id = new Guid("2973ba18-65ad-41f6-a164-bdb2bf33b394"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 166,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(6184),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(2034),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "FREDSON LEITE",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("c586ba70-7665-4928-9018-3a6c2a59cb0d"),
+                            Id = new Guid("7f56511c-ae55-4a7e-8f05-e1df58e38a1c"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 167,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(6188),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(2037),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "THAMIRES GOMES",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         },
                         new
                         {
-                            Id = new Guid("c14a2859-8f94-451e-9c51-d1b32e371e50"),
+                            Id = new Guid("ff781ae8-1e32-4e5f-a9ce-4da00ec47164"),
                             Ativo = false,
                             CargaHorariaSemanal = 0.0,
                             CodPonto = 168,
-                            Contratacao = new DateTime(2021, 11, 14, 18, 55, 13, 138, DateTimeKind.Local).AddTicks(6193),
+                            Contratacao = new DateTime(2023, 4, 26, 21, 34, 22, 59, DateTimeKind.Local).AddTicks(2040),
                             Cpf = "",
+                            Email = "asd@asd.com",
                             HoraAula = 52.00m,
                             Nome = "FERNANDA",
                             Numero = 0,
-                            Salario = 5000.00m
+                            Salario = 5000.00m,
+                            Telefone = "99999999"
                         });
                 });
 
@@ -2317,7 +2651,7 @@ namespace BlazorServer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f2374dee-65a8-4ac3-a0b7-1aaa17573a9f"),
+                            Id = new Guid("4c3e8902-acd3-441d-8620-716a70b0f3c8"),
                             EnderecoEmail = "edivaldomachado@gmailcom",
                             Nome = "Edivaldo"
                         });
@@ -2344,25 +2678,25 @@ namespace BlazorServer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("fd3b7eda-da7a-4e93-b31b-dc6e3926350f"),
+                            Id = new Guid("6a462591-3e86-4751-b60b-2e2cf79f8c83"),
                             DataFeriado = new DateTime(2021, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Descricao = "Ano Novo"
                         },
                         new
                         {
-                            Id = new Guid("0b6b4c1b-5445-4534-b7ba-49d39e1397ee"),
+                            Id = new Guid("bbcdb56f-9bde-46e1-9062-e9bddbbc25c2"),
                             DataFeriado = new DateTime(2021, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Descricao = "Natal"
                         },
                         new
                         {
-                            Id = new Guid("d1b4e769-de95-4a23-92d7-25be1418d80c"),
+                            Id = new Guid("06d6f1ed-7b73-420c-9aa8-0d008a792357"),
                             DataFeriado = new DateTime(2021, 11, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Descricao = "Proclamacao da republica"
                         },
                         new
                         {
-                            Id = new Guid("3afb6ea4-ad62-4843-b172-fa998893a427"),
+                            Id = new Guid("14cfa117-02a1-494e-823f-350a021c1006"),
                             DataFeriado = new DateTime(2021, 11, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Descricao = "Finados"
                         });
@@ -2421,7 +2755,6 @@ namespace BlazorServer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CNPJ")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Cidade")
@@ -2438,7 +2771,6 @@ namespace BlazorServer.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("RazaoSocial")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -2448,7 +2780,7 @@ namespace BlazorServer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("cd179d84-4a4f-4cde-a64a-5a9dc6da01d3"),
+                            Id = new Guid("80631538-f162-4226-b719-1a6763a08a23"),
                             Bairro = "Bairro da Paz",
                             CNPJ = "123123123/1234-12",
                             Cidade = "Parauapebas",
@@ -2459,7 +2791,7 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b158879b-7545-43b8-b08b-2863a5201442"),
+                            Id = new Guid("a29848a8-1c90-4dd0-84b2-2583e4820b71"),
                             Bairro = "Centro",
                             CNPJ = "123123123/1234-12",
                             Cidade = "Eldorado dos Carajás",
@@ -2470,7 +2802,7 @@ namespace BlazorServer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("9cbea4ae-a9fd-4f68-bc32-41521627e780"),
+                            Id = new Guid("49bd0b0f-2dc1-43b1-92c0-dbf418ad578a"),
                             Bairro = "Centro",
                             CNPJ = "123123123/1234-12",
                             Cidade = "Canaa dos Carajas",

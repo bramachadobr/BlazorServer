@@ -61,7 +61,7 @@ namespace BlazorServer.Data
         [Column(TypeName = "uniqueidentifier")]
         public Guid Id { get; set; }
         [Required]
-        public string NomeCargo { get; set; }
+        public string? NomeCargo { get; set; }
         public List<Colaborador> Colaboradores { get; set; }
     }
 
@@ -79,14 +79,15 @@ namespace BlazorServer.Data
         public Guid Id { get; set; }
         public int CodPonto { get; set; }
         [Required(ErrorMessage = "Informe um nome para o colaborador")]
-        public string Nome { get; set; }
+        public string Nome { get; set; } = string.Empty;
         [Required(ErrorMessage = "Informe o CPF do colaborador")]
-        public string Cpf { get; set; }
+        public string Cpf { get; set; } = string.Empty;    
 
         public string CpfComMascara { get => string.Format(@"{0:000\.###\.###-##}", Cpf); }
         //[Required(ErrorMessage ="Informe o Cargo do colaborador")]
-        public Cargo Cargo { get; set; }
+        public Cargo? Cargo { get; set; }
         public Unidade Unidade { get; set; }
+        [Required(ErrorMessage ="Data da contratação obrigatoria")]
         public DateTime? Contratacao { get; set; }
 
         public DateTime? Demissao { get; set; }
@@ -96,19 +97,21 @@ namespace BlazorServer.Data
         [Column(TypeName = "decimal(18,2)")]
         public decimal HoraAula { get; set; }
         public double CargaHorariaSemanal { get; set; }
-        //[Required(ErrorMessage ="Informe o e-mail do colaborador")]
-        public string Email { get; set; }
-        //[Required(ErrorMessage ="Informe o telefone do colaborador")]
-        public string Telefone { get; set; }
 
-        public string Endereco { get; set; }
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }=string.Empty;
+
+        [Required]
+        public string Telefone { get; set; }=string.Empty;
+        public string Endereco { get; set; } = string.Empty;
 
         public int Numero { get; set; }
 
-        public string Bairro { get; set; }
+        public string Bairro { get; set; } = string.Empty;
 
-        public string Cidade { get; set; }
-        public string Estado { get; set; }
+        public string Cidade { get; set; } = string.Empty;
+        public string Estado { get; set; } = string.Empty;
 
         public bool Ativo { get; set; }
 
@@ -148,6 +151,7 @@ namespace BlazorServer.Data
                                 + (PM_SAI.TimeOfDay.Ticks - PM_ENT.TimeOfDay.Ticks)
                                 + (NOI_SAI.TimeOfDay.Ticks - NOI_ENT.TimeOfDay.Ticks));
         }
+
         [Column(TypeName = "decimal(18,2)")]
         public decimal ValorHora { get; set; }
         [Column(TypeName = "decimal(18,2)")]

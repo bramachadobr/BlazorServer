@@ -7,7 +7,7 @@
 
 @inherits OwningComponentBase<Service.CargoService>
 
-<div class="container">
+@*<div class="container">
     <RadzenTemplateForm Data="CargoObj"  TItem="@Data.Cargo" Submit="@((Data.Cargo args)=> {Submit(args);})">
 
             <RadzenFieldset Text="Cargo">
@@ -26,14 +26,28 @@
 
     </RadzenTemplateForm>
 
+</div>*@
+
+
+<div class="container">
+
+    <MudDialog>
+        <TitleContent><MudText>Cargo</MudText></TitleContent>
+        <DialogContent>
+            <MudForm Model="@CargoObj" @ref="@mudForm">
+                <MudTextField T="string" Label="Cargo" Required="true" RequiredError="Nome do cargo obrigatorio!" ReadOnly="false" @bind-Value="CargoObj.NomeCargo" For="@(() => CargoObj.NomeCargo)" />
+            </MudForm>
+        </DialogContent>
+        <DialogActions>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="@(async () => await Submit())">Order</MudButton>
+        </DialogActions>
+    </MudDialog>
+
 </div>
-
-
-
-
 
 @code 
 {
+    MudForm mudForm;
 
     [Parameter]
     public Data.Cargo CargoObj { get; set; }
@@ -76,6 +90,19 @@
         }
     }
 
+    async Task Submit()
+    {
+        if (CargoObj != null)
+        {
+            if (CargoObj.NomeCargo != "")
+            {
+                Service.UpdateCargo(CargoObj);
+                MudDialog.Close();
+                //Task.Run(()=> ShowInlineDialog());
+            }
+        }
+    }
+
     async Task ShowInlineDialog()
     {
      var result = await DialogService.OpenAsync("Registro adicionado com sucesso! ", ds =>
@@ -88,5 +115,4 @@
             </div>
         </div>);
     }
-
 }

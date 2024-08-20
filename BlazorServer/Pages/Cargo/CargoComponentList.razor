@@ -12,7 +12,6 @@
 @inherits OwningComponentBase<CargoService>
 
 
-
 <div class="container">
     <br />
     <MudFab Color="Color.Primary" Icon="@Icons.Material.Filled.Add" aria-label="Adicionar" OnClick="@NovoCargo" />
@@ -62,7 +61,7 @@
 
     [Parameter] public Data.Cargo CargoObj { get; set; }
 
-    RadzenDataGrid<Data.Cargo> grid;
+    //RadzenDataGrid<Data.Cargo> grid;
 
     //Service.CargoService ServiceCargo;
 
@@ -115,10 +114,12 @@
 
     async void Editar(Guid id)
     {
+
         MudBlazor.DialogOptions opt = new MudBlazor.DialogOptions()
         {
             //MaxWidth = MaxWidth.False,
             //NoHeader = false,
+            FullScreen = true,
             CloseButton = true
         };
 
